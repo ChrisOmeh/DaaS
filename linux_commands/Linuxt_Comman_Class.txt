@@ -1,0 +1,57 @@
+===========BASIC LINUX COMMANDS==================
+w ----command to display user
+who -----command to display current users 
+man useradd ---command to check useradd manual
+useradd name_user
+useradd -m chris ---create user. The -m flag creates the user on pwd
+passwd password_here  --- Enter your password
+
+===================================================
+systemctl
+systemctl ----command used to manage and check the status of  your system server
+NOTE: APACHE IS A WEB SERVER TO HANDLE YOUR HTTP REQUEST. --pam means privilede access management
+systemctl status apache2
+systemctl disable apache2
+systemctl enable apache2
+systemctl start/restart stop apache2
+systemctl is-enabled apache2
+systemctl list unit  ---list all running services(i.e is things running in background. They are DAEMON)
+
+================================================
+log
+journalctl command is good for troubleshooting
+eg
+journalctl -u apache2
+journal -u ssh
+
+REAL TIME LOGGING I.E FOLLOWING
+journalctl -u ssh -f
+journalctl -u ssh --since "2022-09-02 09:00:00" 
+
+ANALYZING CPU MEMORY AND SWAP(I.E RESERVED MEMORY)
+htop
+GREEN = USER PROCESSES
+GRAY = INPUT/OUTPUT INFO
+RED = SYSTEM PROCESSES
+BLUE = BUFFER PROCESSES
+
+==========================================
+UPDATE
+
+IN linux,apt is a database that store various linux commands.
+For redhat, they use 'yuml' while ubuntu use 'apt'. motd manages server welcome message
+---------------------------
+apt-get update
+apt update
+apt list --upgradable
+==etc directory
+cd /etc/apt
+
+then 
+ls items inside /etc/apt
+
+cat sources.list
+
+PROXY
+Forward Proxy
+Reverse Proxy
