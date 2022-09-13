@@ -1,0 +1,59 @@
+==========================================================
+NETWORKING IN DEVOPS
+BY ESE ATAIDE
+=========================================================
+
+What is networking?
+Communication between two or more computer and associated devices.
+
+Transmission Media are used to transfer files from one medium to another.
+Sharded Cables
+ALl PEOPLE SEEM TO NEED DATA PROCESSING networking model
+
+If two or mpre ips are in different network but same subnet, can they commnunicate by default? If yes can i set a firewal rule to stop the 
+communication?
+
+Each octex has 8 bits. 128,64,32,16,8,4,2,1
+There mainly Class A, Class B, Class C IP Addresses.
+
+Identifying Subnet, Network and Host
+If the value is in the range 1 to 127, the address belongs to class A. 
+If the value is in the range 128 to 191, the address belongs to class B.
+If the value is in the range 192 to 223, the address belongs to class C.
+If the value is in the range 224 to 239, the address belongs to class D.
+
+============
+If the value is in the range 1 to 127, the address belongs to class A.
+If the value is in the range 128 to 191, the address belongs to class B.
+If the value is in the range 192 to 223, the address belongs to class C.
+If the value is in the range 224 to 239, the address belongs to class D.
+If the value is in the range 240 to 255, the address belongs to class E.
+
+ONES WILL GIVE MORE SUBNETS WHILE MORE ZEROES WILL GIVE MORE Host
+subnet = 2 power network n here is ones
+host = 2 power n - 2  n here is zeros
+
+BROADCAST IP ADDRESS IS WHERE ALL THE BITS ARE TURNED ON I.E 1, 255
+WHILE NETWORK IP ADIS WHERE BIT ARE TURNED OFF I.E 0, 0
+
+Example
+Netword = 172.43.1.0
+first ip =172.43.1.1
+last ip = 172.43.1.2
+broadcast ip = 172.43.1.3
+
+
+NOTES
+--IPV4 is made up of 32 bit logical address
+--The 32 bits are divided into four octets of 8 bits i.e 1byte per octets
+--The octets are separated by a DOT notation.
+--Network Bit is denoted by ONE(1) while the Host Bit is denoted by ZERO(0)
+--In Class A IP Address, the first Octet is for NETWORK i.e NETWORK ADDRESS/8 BIT
+--In Class B IP Address, the first and second octet are for the NETWORK i.e NETWORK 16 BIT
+--In Class C IP Address, the first, second and third octet are for the NETWORK i.e NETWORK 24 BIT
+
+STEPS 
+-Use ip address and its subnet mask to determine the ip class
+-Use ip address and its subnet mask to determine the CIDR 
+-Use CIDR to determine the NETWORK ADDRESS.
+-
