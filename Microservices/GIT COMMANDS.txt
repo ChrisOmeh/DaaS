@@ -1,0 +1,56 @@
+===============
+INITIALIZATION
+===============
+$git config --global user.name "John Doe"
+$git config --global user.email johndoe@example.com
+
+$git init -main/git init
+
+$git config --list show-origin
+
+===============================
+CREATE REPO
+==============================
+METHOD 1: USING GIT INIT
+$git init ---used to initialize a folder in local machine to create a default git repo of .git
+
+--make init default repository
+$git config --global init.defaultBranch main
+
+METHOD 2: CREATING A REMOTE REPO
+Use Git GUI to create a new repo and implement needed settings
+
+=======================================
+$gh repo create organization-name/project-name
+$gh repo create
+
+* In the command line, navigate to the root directory of your new project. 
+(This directory was created when you ran the gh repo create command.)
+
+* Create a README file with some information about the project.
+
+$echo "info about this project" >> README.md
+
+* Enter git status. You will see that you have an untracked README.md file.
+$git status
+
+* Stage and commit the file.
+$git add README.md && git commit -m "Add README"
+
+* Push the changes to your branch.
+$git push --set-upstream origin BRANCH_NAME/HEAD --this makes origin/master branch default commit branch
+
+-=================================
+BRANCHING
+==================================
+1. Check git branch
+$git branch
+
+2. Create new branch
+$git checkout -b branch_name
+
+3. switch branches
+$git checkout
+
+4. git checkout -d branch_name,  delete the branch 
+
