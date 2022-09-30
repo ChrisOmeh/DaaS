@@ -12,7 +12,7 @@ try:
     ctx = ssl.create_default_context()
     password = os.getenv("password")    # Your app password goes here
     sender = "chrismekus94@gmail.com"    # Your e-mail address
-    receiver = ["emmymary11@gmail.com", "benedictwisdom3@gmail.com"]#,"ritaify25@gmail.com"]  # Recipient's address
+    receiver = ["hello@daas.ng", "emmymary11@gmail.com","mikesosodefnig@gmail.com","jemimahsolomonsanu@gmail.com"]#, "benedictwisdom3@gmail.com"]#,"ritaify25@gmail.com"]  # Recipient's address
 
     # Create the message
     message = MIMEMultipart("alternative")
@@ -20,8 +20,8 @@ try:
     message["From"] = sender
     message["To"] = ",".join(receiver)
 
-    attach_file_name = 'Python_Assignment_Team-K8S.xlsx'
-    attach_file = open("/home/chuxian/DaaS/PYTHON-CLASS/EXCEL_FILES/Python_Assignment_Team-K8S.xlsx", 'rb') # Open the file as binary mode
+    attach_file_name = 'Python_Assignment_Team-K8S.csv'
+    attach_file = open("/home/chuxian/DaaS/PYTHON-CLASS/EXCEL_FILES/Python_Assignment_Team-K8S.csv", 'rb') # Open the file as binary mode
     payload = MIMEBase('application', 'octate-stream')
     payload.set_payload((attach_file).read())
     encoders.encode_base64(payload) #encode the attachment

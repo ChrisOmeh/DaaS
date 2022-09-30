@@ -12,7 +12,7 @@ print(f"THE FILES IN PWD IS:,'\n',{os.getcwd()}")
 csv_file_path = "/home/chuxian/DaaS/PYTHON-CLASS/CSV_FILES"
 excel_file_path = "/home/chuxian/DaaS/PYTHON-CLASS/EXCEL_FILES"
 
-def test_fun(csv_file_path, excel_file_path):
+def solution_fun(csv_file_path, excel_file_path):
     # READ ALL CSV FILES
     account = pd.read_csv(csv_file_path + "/Accountancy Result.csv")
     english = pd.read_csv(csv_file_path+"/English.csv")
@@ -95,7 +95,7 @@ def test_fun(csv_file_path, excel_file_path):
 
     # CREATING THE TOTAL AND AVERAGE COLUMNS OF STUDENTS SCORE
     tb_pivot["Total"] = tb_pivot['Accountancy']+tb_pivot['Business Studies']+tb_pivot['Economics']+tb_pivot['English']+tb_pivot['Mathematics']
-    tb_pivot["Average"] = round((tb_pivot['Accountancy']+tb_pivot['Business Studies']+tb_pivot['Economics']+tb_pivot['English']+tb_pivot['Mathematics'])/4)
+    tb_pivot["Average"] = round((tb_pivot['Accountancy']+tb_pivot['Business Studies']+tb_pivot['Economics']+tb_pivot['English']+tb_pivot['Mathematics'])/5)
     print("===================================================================,'\n'")
     print("=====TOP 10 RESULT OF SUMMARY SHEET OF GRADE WORKBOOK IS BELOW=====,'\n'")
     print(tb_pivot.head(n=10).sort_values(by = "Name"))
@@ -119,4 +119,4 @@ def test_fun(csv_file_path, excel_file_path):
 
 
 if __name__ == "__main__":
-    print(test_fun(csv_file_path=csv_file_path, excel_file_path=excel_file_path))
+    print(solution_fun(csv_file_path=csv_file_path, excel_file_path=excel_file_path))

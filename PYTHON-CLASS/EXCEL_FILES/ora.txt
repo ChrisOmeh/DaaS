@@ -1,0 +1,23 @@
+ALTER TA
+lsdg to check datafile memory
+
+
+Disk group in Oracle
+TempSpace(sorting queries) or Undo Tablespace(when you failed to commit)
+
+vg$session
+
+Check visually to see if all is fine
+Check alert logs.
+Deleting unencessary log in the system /uo1/Oracle
+Command for removing alert logs
+du -sh *
+
+cluster level is grid: su -grid, du -su*
+
+> listener.log zeroes the file
+Understand Oracle file system
+
+df -h Command
+cd ../../
+cd ../file_to_navigate_to
