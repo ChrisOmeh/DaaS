@@ -29,3 +29,8 @@ DaaS ng was founded by group of young Nigerian DevOps practitioners.
 * Docker and Kubernetes
 
 # The codes and resources in this repo is public. It contains various Bootcamp Resource.
+
+
+https://app-services-3-ase2.azurewebsites.net/
+
+https://teamk8s-app-service-1.azurewebsites.net/
