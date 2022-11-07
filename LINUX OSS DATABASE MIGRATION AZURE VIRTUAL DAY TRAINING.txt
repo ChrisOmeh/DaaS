@@ -1,0 +1,29 @@
+ps -eaf
+
+Exercise to deploy Azure Resources to Azure using Terraform
+https://learn.microsoft.com/en-us/training/modules/deploy-java-azure-pipeline-terraform/4-exercise?pivots=github-actions
+
+https://learn.microsoft.com/en-us/training/modules/deploy-java-azure-pipeline-terraform/
+
+https://learn.microsoft.com/en-us/training/paths/best-practices-java-azure/
+
+https://learn.microsoft.com/en-us/training/modules/deploy-java-azure-pipeline-terraform/5-exercise?pivots=github-actions
+
+
+Migrate Azure Database for MySql
+https://learn.microsoft.com/en-us/azure/dms/tutorial-mysql-azure-single-to-flex-online-portal
+
+Azure Database for PostgreSQL
+QUESTION:
+Is it possible that there is potential data loss at point of cut over? Imagine a scenario where cut over takes me 1
+0secs to complete and within this 10secs, there is a transaction recorded in my source database. 
+Thus, leading to potential loss of that transaction to destination database(Azure db for MySql). Thanks
+
+ANSWER:
+Usually, in an online migration, before you perform the cutover, you wait for any pending transactions to be applied to the target. 
+Once you initiate the cutover, any incoming transaction to the source are stopped for that duration. 
+This might help : https://learn.microsoft.com/en-us/azure/dms/tutorial-mysql-azure-single-to-flex-online-portal
+
+AZURE DATABASE MIGRATION GUIDE
+https://learn.microsoft.com/en-us/data-migration/
+
