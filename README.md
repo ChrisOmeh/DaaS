@@ -66,3 +66,30 @@ DaaS ng was founded by group of young Nigerian DevOps practitioners.
   https://learn.microsoft.com/en-us/training/modules/deploy-java-azure-pipeline-terraform/4-exercise?pivots=github-actions
 
 
+*Breakdown of Monthly dues payment since May we started.*
+Total number of people paid = 10
+Total Amount paid = #20,700.00k
+
+Percentage of those that have completed this year monthly dues from may we started  = 50% of those that have paid.
+
+Percentage of those yet to complete this years dues = 50% of those that have paid.
+
+Percentage of those that have made upfront payment toward next year = 30% of those that have paid.
+
+A completion of this year(2022) dues means paying 2,400 Naira which is #300 * 8months counting from May 2022 we started paying monthly
+dues.
+
+As we all know, it is what we reliazed from monthly dues that will help us undergo the project we have at hand.
+
+In a special way i want to appreciated those that have completed their this year payment and have even made upward/upfront payment into 
+next year. May God continue to bless us all. 
+
+If you are yet to make any commitment/pay pls try and do so. We undertstand that times are hard but i believe we can do this.
+
+If 50% of people in this group should make their payments, we will have enough to do our project.
+
+*Payment Account Details*
+Account Number: 3105401730
+Bank Name: First BANK
+Account Name: Omeh, Chukwuemeka Christian.
+
