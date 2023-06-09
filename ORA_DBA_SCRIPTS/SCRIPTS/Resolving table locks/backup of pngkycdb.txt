@@ -1,0 +1,11 @@
+set ORACLE_SID=pngkycdb1
+set ORACLE_HOME=C:\oracle\product\11.2.0\dbhome_1
+
+run{
+Allocate channel ch1 type disk format 'C:\Oracle_Backups\Kyc_%d_data_%U';
+Backup incremental level=0 database tag='complete_backup';
+Release channel ch1;
+Allocate channel t1 type disk format 'C:\Oracle_Backups\Kyc_%d_ctrl_%U';
+Backup current controlfile;
+Release channel t1;
+} 

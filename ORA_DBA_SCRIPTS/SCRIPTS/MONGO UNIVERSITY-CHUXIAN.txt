@@ -1,0 +1,1723 @@
+username: m001-student
+password: m001-mongodb-basics
+
+Mongodb Compass
+mongodb+srv://m001-student:m001-mongodb-basics@sandbox.dptwmxc.mongodb.net/Sandbox
+mongodb+srv://m001-student:m001-mongodb-basics@sandbox.dptwmxc.mongodb.net/test
+
+Mongodb Shell
+mongosh "mongodb+srv://sandbox.dptwmxc.mongodb.net/Sandbox" --apiVersion 1 --username m001-student
+mongo "mongodb+srv://sandbox.qjigypx.mongodb.net/Sandbox" --username m001-student
+mongosh "mongodb+srv://sandbox.dptwmxc.mongodb.net/test" --apiVersion 1 --username m001-student
+
+mongorestore --uri "enter uri path" --drop dump
+mongorestore --uri mongodb+srv://m001-student:<PASSWORD>@sandbox.dptwmxc.mongodb.net 
+
+
+mongoimport --uri "enter the uri path" --drop=<filename.json>
+mongodump --uri mongodb+srv://m001-student:<PASSWORD>@sandbox.dptwmxc.mongodb.net/<DATABASE> 
+mongosh "mongodb+srv://sandbox.dptwmxc.mongodb.net/myFirstDatabase" --apiVersion 1 --username m001-student
+
+mongodump --uri "mongodb+srv://<your username>:<your password>@<your cluster>.mongodb.net/sample_supplies"
+mongodump dumps the document in BSON format
+
+mongoexport --uri="mongodb+srv://<your username>:<your password>@<your cluster>.mongodb.net/sample_supplies" --collection=sales --out=sales.json
+eg: mongoexport --uri="mongodb+srv://m001-student:m001-mongodb-basics@sandbox.mongodb.net/sample_supplies" --collection=sales --out=sales.json
+mongoexport exports the document to JSON format
+
+mongorestore --uri "mongodb+srv://<your username>:<your password>@<your cluster>.mongodb.net/sample_supplies"  --drop dump
+mongorestore helps you restore/bring back BSON document. The --drop command helps remove possible database duplicate name  in restore location.
+
+
+mongoimport --uri="mongodb+srv://<your username>:<your password>@<your cluster>.mongodb.net/sample_supplies" --drop sales.json
+mongoimport helps you import/bring back JSON document
+
+{"_id":{"$oid":"56e9b39b732b6122f877fa31"},"airline":{"id":{"$numberInt":"410"},"name":"Aerocondor","alias":"2B","iata":"ARD"},"src_airport":"CEK","dst_airport":"KZN","codeshare":"","stops":{"$numberInt":"0"},"airplane":"CR2"}
+
+1. use mydb -- To enter the mongdb environment
+2. db.author.find() ---Existing DB author's information.
+===When you create a mongodb collections and document, mongo automatically attach a unique identifier for identification. "_id":"ObjcetId("thewakjuj")
+
+===============================================
+Chapter 3: Creating and Manipulating Documents
+===============================================
+Inserting New Documents - insert() order
+
+--Insert 3 documents without specifying the "_id"
+db.inspections.insert([ { "test": 1 }, { "test": 2 }, { "test": 3 } ])
+
+--Insert 3 documents with "_id" field provided.
+db.inspections.insert([{ "_id": 1, "test": 1 },{ "_id": 1, "test": 2 },
+                       { "_id": 3, "test": 3 }])
+					   
+--Insert multiple documents specifying the _id values, and using the "ordered": false option.
+db.inspections.insert([{ "_id": 1, "test": 1 },{ "_id": 1, "test": 2 },
+                       { "_id": 3, "test": 3 }],{ "ordered": false })
+
+
+--Insert multiple documents with _id: 1 with the default "ordered": true setting
+db.inspection.insert([{ "_id": 1, "test": 1 },{ "_id": 3, "test
+
+=======================================UPDATE ONE VS UPDATE MANY==============================================
+Use the sample_training database as your database in the following commands.
+use sample_training
+
+Find all documents in the zips collection where the zip field is equal to "12434".
+db.zips.find({ "zip": "12534" }).pretty()
+
+
+Find all documents in the zips collection where the city field is equal to "HUDSON".
+db.zips.find({ "city": "HUDSON" }).pretty()
+
+
+Find how many documents in the zips collection have the city field equal to "HUDSON".
+db.zips.find({ "city": "HUDSON" }).count()
+
+
+Update all documents in the zips collection where the city field is equal to "HUDSON" by adding 10 to the current value of the "pop" field.
+db.zips.updateMany({ "city": "HUDSON" }, { "$inc": { "pop": 10 } })
+
+
+Update a single document in the zips collection where the zip field is equal to "12534" by setting the value of the "pop" field to 17630.
+db.zips.updateOne({ "zip": "12534" }, { "$set": { "pop": 17630 } })
+
+
+Update a single document in the zips collection where the zip field is equal to "12534" by setting the value of the "population" field to 17630.
+db.zips.updateOne({ "zip": "12534" }, { "$set": { "population": 17630 } })
+
+
+Find all documents in the grades collection where the student_id field is 151 , and the class_id field is 339.
+db.grades.find({ "student_id": 151, "class_id": 339 }).pretty()
+
+
+Find all documents in the grades collection where the student_id field is 250 , and the class_id field is 339.
+db.grades.find({ "student_id": 250, "class_id": 339 }).pretty()
+
+
+Update one document in the grades collection where the student_id is ``250`` *, and the class_id field is 339 , by adding a document element to the "scores" array.
+db.grades.updateOne({ "student_id": 250, "class_id": 339 },
+                    { "$push": { "scores": { "type": "extra credit",
+                                             "score": 100 }
+                                }
+                     })
+
+--"$inc"  is used to update various documents by an incremental values.
+{"$inc": {"pop":10, "field on which increment uses": <incremental value>}}}
+
+--"$set" is used to set a value for a particluar field. You can set value for many fields.
+--"$unset" opposite of set command.
+db.zips.findOne({"zip":"12534"}, {"$set"{"pop":"34571"}})
+
+--"$push" used to add an element into an ARRAY field.
+{"$push": {"field": <value to add into the field>}}
+
+----------
+How many zips in the sample_training.zips dataset are neither over-populated nor under-populated?
+In this case, we consider population of more than 1,000,000 to be over- populated and less than 5,000 to be under-populated.
+db.zips.find({ "$nor": [ { "pop": { "$lt":5000 } },
+             { "pop": { "$gt": 1000000 } } ] } ).count()
+			 
+db.zips.find({"$nor":[{"pop":{"$gt":1000000},"pop":{"$lt":5000}}]},{"city":1}).pretty()
+
+=====================================
+DELETING DOCUMNETS, COLLECTION OR DB
+Deleting Documents and Collections
+====================================
+use sample_training
+--Look at all the docs that have test field equal to 1.
+db.inspections.find({ "test": 1 }).pretty()
+
+--Look at all the docs that have test field equal to 3.
+db.inspections.find({ "test": 3 }).pretty()
+
+--Delete all the documents that have test field equal to 1.
+db.inspections.deleteMany({ "test": 1 })
+
+--Delete one document that has test field equal to 3.
+db.inspections.deleteOne({ "test": 3 })
+
+--Inspect what is left of the inspection collection.
+db.inspection.find().pretty()
+
+--View what collections are present in the sample_training collection.
+show collections
+
+--Drop the inspection collection.
+db.inspection.drop()
+
+
+=======================================
+MONGODB INSERT DOCUMENT AND OBJECTID
+=======================================
+-The "_id" is a unique identifier for every mongodb document
+-The "_id" is required in every mongodb document.
+-The ObjectId() is the default value for the "_id" field  in mongodb document unless specified.
+
+
+========================
+MONGO DB COMMANDS
+========================
+1.use database_name --this command launches a particluar db 
+2. show dbs --list all dbs in a mongodb instance
+3. show collections --list all collections in a mongodb database
+4. it --iterates through a cursor(a pointer to a query result set) and a pointer direct address to memory location.
+5. db.collection_name.find({field:values}).pretty() --This formats the output of the result.
+6. db.collection_name.find({field:values}).count()
+7. ------------------------------------
+show dbs
+use sample_training
+show collections
+db.zips.find({"state": "NY"})
+
+8.------------------------------------------------------------------------------------------------------------------
+Switch to this database:
+use sample_training
+
+Find all documents where the tripduration was less than or equal to 70 seconds and the usertype was not Subscriber:
+db.trips.find({ "tripduration": { "$lte" : 70 },
+                "usertype": { "$ne": "Subscriber" } }).pretty()
+
+Find all documents where the tripduration was less than or equal to 70 seconds and the usertype was Customer using a redundant equality operator:
+db.trips.find({ "tripduration": { "$lte" : 70 },
+                "usertype": { "$eq": "Customer" }}).pretty()
+
+
+Find all documents where the tripduration was less than or equal to 70 seconds and the usertype was Customer using the implicit equality operator:
+db.trips.find({ "tripduration": { "$lte" : 70 },
+                "usertype": "Customer" }).pretty()
+				
+9. ------------------------------------------------------------------------
+LOGIC OPERATOR IN Mongodb
+Eg: "$or", "$and", "$not", "$nor"
+db.routes.find({ "$and": [ { "$or" :[ { "dst_airport": "KZN" },
+                                    { "src_airport": "KZN" }
+                                  ] },
+                          { "$or" :[ { "airplane": "CR2" },
+                                     { "airplane": "A81" } ] }
+                         ]}).pretty()				
+				
+db.zips.find({ "pop": { "$gte": 5000, "$lte": 1000000 }}).count()
+db.zips.find({ "$nor": [ { "pop": { "$lt":5000 } },
+             { "pop": { "$gt": 1000000 } } ] } ).count()
+			 
+db.companies.find({ "$and": [
+                        { "$or": [ { "founded_year": 2004 },
+                                   { "founded_month": 10 } ] },
+                        { "$or": [ { "category_code": "web" },
+                                   { "category_code": "social" }]}]}).count()
+					
+CRUD CLASS QUESTION
+part 1 = {"$and": [{"founded_year":2004},{"$or":[{"category_code": "web","category_code": "social"}]}]}
+"$or"
+part 2 = {"$and": [{"founded_month":10},{"$or":[{"category_code": "web","category_code": "social"}]}]}
+
+
+
+{"$or": [{"$and": [{"founded_year":2004},{"$or":[{"category_code": "web","category_code": "social"}]}]},
+		 {"$and": [{"founded_month":10},{"$or":[{"category_code": "web","category_code": "social"}]}]}]}
+
+{"founded_month":2}
+{"founded_year":2004}
+
+
+db.companies.find({"$and":[{"$or":[{"founded_month":2},{"founded_year":2004}]},{"$or":[{"category_code":} {"web","category_code": "social"}]}]}).count()
+db.companies.find({"$or": [{"$and": [{"founded_year":2004},{"$or":[{"category_code": "web","category_code": "social"}]}]},
+		 {"$and": [{"founded_month":10},{"$or":[{"category_code": "web","category_code": "social"}]}]}]})
+		 
+		 
+db.companies.find({ "$and": [
+                        { "$or": [ { "founded_year": 2004 },
+                                   { "founded_month": 10 } ] },
+                        { "$or": [ { "category_code": "web" },
+                                   { "category_code": "social" }]}]}).count()
+
+
+
+db.companies.find({"$and":
+	[{"$or":[{"founded_month":10},
+	{"founded_year":2004}]},
+	{"$or":[{"category_code": "web"},
+	{"category_code": "social"}]}]})
+	
+	
+EXPRESSIVE QUERY CLASS
+"$expr" command is used to indicate expressive queries.It allows the use of aggregation expressions within the query language.
+$expr allows us to use variables and conditional statements. It helps compare fields within same document.
+
+Examples of aggregation expressions/functions are:
+sum(), mean(), max(), min() etc
+
+USAGE: {"$expr": {expressions here}
+{"$expr": {"$eq":["$start station id","$end station id"]}}
+db.trips.find({"$expr": {"$eq":["$start station id","$end station id"]}}).count()
+db.trips.find({"$expr": {"$eq":["$start station id","$end station id"]}}).pretty()
+
+db.trips.find({"$expr": {"$and":[{"$gt":["$tripduration",1200]},
+								{"$eq":["$start station id","$end station id"]}
+								]}}).count()
+															
+$ sign indicates the use of operator and it addresses the field value.
+
+MQL allows for CRUD operations i.e CREATE, READ, UPDATE, DELETE.
+
+==========QUESTION IN EXPRESSIVE QUERY CLASS===========
+db.companies.find({"$expr":{"$lt":["$founded_year","$number_of_employees"]}}).count()
+db.companies.find({"$expr":{"$gt":["$number_of_employees", "$founded_year"]}}).count()
+
+db.companies.find({"$expr":{"$eq":["$permalink", "$twitter_username"]}}).count()
+
+======ARRAY OPERATOR=======
+$push --Helps us to add an element into an array or turn a field into an array if it was previously different type.
+{"$and":[{"cancellation_policy":{"$nin":["moderate","strict_14_with_grace_period","flexible"]}}, {"$expr": {"$eq":["$bedrooms", "$beds"]}}]}
+
+["Internet","Wifi","Kitchen","Heating","Family/kid friendly","Washer","Dryer","Essentials","Shampoo","Hangers","Hair dryer","Iron","Laptop friendly workspace"]
+Pattern matters in array operator
+Example: 
+{"amenities":["Internet","Wifi","Kitchen","Heating","Family/kid friendly","Washer","Dryer","Essentials","Shampoo","Hangers","Hair dryer","Iron","Laptop friendly workspace"]}
+The above return result where the amenities field has the array in same pattern. Output was one
+
+"$all" operator
+{"amenities":{"$all":["Internet","Wifi","Kitchen","Heating","Family/kid friendly","Washer","Dryer","Essentials","Shampoo","Hangers","Hair dryer","Iron","Laptop friendly workspace"]}}
+
+"$size" operator --help limits the array length to specified number
+{"amenities":{"$size":20,"$all":["Internet","Wifi","Kitchen","Heating","Family/kid friendly","Washer","Dryer","Essentials","Shampoo","Hangers","Hair dryer","Iron","Laptop friendly workspace"]}}
+
+{"amenities":{"$size":20,"$all":["Internet","Wifi","Kitchen","Heating","Family/kid friendly","Washer","Dryer","Essentials","Shampoo","Hangers","Hair dryer","Iron","Laptop friendly workspace"]}}
+
+==Adding projection to your document queries, Projections allows us to know which document queries will be part of our resulting field.
+{"$and":[{"accommodates":{"$gt":6}},{"review":{"$size":50}}]}
+
+==QUESTION ON ARRAY OPERATOR===
+db.listingsAndReviews.find({"$and":[{"property_type":{"$eq":"House"}}, {"amenities":"Changing table"}]}).count()
+OR
+db.listingsAndReviews.find({"$and":[{"property_type":{"$eq":"House"}}, {"amenities":{"$in":["Changing table"]}}]}).count()
+
+QUESTION
+db.listingsAndReviews.find({"amenities":{"$all":["Free parking on premises", "Air conditioning","Wifi"]}, "bedrooms":{"$gte":2}}).count()
+db.listingsAndReviews.find({"amenities":{"$all":["Free parking on premises", "Air conditioning","Wifi"]}, "bedrooms":{"$gte":2}}).pretty()
+
+====ARRAY OPERATOR AND PROJECTIONS====
+
+1. Find all documents with exactly 20 amenities which include all the amenities listed in the query array, and display their price and address:
+db.listingsAndReviews.find({ "amenities":
+        { "$size": 20, "$all": [ "Internet", "Wifi",  "Kitchen", "Heating",
+                                 "Family/kid friendly", "Washer", "Dryer",
+                                 "Essentials", "Shampoo", "Hangers",
+                                 "Hair dryer", "Iron",
+                                 "Laptop friendly workspace" ] } },
+                            {"price": 1, "address": 1}).pretty()
+							
+db.listingsAndReviews.find({ "reviews": { "$size":50 },
+                             "accommodates": { "$gt":6 }})
+
+2. Find all documents that have Wifi as one of the amenities only include price and address in the resulting cursor:
+db.listingsAndReviews.find({ "amenities": "Wifi" },
+                           { "price": 1, "address": 1, "_id": 0 }).pretty()
+						   
+In Projection, use:
+1 = include the field.
+0 = exclude the field.
+db.collection_name.find({<expression>}, {<projection>})
+
+The only time we can use 1 and 0 is when we want to exclude the _id field
+db.collection_name.find({<expression>}, {{<field:1>, <"_id":0>})
+						 
+						 
+3 .Find all documents that have Wifi as one of the amenities only include price and address in the resulting cursor, also exclude ``"maximum_nights"``. **This will be an error:*
+db.listingsAndReviews.find({ "amenities": "Wifi" },
+                           { "price": 1, "address": 1,
+                             "_id": 0, "maximum_nights":0 }).pretty()						 
+				
+4. Get one document from the collection:
+db.grades.findOne()
+
+5. Find all documents where the student in class 431 received a grade higher than 85 for any type of assignment:
+db.grades.find({ "class_id": 431 },
+               { "scores": { "$elemMatch": { "score": { "$gt": 85 } } }
+             }).pretty()
+
+6. Find all documents where the student had an extra credit score:
+db.grades.find({ "scores": { "$elemMatch": { "type": "extra credit" } }
+               }).pretty()
+			   
+==COMPANIES THAT HAVE OFFICE IN CITY OF SEATTLE
+db.companies.find({ "offices": { "$elemMatch": { "city": { "$eq": "Seattle" } } }}).count()
+
+
+--USING REGULAR EXPRESSION FOR QUERYING(regex)
+==Array Operators and Sub-Documents==
+$regex
+{ <field>: { $regex: /pattern/, $options: '<options>' } }
+{ <field>: { $regex: 'pattern', $options: '<options>' } }
+{ <field>: { $regex: /pattern/<options> } }
+
+db.inspections.find({"address.street":{"$regex":"DOUGLASS"}}).pretty()
+
+use sample_training
+
+db.trips.findOne({ "start station location.type": "Point" })
+
+db.companies.find({ "relationships.0.person.last_name": "Zuckerberg" },
+                  { "name": 1 }).pretty()
+
+db.companies.find({ "relationships.0.person.first_name": "Mark",
+                    "relationships.0.title": { "$regex": "CEO" } },
+                  { "name": 1 }).count()
+
+
+db.companies.find({ "relationships.0.person.first_name": "Mark",
+                    "relationships.0.title": {"$regex": "CEO" } },
+                  { "name": 1 }).pretty()
+
+db.companies.find({ "relationships":
+                      { "$elemMatch": { "is_past": true,
+                                        "person.first_name": "Mark" } } },
+                  { "name": 1 }).pretty()
+
+db.companies.find({ "relationships":
+                      { "$elemMatch": { "is_past": true,
+                                        "person.first_name": "Mark" } } },
+                  { "name": 1 }).count()
+				  
+Accessing nested documents using $regex
+db.companies.find({"field 1.other field.also a field": "value"})
+
+
+====SUMMARY QUESTION FROM THE CLASS======
+Query Operators - Comparison
+
+1. Find all documents where the trip was less than or equal to 70 seconds
+   and the usertype was not "Subscriber"
+2. Find all documents where the trip was less than or equal to 70 seconds
+   and the usertype was "Customer" using a redundant equality operator.
+3. Find all documents where the trip was less than or equal to 70 seconds
+   and the usertype was "Customer" using the implicit equality operator.
+
+
+Query Operators - Logic
+
+Find all documents where airplanes CR2 or A81 left or landed in the KZN
+airport.
+
+Expressive Query Operator
+
+1. Find all documents where the trip started and ended at the same station.
+2. Find all documents where the trip lasted longer than 1200 seconds, and
+   started and ended at the same station.
+
+Array Operators
+
+1. Find all documents that contain more than one amenity without caring
+   about the order of array elements.
+2. Only return documents that list exactly 20 amenities in this field and
+   contain the amenities of your choosing.
+
+Array Operators and Projection
+
+1. Find all documents in the sample_airbnb database with exactly 20
+   amenities which include all the amenities listed in the query array, and display their price and address.
+2. Find all documents in the sample_airbnb database that have Wifi as one of
+   the amenities only include price and address in the resulting cursor.
+3. Find all documents in the sample_airbnb database that have Wifi as one of
+   the amenities only include price and address in the resulting cursor,
+   also exclude "maximum_nights".
+   Was this operation successful? Why?
+4. Find all documents in the grades collection where the student in class
+   431 received a grade higher than 85 for any type of assignment.
+5. Find all documents in the grades collection where the student had an
+   extra credit score.
+
+Array Operators and Sub-Documents
+
+1. Find any document from the companies collection where the last name
+   Zuckerberg in the first element of the relationships array.
+2. Find how many documents from the companies collection have CEOs who's
+   first name is Mark and who are listed as the first relationship in this
+   array for their company entry.
+3. Find all documents in the companies collection where people named Mark
+   used to be in the senior company leadership array, a.k.a the
+   relationships array, but are no longer with the company.
+
+======QUIZ QUESTION FROM CHAPTER 4========
+Query Operators - Comparison
+
+1. How many documents in the sample_training.zips collection have fewer than
+   1000 people listed in the pop field?
+
+2. What is the difference between the number of people born in 1998 and the
+   number of people born after 1998 in the sample_training.trips collection?
+
+3. Using the sample_training.routes collection find out which of the
+   following statements will return all routes that have at least one stop
+   in them?
+
+        -  db.routes.find({ "stops": { "$gt": 0 }}).pretty()
+        -  db.routes.find({ "stops": { "$gte": 0 }}).pretty()
+        -  db.routes.find({ "stops": { "$ne": 0 }}).pretty()
+        -  db.routes.find({ "stops": { "$lt": 10 }}).pretty()
+
+
+Query Operators - Logic
+
+1. How many businesses in the sample_training.inspections dataset have the
+   inspection result "Out of Business" and belong to the Home Improvement
+   Contractor - 100 sector?
+2. How many zips in the sample_training.zips dataset are neither over-
+   populated nor under-populated?
+
+   In this case, we consider population over 1,000,000 to be over-populated
+   and under 5,000 to be under-populated.
+3. How many companies in the sample_training.companies dataset were either
+   founded in 2004, or in the month of October and either have the social
+   category_code or web category_code?
+
+Expressive Query Operator
+
+How many companies in the sample_training.companies collection have the same
+permalink as their twitter_username?
+
+Array Operators
+
+1. What is the name of the listing in the sample_airbnb.listingsAndReviews
+   dataset accommodate more than 6 people and has exactly 50 reviews?
+2. How many documents have the property_type House, and include Changing
+   table as one of the amenities?
+
+Array Operators and Projection
+
+How many companies in the sample_training.companies collection have offices
+in the city of Seattle?
+
+Array Operators and Sub-Documents
+
+1. Latitude decreases in value as you move west.
+
+   How many trips in the sample_training.trips collection started at
+   stations that are to the west of the -74 latitude coordinate?
+2. How many inspections from the sample_training.inspections collection were
+   conducted in the city of NEW YORK?
+
+
+======AGGREGATION FRAMEWORK CLASS========
+With aggregate function, we can compute and reshape data
+1. Find all documents that have Wifi as one of the amenities. Only include price and address in the resulting cursor.
+ db.listingsAndReviews.find({"amenities":"Wifi"},{"price":1,"address":1,"_id":0}).pretty()
+ db.listingsAndReviews.find({"amenities":"Wifi"},{"price":1,"address":1,"_id":0}).count()
+ 
+2. Using the aggregation framework find all documents that have Wifi as one of the amenities``*. Only include* ``price 
+and address in the resulting cursor.
+db.listingsAndReviews.aggregate([{ "$match": { "amenities": "Wifi" } },{ "$project": { "price": 1,"address": 1,"_id": 0 }}]).pretty()
+
+3. Find one document in the collection and only include the address field in the resulting cursor.
+db.listingsAndReviews.findOne({},{"address":1, "_id":0})
+
+4. Find one document in the collection and only include the address field in the resulting cursor.
+db.listingsAndReviews.findOne({},{"address":1, "_id":0})
+db.listingsAndReviews.aggregate([{"$project":{"address":1,"_id":0}}, {"$group":{"_id":"$address.country"}}])
+db.listingsAndReviews.aggregate([ { "$group": { "_id": "$room_type" } }])
+
+5. Project only the address field value for each document, then group all documents into one document per address.country value.
+db.listingsAndReviews.aggregate([ { "$project": { "address": 1, "_id": 0 }},
+                                  { "$group": { "_id": "$address.country" }}])
+
+6. Project only the address field value for each document, then group all documents into one document per address.country value, 
+and count one for each document in each group.
+db.listingsAndReviews.aggregate([
+                                  { "$project": { "address": 1, "_id": 0 }},
+                                  { "$group": { "_id": "$address.country",
+                                                "count": { "$sum": 1 } } }])
+												
+Various Aggregation functions and methods
+$group
+$match
+$project
+
+$group aggregate function
+{"$group":{"_id": <expression>,"fields":{"accumulator1":<expressions>}}}
+eg:
+{ "$group": { "_id": "$address.country",
+             "count": { "$sum": 1 } } }
+			 
+
+7. What room types are present in the sample_airbnb.listingsAndReviews collection?
+db.listingsAndReviews.aggregate([{"$project":{"room_type":1,"_id":0}}, {"$group":{"_id":"$room_type"}}])
+db.listingsAndReviews.aggregate([ { "$group": { "_id": "$room_type" } }])
+
+The aggregation framework allows us to compute and reshape data via using stages like $group, $sum, and others.
+
+Chapter 5: Indexing and Aggregation Pipeline
+===MONGODB SORT AND LIMIT CLASS====
+There is another method that comes hand with skip() and limit(). The method is use sample_training skip() function.
+
+db.zips.find().sort({ "pop": 1 }).limit(1)
+db.zips.find().sort({ "pop": 1 }).limit(1).pretty()
+db.zips.find({ "pop": 0 }).count()
+
+db.zips.find().sort({ "pop": -1 }).limit(1)
+
+db.zips.find().sort({ "pop": -1 }).limit(10)
+
+db.zips.find().sort({ "pop": 1, "city": -1 })
+db.trips.find({ "birth year": { "$ne":"" } },
+              { "birth year": 1 }).sort({ "birth year": -1 }).limit(1)
+
+--CURSOR METHODS
+Cursor method is not applied to data stored in the database but applied on result sets that lives in the cursor i.e result 
+of the find() command.
+sort()
+limit()
+pretty()
+count()
+In mongodb cursor.limit().sort() means cursor.sort().limit().
+
+Problem:
+Which of the following commands will return the name and founding year for the 5 oldest 
+companies in the sample_training.companies collection?
+
+db.companies.find({ "founded_year": { "$ne": null }},
+                  { "name": 1, "founded_year": 1 }
+                 ).sort({ "founded_year": 1 }).limit(5)
+				 
+				 
+db.companies.find({ "founded_year": { "$ne": null }},
+                  { "name": 1, "founded_year": 1 }
+                 ).limit(5).sort({ "founded_year": 1 })
+				 
+
+Quiz 2: sort() and limit()
+Problem:
+To complete this exercise connect to your Atlas cluster using the in-browser IDE space at the end of this chapter.
+In what year was the youngest bike rider from the sample_training.trips collection born?
+db.trips.find({ "birth year": { "$ne":"" } },
+              { "birth year": 1 }).sort({ "birth year": -1 }).limit(1)
+			  
+
+INDEXES
+use sample_training
+
+db.trips.find({ "birth year": 1989 })
+
+db.trips.find({ "start station id": 476 }).sort( { "birth year": 1 } )
+
+db.trips.createIndex({ "birth year": 1 })--Sinle Index
+
+db.trips.createIndex({ "start station id": 1, "birth year": 1 })--Compound Index
+
+Introduction to Data Modeling
+Data Modelling is a way to oragnize fields in documents to support and improve your application performance
+and quering capabilities.
+Important Rule of Thumb of Data Modeling in Mongodb is:
+Data is stored in a way that it is used.
+
+Upsert - Update or Insert?
+
+Upsert is a hybrid of Update and Insert. It should be used with care.
+db.iot.updateOne({ "sensor": r.sensor, "date": r.date,
+                   "valcount": { "$lt": 48 } },
+                         { "$push": { "readings": { "v": r.value, "t": r.time } },
+                        "$inc": { "valcount": 1, "total": r.value } }
+                 { "upsert": true })
+				 
+db.collections.updateOne({<query to locate>}, {<update>})
+
+db.collections.updateOne({<query>}, {<update>}, {"upsert":true}) --upsert is listed as 3rd option after your update command.
+By default, upsert is set to false but when you set it to true, it will check if there a match, if yes that there is a match,
+UPDATE THE DOCUMENTS. But when there no document that match UPDATE, the INSERT will take place.
+
+MONGODB REALM
+REALM is a mongodb feature that helps you integrate real time monitoring of db instance into your application.
+Realm is an embedded, object-oriented database that lets you build real-time, offline-first applications. Its SDKs also provide access to Atlas App Services, a secure backend that can sync data between devices, authenticate and manage users, and run serverless JavaScript functions.
+
+Realm has open-source SDKs available for most popular languages, frameworks, and platforms. Each SDK is language-idiomatic and includes:
+
+The core database APIs for creating and working with on-device databases.
+
+The APIs you need for connecting to the App Services backend so you can make use of server-side features like 
+Device Sync
+, 
+Authentication
+, 
+Functions
+, 
+Triggers
+, and more.
+
+MONGODB CHARTS FEATURE
+LINK TO SAMPLE CHART: https://charts.mongodb.com/charts-m001-dgxyp/public/dashboards/6346d7ac-1572-454c-8f15-16ef96ff5107
+
+Chart Aggregation pipeline script
+[
+  {
+    "$match": {
+      "price": {
+        "$lte": 20000
+      }
+    }
+  },
+  {
+    "$project": {
+      "__alias_0": "$address.location",
+      "__alias_1": "$price"
+    }
+  },
+  {
+    "$project": {
+      "geopoint": "$__alias_0",
+      "intensity": "$__alias_1",
+      "_id": 0
+    }
+  },
+  {
+    "$match": {
+      "geopoint.type": "Point",
+      "geopoint.coordinates": {
+        "$type": "array"
+      },
+      "geopoint.coordinates.0": {
+        "$type": "number",
+        "$ne": {
+          "$numberDouble": "NaN"
+        },
+        "$gte": -180,
+        "$lte": 180
+      },
+      "geopoint.coordinates.1": {
+        "$type": "number",
+        "$ne": {
+          "$numberDouble": "NaN"
+        },
+        "$gte": -90,
+        "$lte": 90
+      }
+    }
+  },
+  {
+    "$limit": 50000
+  }
+]
+
+Replica Set - a few connected machines that store the same data to ensure that if something happens to one of the machines the data will remain intact. Comes from the word replicate - to copy something.
+
+Instance - a single machine locally or in the cloud, running a certain software, in our case it is the MongoDB database.
+
+Cluster - group of servers that store your data.
+
+==========================================
+CREATE A NEW MONGODB USER WITH DEFINE ROLE
+==========================================
+use test ---DB of which is to be created.
+db.createUser(
+   {
+     user: "mynewuser",
+     pwd: "myuser123",
+     roles: [ "readWrite", "dbAdmin" ]
+   }
+);
+
+==========================================
+CREATE A NEW MONGODB USER WITHOUT DEFINE ROLE
+==========================================
+use database_name
+db.createUser(
+   {
+     user: "mynewuser",
+     pwd: "myuser123",
+     roles: []
+   }
+);
+
+======================================
+CREATE ADMINISRTATIVE USER ROLE
+======================================
+use admin  --- Use admin db to do this
+db.createUser(
+   {
+     user: "myadmin1",
+     pwd: "myadmin123",
+     roles:
+       [
+         { role: "readWrite", db: "config" },
+         "clusterAdmin"
+       ]
+   }
+);
+
+mongo admin --host localhost:27000 --eval '
+  db.createUser({
+    user: "m103-admin",
+    pwd: "m103-pass",
+    roles: [
+      {role: "root", db: "admin"}
+    ]
+  })
+  
+=====DBA COMMANDS=====
+db.serverStatus()
+db.runCommand()
+db.commandHelp()
+db.getLogComponents()
+db.adminCommand({"getLog":"global"})
+
+--View the logs through the Mongo shell:
+db.adminCommand({ "getLog": "global" })
+
+--View the logs through the command line:
+tail -f /data/db/mongod.log
+
+--MONGODB PROFILING-----
+db.getProfilingLevel()
+db.setProfilingLevel(1)
+
+--Get profiling level:
+mongo newDB --host 10.0.0.13.100:27000 -u m103-admin -p m103-pass --authenticationDatabase admin --eval '
+  db.getProfilingLevel()
+'
+--Set profiling level:
+mongo newDB --host 10.0.0.13.100:27000 -u m103-admin -p m103-pass --authenticationDatabase admin --eval '
+  db.setProfilingLevel(1)
+'
+--Show collections:
+mongo newDB --host 10.0.0.13.100:27000 -u m103-admin -p m103-pass --authenticationDatabase admin --eval '
+  db.getCollectionNames()
+'
+Note: show collections only works from within the shell
+
+--Set slowms to 0:
+mongo newDB --host 10.0.0.13.100:27000 -u m103-admin -p m103-pass --authenticationDatabase admin --eval '
+  db.setProfilingLevel( 1, { slowms: 0 } )
+'
+--Insert one document into a new collection:
+mongo newDB --host 10.0.0.13.100:27000 -u m103-admin -p m103-pass --authenticationDatabase admin --eval '
+  db.new_collection.insert( { "a": 1 } )
+'
+--Get profiling data from system.profile:
+mongo newDB --host 10.0.0.13.100:27000 -u m103-admin -p m103-pass --authenticationDatabase admin --eval '
+  db.system.profile.find().pretty()
+'
+
+
+================================
+UPDATE USER ROLE AND LOGINS
+================================
+db.updateUser( "mynewuser",
+               {
+                 customData : { employeeId : "0x3039" },
+                 roles : [
+                           { role : "read", db : "assets"  }
+                         ]
+                }
+             );
+
+FOR OTHER IMPORTANT METHODS ON MONGODB USER COMMANDS, CHECK BELOW LINKS
+https://www.w3resource.com/mongodb/shell-methods/user-management/db-updateUser.php
+
+ offices: [
+    {
+      description: '',
+      address1: '710 - 2nd Avenue',
+      address2: 'Suite 1100',
+      zip_code: '98104',
+      city: 'Seattle',
+      state_code: 'WA',
+      country_code: 'USA',
+      latitude: 47.603122,
+      longitude: -122.333253
+    },
+db.companies.find({"office.city":"Seattle"}).count()
+
+
+LINKEDIN COURSE SUMMARY
+Happy to  have completion this first lesson on Mongodb Database Administration Learing Path. This course will take you from the Basis of Mongodb through Data Modeling in Mongodb to implementing various Aggregation Pipelines. 
+
+The course provided a lot of Hands on Labs and various in course Quiz to gauge your learning. I have a lot of key takeaway from this course especially:
+
+Mongodb Databases, Collection, and Documents
+
+Importing, Exporting and Quering of Mongodb Documents.
+
+Creating and Maniplating Mongodb Documents.
+
+Advanced CRUD Operation.
+
+Indexing and Aggregation Pipeline
+
+Mongodb Features and products like Mongodb Atlas, Mongodb Chart, Mongodb Realm, Mongodb Compass and Mongodb Shell.
+
+As part of the course, I delplyed Mongosb Shhared Atlas Cluster on AWS using Quickstart. 
+"
+This Quick Start is for developers and DevOps professionals who want to deploy a flexible, 
+fully managed databases on AWS using MongoDB Atlas. By default, the template creates an Atlas 
+project with a standard, single-Region, M10 cluster that can be customized for different 
+configurations and project settings.
+"
+
+I implemented an ETL Pipeline using Mongodb Aggregation pipeline, Pymongo (#Python package for connection to Mongodb instance) and other Python libraries like #JSON, #OS
+
+
+====================================================
+MONGODB BASIC CLUSTER ADMINISRTATION COURSE -- M103
+====================================================
+
+CHAPTER ONE: INTRODUCTION TO REPLICATION AND SHARDING
+
+Linux Files and Filesystem Permission
+File permissions
+Use the chmod command to set file permissions.
+The chmod command uses a three-digit code as an argument.
+
+The three digits of the chmod code set permissions for these groups in this order:
+
+Owner (you)
+Group (a group of other users that you set up)
+World (anyone else browsing around on the file system)
+Each digit of this code sets permissions for one of these groups as follows. Read is 4. Write is 2. Execute is 1.
+
+The sums of these numbers give combinations of these permissions:
+
+0 = no permissions whatsoever; this person cannot read, write, or execute the file
+1 = execute only
+2 = write only
+3 = write and execute (1+2)
+4 = read only
+5 = read and execute (4+1)
+6 = read and write (4+2)
+7 = read and write and execute (4+2+1)
+Chmod commands on file apple.txt (use wildcards to include more files)
+Command	Purpose
+chmod 700 apple.txt	Only you can read, write to, or execute apple.txt
+chmod 777 apple.txt	Everybody can read, write to, or execute apple.txt
+chmod 744 apple.txt	Only you can read, write to, or execute apple.txt Everybody can read apple.txt;
+chmod 444 apple.txt	You can only read apple.txt, as everyone else.
+Detecting File Permissions
+You can use the ls command with the -l option to show the file permissions set. For example, for apple.txt, I can do this:
+
+$ ls -l apple.txt
+-rwxr--r--   1 december december       81 Feb 12 12:45 apple.txt
+$
+The sequence -rwxr--r-- tells the permissions set for the file apple.txt. The first - tells that apple.txt is a file. 
+The next three letters, rwx, show that the owner has read, write, and execute permissions. 
+Then the next three symbols, r--, show that the group permissions are read only. 
+The final three symbols, r--, show that the world permissions are read only. 
+Filesystem in Linux and permission: december.com/unix/ref/chmod.html
+
+
+==============Ownership=====================
+Every file is owned by a specific user and a specific group in Linux. In this course the files will be mostly owned by the root user.
+Ownership can be changed using the chown command.
+
+chown
+Chown command is used for changing the user/group ownership of a file/directory.
+
+chown [new owner]:[group] <file name>
+If you need to change ownership of a file or directory, you may need to use sudo if the directory is owned by root. For example, this command will change the ownership of the /var/mongodb_directory to myuser.
+
+sudo chown myuser:myuser /var/mongodb_directory
+
+===========Linux process management===================
+Command to check which mongo, mongod and mongos instances are currently running on your system
+
+ps -ef | grep mongo
+
+ps -ef | grep mongod
+
+ps -ef | grep mongos
+
+Command to kill any specific process using the process id i.e. pid
+kill <pid>
+For instance, let's say we want to kill the process associated with node1.conf in the above example. We can do so by running this command.
+
+kill 13029
+Command to kill all the currently running mongod instances.
+
+killall mongod
+Note: Be careful when running this command as it will kill all the currently running mongod instances in one go.
+
+CHAPTER 1
+Mongod: This is programmer resource that is meant to run but not interacted with directly. It is the main daemon process for mongodb. 
+It is core server of the database handling connection requests. Ut contains all we need to make our db secured and distributed.
+
+mongod dbpath = /data/db
+
+--Launch mongod in the first shell:
+mongod
+
+--Connect to the Mongo shell in the second shell:
+mongo
+
+--To create a new collection
+db.createCollection("employees")
+
+--Try to connect back to Mongo shell, without specifying a port:
+use admin
+db.shutdownServer()
+exit
+
+================================================
+my user is:"mongdbuser"
+
+pwd: emmy12
+Log in to the shell with the user credentials to see if the user has been created.
+
+$ mongosh -u mongdbuser -p --authenticationDatabase admin
+
+my mongodb atlas login details
+
+connection string: mongosh "mongodb+srv://sandbox.dptwmxc.mongodb.net/Sandbox" --apiVersion 1 --username m001-student
+
+password: m001-mongodb-basics
+
+=================================
+mongodb config file
+=================================
+
+At 3:54 the speaker says "YAML stands for Yet Another Markup Language". This acronym has been updated to "YAML Ain't Markup Language".
+
+See MongoDB documentation for more information about command line options and configuration file options.
+
+Lecture Instructions
+
+These lecture instructions are not meant to be reproduced in your environment. They reflect what you will see in the lecture video. However, they may point to non-existing resources and files.
+
+Launch mongod using default configuration:
+
+mongod
+Launch mongod with specified --dbpath and --logpath:
+
+mongod --dbpath /data/db --logpath /data/log/mongod.log
+Launch mongod and fork the process:
+
+mongod --dbpath /data/db --logpath /data/log/mongod.log --fork
+Launch mongod with many configuration options:
+
+Note that all "ssl" options have been edited to use "tls" instead. As of MongoDB 4.2, options using "ssl" have been deprecated.
+
+mongod --dbpath /data/db --logpath /data/log/mongod.log --fork --replSet "M103" --keyFile /data/keyfile --bind_ip "127.0.0.1,10.0.0.13.100" --tlsMode requireTLS --tlsCAFile "/etc/tls/TLSCA.pem" --tlsCertificateKeyFile "/etc/tls/tls.pem"
+Example configuration file, with the same configuration options as above:
+--
+storage:
+  dbPath: "/data/db"
+systemLog:
+  path: "/data/log/mongod.log"
+  destination: "file"
+replication:
+  replSetName: M103
+net:
+  bindIp : "127.0.0.1,10.0.0.13.100"
+tls:
+  mode: "requireTLS"
+  certificateKeyFile: "/etc/tls/tls.pem"
+  CAFile: "/etc/tls/TLSCA.pem"
+security:
+  keyFile: "/data/keyfile"
+processManagement:
+  fork: true
+  
+===Mongo Filestructure====
+Note: At 3:15, the instructor mistakenly says that the WiredTiger syncs the journal to disk every 50 milliseconds. On WiredTiger, the default journal commit interval is 100 milliseconds. For more information please refer our documentation.
+
+Lecture Instructions
+
+List --dbpath directory:
+ls -l /data/db
+
+List diagnostics data directory:
+ls -l /data/db/diagnostic.data
+
+List journal directory:
+ls -l /data/db/journal
+
+List socket file:
+ls /tmp/mongodb-27017.sock
+
+===MONGODB BUILT IN USERS======
+--Create database administrator:
+db.createUser(
+  { user: "dba",
+    pwd: "c1lynd3rs",
+    roles: [ { db: "admin", role: "dbAdmin" } ]
+  }
+)
+
+
+--Grant Role to USER
+db.grantRolesToUser( "dba",  [ { db: "playground", role: "dbOwner"  } ] )
+
+--Show privileges
+db.runCommand( { rolesInfo: { role: "dbOwner", db: "playground" }, showPrivileges: true} )
+
+
+====MONGODB SERVER TOOLS====
+--View all Mongodb tools using
+$find /usr/bin/ -name "mongo*"
+
+--List mongodb binaries:
+find /usr/bin/ -name "mongo*"
+
+
+--Create new dbpath and launch mongod:
+mkdir -p ~/first_mongod
+mongod --port 30000 --dbpath ~/first_mongod --logpath ~/first_mongod/mongodb.log --fork
+--Use mongostat to get stats on a running mongod process:
+mongostat --help
+mongostat --port 30000
+
+
+
+--Use mongodump to get a BSON dump of a MongoDB collection:
+mongodump --help
+mongodump --port 30000 --db applicationData --collection products
+ls dump/applicationData/
+cat dump/applicationData/products.metadata.json
+
+
+--Use mongorestore to restore a MongoDB collection from a BSON dump:
+mongorestore --drop --port 30000 dump/
+
+
+--Use mongoexport to export a MongoDB collection to JSON or CSV (or stdout!):
+mongoexport --help
+mongoexport --port 30000 --db applicationData --collection products
+mongoexport --port 30000 --db applicationData --collection products -o products.json
+
+Tail the exported JSON file:
+tail products.json
+
+
+--Use mongoimport to create a MongoDB collection from a JSON or CSV file:
+mongoimport --port 30000 products.json
+
+
+
+================================================
+======M103 CHAPTER 2: MONGODB REPLICATION=======
+================================================
+--The configuration file for the first node (node1.conf):
+storage:
+  dbPath: /var/mongodb/db/node1
+net:
+  bindIp: 10.0.0.13.100,localhost
+  port: 27011
+security:
+  authorization: enabled
+  keyFile: /var/mongodb/pki/m103-keyfile
+systemLog:
+  destination: file
+  path: /var/mongodb/db/node1/mongod.log
+  logAppend: true
+processManagement:
+  fork: true
+replication:
+  replSetName: m103-example
+
+--Creating the keyfile and setting permissions on it:
+sudo mkdir -p /var/mongodb/pki/
+sudo chown chuxian:chuxian /var/mongodb/pki/
+openssl rand -base64 741 > /var/mongodb/pki/m103-keyfile
+chmod 400 /var/mongodb/pki/m103-keyfile
+
+
+--Creating the dbpath for node1:
+mkdir -p /var/mongodb/db/node1
+
+
+--Starting a mongod with node1.conf:
+mongod -f mongo_node1.conf
+
+
+--Copying node1.conf to node2.conf and node3.conf:
+sudo cp mongo_node1.conf mongo_node2.conf
+sudo cp mongo_node2.conf mongo_node3.conf
+
+sudo cp ~/mongo_node1.conf /etc/
+
+
+--Editing node2.conf using vi:
+vi node2.conf
+
+
+--Saving the file and exiting vi:
+:wq
+
+
+--node2.conf, after changing the dbpath, port, and logpath:
+storage:
+  dbPath: /var/mongodb/db/node2
+net:
+  bindIp: 10.0.0.13.100,localhost
+  port: 27012
+security:
+  keyFile: /var/mongodb/pki/m103-keyfile
+systemLog:
+  destination: file
+  path: /var/mongodb/db/node2/mongod.log
+  logAppend: true
+processManagement:
+  fork: true
+replication:
+  replSetName: m103-example
+
+
+--node3.conf, after changing the dbpath, port, and logpath:
+storage:
+  dbPath: /var/mongodb/db/node3
+net:
+  bindIp: 10.0.0.13.100,localhost
+  port: 27013
+security:
+  keyFile: /var/mongodb/pki/m103-keyfile
+systemLog:
+  destination: file
+  path: /var/mongodb/db/node3/mongod.log
+  logAppend: true
+processManagement:
+  fork: true
+replication:
+  replSetName: m103-example
+
+
+--Creating the data directories for node2 and node3:
+mkdir /var/mongodb/db/{mongo_node2,mongo_node3}
+
+
+--Starting mongod processes with node2.conf and node3.conf:
+sudo mongod -f mongo_node2.conf
+sudo mongod -f mongo_node3.conf
+
+
+--Connecting to node1:
+mongo --port 27011
+
+
+--Initiating the replica set:
+rs.initiate()
+
+
+--Creating a user:
+use admin
+db.createUser({
+  user: "m103-admin",
+  pwd: "m103-pass",
+  roles: [
+    {role: "root", db: "admin"}
+  ]
+})
+
+
+use admin
+db.createUser({user: "m103-admin",pwd: "m103-pass",roles: [{role: "root", db: "admin"}]})
+
+
+--Exiting out of the Mongo shell and connecting to the entire replica set:
+exit
+mongo --host "m103-example/192.168.32.164:27011" -u "m103-admin"
+-p "m103-pass" --authenticationDatabase "admin"
+
+
+--Getting replica set status:
+rs.status()
+
+
+--Adding other members to replica set:   NOTE:HAVING ISSUES HERE.
+rs.add("m103:27012")
+rs.add("m103:27013")
+
+CORRECT ONE BELOW
+rs.add("192.168.32.164:27012")
+rs.add("192.168.32.164:27013")
+
+
+
+--Getting an overview of the replica set topology:
+rs.isMaster()
+
+
+--Stepping down the current primary:
+rs.stepDown()
+
+
+--Checking replica set overview after election:
+rs.isMaster()
+
+==REPLICATION COMMANDS=====
+Commands covered in this lesson:
+rs.status()
+
+rs.isMaster()
+
+db.serverStatus()['repl']
+
+rs.printReplicationInfo()
+
+
+==LOCAL DB IN REPLICA SET===
+--Make a data directory and launch a mongod process for a standalone node:
+mkdir allbymyselfdb
+mongod --dbpath allbymyselfdb
+Display all databases (by default, only admin and local):
+-
+mongo
+show dbs
+
+--Display collections from the local database (this displays more collections from a replica set than from a standalone node):
+use local
+show collections
+
+
+Query the oplog after connected to a replica set:
+use local
+db.oplog.rs.find()
+Get information about the oplog (remember the oplog is a capped collection).
+
+--Store oplog stats as a variable called stats:
+var stats = db.oplog.rs.stats()
+
+
+--Verify that this collection is capped (it will grow to a pre-configured size before it starts to overwrite the oldest entries with newer ones):
+stats.capped
+
+
+--Get current size of the oplog:
+stats.size
+
+
+--Get size limit of the oplog:
+stats.maxSize
+
+
+--Get current oplog data (including first and last event times, and configured oplog size):
+rs.printReplicationInfo()
+
+
+Create new namespace m103.messages:
+use m103
+db.createCollection('messages')
+
+--Query the oplog, filtering out the heartbeats ("periodic noop") and only returning the latest entry:
+use local
+db.oplog.rs.find( { "o.msg": { $ne: "periodic noop" } } ).sort( { $natural: -1 } ).limit(1).pretty()
+
+
+--Insert 100 different documents:
+use m103
+for ( i=0; i< 100; i++) { db.messages.insert( { 'msg': 'not yet', _id: i } ) }
+db.messages.count()
+
+
+--Query the oplog to find all operations related to m103.messages:
+use local
+db.oplog.rs.find({"ns": "m103.messages"}).sort({$natural: -1})
+
+
+--Illustrate that one update statement may generate many entries in the oplog:
+use m103
+db.messages.updateMany( {}, { $set: { author: 'norberto' } } )
+use local
+db.oplog.rs.find( { "ns": "m103.messages" } ).sort( { $natural: -1 } )
+
+Remember, even though you can write data to the local db, you should not.
+
+
+====Reconfiguring a Running Replica Set====
+
+node4.conf:
+storage:
+  dbPath: /var/mongodb/db/node4
+net:
+  bindIp: 10.0.0.13.100,localhost
+  port: 27014
+systemLog:
+  destination: file
+  path: /var/mongodb/db/node4/mongod.log
+  logAppend: true
+processManagement:
+  fork: true
+replication:
+  replSetName: m103-example
+arbiter.conf:
+
+
+storage:
+  dbPath: /var/mongodb/db/arbiter
+net:
+  bindIp: 10.0.0.13.100,localhost
+  port: 28000
+systemLog:
+  destination: file
+  path: /var/mongodb/db/arbiter/mongod.log
+  logAppend: true
+processManagement:
+  fork: true
+replication:
+  replSetName: m103-example
+Starting up mongod processes for our fourth node and arbiter:
+
+------
+mongod -f node4.conf
+mongod -f arbiter.conf
+
+
+--From the Mongo shell of the replica set, adding the new secondary and the new arbiter:
+rs.add("m103:27014")
+rs.addArb("m103:28000")
+
+
+--Checking replica set makeup after adding two new nodes:
+rs.isMaster()
+
+--Removing the arbiter from our replica set:
+rs.remove("m103:28000")
+
+
+--Assigning the current configuration to a shell variable we can edit, in order to reconfigure the replica set:
+cfg = rs.conf()
+
+
+--Editing our new variable cfg to change topology - specifically, by modifying cfg.members:
+cfg.members[3].votes = 0
+cfg.members[3].hidden = true
+cfg.members[3].priority = 0
+
+
+--Updating our replica set to use the new configuration cfg:
+rs.reconfig(cfg)
+
+
+
+
+
+--SUCCESSFULL CONNECTION TO MY REPLICA SET USING MONGO COMPASS WAS ACHIEVED USING BELWO CONNECTION URL
+mongodb://m103-admin:m103-pass@192.168.32.164:27011/
+
+
+==FOR MONGODB IN MY PC SUPER USER DETAILS===
+user:root
+pwd:root
+roles:root
+OBKJ_VIRTUALCARD
+10.234.135.46
+mongodb://<user>:<password>@pngmobiledb02v:27017/?directConnection=true&authMechanism=DEFAULT&readPreference=secondaryPreferred&authSource=stanbic
+
+
+mongodb://m103-admin:m103-pass@m103-example/192.168.32.164:27011/?replicaSet=m103-example
+]4h}
+
+
+
+====MONGODB SHARDING====
+Sharding Architecture
+
+So in this lesson, we're going to walk to the architecture of a sharded cluster.
+
+The most important aspect of a sharded cluster is that we can add any number of shards.
+
+And because that could potentially be a lot of different shards, client applications aren't going to communicate directly with the shards.
+
+Instead, we set up a kind of router process called mongos.
+
+Then the client connects to mongos, and mongos routes queries to the correct shards.
+
+So how does mongos figure out exactly where everything is?
+
+Well it has to understand exactly how the data is distributed.
+
+So, let's say this data is on soccer players.
+
+Some of you may know them as football players.
+
+We split our data set on the last name of each player.
+
+So players with last names between A and J are stored in the first shard, between K and Q on the second shard, and between R and Z on the third shard.
+
+Mongos is going to need this information to route queries the client.
+
+For example, if the client sends a query to mongos about Luis Suarez, mongos can use the last name Suarez to figure out exactly which shard contains that player's document, and then route that query to the correct shard.
+
+We can also have multiple mongos processes from high availability with mongos, or to service multiple applications at once.
+
+The mongos processes are going to use the metadata around the collections that have been sharded to figure out exactly where to route queries.
+
+The metadata for this collection will look like this.
+
+But the data is not stored on mongos.
+
+Instead, the collection metadata gets stored in config servers, which constantly keep track of where each piece of data lives in the cluster.
+
+This is especially important because the information contained on each shard might change with time.
+
+So mongos queries the config servers often, in case a piece of data is moved.
+
+But why might a piece of data have to move?
+
+Well, the config servers have to make sure that there's an even distribution of data across each part.
+
+For example, if there are a lot of people in our database with the last name Smith, the third shard is going to contain a disproportionately large amount of data.
+
+When this happens, the config servers have to decide what data has to be moved around so the shards have a more even distribution.
+
+In this example, all the names beginning with R hadn't moved to the second shard from the third shard, to make room and third shard for all those people named Smith.
+
+The config servers will then update the data they contain, and then send the data to the correct shards.
+
+There's also a chance that a chunk gets too big and needs to be split.
+
+In that case, mongos would split the chunk.
+
+We'll talk more about this in the lesson about chunks.
+
+In the sharded cluster, we also have this notion of a primary shard.
+
+Each database will be assigned a primary shard, and all the non-sharded collections on that database will remain on that shard.
+
+Remember, not all the collections in a sharded cluster need to be distributed.
+
+The config servers will assign a primary shard to each database once they get created.
+
+But we can also change the primary shard of a database.
+
+We're just not going to cover that in this course.
+
+The primary shard also has a few other responsibilities, specifically around merge operations for aggregation commands.
+
+So while we're talking about merging results, I just to point something out here.
+
+In our example, the data is organized across shards by the name of each player.
+
+So if the client receives a query about the age of a player, it doesn't know exactly where to look.
+
+So it's just going to check every shard.
+
+It's going to send this query to every single shard in the cluster.
+
+And it might find a few documents here, a few documents here.
+
+And each individual shard is going to send their results back to mongos.
+
+The mongos will gather results, and then maybe sort the results if the query mandated it.
+
+This stage is called the shard merge, and it takes place on the mongos.
+
+Once the shard merge is complete, the mongos will return the results back to the client, but the client won't be aware of any of this.
+
+It will query this process like a regular mongoD.
+
+So just to recap, in this lesson we covered the basic responsibilities of mongos, the metadata contained on the contact servers, and we defined the concept of a primary shard.
+
+
+===Setting Up a Sharded Cluster====
+Lecture Instructions
+If you'd like to deploy a sharded cluster on your machine, you can find the commands from the lecture here:
+
+--Configuration file for first config server csrs_1.conf:
+
+sharding:
+  clusterRole: configsvr
+replication:
+  replSetName: m103-csrs
+security:
+  keyFile: /var/mongodb/pki/m103-keyfile
+net:
+  bindIp: localhost,10.0.0.13
+  port: 26001
+systemLog:
+  destination: file
+  path: /var/mongodb/db/csrs1.log
+  logAppend: true
+processManagement:
+  fork: true
+storage:
+  dbPath: /var/mongodb/db/csrs1
+  
+--csrs_2.conf:
+
+sharding:
+  clusterRole: configsvr
+replication:
+  replSetName: m103-csrs
+security:
+  keyFile: /var/mongodb/pki/m103-keyfile
+net:
+  bindIp: localhost,10.0.0.13
+  port: 26002
+systemLog:
+  destination: file
+  path: /var/mongodb/db/csrs2.log
+  logAppend: true
+processManagement:
+  fork: true
+storage:
+  dbPath: /var/mongodb/db/csrs2
+  
+  
+--csrs_3.conf:
+
+sharding:
+  clusterRole: configsvr
+replication:
+  replSetName: m103-csrs
+security:
+  keyFile: /var/mongodb/pki/m103-keyfile
+net:
+  bindIp: localhost,10.0.0.13
+  port: 26003
+systemLog:
+  destination: file
+  path: /var/mongodb/db/csrs3.log
+  logAppend: true
+processManagement:
+  fork: true
+storage:
+  dbPath: /var/mongodb/db/csrs3
+Starting the three config servers:
+
+
+---------------
+mongod -f csrs_1.conf
+mongod -f csrs_2.conf
+mongod -f csrs_3.conf
+
+
+--Connect to one of the config servers:
+mongo --port 26001
+
+
+--Initiating the CSRS:
+rs.initiate()
+
+
+--Creating super user on CSRS:
+use admin
+db.createUser({
+  user: "m103-admin",
+  pwd: "m103-pass",
+  roles: [
+    {role: "root", db: "admin"}
+  ]
+})
+
+db.createUser({user: "m103-admin",pwd: "m103-pass",roles: [{role: "root", db: "admin"}]})
+
+
+--Authenticating as the super user:
+db.auth("m103-admin", "m103-pass")
+
+
+--Add the second and third node to the CSRS:
+rs.add("10.0.0.13:26002")
+rs.add("10.0.0.13:26003")
+
+--Mongos config (mongos.conf):
+
+sharding:
+  configDB: m103-csrs/10.0.0.13.100:26001,10.0.0.13.100:26002,10.0.0.13.100:26003
+security:
+  keyFile: /var/mongodb/pki/m103-keyfile
+net:
+  bindIp: localhost,10.0.0.13.100
+  port: 26000
+systemLog:
+  destination: file
+  path: /var/mongodb/db/mongos.log
+  logAppend: true
+processManagement:
+  fork: true
+  
+  
+--Start the mongos server:
+mongos -f mongos.conf
+
+
+--Connect to mongos:
+vagrant@m103:~$ mongo --port 26000 --username m103-admin --password m103-pass --authenticationDatabase admin
+
+
+--Check sharding status:
+MongoDB Enterprise mongos> sh.status()
+Updated configuration for node1.conf:
+
+sharding:
+  clusterRole: shardsvr
+storage:
+  dbPath: /var/mongodb/db/node1
+  wiredTiger:
+    engineConfig:
+      cacheSizeGB: .1
+net:
+  bindIp: 10.0.0.13.100,localhost
+  port: 27011
+security:
+  keyFile: /var/mongodb/pki/m103-keyfile
+systemLog:
+  destination: file
+  path: /var/mongodb/db/node1/mongod.log
+  logAppend: true
+processManagement:
+  fork: true
+replication:
+  replSetName: m103-repl
+
+
+--Updated configuration for node2.conf:
+sharding:
+  clusterRole: shardsvr
+storage:
+  dbPath: /var/mongodb/db/node2
+  wiredTiger:
+    engineConfig:
+      cacheSizeGB: .1
+net:
+  bindIp: 10.0.0.13.100,localhost
+  port: 27012
+security:
+  keyFile: /var/mongodb/pki/m103-keyfile
+systemLog:
+  destination: file
+  path: /var/mongodb/db/node2/mongod.log
+  logAppend: true
+processManagement:
+  fork: true
+replication:
+  replSetName: m103-repl
+
+
+--Updated configuration for node3.conf:
+sharding:
+  clusterRole: shardsvr
+storage:
+  dbPath: /var/mongodb/db/node3
+  wiredTiger:
+    engineConfig:
+      cacheSizeGB: .1
+net:
+  bindIp: 10.0.0.13.100,localhost
+  port: 27013
+security:
+  keyFile: /var/mongodb/pki/m103-keyfile
+systemLog:
+  destination: file
+  path: /var/mongodb/db/node3/mongod.log
+  logAppend: true
+processManagement:
+  fork: true
+replication:
+  replSetName: m103-repl
+  
+mongo --host ac-nuorvip-shard-00-01.dptwmxc.mongodb.net --port 27017 -u "m001-student" -p "m001-mongodb-basics" --authenticationDatabase "admin"
+--Connecting directly to secondary node (note that if an election has taken place in your replica set, the specified node may have become primary):
+mongo --port 27012 -u "m103-admin" -p "m103-pass" --authenticationDatabase "admin"
+
+
+--Shutting down node:
+use admin
+db.shutdownServer()
+
+
+--Restarting node with new configuration:
+mongod -f node2.conf
+
+
+--Stepping down current primary:
+rs.stepDown()
+
+
+--Adding new shard to cluster from mongos:
+sh.addShard("m103-repl/10.0.0.13.100:27012")

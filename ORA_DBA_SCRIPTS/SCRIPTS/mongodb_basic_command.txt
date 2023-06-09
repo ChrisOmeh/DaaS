@@ -1,0 +1,1000 @@
+   11  grep '^\+:' /etc/group
+   12  grep '^\+:' /etc/shadow
+   13  grep '^\+:' /etc/passwd
+   14  cat /etc/shadow | awk -F: '($2 == "" ) { print $1 " does not have a password "}'
+   15   df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -2000
+   16  find /usr/bin/wall
+   17  find -xdev -type f -perm -2000 /usr/bin/wall
+   18  find /usr/bin/wall -xdev -type f -perm -2000
+   19  df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -4000
+   20  df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nogroup
+   21  df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nouser
+   22  df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -0002
+   23  stat /etc/gshadow-
+   24  stat /etc/group
+   25  stat /etc/shadow-
+   26  stat /etc/passwd
+   27  stat /etc/gshadow
+   28  stat /etc/group
+   29  stat /etc/shadow
+   30  stat /etc/passwd
+   31  cat /etc/shadow | cut -d: -f1
+   32  chage --list
+   33   chage serveradmin
+   34  useradd -D | grep INACTIVE
+   35  egrep ^[^:]+:[^\!*] /etc/shadow | cut -d: -f1
+   36  chage serveradmin
+   37  grep PASS_WARN_AGE /etc/login.defs
+   38  PASS_WARN_AGE X
+   39  df -hT
+   40  grep PASS_WARN_AGE /etc/login.defs
+   41  mount | grep /tmp
+   42  df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d \( -perm -0002 -a ! -perm -1000 \) 2>/dev/null
+   43  mount
+   44  modprobe -n -v cramfs
+   45  lsmod | grep cramfs
+   46  modprobe -n -v freevxfs
+   47  lsmod | grep freevxfs
+   48  modprobe -n -v hfs
+   49  lsmod | grep hfs
+   50  modprobe -n -v hfsplus
+   51  modprobe -n -v squashfs
+   52  ls -l /var/log/
+   53  systemctl is-enabled syslog-ng
+   54  enabled
+   55  systemctl is-enabled syslog-ng
+   56  enabled
+   57  systemctl is-enabled syslog-ng
+   58  enabled
+   59  systemctl is-enabled syslog-ng
+   60  grep '$ModLoad imtcp' /etc/rsyslog.conf /etc/rsyslog.d/*.conf
+   61  grep '$InputTCPServerRun' /etc/rsyslog.conf /etc/rsyslog.d/*.conf
+   62  yum repolist
+   63  grep "umask" /etc/bashrc
+   64  grep "^root:" /etc/passwd | cut -f4 -d:
+   65  egrep -v "^\+" /etc/passwd | awk -F: '($1!="root" && $1!="sync" && $1!="shutdown" && $1!="halt" && $3
+   66  done
+   67  ;
+   68  egrep -v "^\+" /etc/passwd | awk -F: '($1!="root" && $1!="sync" && $1!="shutdown" && $1!="halt" && $3
+   69  done
+   70  done
+   71  fi
+   72  egrep '^password\s+sufficient\s+pam_unix.so' /etc/pam.d/password-auth
+   73  grep ^gpgcheck /etc/yum.conf
+   74  grep ^gpgcheck /etc/yum.repos.d/*
+   75   rpm -q gpg-pubkey --qf
+   76  rpm -q gpg-pubkey --qf '%{name}-%{version}-%{release} --> %{summary}\n'
+   77  subscription-manager identity
+   78   rpm -q aide
+   79  crontab -u root -l | grep aide
+   80  grep -r aide /etc/cron.* /etc/crontab
+   81   stat /boot/grub2/grub.cfg
+   82  stat /boot/grub2/user.cfg
+   83  grep /sbin/sulogin
+   84  grep "^GRUB2_PASSWORD" /boot/grub2/grub.cfg
+   85  GRUB2_PASSWORD= 
+   86  grep "^GRUB2_PASSWORD" /boot/grub2/grub.cfg
+   87  grep /sbin/sulogin
+   88  sysctl fs.suid_dumpable
+   89  grep "hard core" /etc/security/limits.conf
+   90  grep "fs\.suid_dumpable" /etc/sysctl.conf /etc/sysctl.d/*
+   91  dmesg | grep NX
+   92  NX (Execute Disable) protection: active
+   93  dmesg | grep NX
+   94  NX (Execute Disable) protection: active
+   95  dmesg | grep NX
+   96  sysctl kernel.randomize_va_space
+   97  grep "kernel\.randomize_va_space"
+   98  cat /etc/motd
+   99  egrep '(\\v|\\r|\\m|\\s)' /etc/motd
+  100  cat /etc/issue.net
+  101  egrep '(\\v|\\r|\\m|\\s)' /etc/issue.net
+  102  stat /etc/motd
+  103  stat /etc/issue
+  104  stat /etc/issue.net
+  105  chkconfig --list
+  106  xinetd based services:
+  107   chargen-dgram: off
+  108  chkconfig --list
+  109  xinetd based serviceschkconfig --list
+  110  xinetd based services:
+  111  chkconfig --list
+  112  systemctl is-enabled xinetd
+  113  disabled
+  114  systemctl is-enabled xinetd
+  115  disabled
+  116  systemctl is-enabled xinetd
+  117  disabled
+  118  systemctl is-enabled xinetd
+  119  rpm -qa xorg-x11*
+  120  systemctl is-enabled avahi-daemon
+  121  systemctl is-enabled avahi-daemon disabled
+  122   systemctl is-enabled cups
+  123  systemctl is-enabled cups
+  124  systemctl is-enabled dhcpd
+  125  systemctl disable dhcpd
+  126  systemctl is-enabled tftp.socket
+  127  disabled
+  128  systemctl is-enabled tftp.socket
+  129  systemctl is-enabled rsh.socket
+  130  netstat -an | grep LIST | grep ":25[[:space:]]"
+  131  tcp 0 0 127.0.0.1:25 0.0.0.0:* LISTEN
+  132  netstat -an | grep LIST | grep ":25[[:space:]]"
+  133  tcp 0 0 127.0.0.1:25 0.0.0.0:* LISTEN
+  134  netstat -an | grep LIST | grep ":25[[:space:]]"
+  135  tcp 0 0 127.0.0.1:25 0.0.0.0:* LISTEN
+  136  netstat -an | grep LIST | grep ":25[[:space:]]"
+  137  rpm -q ntp
+  138  rpm -q chrony
+  139  grep "^restrict" /etc/ntp.conf
+  140  grep "^(server|pool)" /etc/ntp.conf
+  141  grep ^OPTIONS /etc/sysconfig/chronyd
+  142  OPTIONS="-u chrony"
+  143  rpm -q ypbind
+  144  rpm -q talk
+  145  rpm -q rsh
+  146  rpm -q telnet
+  147  rpm -q openldap-clients
+  148  iwconfig
+  149  ip link show up
+  150  sysctl net.ipv4.ip_forward
+  151  grep "net\.ipv4\.ip_forward" /etc/sysctl.conf /etc/sysctl.d/*
+  152  sysctl net.ipv4.conf.all.send_redirects
+  153  sysctl net.ipv4.conf.default.send_redirects
+  154  grep "net\.ipv4\.conf\.all\.send_redirects" /etc/sysctl.conf /etc/sysctl.d/*
+  155  grep "net\.ipv4\.conf\.default\.send_redirects" /etc/sysctl.conf /etc/sysctl.d/*
+  156  sysctl net.ipv4.conf.all.accept_source_route
+  157  sysctl net.ipv4.conf.default.accept_source_route
+  158  grep "net\.ipv4\.conf\.all\.accept_source_route" /etc/sysctl.conf /etc/sysctl.d/*
+  159  grep "net\.ipv4\.conf\.default\.accept_source_route" /etc/sysctl.conf /etc/sysctl.d/*
+  160  grep "net\.ipv4\.conf\.all\.accept_source_route" /etc/sysctl.conf /etc/sysctl.d/*
+  161  grep "net\.ipv4\.conf\.all\.accept_source_route" /etc/sysctl.conf /etc/sysctl.d/
+  162  grep "net\.ipv4\.conf\.all\.accept_source_route" /etc/sysctl.conf /etc/sysctl.d/*
+  163  sysctl net.ipv4.conf.all.log_martians
+  164  sysctl net.ipv4.conf.default.log_martians
+  165  grep "net\.ipv4\.conf\.all\.log_martians" /etc/sysctl.conf /etc/sysctl.d/*
+  166   grep "net\.ipv4\.conf\.default\.log_martians" /etc/sysctl.conf /etc/sysctl.d/*
+  167  sysctl net.ipv4.conf.all.accept_redirects
+  168  sysctl net.ipv4.icmp_echo_ignore_broadcasts
+  169  sysctl
+  170  grep "net\.ipv4\.icmp_ignore_bogus_error_responses" /etc/sysctl.conf /etc/sysctl.d/*
+  171  sysctl net.ipv4.conf.all.rp_filter
+  172  sysctl net.ipv4.tcp_syncookies
+  173  sysctl net.ipv6.conf.all.accept_ra
+  174  sysctl net.ipv6.conf.default.accept_ra
+  175  sysctl net.ipv6.conf.all.accept_redirects
+  176  grep "^\s*linux" /boot/grub2/grub.cfg
+  177  rpm -q tcp_wrappers
+  178  rpm -q tcp_wrappers-libs
+  179  cat /etc/hosts.allow
+  180  grep "^Banner" /etc/ssh/sshd_config
+  181   grep "^LoginGraceTime" /etc/ssh/sshd_config
+  182  grep "^ClientAliveInterval" /etc/ssh/sshd_config
+  183  ClientAliveInterval 300
+  184  grep "^ClientAliveCountMax" /etc/ssh/sshd_config
+  185  grep "MACs" /etc/ssh/sshd_config
+  186  MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com,curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+  187  grep "MACs" /etc/ssh/sshd_config
+  188  grep PermitUserEnvironment /etc/ssh/sshd_config
+  189   grep "^PermitEmptyPasswords" /etc/ssh/sshd_config
+  190  grep "^PermitRootLogin" /etc/ssh/sshd_config
+  191  grep "^IgnoreRhosts" /etc/ssh/sshd_config
+  192  grep "^LogLevel" /etc/ssh/sshd_config
+  193  grep "^Protocol" /etc/ssh/sshd_config
+  194  stat /etc/ssh/sshd_config
+  195  stat /etc/cron.deny
+  196  stat /etc/at.deny
+  197  rm /etc/cron.deny ; rm /etc/at.deny ; touch /etc/cron.allow ; touch /etc/at.allow ; chmod og-rwx /etc/cron.allow ; chmod og-rwx /etc/at.allow ; chown root:root /etc/cron.allow ; chown root:root /etc/at.allow
+  198  stat /etc/cron.deny
+  199  stat /etc/at.deny
+  200  stat /etc/cron.allow
+  201  stat /etc/at.allow
+  202  stat /etc/cron.d
+  203  chown root:root /etc/cron.d ; chmod og-rwx /etc/cron.d
+  204   stat /etc/cron.d
+  205  stat /etc/cron.monthly
+  206  chown root:root /etc/cron.monthly ; chmod og-rwx /etc/cron.monthly
+  207  stat /etc/cron.monthly
+  208  chown root:root /etc/cron.weekly ; chmod og-rwx /etc/cron.weekly
+  209  stat /etc/cron.weekly
+  210  chown root:root /etc/cron.daily ; chmod og-rwx /etc/cron.daily
+  211  stat /etc/cron.daily
+  212  chown root:root /etc/cron.hourly ; chmod og-rwx /etc/cron.hourly
+  213  stat /etc/cron.hourly
+  214  chown root:root /etc/crontab ; chmod og-rwx /etc/crontab
+  215  stat /etc/crontab
+  216  systemctl is-enabled crond
+  217  grep pam_wheel.so /etc/pam.d/su
+  218  grep wheel /etc/group
+  219  vi /etc/pam.d/su
+  220  cat /etc/pam.d/su
+  221  grep pam_wheel.so /etc/pam.d/su
+  222  cat /etc/securetty
+  223  cat /etc/syslog-ng/syslog-ng.conf
+  224   grep ^options /etc/syslog-ng/syslog-ng.conf
+  225  systemctl is-enabled syslog-ng
+  226  grep '$ModLoad imtcp' /etc/rsyslog.conf /etc/rsyslog.d/*.conf
+  227  grep '$InputTCPServerRun' /etc/rsyslog.conf /etc/rsyslog.d/*.con
+  228  grep ^\$FileCreateMode /etc/rsyslog.conf /etc/rsyslog.d/*.conf
+  229  ls -l /var/log/
+  230  systemctl is-enabled rsyslog
+  231  find /var/log -type f -ls
+  232  find /var/log -type f -exec chmod g-wx,o-rwx {} +
+  233  find /var/log -type f -ls
+  234  rpm -q rsyslog
+  235  rpm -q syslog-ng
+  236  modprobe -n -v tipc
+  237  lsmod | grep tipc
+  238  vi /etc/modprobe.d/CIS.conf
+  239  modprobe -n -v tipc
+  240  lsmod | grep tipc
+  241  modprobe -n -v rds
+  242  vi /etc/modprobe.d/CIS.conf
+  243  cat/etc/modprobe.d/CIS.conf
+  244  cat /etc/modprobe.d/CIS.conf
+  245  modprobe -n -v rds
+  246   lsmod | grep rds
+  247  vi /etc/modprobe.d/CIS.conf
+  248  modprobe -n -v sctp
+  249  lsmod | grep sctp
+  250  vi /etc/modprobe.d/CIS.conf
+  251  cat /etc/modprobe.d/CIS.conf
+  252  modprobe -n -v dccp
+  253  lsmod | grep dccp
+  254  stat /etc/hosts.deny
+  255  stat /etc/hosts.allow
+  256  cat /etc/hosts.deny
+  257  echo "ALL: ALL" >> /etc/hosts.deny
+  258  cat /etc/hosts.deny
+  259  cat cat /etc/hosts.allow
+  260  vi /etc/hosts.deny
+  261   rpm -q tcp_wrappers
+  262  grep "^\s*linux" /boot/grub2/grub.cfg
+  263  sysctl net.ipv6.conf.all.accept_redirects
+  264  sysctl net.ipv6.conf.default.accept_redirects
+  265  grep "net\.ipv6\.conf\.all\.accept_redirect"
+  266  grep "net\.ipv6\.conf\.all\.accept_redirect" /etc/sysctl.conf /etc/sysctl.d/*
+  267  grep "net\.ipv6\.conf\.default\.accept_redirect" /etc/sysctl.conf /etc/sysctl.d/*
+  268  sysctl net.ipv6.conf.all.accept_ra
+  269  sysctl net.ipv6.conf.default.accept_ra
+  270  grep "net\.ipv6\.conf\.all\.accept_ra" /etc/sysctl.conf /etc/sysctl.d/*
+  271  grep "net\.ipv6\.conf\.default\.accept_ra" /etc/sysctl.conf /etc/sysctl.d/*
+  272  vi /etc/rhsm/rhsm.conf
+  273  yum repolist
+  274  subscription-manager register --auto-attach
+  275  mount | grep /tmp
+  276  df -hT
+  277   mount | grep /var
+  278  mount | grep /var/tmp
+  279  mount | grep /var/log
+  280  mount | grep /var/log/audit
+  281  mount | grep /home
+  282  modprobe -n -v vfat
+  283   lsmod | grep vfat
+  284  vi /etc/modprobe.d/CIS.conf
+  285  rmmod vfat
+  286  modprobe -n -v vfat
+  287   lsmod | grep vfat
+  288  chkconfig --list rhnsd
+  289  chkconfig rhnsd off
+  290  chkconfig --list rhnsd
+  291  rpm -q libselinux
+  292  grep "^\s*linux" /boot/grub2/grub.cfg
+  293  grep SELINUX=enforcing /etc/selinux/config
+  294  sestatus
+  295  cat /etc/redhat-release 
+  296  grep SELINUXTYPE=targeted /etc/selinux/config
+  297  sestatus
+  298  rpm -q setroubleshoot
+  299  rpm -q mcstrans
+  300  cd etc/dconf/profile/
+  301  cd /etc/dconf
+  302  mkdir -p etc/dconf/profile/
+  303  yum install gdm
+  304  ps -ef | grep -i
+  305  ps -ef | grep -i gdm
+  306  rpm -q | grep -i gdm
+  307  ps -ef | grep -i yum
+  308  ls -lrt /etc/dconf/profile/
+  309  vi /etc/dconf/profile/gdm
+  310  cat /etc/dconf/profile/gdm
+  311  vi /etc/dconf/db/gdm.d/01-banner-message
+  312  cd /etc/dconf/db/
+  313  cd gdm.d
+  314  mkdir gdm.d
+  315  cd gdm.d
+  316  ls -lrt
+  317   vi /etc/dconf/db/gdm.d/01-banner-message
+  318  dconf update
+  319  vi /etc/dconf/db/gdm.d/01-banner-message
+  320  dconf update
+  321   vi /etc/dconf/db/gdm.d/01-banner-message
+  322  dconf update
+  323  vi /etc/dconf/db/gdm.d/01-banner-message
+  324  vi  vi /etc/dconf/db/gdm.d/01-banner-message
+  325  vi /etc/dconf/db/gdm.d/01-banner-message
+  326  dconf update
+  327  vi /etc/dconf/db/gdm.d/01-banner-message
+  328  cd /etc
+  329  ls -lrt issue
+  330  vi issue
+  331  cp issue_old
+  332  cp issue bkp_issue
+  333  vi issue
+  334  cat issue
+  335  vi /etc/dconf/db/gdm.d/01-banner-message
+  336  dconf update
+  337  systemctl is-enabled auditd
+  338  grep "^\s*linux" /boot/grub2/grub.cfg
+  339  vi /etc/fstab
+  340  vi /etc/security/pwquality.conf
+  341  grep ^minlen /etc/security/pwquality.conf
+  342  vi /etc/security/pwquality.conf
+  343  grep ^minlen /etc/security/pwquality.conf
+  344  grep ^dcredit /etc/security/pwquality.conf
+  345  vi /etc/security/pwquality.conf
+  346  grep ^minlen /etc/security/pwquality.conf
+  347  grep ^dcredit /etc/security/pwquality.conf
+  348  grep ^lcredit /etc/security/pwquality.conf
+  349  grep ^ocredit /etc/security/pwquality.conf
+  350  grep ^ucredit /etc/security/pwquality.conf
+  351  vi /etc/pam.d/password-auth
+  352  vi auth required pam_faillock.so preauth audit silent deny=5 unlock_time=6
+  353  vi /etc/pam.d/password-auth
+  354  vi /etc/pam.d/system-auth
+  355  vi /etc/pam.d/password-auth
+  356  cat /etc/pam.d/password-auth
+  357  vi /etc/pam.d/password-auth
+  358  vi /etc/pam.d/system-auth
+  359  cat /etc/pam.d/system-auth
+  360  egrep '^password\s+required\s+pam_pwhistory.so' /etc/pam.d/password-auth
+  361  egrep '^password\s+required\s+pam_pwhistory.so' /etc/pam.d/system-auth
+  362  egrep '^password\s+sufficient\s+pam_unix.so' /etc/pam.d/password-auth
+  363  egrep '^password\s+sufficient\s+pam_unix.so' /etc/pam.d/system-auth
+  364  vi /etc/pam.d/password-auth
+  365  vi /etc/pam.d/system-auth
+  366   egrep '^password\s+sufficient\s+pam_unix.so' /etc/pam.d/password-auth
+  367  egrep '^password\s+sufficient\s+pam_unix.so' /etc/pam.d/system-auth
+  368  egrep '^password\s+required\s+pam_pwhistory.so' /etc/pam.d/password-auth
+  369  egrep '^password\s+required\s+pam_pwhistory.so' /etc/pam.d/system-auth
+  370  egrep -v "^\+" /etc/passwd | awk -F: '($1!="root" && $1!="sync" && $1!="shutdown" && $1!="halt" && $3
+  371  chage --30
+  372  grep PASS_MAX_DAYS /etc/login.defs
+  373  chage -M 31
+  374  vi /etc/login.defs
+  375  grep PASS_MAX_DAYS /etc/login.defs
+  376  egrep ^[^:]+:[^\!*] /etc/shadow | cut -d: -f1
+  377  chage -M root
+  378  chage --maxdays
+  379  chage -l
+  380  chage -l root
+  381  chage -l serveradmin
+  382  grep PASS_MAX_DAYS /etc/login.defs
+  383   egrep ^[^:]+:[^\!*] /etc/shadow | cut -d: -f1
+  384  chage -l root
+  385  chage -l serveradmin
+  386  useradd -m test
+  387  chage -l test
+  388  rning before password expires       : 7
+  389  grep PASS_MIN_DAYS /etc/login.defs
+  390  vi /etc/login.defs
+  391  chage -l test
+  392  usermod -r test
+  393  userdel  -r test
+  394  ls -lrt /home
+  395  useradd -m test
+  396  chage -l test
+  397  vi /etc/pam.d/password-auth
+  398  vi /etc/pam.d/system-auth
+  399   egrep '^password\s+sufficient\s+pam_unix.so' /etc/pam.d/password-auth
+  400  egrep '^password\s+sufficient\s+pam_unix.so' /etc/pam.d/system-auth
+  401  egrep '^password\s+required\s+pam_pwhistory.so' /etc/pam.d/password-auth
+  402  egrep '^password\s+required\s+pam_pwhistory.so' /etc/pam.d/system-auth
+  403  cat /etc/ssh/sshd_config
+  404  without-password 
+  405  vi /etc/ssh/sshd_config
+  406  grep "^PermitRootLogin" /etc/ssh/sshd_config
+  407  ssh-keygen -t rsa
+  408  cd .ssh
+  409  ls -lrt
+  410  cat id_rsa.pub
+  411  cat id_rsa
+  412  resize
+  413  vi /etc/ssh/sshd_config
+  414  grep "^Protocol" /etc/ssh/sshd_config
+  415  grep "^LogLevel" /etc/ssh/sshd_config
+  416  vi /etc/ssh/sshd_config
+  417  grep "^IgnoreRhosts" /etc/ssh/sshd_config
+  418  vi /etc/ssh/sshd_config
+  419   grep "^HostbasedAuthentication" /etc/ssh/sshd_config
+  420  grep "^LoginGraceTime" /etc/ssh/sshd_config
+  421  vi /etc/ssh/sshd_config
+  422  grep "^LoginGraceTime" /etc/ssh/sshd_config
+  423  grep PASS_WARN_AGE /etc/login.defs
+  424  useradd -D | grep INACTIVE
+  425  egrep ^[^:]+:[^\!*] /etc/shadow | cut -d: -f1
+  426  chage -l test
+  427  useradd -D -f 30
+  428  egrep ^[^:]+:[^\!*] /etc/shadow | cut -d: -f1
+  429  userdel -r test
+  430  useradd -m test
+  431  chage -l test
+  432  useradd -D | grep INACTIVE
+  433  cat /etc/shadow | cut -d: -f1
+  434  chage -l test
+  435  chage -l root
+  436  df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -4000
+  437  grep PASS_WARN_AGE /etc/login.defs
+  438  systemctl is-enabled syslog-ng
+  439  vi /etc/logrotate.conf
+  440  vi /etc/logrotate.d/*
+  441  grep "^\s*linux" /boot/grub2/grub.cfg
+  442  vi /etc/sysctl.conf
+  443  net.ipv4.conf.all.rp_filter = 1
+  444  net.ipv4.conf.default.rp_filter = 1
+  445  vi /etc/sysctl.conf
+  446  sysctl -w net.ipv4.conf.all.rp_filter=1
+  447  sysctl -w net.ipv4.conf.default.rp_filter=1
+  448  sysctl -w net.ipv4.route.flush=1
+  449  grep "net\.ipv4\.conf\.all\.rp_filter" /etc/sysctl.conf /etc/sysctl.d/*
+  450  grep "net\.ipv4\.conf\.default\.rp_filter" /etc/sysctl.conf /etc/sysctl.d/*
+  451  grep "net\.ipv4\.conf\.all\.rp_filter" /etc/sysctl.conf /etc/sysctl.d/*
+  452   grep "net\.ipv4\.conf\.default\.rp_filter" /etc/sysctl.conf /etc/sysctl.d/*
+  453  cat /etc/chrony.conf
+  454  yum check-update --security
+  455  mount | grep /dev/shm
+  456  cat /etc/fstab | grep -i `/dev/shm
+  457   cat /etc/fstab | grep -i /dev/shm
+  458  df -hT
+  459  cat /etc/fstab
+  460  mount | grep /dev/shm
+  461  vi /etc/fstab
+  462  cat /etc/fstab
+  463  mount -o remount,noexec /dev/shm
+  464  mount | grep /dev/shm
+  465  subscription-manager identity
+  466  crontab -u root -e
+  467  crontab -u root -l | grep aide
+  468   grep -r aide /etc/cron.* /etc/crontab
+  469  chmod og-rwx /boot/grub2/user.cfg
+  470  stat /boot/grub2/user.cfg
+  471  grep "^GRUB2_PASSWORD" /boot/grub2/grub.cfg
+  472  grub2-setpassword
+  473  grep "^GRUB2_PASSWORD" /boot/grub2/grub.cfg
+  474  vi /boot/grub2/grub.cfg
+  475  grep "^GRUB2_PASSWORD" /boot/grub2/grub.cfg
+  476  grub2-setpassword
+  477  grep "^GRUB2_PASSWORD" /boot/grub2/grub.cfg
+  478  vi /etc/security/limits.conf
+  479  grep "hard core" /etc/security/limits.conf /etc/security/limits.d/*
+  480  vi /etc/security/limits.d/
+  481  vi /etc/security/limits.d/*
+  482  grep "hard core" /etc/security/limits.conf /etc/security/limits.d/*
+  483  sysctl fs.suid_dumpable
+  484  grep "fs\.suid_dumpable" /etc/sysctl.conf /etc/sysctl.d/*
+  485  cat /etc/motd
+  486  egrep '(\\v|\\r|\\m|\\s)' /etc/motd
+  487  vi /etc/motd
+  488  cat /etc/motd
+  489  cat /etc/issue
+  490  cat /etc/issue.net
+  491  vi cat /etc/issue.net
+  492  cat /etc/issue.net
+  493  vi /etc/issue.net
+  494  cat /etc/issue.net
+  495  egrep '(\\v|\\r|\\m|\\s)' /etc/issue.net
+  496  vi /etc/postfix/main.cf
+  497  systemctl restart postfix
+  498  rpm -qa | grep -i postfix
+  499  systemctl start postfix
+  500  netstat -an | grep LIST | grep ":25[[:space:]]"
+  501  yum install netstat
+  502  netstat
+  503  yum install ntp
+  504  rpm -qa | grep -i ntp
+  505  rpm -qa | grep -i chrony
+  506  yumcheck-update chrony*
+  507  yum check-update chrony*
+  508  vi /etc/ntp.conf
+  509  systemctl status chronyd
+  510  vi /etc/chrony.conf
+  511  systemctl restart chronyd
+  512  systemctl status chronyd
+  513  timedatectl
+  514  grep "^(server|pool)" /etc/chrony.conf
+  515  cat /etc/chrony.conf
+  516  grep 'server' /etc/chrony.conf
+  517  grep ^OPTIONS /etc/sysconfig/chronyd
+  518  vi /etc/sysconfig/chronyd
+  519  grep ^OPTIONS /etc/sysconfig/chronyd
+  520  grep ^server /etc/chrony.conf
+  521  vi /etc/ntp.conf
+  522  vi etc/sysconfig/ntpd
+  523  cd etc/sysconfig/
+  524  cd /etc/sysconfig
+  525  ls -lrt ntp*
+  526  vi ntpd
+  527  vi /etc/sysconfig/ntpd
+  528  cat /etc/sysconfig/ntpd
+  529  /etc/sysconfig/ntpd
+  530  grep "^restrict" /etc/ntp.conf
+  531  vi /etc/ntp.conf
+  532  grep "^restrict" /etc/ntp.conf
+  533  grep "^OPTIONS" /etc/sysconfig/ntpd
+  534  grep "^ExecStart"
+  535   grep "^ExecStart" /usr/lib/systemd/system/ntpd.service
+  536  grep "^\s*linux" /boot/grub2/grub.cfg
+  537  vi /etc/default/grub
+  538   grub2-mkconfig > /boot/grub2/grub.cfg
+  539   grep "^\s*linux" /boot/grub2/grub.cfg
+  540  uname -a
+  541  grep identity /etc/audit/audit.rules
+  542  auditctl -l | grep identity
+  543  vi /etc/audit/audit.rules
+  544  auditctl -l | grep identity
+  545  grep identity /etc/audit/audit.rules
+  546  vi /etc/audit/audit.rules
+  547  grep MAC-policy /etc/audit/audit.rules
+  548  vi /etc/audit/audit.rules
+  549  grep MAC-policy /etc/audit/audit.rules
+  550  grep logins /etc/audit/audit.rules
+  551  grep session /etc/audit/audit.rules
+  552   grep logins /etc/audit/audit.rules
+  553  find -xdev \( -perm -4000 -o -perm -2000 \) -type f | awk '{print \ "-a always,exit -F path=" $1 " -F perm=x -F auid>=1000 -F auid!=4294967295 \ -k privileged" }'
+  554  grep scope /etc/audit/audit.rules
+  555  vi /etc/audit/audit.rules
+  556  grep scope /etc/audit/audit.rules
+  557  grep actions /etc/audit/audit.rules
+  558  vi /etc/audit/audit.rules
+  559  grep actions /etc/audit/audit.rules
+  560   grep "^\s*[^#]" /etc/audit/audit.rules | tail -1
+  561  grep max_log_file /etc/audit/auditd.conf
+  562  grep max_log_file_action /etc/audit/auditd.conf
+  563  vi /etc/audit/auditd.conf
+  564  grep max_log_file_action /etc/audit/auditd.conf
+  565  grep "^TMOUT" /etc/bashrc
+  566  grep "^TMOUT" /etc/profile
+  567  vi /etc/bashrc
+  568  vi /etc/profile
+  569  vi /etc/profile
+  570  grep "^TMOUT" /etc/bashrc
+  571  grep "^TMOUT" /etc/profile
+  572  rpm -Va --nomtime --nosize --nomd5 --nolinkto > verify
+  573  yum check-update
+  574  ls -lrt verify
+  575  cat verify
+  576  rm verify
+  577  ls -lrt /home
+  578  userdel -r test
+  579  ls -lrt /home
+  580  reboot
+  581  yum updateinfo list --sec-severity=Important --sec-severity=Critial --security --bugfix | awk '{print $3}' | uniq
+  582  yum update --sec-severity=Important --sec-severity=Critial --security --bugfix
+  583  yum check-update
+  584  yum update -y
+  585  cat /etc/os-release
+  586  cat /etc/redhat-release 
+  587  yum downgrade redhat-release
+  588  yum-complete-transaction
+  589  cd
+  590  cat /etc/redhat-release 
+  591  yum downgrade redhat-release
+  592  yum-complete-transaction --cleanup-only
+  593  yum install yum-utils
+  594  yum-complete-transaction
+  595  cat /etc/redhat-release 
+  596  cat /etc/chrony.conf 
+  597  :q!
+  598  systemctl status chronyd
+  599  nmtui
+  600  exit
+  601  nmvtui
+  602  nmtui
+  603  ip a s
+  604  yum check-update kern*
+  605  yum check-update --security
+  606  cd /tmp
+  607  ls -rlt
+  608  vi k.sh
+  609  chmod 755 k.sh 
+  610  ./k.sh
+  611  ls -lrt
+  612  k.sh
+  613  ./k.sh
+  614  ls -lrt
+  615  chmod k.sh
+  616  chmod 755 k.sh 
+  617  sh k.sh
+  618  cat k.sh
+  619  cat /etc/group | cut -f1 -d":" | sort -n | uniq -c | while read x ; do  [ -z "${x}" ] & then
+  620   gids=`gawk -F: '($1 == n) { print $3 }' n=$2 /etc/group | xargs`
+  621   echo "Duplicate Group Name ($2): ${gids}"
+  622   fi
+  623  cat /etc/group | cut -f1 -d":" | sort -n | uniq -c | while read x ; do  [ -z "${x}" ] & then
+  624  cat /etc/group | cut -f1 -d":" | sort -n | uniq -c
+  625  ls -lrt
+  626  rm k.sh
+  627  systemct status chronyd
+  628  systemctl status chronyd
+  629  vi /etc/rhsm/rhsm.conf
+  630  cat /etc/chrony.conf 
+  631  ping 10.234.17.142
+  632  vi /etc/chrony.conf 
+  633  systemctl restart chronyd
+  634  systemctl status chronyd
+  635  timedatectl
+  636  nmtui
+  637  systemctl status chronyd
+  638  cat /etc/hosts
+  639  cat /etc/resolv.conf 
+  640  vi /etc/resolv.conf 
+  641  cd /etc/sysconfig/network-scripts/
+  642  ls -lrt
+  643  ip a s
+  644  vi ifcfg-ens192 
+  645  lsblk
+  646  cd
+  647  lsblk
+  648  free -m
+  649  free -h
+  650  yum install java-1.8.0-openjdk*
+  651  exit
+  652  vi /etc/rhsm/rhsm.conf
+  653  yum repolist
+  654  ps -ef | grep -i yum
+  655  kill -9 82690
+  656  kill -9 82989
+  657  df -h
+  658  exit
+  659  ip a s
+  660  nmtui
+  661  exit
+  662  clear
+  663  lsblk
+  664  hostname -I
+  665  pvcreate -v /dev/sdb ; vgcreate appvg /dev/sdb ; mkdir -p /Ops/app/NGPRD ; lvcreate -n opslv -L 499G appvg ; mkfs.xfs /dev/appvg/Ops
+  666  vgs
+  667  pvs
+  668  mkdir -p /Ops/app/NGPRD
+  669  lvcreate -n opslv -L 499G appvg
+  670  mkfs.xfs /dev/appvg/opslv
+  671  chown -R apiadm:apiadm /Ops/app/NGPRD ;  chown -R apiadm:apiadm /Ops/
+  672  vi /etc/fstab
+  673  for i in opsadm; do echo "qwer1234" | passwd --stdin $i; done
+  674  for i in opsadm; do useradd -m $i; done ; for i in opsadm; do echo "qwer1234" | passwd --stdin $i; done
+  675  mount -a
+  676  vi /etc/fstab
+  677  mount -a
+  678  df -h
+  679  umount /Ops/app/NGPRD
+  680  chown -R opsadm:opsadm /Ops/app/NGPRD ;  chown -R opsadm:opsadm /Ops/
+  681  mount -a
+  682  vi /etc/rhsm/rhsm.conf
+  683  subscription-manager register
+  684  subscription-manager remove --all ; subscription-manager clean
+  685  subscription-manager register
+  686  visudo
+  687  clear
+  688  df -h
+  689  subscription-manager list --available --all
+  690  df -h
+  691  hostname -I
+  692  grep -q 'vm.zone_reclaim_mode' /etc/sysctl.conf || echo "vm.zone_reclaim_mode=0" | sudo tee --append /etc/sysctl.conf ; sudo sysctl -w  vm.zone_reclaim_mode=0
+  693  grep -q 'vm.swappiness' /etc/sysctl.conf || echo "vm.swappiness=1" | sudo tee --append /etc/sysctl.conf ; sudo sysctl -w  vm.swappiness=1
+  694  sudo grep -q 'kernel.pid_max' /etc/sysctl.conf || echo "kernel.pid_max=64000" | sudo tee --append /etc/sysctl.conf ; sudo sysctl -w kernel.pid_max=64000
+  695  sudo grep -q 'net.ipv4.tcp_keepalive_time' /etc/sysctl.conf || echo "net.ipv4.tcp_keepalive_time=120" | sudo tee --append /etc/sysctl.conf ; sudo sysctl -w net.ipv4.tcp_keepalive_time=120
+  696  sudo grep -q 'fs.file-max' /etc/sysctl.conf || echo "fs.file-max=98000" | sudo tee --append /etc/sysctl.conf ; sudo sysctl -w fs.file-max=98000
+  697  sudo grep -q 'kernel.threads-max' /etc/sysctl.conf || echo "kernel.threads-max=64000" | sudo tee --append /etc/sysctl.conf ; sudo sysctl -w kernel.threads-max=64000
+  698  sudo grep -q 'vm.max_map_count' /etc/sysctl.conf || echo "vm.max_map_count=128000" | sudo tee --append /etc/sysctl.conf ; sudo sysctl -w vm.max_map_count=128000
+  699  for limit in fsize cpu as memlock; do   grep "mongodb" /etc/security/limits.conf | grep -q $limit || echo -e "mongod     hard   $limit    unlimited\nmongod     soft    $limit   unlimited" | sudo tee --append /etc/security/limits.conf; done
+  700  for limit in nofile noproc; do   grep "mongodb" /etc/security/limits.conf | grep -q $limit || echo -e "mongod     hard   $limit    64000\nmongod     soft    $limit   64000" | sudo tee --append /etc/security/limits.conf; done
+  701  clear
+  702  pwd
+  703  thp.sh
+  704  vi thp.sh
+  705  chmod 755 thp.sh
+  706  ./thp.sh
+  707  nmtui
+  708  systemctl restart network
+  709  cat /etc/resolv.conf 
+  710  exit
+  711  export http_proxy=http://10.234.175.54:80 ;
+  712  sudo vi /etc/yum.repos.d/mongodb-enterprise-5.0.repo
+  713  sudo yum install -y mongodb-enterprise
+  714  clear
+  715  df -h
+  716  umount /Ops/app/NGPRD
+  717  mkdir /data
+  718  chown -R opsadm:opsadm /data
+  719  vi /etc/fstab
+  720  mount -a
+  721  df -h
+  722  exit
+  723  clear
+  724  systemctl stop firewalld
+  725  systemctl disable firewalld
+  726  exit
+  727  subscription-manager remove --all ; subscription-manager clean
+  728  subscription-manager register --auto-attach
+  729  yum update
+  730  cat /etc/redhat-release 
+  731  exit
+  732  http://10.234.175.54:80
+  733  wget
+  734  wget "https://downloads.mongodb.com/on-prem-mms/rpm/mongodb-mms-5.0.9.100.20220407T0303Z-1.x86_64.rpm"
+  735  df -h
+  736  exit
+  737  ls 
+  738  sudo rpm -ivh mongodb-mms-*.x86_64.rpm
+  739  sudo /opt/mongodb/mms/bin/credentialstool --username root --password P@ssw0rd
+  740  sudo /opt/mongodb/mms/bin/credentialstool --username root --password
+  741  cp /opt/mongodb/mms/conf/conf-mms.properties /opt/mongodb/mms/conf/conf-mms.properties_bkp
+  742  vi /opt/mongodb/mms/conf/conf-mms.properties
+  743  sudo systemctl start mongodb-mms
+  744  sudo systemctl status mongodb-mms
+  745  cd /opt/mongodb/mms/logs/
+  746  ls -lrt
+  747  tail -1000f mms0.log
+  748  telnet 10.234.19.126 27018
+  749  telnet 10.234.178.54 27018
+  750  telnet 10.234.178.55 27018
+  751  tail -1000f mms0.log
+  752  telnet pngmondbops02.ng.sbicdirectory.com 27018
+  753  sudo systemctl stop mongodb-mms
+  754  sudo systemctl start mongodb-mms
+  755  cd /opt/mongodb/mms/logs/
+  756  ls -lrt
+  757  tail -1000f mms0.log
+  758  sudo systemctl status mongodb-mms
+  759  history
+  760  mongo --host 10.234.19.126:27018 -u root --authenticationDatabase admin -p P@ssw0rd
+  761  ps -ef | grep mongod
+  762  sudo systemctl status mongod
+  763  df -h
+  764  mkdir /data/head
+  765  sudo chown mongodb-mms:mongodb-mms /data/head
+  766  df -h
+  767  cd /opt/mongodb/mms/mongodb-releases/
+  768  ls -lrt
+  769  cd /tmp/
+  770  cp mongodb-compass-1.31.2-win32-x64.zip mongodb-linux-x86_64-enterprise-rhel62-4.2.1.tgz mongodb-database-tools-rhel70-x86_64-100.5.2.tgz mongodb-database-tools-rhel70-x86_64-100.5.1.tgz mongodb-linux-x86_64-enterprise-rhel70-4.4.13.tgz mongodb-linux-x86_64-enterprise-rhel70-5.0.8.tgz /opt/mongodb/mms/mongodb-releases/
+  771  cd /opt/mongodb/mms/mongodb-releases/
+  772  ls -lrt
+  773  df -h
+  774  cd /opt/mongodb/mms/mongodb-releases/
+  775  ls -lrt
+  776  pwd
+  777  ls -lrt
+  778  cd /opt/mongodb/mms/mongodb-releases/
+  779  ls -lrt
+  780  cd /opt/mongodb/mms/mongodb-releases/
+  781  sudo chown -R mongodb-mms:mongodb-mms /opt/mongodb/mms/mongodb-releases/
+  782  ls -lrt
+  783  history
+  784  sudo systemctl stop mongodb-mms
+  785  sudo systemctl status mongodb-mms
+  786  sudo systemctl start mongodb-mms
+  787  sudo systemctl status mongodb-mms
+  788  cat /etc/fstab
+  789  sudo systemctl status mongodb-mms
+  790  cd /opt/mongodb/mms/
+  791  ls -lrt
+  792  cd logs/
+  793  ls -lrt
+  794  pwd
+  795  ls -lrt
+  796  cd /opt/mongodb
+  797  ls -lrt
+  798  cd mms/
+  799  ls -lrt
+  800  cd mongodb-releases
+  801  ls -lrt
+  802  pwd
+  803  cd /home/serveradmin/
+  804  ls -lrt
+  805  mv mongodb-linux-x86_64-enterprise-rhel70-4.2.1.tgz /opt/mongodb/mms/mongodb-releases/
+  806  cd /opt/mongodb/mms/mongodb-releases/
+  807  ls -lrt
+  808  chown -R mongodb-mms:mongodb-mms mongodb-linux-x86_64-enterprise-rhel70-4.2.1.tgz
+  809  ls -lrt
+  810  history
+  811  sudo systemctl stop mongodb-mms
+  812  sudo systemctl status mongodb-mms
+  813  sudo systemctl start mongodb-mms
+  814  sudo systemctl status mongodb-mms
+  815  history
+  816  sudo systemctl status mongodb-mms
+  817  sudo systemctl stop mongodb-mms
+  818  sudo systemctl start mongodb-mms
+  819  sudo systemctl status mongodb-mms
+  820  df -h
+  821  cd /etc/
+  822  ls -lrt
+  823  cd mongodb-mms/
+  824  ls -lrt
+  825  df -h
+  826  cd /var/log
+  827  ls -lrt
+  828  pwd
+  829  df -h
+  830  cd /data
+  831  ls -lrt
+  832  cd head/
+  833  ls -lrt
+  834  cd ../
+  835  ls -lrt
+  836  cd ../
+  837  df -h
+  838  history
+  839  sudo systemctl status mongodb-mms
+  840  sudo systemctl stop mongodb-mms
+  841  history
+  842  sudo systemctl start mongodb-mms
+  843  sudo systemctl status mongodb-mms
+  844  df -h
+  845  cd /opt/
+  846  ls -lrt
+  847  cd mongodb/
+  848  ls -lrt
+  849  cd mms/
+  850  ls -lrt
+  851  cd logs/
+  852  ls -lrt
+  853  sudo find /opt/mongodb/mms/logs/ -type f -mtime -2 | sudo xargs tar cvfz /tmp/$(hostname)_OMLogs$(date +%s).tgz
+  854  cd /tmp/
+  855  ls -lrt
+  856  chown seradmin:serveradmin pngmondbops01.ng.sbicdirectory.com_OMLogs1653898361.tgz
+  857  chown serveradmin:serveradmin pngmondbops01.ng.sbicdirectory.com_OMLogs1653898361.tgz
+  858  ps -ef | grep mongo
+  859  df -h
+  860  wget sos
+  861  echo "10.234.203.188    pngsatsvr1.ng.sbicdirectory.com" >> /etc/hosts ; subscription-manager remove --all ; subscription-manager clean
+  862  rpm -ivh https://pngsatsvr1.ng.sbicdirectory.com/pub/katello-ca-consumer-latest.noarch.rpm
+  863  wget https://pngsatsvr1.ng.sbicdirectory.com/pub/katello-ca-consumer-latest.noarch.rpm --no-check-certificate
+  864  ll
+  865  rpm -ivh katello-ca-consumer-latest.noarch.rpm
+  866  vi /etc/rhsm/rhsm.conf
+  867  subscription-manager register --org="StanbicIBTC_Prod" --activationkey="RHEL7"
+  868  yum install -y insights-client ; insights-client --register
+  869  df -h
+  870  cd /opt/mongodb/mms/mongodb-releases/
+  871  ls -lrt
+  872  cd /home/serveradmin/
+  873  ls -lrt
+  874  mv  mongodb-linux-x86* /opt/mongodb/mms/mongodb-releases/
+  875  ls -lrt
+  876  cd /opt/mongodb/mms/mongodb-releases/
+  877  ls -lrt
+  878  chown mongodb-mms:mongodb-mms mongodb-linux-x86_64-enterprise-rhel70-4.4.15.tgz mongodb-linux-x86_64-enterprise-rhel70-5.0.9.tgz
+  879  ls -lrt
+  880  df -h
+  881  ls -lrt
+  882  df -h
+  883  lvs
+  884  exit
+  885  visudo
+  886  ls -lrt /home
+  887  df -h
+  888  history
+  889  sudo systemctl status mongodb-mms
+  890  sudo systemctl stop mongodb-mms
+  891  sudo systemctl status mongodb-mms
+  892  sudo systemctl start mongodb-mms
+  893  sudo systemctl status mongodb-mms
+  894  history
+  895  sudo systemctl status mongodb-mms
+  896  sudo systemctl stop mongodb-mms
+  897  sudo systemctl status mongodb-mms
+  898  sudo systemctl start mongodb-mms
+  899  sudo systemctl status mongodb-mms
+  900  df -h
+  901  cd /
+  902  ls -lrt
+  903  ls -la
+  904  du -sh * | sort -h
+  905  cd opt
+  906  ls -lrt
+  907  cd *
+  908  ls -rlt
+  909  cd *
+  910  ls -lrt
+  911  du -sh *
+  912  du -sh * | sort -h
+  913  cd logs
+  914  ls -lrt
+  915  pwd
+  916  df -h
+  917  ip a s
+  918  ls -lrt
+  919  cd ..
+  920  ls -lrt
+  921  who
+  922  ps -ef | grep pmon
+  923  who
+  924  ps -ef | grep mongo
+  925  df -h
+  926  cd /
+  927  ls -lrt
+  928  du -sh * | sort -h
+  929  cd /var/
+  930  ls -lrt
+  931  du -sh *
+  932  du -sh * | sort -h
+  933  cd cache
+  934  ls -lrt
+  935  du -sh *
+  936  cd yum
+  937  ls -lrt
+  938  sudo sysctl vm.drop_caches=1
+  939  df -h
+  940  cd
+  941  df -h
+  942  pwd
+  943  cd -
+  944  cd /
+  945  du -sh *
+  946  cd opt/
+  947  ls -lrt
+  948  cd mongodb/
+  949  ls -lrt
+  950  du -sh *
+  951  cd mms/
+  952  ls -lrt
+  953  du -sh *
+  954  cd logs
+  955  ls -lrt
+  956  rm -rf *.log.gz
+  957  ls -lrt
+  958  df -h
+  959  pwd
+  960  ls -lrt
+  961  du -sh *
+  962  ls -lrt
+  963  rm -rf mms0.20220926.log12203959973633753.tmp
+  964  df -h
+  965  cd /
+  966  du -sh *
+  967  cd opt
+  968  ls -lrt
+  969  cd mongodb/
+  970  ls -lrt
+  971  cd mms/
+  972  ls -lrt
+  973  du -sh *
+  974  history
+  975  sudo systemctl status mongodb-mms
+  976  sudo systemctl stop mongodb-mms
+  977  sudo systemctl status mongodb-mms
+  978  sudo systemctl start mongodb-mms
+  979  sudo systemctl status mongodb-mms
+  980  df -h
+  981  yum check-update
+  982  yum check-update --security
+  983  yum update --security
+  984  yum check-update 
+  985  insights-client 
+  986  cat /usr/lib/systemd/system/mdatp.service
+  987  exit
+  988  clear
+  989  yum repolist
+  990  yum install sos
+  991  history
+  992  sudo systemctl status mongodb-mms
+  993  df -h
+  994  sudo systemctl stop mongodb-mms
+  995  sudo systemctl status mongodb-mms
+  996  sudo systemctl start mongodb-mms
+  997  sudo systemctl status mongodb-mms
+  998  history
+  999  clear
+ 1000  history
+ 1001  cat history >> mongodb_basic_command.txt
+ 1002  cat mongodb_basic_command.txt >> history
+ 1003  ls
+ 1004  ls -lrt
+ 1005  cat history 
+ 1006  rm history
+ 1007  rm -rf history
+ 1008  ls
+ 1009  cat mongodb_basic_command.txt 
+ 1010  history >> mongodb_basic_command.txt

@@ -1,0 +1,31 @@
+GRAFAN SETUP
+Server: 10.234.18.188
+vw|~jLu5K4S+$Fc
+
+
+DAILY DB REPORT
+Server: 10.234.17.93
+nu6'WY{bFD/j
+nu6'WY{bFD/j
+
+
+======GRAFANA AND PROMRTHEUS FOR MONITORING========
+*******Servers to onboard*********
+GINA Cluster after setup  -----Done
+ACTIMIZE  --10.234.19.76 the old ACTMIZE of 10.234.18.40 is already onboarded
+10.234.17.40  --done
+10.234.17.20  --done
+10.234.17.100  --done
+10.234.19.82 --DATASTORE PROD  --done
+10.234.18.152  --DATA RESERVOIR  --done using the listener on 18.155
+10.234.17.71   
+
+GRAFANA User
+User Id=alwayson;Password=P@ssw0rd;Database=Master;
+
+The instance(s) below have database(s) in recovery state {{ with $values }} {{ range $k, $v := . }} Instance: {{$v.Labels.sql_instance}} 
+Alerting value: {{ $v }} database(s) {{ end }} {{ end }}
+
+STanbic__1234#
+
+STanbic__1234#

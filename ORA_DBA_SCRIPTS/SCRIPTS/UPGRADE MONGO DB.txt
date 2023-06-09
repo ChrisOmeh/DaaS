@@ -1,0 +1,39 @@
+=============Upgrade a Replica Set to 4.4===========================
+
+==Ensure you are running version 4.2 in order to upgrade to 4.4
+==Check for driver compatability
+==All replica set must be running version 4.2
+==Confirm that to be upgraded replica set member is properly cleaned up
+==Ensure feature compatability-meaning that featureCompatibiltyVersion is 4.2 before upgrading to 4.4-->5.0
+==Ensure that no replica set member is in ROLLBACK or RECOVERING state.
+
+==============================================
+STEP ONE
+Upgrade secondary members of the replica set.
+Upgrade the secondary members of the replica set one at a time
+
+STEP TWO
+Step down the replica set primary
+$rs.stepDown()--to step down the primary and force an election of a new primary.
+
+STEP THREE
+Upgrade the primary.
+When rs.status() shows that the primary has stepped down and another 
+member has assumed PRIMARY state, upgrade the stepped-down primary
+
+STEP FOUR
+Run the FeatureCompatibilty
+db.adminCommand( { setFeatureCompatibilityVersion: "4.4" } )
+
+
+
+============Upgrade a Replica Set to 5.0========================
+--REPEAT ABOVE PROCEDURE AND ENSURE COMMANDS, NUMBERS AND STEP TEXT TAKE RECOGNIZED STEPS.
+
+
+================================================================================
+========REVIEW=============
+1. The DRIVER plays a very important role in keeping the application online
+2. Do not move from an ancient verison to a new version.
+3. Test the new version before applying it in production.
+4. Create backup before upgrading

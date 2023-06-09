@@ -1,0 +1,10 @@
+use cyclone;
+select a.member_id, d.username, a.owner_name,b.email , c.string_value ,
+b.creation_date, b.member_activation_date ,
+ a.upper_credit_limit , d.last_login
+from accounts a, members b, custom_field_values c, users d
+where a.owner_name='2347064455943'
+and a.member_id= b.id
+and a.member_id = c.member_id
+and a.member_id = d.id
+and c.field_id = 1;

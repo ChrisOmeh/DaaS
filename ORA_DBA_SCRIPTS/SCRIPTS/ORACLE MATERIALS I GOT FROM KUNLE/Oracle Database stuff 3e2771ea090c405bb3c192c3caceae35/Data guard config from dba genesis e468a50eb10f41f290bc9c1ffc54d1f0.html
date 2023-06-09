@@ -1,0 +1,873 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Data guard config from dba genesis</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="e468a50e-b10f-41f2-90bc-9c1ffc54d1f0" class="page sans"><header><h1 class="page-title">Data guard config from dba genesis</h1></header><div class="page-body"><p id="f8a287c7-bdc9-403a-a8d3-98cbbc45ccd2" class="">
+</p><h1 id="32f04d63-e8e8-46f2-9a5a-72322ab8914a" class=""><strong>Oracle Data Guard Physical Standby Configuration</strong></h1><p id="0f97f2e9-ceeb-46c9-baa3-5de8110438fb" class="">There are various steps in which you can configure physical standby database. We need to make several changes to the primary database before we can even setup the standby database. In this article, we will set up physical standby on Oracle Linux 7.6 server.</p><ul id="eaf87e6a-5db7-40c3-976d-dae96d154dc6" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.support.dbagenesis.com/post/configure-physical-standby#viewer-7u2cl"><span style="border-bottom:0.05em solid">Configuration overview</span></a></li></ul><ul id="02fdec8f-0a71-4d1f-b303-1b5ae802f4a5" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.support.dbagenesis.com/post/configure-physical-standby#viewer-5i2pl"><span style="border-bottom:0.05em solid">Primary database changes</span></a></li></ul><ul id="fdbb12cb-c288-4bb6-88c5-21d9829dcf62" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.support.dbagenesis.com/post/configure-physical-standby#viewer-64ok7"><span style="border-bottom:0.05em solid">Configure network</span></a></li></ul><ul id="7bbff0b7-89ef-4c8e-8039-f59e5c69ed72" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.support.dbagenesis.com/post/configure-physical-standby#viewer-2gnam"><span style="border-bottom:0.05em solid">Configure redo transport</span></a></li></ul><ul id="86e16a3e-f9b9-44eb-9a48-85de1f963a82" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.support.dbagenesis.com/post/configure-physical-standby#viewer-2qrs5"><span style="border-bottom:0.05em solid">Build standby</span></a></li></ul><ul id="5c95ad52-feb8-4c22-ab05-c072be4bdd46" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.support.dbagenesis.com/post/configure-physical-standby#viewer-8nef1"><span style="border-bottom:0.05em solid">Verify standby configuration</span></a></li></ul><blockquote id="cf23bdee-e556-44f2-bf2a-cedb93817050" class="">This article applies to Oracle 12c R2 database version</blockquote><h2 id="abd02963-6f4b-4102-ab7d-702c48aedfdb" class=""><strong>Configuration overview</strong></h2><p id="975df4a0-54f3-4e00-800d-3ad737b3621e" class="">Primary details</p><pre id="4a1082e4-58fb-47c5-b656-4f66df3bf1e5" class="code code-wrap"><code>SID: ip7
+ORACLE_HOME: /u01/app/oracle/product/12.2.0.1
+Host Name: srv1.dbagenesis.com</code></pre><p id="5185f737-c021-4640-90c5-6726bf4f291f" class="">Standby details</p><pre id="4b27cadc-8446-4955-82f1-c20500037b43" class="code code-wrap"><code>SID: ip7
+ORACLE_HOME: /u01/app/oracle/product/12.2.0.1
+Host Name: srv2.dbagenesis.com</code></pre><p id="17a28667-e985-4daf-bf99-1cc66d5905a5" class=""><strong>Assumption:</strong> we assume that primary server has a database (SID=ip7) up and running. The standby database has Oracle 12cR2 installation done in the same oracle home location as primary.</p><h2 id="0583888c-07d4-41b5-9f3e-f833951ed178" class=""><strong>Primary database changes</strong></h2><p id="86c9faa3-469f-4c37-bb8a-c2dee42c2f6e" class="">Primary must run in archive log mode. Check the archive log mode</p><pre id="95b16155-d47e-4864-ad79-fc333cf70d9e" class="code code-wrap"><code>SELECT log_mode FROM v$database;
+
+LOG_MODE
+------------
+NOARCHIVELOG</code></pre><p id="f8adbfdc-d0d0-442b-9540-9c0398edb65f" class="">If it is not running in archive log mode, then enable it</p><pre id="1c2a5bb5-6d2c-47aa-8bcd-ec76e4b4d357" class="code code-wrap"><code>SQL&gt; shutdown immediate
+SQL&gt; startup mount
+SQL&gt; alter database archivelog;
+SQL&gt; alter database open;
+SQL&gt; archive log list;</code></pre><p id="a0460b39-d5a0-465f-92b9-f30519029e22" class=""><strong>Enable force logging on primary</strong>: In oracle, users can restrict redo generation for SQL by using NOLOGGING clause. This NOLOGGING transaction will be a problem for physical standby. Hence, we force logging so even user uses NOLOGGING clause, every SQL will be logged on to redo</p><pre id="2eb4c528-0b6b-40fd-8ff4-b37d7fbd077c" class="code code-wrap"><code>SQL&gt; alter database force logging;
+SQL&gt; select name, force_logging from v$database;</code></pre><p id="2fc8bbdd-a503-4072-a8fe-a1bc2396f505" class=""><strong>Standby file management:</strong> We need to make sure whenever we add/drop datafile in primary database, those files are also added / dropped on standby</p><pre id="4557d8b6-83e7-4aac-ab09-0b50c07a6d4b" class="code code-wrap"><code>SQL&gt; alter system set standby_file_management = &#x27;AUTO&#x27;;</code></pre><p id="96a84e34-e10e-4997-bb9d-ad78a1875a99" class=""><strong>Create standby log files:</strong> You must create standby log files on primary. These files are used by a standby database to store redo it receives from primary database.</p><p id="611a4cb0-26ed-4487-9926-fb14282ea8fb" class="">Our primary may become standby later and we would need them, so better to create it. First check the current log groups</p><pre id="0f181fcf-9e5a-40bc-a4e3-3a854db133f7" class="code code-wrap"><code>SQL&gt; select GROUP#, THREAD#, bytes/1024/1024, MEMBERS, STATUS from v$log;
+
+    GROUP#    THREAD# BYTES/1024/1024    MEMBERS STATUS
+---------- ---------- --------------- ---------- ----------------
+         1          1             200          1 INACTIVE
+         2          1             200          1 CURRENT
+         3          1             200          1 INACTIVE
+
+SQL&gt; select member from v$logfile;
+
+MEMBER
+---------------------------------------------------
+/u01/data/db_files/ip7/redo03.log
+/u01/data/db_files/ip7/redo02.log
+/u01/data/db_files/ip7/redo01.log</code></pre><p id="f34200bb-2544-4a1c-ae8c-e15cfaca0c51" class="">Add the standby logfiles, make sure group number should be from a different series like in this case we choose to start with 11 and above. This helps in easy differentiation.</p><p id="75a3ea7c-d951-4b14-bdfe-560b9e932507" class="">Make sure to keep the thread# and logfile size exactly same. Oracle also recommends to always create n+1 standby log files. Where n is the total number of logfiles</p><pre id="23fefdd2-7266-4dee-af86-e151fc974b10" class="code code-wrap"><code>ALTER DATABASE ADD STANDBY LOGFILE THREAD 1 GROUP 11 &#x27;/u01/data/db_files/ip7/stb_redo1.log&#x27; SIZE 200M;
+ALTER DATABASE ADD STANDBY LOGFILE THREAD 1 GROUP 12 &#x27;/u01/data/db_files/ip7/stb_redo2.log&#x27; SIZE 200M;
+ALTER DATABASE ADD STANDBY LOGFILE THREAD 1 GROUP 13 &#x27;/u01/data/db_files/ip7/stb_redo3.log&#x27; SIZE 200M;
+ALTER DATABASE ADD STANDBY LOGFILE THREAD 1 GROUP 14 &#x27;/u01/data/db_files/ip7/stb_redo4.log&#x27; SIZE 200M;</code></pre><p id="6be47d35-a152-47de-89a0-97ba73cfa30c" class="">Check the standby log files via below query</p><pre id="73ed3889-4bdd-41ad-9f2e-eadc75272613" class="code code-wrap"><code>SQL&gt; SELECT GROUP#,THREAD#,SEQUENCE#,ARCHIVED,STATUS FROM V$STANDBY_LOG;</code></pre><p id="56e5a6d6-1cf9-41f3-a06d-95a276226032" class=""><strong>Enable flashback on primary:</strong> Flashback database is highly recommended because in case of failover, you need not re-create primary database from scratch</p><pre id="0ce30493-13f6-447b-b3c8-1984e32b4f56" class="code code-wrap"><code>SQL&gt; alter system set db_recovery_file_dest_size=45g;
+SQL&gt; alter database flashback on;
+SQL&gt; select flashback_on from v$database;</code></pre><p id="959047fb-9886-46fd-98cf-b4ca68f9cfa8" class="">If flashback parameters are not set properly, use below commands</p><pre id="0b869b4d-d20c-49b5-b1b9-d36c5af69b52" class="code code-wrap"><code>SQL&gt; show parameter recovery;
+SQL&gt; alter system set db_recovery_file_dest=&#x27;/u01/app/oracle/fast_recovery_area&#x27;;
+SQL&gt; alter system set db_recovery_file_dest_size=45g;
+SQL&gt; alter database flashback on;</code></pre><p id="199220ca-ea29-4260-8c76-fe99e0cba8d4" class=""><strong>Check DB Unique name parameter on primary: </strong>Make sure your primary database has DB_UNIQUE_NAME parameter set for consistency. If it’s not set properly, use ALTER SYSTEM SET command</p><pre id="c3da04a4-c166-477e-936b-578d618aa71f" class="code code-wrap"><code>SQL&gt; show parameter db_name
+
+NAME                                 TYPE        VALUE
+------------------------------------ ----------- -------------
+db_name                              string      ip7
+
+SQL&gt; show parameter db_unique_name
+
+NAME                                 TYPE        VALUE
+------------------------------------ ----------- -------------
+db_unique_name                       string      ip7</code></pre><p id="71e80da9-ea3c-427c-86ea-29b306d8a072" class=""><strong>Create password file for standby:</strong> This is needed for cloning purpose. Even if there is one password file in $ORACLE_HOME/dbs location, create a new one with standby SID</p><pre id="dc5aa2f2-1c9f-415b-bd42-7c8fc838174c" class="code code-wrap"><code>$ orapwd file=$ORACLE_HOME/dbs/orapwip7 entries=10 force=y
+
+$ scp orapwip7 oracle@srv2:$ORACLE_HOME/dbs</code></pre><h2 id="3b4ed1e7-1dbf-4350-b63a-7b72ed0bfe43" class=""><strong>Configure network</strong></h2><p id="7d86fb7d-f847-4e30-8136-e732bac07922" class="">Use below tns entries and put them under <strong>ORACLE</strong> user <strong>HOME/network/admin/tnsnames.ora. </strong>Change host as per your environment and execute on both primary and standby.</p><p id="fdfc9e50-b217-45ee-9143-20340853deeb" class="">Notice the use of the SID, rather than the SERVICE_NAME in the entries. This is important as the broker will need to connect to the databases when they are down, so the services will not be present.</p><pre id="00cf481c-f735-4459-b1e9-c62efb14b3c6" class="code code-wrap"><code>vi $ORACLE_HOME/network/admin/tnsnames.ora
+
+ip7 =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = srv1.dbagenesis.com)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SID = ip7)
+    )
+  )
+
+ip7_stb =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = srv2.dbagenesis.com)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SID = ip7)
+    )
+  )</code></pre><p id="09477929-f5b7-49cb-9ab6-ae384a052bf6" class="">Configure listener on primary database. Since the broker will need to connect to the database when it’s down, we can’t rely on auto-registration with the listener, hence the explicit entry for the database.</p><pre id="08b6c0ac-d701-4283-8dba-2fd9f08d80c8" class="code code-wrap"><code>vi $ORACLE_HOME/network/admin/listener.ora
+
+LISTENER =
+  (DESCRIPTION_LIST =
+    (DESCRIPTION =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = srv1.dbagenesis.com)(PORT = 1521))
+      (ADDRESS = (PROTOCOL = IPC)(KEY = EXTPROC1521))
+    )
+  )
+
+SID_LIST_LISTENER =
+  (SID_LIST =
+    (SID_DESC =
+      (GLOBAL_DBNAME = ip7_DGMGRL)
+      (ORACLE_HOME = /u01/app/oracle/product/12.2.0.1)
+      (SID_NAME = ip7)
+    )
+  )
+
+ADR_BASE_LISTENER = /u01/app/oracle</code></pre><p id="eb290d02-7f27-4416-aab9-f58c71938f96" class="">Configure listener on standby. Since the broker will need to connect to the database when it’s down, we can’t rely on auto-registration with the listener, hence the explicit entry for the database.</p><pre id="f56ffc73-56d9-439f-bed2-77cb236cb570" class="code code-wrap"><code>vi $ORACLE_HOME/network/admin/listener.ora
+
+LISTENER =
+  (DESCRIPTION_LIST =
+    (DESCRIPTION =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = srv2.dbagenesis.com)(PORT = 1521))
+      (ADDRESS = (PROTOCOL = IPC)(KEY = EXTPROC1521))
+    )
+  )
+
+SID_LIST_LISTENER =
+  (SID_LIST =
+    (SID_DESC =
+      (GLOBAL_DBNAME = ip7_stb_DGMGRL)
+      (ORACLE_HOME = /u01/app/oracle/product/12.2.0.1)
+      (SID_NAME = ip7)
+    )
+  )
+
+ADR_BASE_LISTENER = /u01/app/oracle</code></pre><p id="dcd9860e-590e-4a79-9e5c-0937293d8ae8" class="">Once the listener.ora changes are in place, restart the listener on both servers</p><pre id="96fa69c4-f9f8-4d3b-a609-dc3b04ff7600" class="code code-wrap"><code>lsnrctl stop
+lsnrctl start</code></pre><h2 id="ebc2590b-f153-4512-996f-07c8fd177def" class=""><strong>Configure redo transport</strong></h2><blockquote id="ea40da89-5177-4f91-a19f-9bc6d654e648" class="">Note: if you plan to use Oracle Data Guard broker, then you can skip this section “configure redo transport” and jump to “Build Standby” section.</blockquote><p id="69349b4e-288a-4ce6-bf41-38a77d0fc808" class=""><strong>Configure redo transport from primary to standby:</strong>  The below statement says that if the current database is in primary role, then transport logs to standby. We need to change service and db_unique_name for same parameter on standby server</p><pre id="7729b995-f919-4c3d-b07e-0b4193990c2d" class="code code-wrap"><code>On Primary Server
+=================
+SQL&gt; alter system set log_archive_dest_2 = &#x27;service=ip7_stb async
+valid_for=(online_logfiles,primary_role) db_unique_name=ip7_stb&#x27;;</code></pre><p id="97adff5c-cea2-45d6-a272-98c84895320a" class=""><strong>Setup FAL (Fetch Archive Log) server: </strong>This parameters tell the primary as to where it will get archives from (FAL Server=proddb_st)</p><pre id="74106bff-7945-4764-b7d9-f8d4b5620903" class="code code-wrap"><code>On Primary Server
+=================
+SQL&gt; alter system set fal_server = &#x27;ip7_stb&#x27;;</code></pre><p id="2fb02d43-6c7c-47bb-b3e8-2c33839ce5fb" class=""><strong>Setup Data Guard configuration on primary:</strong> This parameter will let primary database know which databases are in data guard configuration</p><pre id="306cac71-664a-4919-9a17-e3bd4bac17c8" class="code code-wrap"><code>On Primary Server
+=================
+SQL&gt; alter system set log_archive_config = &#x27;dg_config=(ip7,ip7_stb)&#x27;;</code></pre><h2 id="53a540a3-645f-4969-ac7b-d4ef307c6e85" class=""><strong>Build standby</strong></h2><p id="f1050067-ce8b-4927-a569-55087eca63b4" class="">On standby server, create parameter file with below contents</p><pre id="19312ab3-bb6f-4007-b9cb-01241dc174c6" class="code code-wrap"><code>On standby server
+=================
+
+vi /tmp/initip7.ora
+*.db_name=&#x27;ip7&#x27;</code></pre><p id="8b0c3105-3ead-47b6-b077-825bb78f8fbc" class="">Create pfile on primary, open it and create the necessary directories on the standby server</p><pre id="f695f4e1-74a9-4770-9191-659690a99b6e" class="code code-wrap"><code>On Primary Server
+=================
+SQL&gt; create pfile from spfile;
+exit
+
+$ cd $ORACLE_HOME/dbs
+$ cat initip7.ora
+
+On Standby Server
+=================
+on standby, create directories as you find in the initip7.ora file
+
+mkdir -p /u01/app/oracle/admin/ip7/adump
+mkdir -p /u01/data/db_files/ip7
+mkdir -p /u01/FRA/ip7</code></pre><p id="22d895fd-df6d-4e82-8232-823e0d27f26d" class="">Start the auxiliary instance on the standby server by starting it using the temporary <strong>init.ora</strong> file</p><pre id="f4c83cfd-8dca-45b5-affb-ed0da7b45a01" class="code code-wrap"><code>On Standby Server
+=================
+
+$ export ORACLE_SID=ip7
+$ sqlplus / as sysdba
+
+SQL&gt; STARTUP NOMOUNT PFILE=&#x27;/tmp/initip7.ora&#x27;;
+SQL&gt; exit;
+
+--you must exit from sqlplus, else cloning will fail</code></pre><p id="de87dd1a-287d-44d2-b1fe-ac07f892acb6" class=""><strong>Duplicate primary database via RMAN: </strong>In this step, we will use RMAN to duplicate primary database for our standby database.</p><p id="53c70af3-b198-4846-8d6c-faa2c5217187" class="">On primary, connect to RMAN, specifying a full connect string for both the TARGET and AUXILIARY instances. Do not attempt to use OS authentication or the database cloning will fail</p><pre id="09ec783b-92cd-46e3-81bb-412477563367" class="code code-wrap"><code>On primary server
+=================
+
+$ rman TARGET sys@ip7
+
+RMAN&gt; connect auxiliary sys@ip7_stb
+
+RMAN&gt; DUPLICATE TARGET DATABASE FOR STANDBY FROM ACTIVE DATABASE DORECOVER SPFILE SET db_unique_name=&#x27;ip7_stb&#x27; COMMENT &#x27;Is standby&#x27; NOFILENAMECHECK;</code></pre><p id="a3c9b3d6-2ebe-49cc-b229-d59b7c89563f" class="">Once cloning is done, you should see below at RMAN prompt</p><pre id="928c1034-cdcf-4359-ab47-ede99b620d5b" class="code code-wrap"><code>Finished Duplicate Db at 07-DEC-2015</code></pre><p id="3082da3b-5fdc-4240-b016-78c717fa5667" class=""><strong>Set Standby Parameters: </strong>We need to make some changes to standby parameters that will enable log shipping to the current primary (ip7) when a switchover happens</p><pre id="e3c9a0b7-ced8-40cd-948e-0b108b1db4f6" class="code code-wrap"><code>On Standby Server
+=================
+SQL&gt; create pfile from spfile;
+
+$ cd $ORACLE_HOME/dbs
+$ vi initip7.ora
+
+--change
+*.fal_server=&#x27;ip7_stb&#x27;
+
+--to
+*.fal_server=&#x27;ip7&#x27;
+
+--change
+*.log_archive_dest_2=&#x27;service=ip7_stb async
+valid_for=(online_logfiles,primary_role) db_unique_name=ip7_stb&#x27;
+
+--to
+*.log_archive_dest_2=&#x27;service=ip7 async
+valid_for=(online_logfiles,primary_role) db_unique_name=ip7&#x27;</code></pre><p id="dc0f3a20-4f0d-4dee-af65-ad3828aeab17" class="">Now re-create spfile for standby using the pfile you just modified</p><pre id="a15147f4-7ac1-4601-8f5b-5bf3df3e2f5f" class="code code-wrap"><code>On Standby Server
+=================
+SQL&gt; create spfile from pfile;
+SQL&gt; shut immediate;
+SQL&gt; startup mount;
+SQL&gt; show parameter spfile;</code></pre><p id="6e81200d-dcb3-4b90-b060-872fcae76c23" class=""><strong>Enable flashback on standby: </strong>As we know the importance of flashback in data guard, we must enable it on standby as well</p><pre id="735b9aec-066c-4771-add8-381414f83b33" class="code code-wrap"><code>On Standby Server
+=================
+SQL&gt; alter database flashback on;</code></pre><h2 id="54bbc8ca-5f2f-4afd-8186-c61343ce3b75" class=""><strong>Verify standby configuration</strong></h2><p id="008ddb88-df2f-46d5-a23c-41f2a044d714" class="">Once MRP is started, we must verify if our setup is working fine</p><pre id="8d17ed98-9abf-4586-966c-9094e83d4eaf" class="code code-wrap"><code>On standby:
+===========
+--start MRP command
+SQL&gt; alter database recover managed standby database disconnect;
+
+On both primary &amp; standby:
+==========================
+set lines 999;
+select * from v$dataguard_status order by timestamp;
+
+select dest_id, status, destination, error from v$archive_dest where dest_id&lt;=2;
+
+IF you see any ORA error like ORA-16058, do this on primary:
+============================================================
+SQL&gt; alter system set log_archive_dest_state_2=&#x27;DEFER&#x27;;
+SQL&gt; alter system set log_archive_dest_state_2=&#x27;ENABLE&#x27;;
+SQL&gt; select dest_id, status, destination, error from v$archive_dest where dest_id&lt;=2;
+
+On primary:
+===========
+select sequence#, first_time, next_time, applied, archived from v$archived_log where name = &#x27;ip7_stb&#x27; order by first_time;
+select STATUS, GAP_STATUS from V$ARCHIVE_DEST_STATUS where DEST_ID = 2;
+archive log list;
+
+On standby:
+===========
+select process, status, sequence# from v$managed_standby;
+select sequence#, applied, first_time, next_time, name filename from v$archived_log order by sequence#;</code></pre><p id="c0702c5e-7c88-447b-86c8-f0f486cd7090" class=""><strong>Configure Archive deletion policy: </strong>We must set this policy in order to prevent accidental deletion of archive logs on primary database</p><pre id="a5e2e457-6ed8-44ca-b17c-5f8ba3ff6b4f" class="code code-wrap"><code>On Primary:
+===========
+rman target /
+configure archivelog deletion policy to applied on all standby;</code></pre></div></article></body></html>

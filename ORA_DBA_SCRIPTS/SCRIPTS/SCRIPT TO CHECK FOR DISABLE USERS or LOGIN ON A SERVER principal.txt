@@ -1,0 +1,103 @@
+select sp.name as login,
+       sp.create_date,
+       --sp.type_desc as login_type,
+       case when sp.is_disabled = 1 then 'Disabled'
+            else 'Enabled' end as status
+from sys.server_principals sp
+left join sys.sql_logins sl
+on sp.principal_id = sl.principal_id
+left join sys.database_principals dp
+on sp.principal_id = dp.principal_id
+where sp.type not in ('A', 'G', 'R', 'X')
+    and sp.type_desc not in ('CERTIFICATE_MAPPED_LOGIN')
+    --and dp.type not in  ( 'S', 'U', 'G' )
+and sp.name not in ('NT AUTHORITY\SYSTEM', 'NT Service\MSSQLSERVER', 'NT SERVICE\SQLSERVERAGENT','NT SERVICE\SQLWriter','NT SERVICE\Winmgmt','##MS_PolicyEventProcessingLogin##','##MS_PolicyTsqlExecutionLogin##')
+order by sp.name;
+
+
+==============================================================
+USE DATABASE_NAME
+(SELECT DISTINCT p.name AS [loginname] ,
+p.type ,
+p.type_desc ,
+CONVERT(VARCHAR(10),p.create_date ,101) AS [created],
+CONVERT(VARCHAR(10),p.modify_date , 101) AS [update],
+case when p.is_disabled = 1 then 'Disabled'
+            else 'Enabled' end as status,
+case when s.sysadmin = 1 then 'Admin'
+            else 'Not Admin' end as Administrative_privilege
+FROM sys.server_principals p
+JOIN sys.syslogins s ON p.sid = s.sid
+JOIN sys.server_permissions sp ON p.principal_id = sp.grantee_principal_id
+WHERE p.type_desc IN ('SQL_LOGIN', 'WINDOWS_LOGIN', 'WINDOWS_GROUP')
+-- Logins that are not process logins
+AND p.name NOT LIKE '##%'
+AND p.name NOT LIKE 'NT SERVICE%'
+-- Logins that are sysadmins or have GRANT CONTROL SERVER
+AND (s.sysadmin = 1)
+)
+
+UNION ALL
+
+(SELECT DISTINCT p.name AS [loginname] ,
+p.type ,
+p.type_desc ,
+CONVERT(VARCHAR(10),p.create_date ,101) AS [created],
+CONVERT(VARCHAR(10),p.modify_date , 101) AS [update],
+case when p.is_disabled = 1 then 'Disabled'
+            else 'Enabled' end as status,
+case when s.sysadmin = 1 then 'Admin'
+            else 'Not Admin' end as Administrative_privilege
+FROM sys.server_principals p
+JOIN sys.syslogins s ON p.sid = s.sid
+JOIN sys.server_permissions sp ON p.principal_id = sp.grantee_principal_id
+RIGHT JOIN sys.database_principals dp ON p.name = dp.name
+WHERE p.type_desc IN ('SQL_LOGIN', 'WINDOWS_LOGIN', 'WINDOWS_GROUP')
+-- Logins that are not process logins
+AND p.name NOT LIKE '##%'
+-- Logins that are sysadmins or have GRANT CONTROL SERVER
+--AND (s.sysadmin = 1 OR sp.permission_name = 'CONTROL SERVER')
+)
+
+===============================================================
+(SELECT DISTINCT p.name AS [loginname] ,
+p.type ,
+p.type_desc ,
+CONVERT(VARCHAR(10),p.create_date ,101) AS [created],
+CONVERT(VARCHAR(10),p.modify_date , 101) AS [update],
+case when p.is_disabled = 1 then 'Disabled'
+            else 'Enabled' end as status,
+case when s.sysadmin = 1 then 'Admin'
+            else 'Not Admin' end as Administrative_privilege
+FROM sys.server_principals p
+JOIN sys.syslogins s ON p.sid = s.sid
+JOIN sys.server_permissions sp ON p.principal_id = sp.grantee_principal_id
+WHERE p.type_desc IN ('SQL_LOGIN', 'WINDOWS_LOGIN', 'WINDOWS_GROUP')
+-- Logins that are not process logins
+AND p.name NOT LIKE '##%'
+AND p.name NOT LIKE 'NT SERVICE%'
+-- Logins that are sysadmins or have GRANT CONTROL SERVER
+AND (s.sysadmin = 1)
+)
+
+UNION ALL
+
+(SELECT DISTINCT p.name AS [loginname] ,
+p.type ,
+p.type_desc ,
+CONVERT(VARCHAR(10),p.create_date ,101) AS [created],
+CONVERT(VARCHAR(10),p.modify_date , 101) AS [update],
+case when p.is_disabled = 1 then 'Disabled'
+            else 'Enabled' end as status,
+case when s.sysadmin = 1 then 'Admin'
+            else 'Not Admin' end as Administrative_privilege
+FROM sys.server_principals p
+JOIN sys.syslogins s ON p.sid = s.sid
+JOIN sys.server_permissions sp ON p.principal_id = sp.grantee_principal_id
+RIGHT JOIN sys.database_principals dp ON p.name COLLATE DATABASE_DEFAULT = dp.name COLLATE DATABASE_DEFAULT
+WHERE p.type_desc IN ('SQL_LOGIN', 'WINDOWS_LOGIN', 'WINDOWS_GROUP')
+-- Logins that are not process logins
+AND p.name NOT LIKE '##%'
+-- Logins that are sysadmins or have GRANT CONTROL SERVER
+--AND (s.sysadmin = 1 OR sp.permission_name = 'CONTROL SERVER')
+)

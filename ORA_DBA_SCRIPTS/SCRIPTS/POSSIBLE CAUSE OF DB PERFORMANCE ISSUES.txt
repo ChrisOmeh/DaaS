@@ -1,0 +1,29 @@
+This is to acknowledge your email. 
+
+However, poor performance on the server can be attributed to several factors, if the database and underlying objects are not properly 
+designed / optimized there will be performance issues, if the resources on the server are not appropriately sized then there will be 
+performance issues. 
+
+Additionally, this is UAT and will not have the kind of hardware/resources to run the kind of tests that is being done. 
+We will look at the database server, and run some performance reports to determine what the issues are. However, you may 
+need to redefine your test cases, sample sizes and also critically look at the design of the database and the jobs, 
+because in our experience these kinds of issues are mostly caused by the way the database is designed and the jobs setup.
+
+
+UDM
+SAM_PRT
+WLF_APP
+
+
+Please note that we have carried out some investigations into the cause for the slowness on the Actimize AML UAT database server. 
+We generated some performance reports from SQL Server which indicates that the databases are missing some indexes required for SQL 
+statements to run efficiently which leads to performance improvements on the database.
+
+As stated earlier based on our experience poorly designed queries are usually the cause for performance bottlenecks on the database, 
+increasing resources such as memory and CPU will only compensate for the poor design.
+
+From the attached, we have provided the missing indexes for your team to review and implement as required. 
+Additionally, we have attached expensive queries which may also be investigated to determine the necessary fixes, 
+refactoring and optimization that may be required. If these are not done, then you will continue to experience slowness on the database. 
+Please implement the recommendations, we believe your experience will be greatly improved if these are done.
+

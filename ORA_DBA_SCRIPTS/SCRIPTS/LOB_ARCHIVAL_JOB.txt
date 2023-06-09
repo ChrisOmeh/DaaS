@@ -1,0 +1,205 @@
+USE [RPA_BotDB]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ArchiveData]    Script Date: 2/24/2023 12:03:20 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+ALTER PROCEDURE [dbo].[sp_ArchiveData]
+	-- Add the parameters for the stored procedure here
+
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+
+
+insert into [RPA_BotDB_Archive].dbo.ATMFEP_Backup ([FROM_ACCOUNT_ID],[PAN],[BIN],[DATETIME_TRAN_LOCAL],[DATETIME_TRAN_GMT],[STAN],[SINK_NODE_NAME],[SOURCE_NODE_NAME],[RETRIEVAL_REFERENCE_NR],[TRAN_AMOUNT_REQ],[DATETIME_REQ],[TRAN_AMOUNT_RSP] ,[TERMINAL_ID],[RSP_CODE_RSP],[MESSAGE_TYPE],[ID]) select [FROM_ACCOUNT_ID],[PAN],[BIN],[DATETIME_TRAN_LOCAL],[DATETIME_TRAN_GMT],[STAN],[SINK_NODE_NAME],[SOURCE_NODE_NAME],[RETRIEVAL_REFERENCE_NR],[TRAN_AMOUNT_REQ],[DATETIME_REQ],[TRAN_AMOUNT_RSP] ,[TERMINAL_ID],[RSP_CODE_RSP],[MESSAGE_TYPE],[ID] from [RPA_BotDB].dbo.ATMFEP
+	insert into [RPA_BotDB_Archive].dbo.ATMGL_Backup select * from [RPA_BotDB].dbo.ATMGL 
+	insert into [RPA_BotDB_Archive].dbo.MATCHED_3WAY_Backup select * from [RPA_BotDB].dbo.MATCHED_3WAY 
+	insert into [RPA_BotDB_Archive].dbo.EXCEPTION_3WAY_Backup select * from [RPA_BotDB].dbo.EXCEPTION_3WAY
+	insert into [RPA_BotDB_Archive].dbo.ANALYZED_EJOURNAL_Backup select * from [RPA_BotDB].dbo.ANALYZED_EJOURNAL where TranDate <= FORMAT(dateadd(day,-2,GETDATE()),'yyyyMMdd')
+	insert into [RPA_BotDB_Archive].dbo.ATM_BALANCES_Backup select * from [RPA_BotDB].dbo.ATM_BALANCES
+
+	truncate table [RPA_BotDB].dbo.ATMFEP
+	truncate table [RPA_BotDB].dbo.ATMGL 
+	truncate table [RPA_BotDB].dbo.MATCHED_3WAY 
+	truncate table [RPA_BotDB].dbo.EXCEPTION_3WAY
+	truncate table [RPA_BotDB].dbo.ATM_BALANCES
+	delete from [RPA_BotDB].dbo.ANALYZED_EJOURNAL where TranDate <= FORMAT(dateadd(day,-2,GETDATE()),'yyyyMMdd')
+
+	--insert into [RPA_BotDB_Archive].dbo.ATMFEP_Backup select * from [RPA_BotDB].dbo.ATMFEP where convert(date, DATETIME_TRAN_LOCAL) < dateadd(day,-6, Getdate())
+	--insert into [RPA_BotDB_Archive].dbo.ATMGL_Backup select * from [RPA_BotDB].dbo.ATMGL where convert(date, PSTD_DATE) < dateadd(day,-6, Getdate())
+	--insert into [RPA_BotDB_Archive].dbo.MATCHED_3WAY_Backup select * from [RPA_BotDB].dbo.MATCHED_3WAY where convert(date, TranDate) < dateadd(day,-6, Getdate())
+	--insert into [RPA_BotDB_Archive].dbo.EXCEPTION_3WAY_Backup select * from [RPA_BotDB].dbo.EXCEPTION_3WAY where convert(date, TranDate) < dateadd(day,-6, Getdate())
+	----Delete from [RPA_BotDB].dbo.ATMFEP where convert(date, DATETIME_TRAN_LOCAL) < dateadd(day,-6, Getdate())
+	----delete from [RPA_BotDB].dbo.ATMGL where convert(date, PSTD_DATE) < dateadd(day,-6, Getdate())
+	----delete from [RPA_BotDB].dbo.MATCHED_3WAY where convert(date, TranDate) < dateadd(day,-6, Getdate())
+	----delete from [RPA_BotDB].dbo.EXCEPTION_3WAY where convert(date, TranDate) < dateadd(day,-6, Getdate())
+END
+
+
+
+USE [RPA_BotDB]
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_ArchiveData]    Script Date: 2/24/2023 12:35:34 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[sp_ArchiveData]
+	-- Add the parameters for the stored procedure here
+
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+
+
+insert into [RPA_BotDB_Archive].dbo.ATMFEP_Backup ([FROM_ACCOUNT_ID],[PAN],[BIN],[DATETIME_TRAN_LOCAL],[DATETIME_TRAN_GMT],[STAN],[SINK_NODE_NAME],[SOURCE_NODE_NAME],[RETRIEVAL_REFERENCE_NR],[TRAN_AMOUNT_REQ],[DATETIME_REQ],[TRAN_AMOUNT_RSP] ,[TERMINAL_ID],[RSP_CODE_RSP],[MESSAGE_TYPE],[ID]) select [FROM_ACCOUNT_ID],[PAN],[BIN],[DATETIME_TRAN_LOCAL],[DATETIME_TRAN_GMT],[STAN],[SINK_NODE_NAME],[SOURCE_NODE_NAME],[RETRIEVAL_REFERENCE_NR],[TRAN_AMOUNT_REQ],[DATETIME_REQ],[TRAN_AMOUNT_RSP] ,[TERMINAL_ID],[RSP_CODE_RSP],[MESSAGE_TYPE],[ID] from [RPA_BotDB].dbo.ATMFEP
+	insert into [RPA_BotDB_Archive].dbo.ATMGL_Backup select * from [RPA_BotDB].dbo.ATMGL 
+	insert into [RPA_BotDB_Archive].dbo.MATCHED_3WAY_Backup select * from [RPA_BotDB].dbo.MATCHED_3WAY 
+	insert into [RPA_BotDB_Archive].dbo.EXCEPTION_3WAY_Backup select * from [RPA_BotDB].dbo.EXCEPTION_3WAY
+	insert into [RPA_BotDB_Archive].dbo.ANALYZED_EJOURNAL_Backup select * from [RPA_BotDB].dbo.ANALYZED_EJOURNAL where TranDate <= FORMAT(dateadd(day,-2,GETDATE()),'yyyyMMdd')
+	insert into [RPA_BotDB_Archive].dbo.ATM_BALANCES_Backup select * from [RPA_BotDB].dbo.ATM_BALANCES
+
+	truncate table [RPA_BotDB].dbo.ATMFEP
+	truncate table [RPA_BotDB].dbo.ATMGL 
+	truncate table [RPA_BotDB].dbo.MATCHED_3WAY 
+	truncate table [RPA_BotDB].dbo.EXCEPTION_3WAY
+	truncate table [RPA_BotDB].dbo.ATM_BALANCES
+	delete from [RPA_BotDB].dbo.ANALYZED_EJOURNAL where TranDate <= FORMAT(dateadd(day,-2,GETDATE()),'yyyyMMdd')
+
+	--insert into [RPA_BotDB_Archive].dbo.ATMFEP_Backup select * from [RPA_BotDB].dbo.ATMFEP where convert(date, DATETIME_TRAN_LOCAL) < dateadd(day,-6, Getdate())
+	--insert into [RPA_BotDB_Archive].dbo.ATMGL_Backup select * from [RPA_BotDB].dbo.ATMGL where convert(date, PSTD_DATE) < dateadd(day,-6, Getdate())
+	--insert into [RPA_BotDB_Archive].dbo.MATCHED_3WAY_Backup select * from [RPA_BotDB].dbo.MATCHED_3WAY where convert(date, TranDate) < dateadd(day,-6, Getdate())
+	--insert into [RPA_BotDB_Archive].dbo.EXCEPTION_3WAY_Backup select * from [RPA_BotDB].dbo.EXCEPTION_3WAY where convert(date, TranDate) < dateadd(day,-6, Getdate())
+	----Delete from [RPA_BotDB].dbo.ATMFEP where convert(date, DATETIME_TRAN_LOCAL) < dateadd(day,-6, Getdate())
+	----delete from [RPA_BotDB].dbo.ATMGL where convert(date, PSTD_DATE) < dateadd(day,-6, Getdate())
+	----delete from [RPA_BotDB].dbo.MATCHED_3WAY where convert(date, TranDate) < dateadd(day,-6, Getdate())
+	----delete from [RPA_BotDB].dbo.EXCEPTION_3WAY where convert(date, TranDate) < dateadd(day,-6, Getdate())
+END
+GO
+
+--=======================================
+---CREATE THE BACKUP JOB PROCEDURE SCRIPT
+--=======================================
+
+USE [RPA_BotDB]
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_ArchiveData]    Script Date: 2/24/2023 12:35:34 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		<Omeh, Chukwuemeka>
+-- Create date: <25/02/2023>
+-- Description:	<RPA BOT DB table archival job stored procedure>
+-- =============================================
+
+CREATE PROCEDURE [dbo].[sp_ArchiverRPATables]
+	-- Add the parameters for the stored procedure here
+
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+--==========================================
+---EFT_Exceptions_Archive
+--==========================================
+
+--STEP ONE
+INSERT INTO EFT_Exceptions_Archive SELECT * FROM [RPA_BotDB].dbo.EFT_Exceptions WHERE Recon_Date <= DATEADD(DD, -30, GETDATE())
+
+--STEP TWO
+DELETE FROM [RPA_BotDB].dbo.EFT_Exceptions WHERE Recon_Date <= DATEADD(DD, -30, GETDATE())
+
+
+--==========================================
+---T464_Settlement_Archive
+--==========================================
+
+--STEP ONE
+INSERT INTO T464_Settlement_Archive SELECT * FROM [RPA_BotDB].dbo.T464_Settlement WHERE SettlementDate <= DATEADD(DD, -30, GETDATE())
+
+--STEP TWO
+DELETE FROM [RPA_BotDB].dbo.T464_Settlement WHERE SettlementDate <= DATEADD(DD, -30, GETDATE())
+
+--==========================================
+---CARD_GL_Archive
+--==========================================
+
+--STEP ONE
+INSERT INTO CARD_GL_Archive SELECT * FROM [RPA_BotDB].dbo.CARD_GL WHERE PSTD_DATE <= DATEADD(DD, -30, GETDATE())
+
+--STEP TWO
+DELETE FROM [RPA_BotDB].dbo.CARD_GL WHERE PSTD_DATE <= DATEADD(DD, -30, GETDATE())
+
+
+--==========================================
+---FEPArchive_Archive
+--==========================================
+
+--STEP ONE
+INSERT INTO FEPArchive_Archive SELECT * FROM [RPA_BotDB].dbo.FEPArchive WHERE DATETIME_TRAN_LOCAL <= DATEADD(DD, -30, GETDATE())
+
+--STEP TWO
+DELETE FROM [RPA_BotDB].dbo.FEPArchive WHERE DATETIME_TRAN_LOCAL <= DATEADD(DD, -30, GETDATE())
+
+END
+GO
+
+
+
+--==========================================
+---Logs_Archive
+--==========================================
+
+USE [UiPath]
+GO
+CREATE PROCEDURE [dbo].[sp_ArchiverUIPATHTables]
+	-- Add the parameters for the stored procedure here
+
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+--STEP ONE
+INSERT INTO Logs_Archive SELECT * FROM [UiPath].dbo.Logs WHERE TimeStamp <= DATEADD(DD, -30, GETDATE())
+
+--STEP TWO
+DELETE FROM [UiPath].dbo.Logs WHERE TimeStamp <= DATEADD(DD, -30, GETDATE())
+
+END
+GO
+
+
+SELECT NAME,VERSION,CURRENTLY_USED,FEATURE_INFO FROM DBA_FEATURE_USAGE_STATISTICS WHERE NAME = 'Data Guard';

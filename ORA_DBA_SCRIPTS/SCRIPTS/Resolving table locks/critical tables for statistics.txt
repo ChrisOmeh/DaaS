@@ -1,0 +1,242 @@
+EXEC DBMS_STATS.gather_table_stats('TBAADM', 'GENERAL_ACCT_MAST_TABLE', estimate_percent => 20, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','EOD_ACCT_BAL_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','ACCOUNT_LIEN_HISTORY_TABLE', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','ABNRML_TRAN_AUDIT_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','ACH_ENT_DTL_HIST_TBL', estimate_percent => 15, cascade => TRUE);  
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','ACH_ENTRY_DETAIL_TABLE', estimate_percent => 15, cascade => TRUE);  
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','ADDNL_TRAN_DETAIL_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','ASST_CLASS_DETAIL_TBL', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','ASST_CLASS_HIST_TBL', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','REF_TRN_TBL', estimate_percent => 20, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','DC_TRAN_INQ_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','DPD_CYCLE_INFO_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','GL_SUB_HEAD_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','GL_SUB_HEAD_TRAN_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','INT_ADMINISTRATION_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','DC_TRAN_INQ_TABLE_HIST', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','DPD_CYCLE_HISTORY_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','DEFERRED_CHARGES_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','CHRG_TRAN_LOG_TBL', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','INTEREST_DETAILS_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','INTEREST_RPT_DET_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','INT_TBL_CODE_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','INTEREST_HISTORY_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','INT_RECALC_PARAMETER_TBL', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','PART_TRAN_EXCEPTION_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','CORE_CMG_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','RECALC_INT_DET_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','RECALC_INT_RPT_DET_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','REFERRAL_DTLS_HIST_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','REFERRAL_HEADER_HIST_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','REF_TRN_TBL', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','REF_TRN_TBL_HIST', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','ENTITY_INTEREST_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','LA_ACCT_MAST_TABLE', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','LA_REP_SHDL_HISTORY_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','LA_REP_SHDL_TABLE', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','LA_RESHDL_HDR_HIST_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','LA_TRAN_DETAIL_HIST_TABLE', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','LA_RESHDL_HDR_TABLE', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','SI_HISTORY_TABLE', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','BATCH_JOB_MONITOR_TBL', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','FAILURE_EVENT_LOG_TABLE', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','JOB_COLLECTOR_HIST_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','FREE_CODE_FREE_TEXT_TABLE', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','SWIFT_MSG_HISTORY_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','SWIFT_MSG_FOLLOWUP_TABLE', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','ORG_TRAN_TABLE', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','INTEREST_DET_HISTORY_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','TRAN_CONTRA_TABLE', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','CMS_CARD_DETAILS_TABLE', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','CMS_CARD_ACCT_LINK_TABLE', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','ACCT_STATEMENT_TABLE', estimate_percent => 15, cascade => TRUE);
+
+
+***********************************************************************************************************************8
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','EOD_TRAN_DETAIL_TABLE', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','EOD_TRAN_HEADER_TABLE', estimate_percent => 15, cascade => TRUE);  
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','HIST_TRAN_HEADER_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','INTERFACE_REQUEST_DTL_TBL', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','CHQ_BOOK_TABLE', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','CHARGE_ASSESSMENT_TABLE', estimate_percent => 15, cascade => TRUE);  
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','CCOD_ACCT_MAST_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','BATCH_REPORT_STATUS_TBL', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','AMT_DRV_METHOD_TBL', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','ASSESSMENT_PART_TRAN_TABLE', estimate_percent => 15, cascade => TRUE);  
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','MINI_STMNT_DETAILS_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','SOL_VAL_HIST_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','ACCT_PARTITION_TABLE', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','ACCOUNT_DOCUMENT_TABLE', estimate_percent => 15, cascade => TRUE);  
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','ACCOUNT_LIEN_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','ACCT_AUTH_SIGN_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','SI_HEADER_TABLE', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','SBCA_MAST_TABLE', estimate_percent => 15, cascade => TRUE);  
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','PRINT_QUEUE_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','OUT_CLG_SET_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','OUT_CLG_INSTRMNT_TABLE', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','OUT_CLG_PART_TRAN_TABLE', estimate_percent => 15, cascade => TRUE);  
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','INW_CLG_PART_TRAN_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','LIM_HISTORY_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','LIM_HISTORY_EVENT_TABLE', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','LA_TRAN_DETAIL_TABLE', estimate_percent => 15, cascade => TRUE);  
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','LA_DMD_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','LA_DMD_HISTORY_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','LA_DMD_ADJ_TABLE', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','GEN_ACCT_CLASS_TABLE', estimate_percent => 15, cascade => TRUE);  
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','GENERAL_ACCT_EXTN_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','LA_DMD_ADJ_HISTORY_TABLE', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','DRWNG_POWER_HIST_TBL', estimate_percent => 15, cascade => TRUE);
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+EXEC DBMS_STATS.gather_table_stats('MISUSER','SMM_EXTRACTED_TRANSACTIONS', estimate_percent => 15, cascade => TRUE); 
+
+EXEC DBMS_STATS.gather_schema_stats('MISUSER', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_schema_stats('CUSTOM', estimate_percent => 15, cascade => TRUE);
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+EXEC DBMS_STATS.gather_table_stats('CRMUSER','ACCOUNTS', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('CRMUSER','ACTIVITIES', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('CRMUSER','CIF_ID_MASTER', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('CRMUSER','ADDRESS', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('CRMUSER','COREINTERFACE', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('CRMUSER','ENTITYDOCUMENT', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('CRMUSER','PHONEEMAIL', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('CRMUSER','MISCELLANEOUSINFO', estimate_percent => 15, cascade => TRUE);
+
+
+
+EXEC DBMS_STATS.gather_table_stats('FIMASTER','FIUSB_MESSAGE_TABLE', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('FIMASTER','FIUSB_TRANDETAILS_TABLE', estimate_percent => 15, cascade => TRUE);
+
+EXEC DBMS_STATS.gather_table_stats('FIMASTER','FIUSB_TRANSACTION_TABLE', estimate_percent => 15, cascade => TRUE);
+
+
+----------------------------------------------------------------------------------------------------------------------
+
+EXEC DBMS_STATS.gather_table_stats('TBAADM','HIST_TRAN_DTL_TABLE', estimate_percent => 20, cascade => TRUE);  
+
+EXEC DBMS_STATS.gather_table_stats('SVSUSER','SIGNCUSTINFO', estimate_percent => 15, cascade => TRUE);
+
+
+EXEC DBMS_STATS.gather_table_stats('SVSUSER','SIGNOTHERINFO', estimate_percent => 15, cascade => TRUE);
+
+
+EXEC DBMS_STATS.gather_table_stats('SVSUSER','SIGNMAINTENANCE', estimate_percent => 15, cascade => TRUE);
+
+
+EXEC DBMS_STATS.gather_table_stats('SVSUSER','TRANSHISTORY', estimate_percent => 15, cascade => TRUE);
+
+
+EXEC DBMS_STATS.gather_table_stats('SVSUSER','TRANSHISTORYDETAILS', estimate_percent => 15, cascade => TRUE);
+
+
+EXEC DBMS_STATS.gather_table_stats('SVSUSER','DATESHIFT', estimate_percent => 15, cascade => TRUE);
+
+
+EXEC DBMS_STATS.gather_table_stats('SVSUSER','AUDITINFO', estimate_percent => 15, cascade => TRUE);
+
+
+
+
+
+

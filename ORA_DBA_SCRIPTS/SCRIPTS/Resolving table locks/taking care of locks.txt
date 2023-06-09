@@ -1,0 +1,23 @@
+
+
+
+SELECT spid 
+FROM v$process
+WHERE addr IN 
+(SELECT paddr FROM v$session WHERE sid=<> AND serial#=<>); 
+
+
+
+OR 
+
+Determine the spid to be killed straight from 
+
+SELECT s.inst_id,
+       s.sid,
+       s.serial#,
+       p.spid,
+       s.username,
+       s.program
+FROM   gv$session s
+       JOIN gv$process p ON p.addr = s.paddr AND p.inst_id = s.inst_id
+WHERE  s.type != 'BACKGROUND';

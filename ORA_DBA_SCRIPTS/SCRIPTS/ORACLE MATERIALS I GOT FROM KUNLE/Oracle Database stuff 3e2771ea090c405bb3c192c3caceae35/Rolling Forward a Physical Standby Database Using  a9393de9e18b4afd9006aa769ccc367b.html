@@ -1,0 +1,960 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Rolling Forward a Physical Standby Database Using the RECOVER FROM SERVICE Command (12c and above)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a9393de9-e18b-4afd-9006-aa769ccc367b" class="page sans"><header><h1 class="page-title"><strong>Rolling Forward a Physical Standby Database Using the RECOVER FROM SERVICE Command (12c and above)</strong></h1></header><div class="page-body"><h2 id="c8ede421-e6f9-466f-b1f7-d47f862557b9" class="">APPLIES TO:</h2><p id="dc0928c3-0af4-4504-b121-432bdfe916c8" class="">Oracle Database - Enterprise Edition - Version 12.1.0.1 and later</p><p id="60715380-f321-4a4d-a0e8-76cee00fa483" class="">Information in this document applies to any platform.</p><p id="ab381508-2b22-4ba3-b8c0-111403c7cfb7" class="">Checked for relevance on 03-Dec-2019</p><h2 id="6aad2a6c-abe6-41f9-a3e9-ac4d3239dbd5" class="">GOAL</h2><p id="0ffbf561-76ed-4879-9aa9-3ce04fd1d9ae" class=""><strong>NOTE:  If you are running a Oracle 11g or earlier, see:</strong><strong>Steps to perform for Rolling Forward a Physical Standby Database using RMAN Incremental Backup. (</strong><a href="https://support.oracle.com/epmos/faces/DocumentDisplay?parent=DOCUMENT&amp;sourceId=1987763.1&amp;id=836986.1"><strong>Note:836986.1</strong></a><strong>)</strong></p><p id="c62a7dbe-234b-4cd1-9375-060120b76d83" class=""><strong></strong><strong>Rolling Forward a Physical Standby Database Using the RECOVER FROM SERVICE Command</strong></p><p id="e2826e0b-dc39-40d2-b8ac-5ed6ce2ab16f" class="">A standby database is a transactionally-consistent copy of the production database. It enables production Oracle database to survive disasters and data corruption. If the production database becomes unavailable because of a planned or an unplanned outage, Data Guard can switch a standby database to the production role, minimizing the downtime associated with the outage. Moreover, performance of production database can be improved by offloading resource-intensive backup and reporting operations to standby systems. As you can see, it’s always desirable to have standby database synchronized with the primary database.</p><p id="ce4ae19f-99da-4d71-8586-c83240195647" class="">Prior to 12c, in order to roll forward the standby database using incremental backups you would need to:</p><ul id="897809a9-870b-49e9-a589-7d855cf5dbca" class="bulleted-list"><li style="list-style-type:disc">Determine the necessary SCN of the standby</li></ul><ul id="33685fa3-cfc1-42b4-b225-eb3a1396cea9" class="bulleted-list"><li style="list-style-type:disc">Take an incremental backup on the primary starting from that SCN# of the standby database.</li></ul><ul id="674b26fd-8904-465c-9caf-34045223cba0" class="bulleted-list"><li style="list-style-type:disc">Copy the incremental backup to the standby host</li></ul><ul id="f5c5aa36-f2af-4cb1-ad82-beb7783bd58c" class="bulleted-list"><li style="list-style-type:disc">Catalog the backups (copied from the primary) into the standby controlfile.</li></ul><ul id="6e1a04d4-db52-4803-a8bf-75c60c43ac3f" class="bulleted-list"><li style="list-style-type:disc">Cancel managed recovery of the standby database and apply the incremental backup on the standby database.</li></ul><ul id="e11e444d-9ea0-4da1-b9d1-2b60f9968abe" class="bulleted-list"><li style="list-style-type:disc">Create a control file for the standby database on the primary database.</li></ul><ul id="36dbaa4a-1109-463a-ad95-af3e52da352a" class="bulleted-list"><li style="list-style-type:disc">Mount the standby database with newly created standby control file.</li></ul><ul id="d1a2df6e-0786-49f4-811e-c235d3956741" class="bulleted-list"><li style="list-style-type:disc">Start managed recovery of standby database.</li></ul><p id="411d4e39-734f-46fb-a009-f79ec3077631" class="">In 12c, this procedure has been dramatically simplified. In 12c, you can use the RECOVER … FROM SERVICE command to synchronize the physical standby database with the primary database.  This command does the following:</p><ul id="0dd9a932-0897-4882-8ae2-9aab7e3296c6" class="bulleted-list"><li style="list-style-type:disc">Creates an incremental backup containing the changes to the primary database. All changes to data files on the primary database, beginning with the SCN in the standby data file header, are included in the incremental backup.</li></ul><ul id="e79fe749-cbaf-41d6-854a-515a45c3d572" class="bulleted-list"><li style="list-style-type:disc">Transfers the incremental backup over the network to the physical standby database.</li></ul><ul id="b87b99e2-f4c9-4217-bff5-6b98ef0189d0" class="bulleted-list"><li style="list-style-type:disc">Applies the incremental backup to the physical standby database.</li></ul><p id="09690c27-cfab-443c-8451-919f56c40c40" class="">This results in rolling forward the standby datafiles to the same point-in-time as the primary.   However, since the standby controlfile still contains old SCN values (lower than the SCN values of the standby datafiles) to complete the synchronization of the physical standby database, the standby control file needs to be refreshed.</p><h2 id="5938bee2-f651-4b21-9ebf-45b3bd4c0aac" class="">SOLUTION</h2><p id="51673233-31d5-4cd7-b66f-84a4cd7d2dfb" class=""><strong>NOTE: In the images and/or the document content below, the user information and environment data used represents fictitious data from the Oracle sample schema(s), Public Documentation delivered with an Oracle database product or other training material. Any similarity to actual environments, actual persons, living or dead, is purely coincidental and not intended in any manner.</strong></p><p id="c8375ae3-dcb4-43f2-80c4-c02ba0d3ec28" class="">For the purposes of this document, the following fictitious environment is used as an example to describe the procedure:</p><p id="8c565ba2-9754-4fbb-8b02-97713faf97b2" class="">Primary Database:DB_UNIQUE_NAME: prim (net service name &#x27;PRIM&#x27;)PDB names = PDB1, PDB3Standby Database:DB_UNIQUE_NAME: clone (net service name &#x27;CLONE&#x27;)</p><ul id="d6b4beb9-b890-4289-9504-350390a3632a" class="bulleted-list"><li style="list-style-type:disc">************</li></ul><p id="f32cf6f6-e9ae-4b7b-9dc3-ad15baa7bffd" class="">Use the following steps to refresh the physical standby database with changes made to the primary database:</p><p id="a9ab7a5e-a5cd-43de-a633-2e118368fcdc" class=""><em><strong>Prerequisites</strong></em>:</p><ul id="4ed6d2be-1a48-4559-aac4-1d4ee7f662aa" class="bulleted-list"><li style="list-style-type:disc">Oracle Net connectivity is established between the physical standby database and the primary database. This is done by adding an entry corresponding to the primarydatabase in the tnsnames.ora file of the physical standby database.</li></ul><ul id="d542c0f8-d199-4756-921b-78fe1df3993f" class="bulleted-list"><li style="list-style-type:disc">The password files on the primary database and the physical standby database are identical.</li></ul><ul id="a5e93d5a-2526-469e-9492-1093e6984ba3" class="bulleted-list"><li style="list-style-type:disc">The COMPATIBLE parameter in the initialization parameter file of the primary database and physical standby database is set to 12.0 or higher.</li></ul><ul id="a3189d84-3c8c-44c6-b18f-4353de6237c0" class="bulleted-list"><li style="list-style-type:disc">Start RMAN and connect as target to the physical standby database.</li></ul><ul id="099b4e75-bfcf-4c6e-b73d-f1badb53e58b" class="bulleted-list"><li style="list-style-type:disc">Check the existing size of the Primary database and compare with the existing size of the standby datafiles. You will need at-least the difference in free space size. If the datafiles on primaryhave autoextended, the standby datafile would not be same in the size comparison. When the incremental rollforward is executed, it will apply the newly added blocks to the standby datafiles.</li></ul><p id="7f514a7f-4c28-406a-aafc-57613d98d353" class=""><strong>1. Place the physical standby database in MOUNT mode.</strong></p><pre id="9c09174b-4664-4c98-835b-4f8901628fdd" class="code code-wrap"><code>RMAN&gt;  SHUTDOWN IMMEDIATE;</code></pre><pre id="5c18cfcd-517b-4490-9b8d-4c8c61b197d9" class="code code-wrap"><code>RMAN&gt;  STARTUP MOUNT;</code></pre><p id="91839e8a-1528-470f-bdb1-03a6a1669af8" class=""><strong>2. Stop the managed recovery processes on the physical standby database.</strong></p><pre id="647bcd3c-efb3-4e5a-b3f3-db2486c47fd2" class="code code-wrap"><code>RMAN&gt;  ALTER DATABASE RECOVER MANAGED STANDBY DATABASE CANCEL;</code></pre><p id="ce7fc57e-3d08-4338-9777-328354de4aa5" class="">NOTE:  If using broker, you will need to stop MRP through DGMGRL.  I.e.:DGMGRL&gt; edit database &#x27;&lt;Standby db_unique_name&gt;&#x27; set STATE=&#x27;APPLY-OFF&#x27; ;</p><p id="c92ff1d0-1b86-4482-96d3-ceedc4feb3fd" class=""><strong>3. Let us identify the datafiles on standby database which are out of sync with respect to primary.</strong></p><pre id="898ba0c6-fa6e-4dcb-aba4-e1a2d922eba1" class="code code-wrap"><code>PRIMARY:
+
+SQL&gt; select HXFIL File_num,substr(HXFNM,1,40),fhscn from x$kcvfh;
+
+  FILE_NUM SUBSTR(HXFNM,1,40)                       FHSCN
+---------- ---------------------------------------- ----------------
+         1 /&lt;path&gt;/prim/system01.dbf                 1984501
+         3 /&lt;path&gt;/prim/sysaux01.dbf                 1984501
+         4 /&lt;path&gt;/prim/undotbs01.dbf                1984501
+         5 /&lt;path&gt;/prim/pdbseed/system01.dbf         1733076
+         6 /&lt;path&gt;/prim/users01.dbf                  1984501
+         7 /&lt;path&gt;/prim/pdbseed/sysaux01.dbf         1733076
+         8 /&lt;path&gt;/prim/pdb1/system01.dbf            1984501
+         9 /&lt;path&gt;/prim/pdb1/sysaux01.dbf            1984501
+        10 /&lt;path&gt;/prim/pdb1/pdb1_users01.dbf        1984501
+        16 /&lt;path&gt;/prim/pdb3/system01.dbf            1984501
+        17 /&lt;path&gt;/prim/pdb3/sysaux01.dbf           1984501
+        18 /&lt;path&gt;/prim/pdb3/pdb3_users01.dbf        1984501
+        19 /&lt;path&gt;/prim/pdb3/test.dbf                1984501
+
+13 rows selected.
+
+STANDBY:
+
+SQL&gt;  select HXFIL File_num,substr(HXFNM,1,40),fhscn from x$kcvfh;
+
+  FILE_NUM SUBSTR(HXFNM,1,40)                       FHSCN
+---------- ---------------------------------------- ----------------
+         1 /&lt;path&gt;/clone/system01.dbf               1980995
+         3 /&lt;path&gt;/clone/sysaux01.dbf               1980998
+         4 /&lt;path&gt;/clone/undotbs01.dbf              1981008
+         5 /&lt;path&gt;/clone/pdbseed/system01.dbf       1733076
+         6 /&lt;path&gt;/clone/users01.dbf                1981012
+         7 /&lt;path&gt;/clone/pdbseed/sysaux01.dbf       1733076
+         8 /&lt;path&gt;/clone/pdb1/system01.dbf          1981015
+         9 /&lt;path&gt;/clone/pdb1/sysaux01.dbf          1981021
+        10 /&lt;path&gt;/clone/pdb1/pdb1_users01.dbf      1981028
+        16 /&lt;path&gt;/clone/pdb3/system01.dbf          1981030
+        17 /&lt;path&gt;/clone/pdb3/sysaux01.dbf          1981036
+        18 /&lt;path&gt;/clone/pdb3/pdb3_users01.dbf      1981043
+        19 /&lt;path&gt;/clone/pdb3/test.dbf              1981044
+
+13 rows selected.</code></pre><p id="3bfbc3e2-be75-44dc-a3bd-cba02f8db9d6" class="">From the above example, when comparing the SCN of the datafiles&#x27; header on the primary (PRIM) and standby (CLONE), we see that whereas the SCN of datafiles 5 and 7 match that of primary, the rest of the datafiles (1,3,4,6,8,9,10,16,17) of the standby are lagging behind the primary database.<strong>4. Note the current SCN of the physical standby database. This is required to determine, in a later step, if new data files were added to the primary database.</strong></p><p id="d09ba997-fde2-47dc-b4fe-29c80feefcd4" class="">Query the V$DATABASE view to obtain the current SCN using the following command:</p><pre id="b4cb6acb-70e8-45aa-bea0-d618b4388162" class="code code-wrap"><code>RMAN&gt;  SELECT CURRENT_SCN FROM V$DATABASE;
+
+For Example:
+
+RMAN&gt; SELECT CURRENT_SCN FROM V$DATABASE;
+CURRENT_SCN
+-----------
+1984232</code></pre><p id="d585225a-ea35-4183-bc77-7a58dc525b28" class="">5. <strong>The RECOVER … FROM SERVICE command refreshes the standby data files and rolls them forward to the same point-in-time as the primary.</strong></p><pre id="e2e6c0bd-f4ed-409a-8416-aef9d7b005e7" class="code code-wrap"><code>$ rman target SYS/&lt;password&gt;
+
+Recovery Manager: Release 12.1.0.1.0 - Production on Mon Mar 9 18:22:52 2015
+Copyright (c) 1982, 2013, Oracle and/or its affiliates.  All rights reserved.
+connected to target database: PRIM (DBID=4165840403, not open)
+
+
+RMAN&gt; recover database from service PRIM noredo using compressed backupset;</code></pre><p id="54491b55-8517-40cd-9ab7-1d880e9bd3a5" class="">Output Sample:</p><pre id="3e682304-98d5-4562-882f-69ba27fe6197" class="code code-wrap"><code>Starting recover at 09-MAR-15
+using target database control file instead of recovery catalog
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: SID=32 device type=DISK
+skipping datafile 5; already restored to SCN 1733076
+skipping datafile 7; already restored to SCN 1733076
+channel ORA_DISK_1: starting incremental datafile backup set restore
+channel ORA_DISK_1: using compressed network backup set from service prim
+destination for restore of datafile 00001: /&lt;path&gt;/clone/system01.dbf
+channel ORA_DISK_1: restore complete, elapsed time: 00:00:07
+channel ORA_DISK_1: starting incremental datafile backup set restore
+channel ORA_DISK_1: using compressed network backup set from service prim
+destination for restore of datafile 00003: /&lt;path&gt;/clone/sysaux01.dbf
+channel ORA_DISK_1: restore complete, elapsed time: 00:00:25
+channel ORA_DISK_1: starting incremental datafile backup set restore
+channel ORA_DISK_1: using compressed network backup set from service prim
+destination for restore of datafile 00004: /&lt;path&gt;/clone/undotbs01.dbf
+channel ORA_DISK_1: restore complete, elapsed time: 00:00:07
+channel ORA_DISK_1: starting incremental datafile backup set restore
+channel ORA_DISK_1: using compressed network backup set from service prim
+destination for restore of datafile 00006: /&lt;path&gt;/clone/users01.dbf
+channel ORA_DISK_1: restore complete, elapsed time: 00:00:03
+channel ORA_DISK_1: starting incremental datafile backup set restore
+channel ORA_DISK_1: using compressed network backup set from service prim
+destination for restore of datafile 00008: /&lt;path&gt;/clone/pdb1/system01.dbf
+channel ORA_DISK_1: restore complete, elapsed time: 00:00:07
+channel ORA_DISK_1: starting incremental datafile backup set restore
+channel ORA_DISK_1: using compressed network backup set from service prim
+destination for restore of datafile 00009: /&lt;path&gt;/clone/pdb1/sysaux01.dbf
+channel ORA_DISK_1: restore complete, elapsed time: 00:00:15
+channel ORA_DISK_1: starting incremental datafile backup set restore
+channel ORA_DISK_1: using compressed network backup set from service prim
+destination for restore of datafile 00010: /&lt;path&gt;/clone/pdb1/pdb1_users01.dbf
+channel ORA_DISK_1: restore complete, elapsed time: 00:00:01
+channel ORA_DISK_1: starting incremental datafile backup set restore
+channel ORA_DISK_1: using compressed network backup set from service prim
+destination for restore of datafile 00016: /&lt;path&gt;/clone/pdb3/system01.dbf
+channel ORA_DISK_1: restore complete, elapsed time: 00:00:15
+channel ORA_DISK_1: starting incremental datafile backup set restore
+channel ORA_DISK_1: using compressed network backup set from service prim
+destination for restore of datafile 00017: /&lt;path&gt;/clone/pdb3/sysaux01.dbf
+channel ORA_DISK_1: restore complete, elapsed time: 00:00:15
+channel ORA_DISK_1: starting incremental datafile backup set restore
+channel ORA_DISK_1: using compressed network backup set from service prim
+destination for restore of datafile 00018: /&lt;path&gt;/clone/pdb3/pdb3_users01.dbf
+channel ORA_DISK_1: restore complete, elapsed time: 00:00:03
+channel ORA_DISK_1: starting incremental datafile backup set restore
+channel ORA_DISK_1: using compressed network backup set from service prim
+destination for restore of datafile 00019: /&lt;path&gt;/clone/pdb3/test.dbf
+channel ORA_DISK_1: restore complete, elapsed time: 00:00:02
+Finished recover at 09-MAR-15</code></pre><p id="d3c28cbc-ac7b-4059-b227-98a157aaac5b" class="">6. Lets check the SCNs of the datafiles at primary and standby now.</p><pre id="0fa8a4e6-6d70-4885-a441-37c79e6a0d35" class="code code-wrap"><code>PRIMARY:
+
+SQL&gt; select HXFIL File_num,substr(HXFNM,1,40),fhscn from x$kcvfh;
+
+  FILE_NUM SUBSTR(HXFNM,1,40)                       FHSCN
+---------- ---------------------------------------- ----------------
+         1 /&lt;path&gt;/prim/system01.dbf                1985174
+         3 /&lt;path&gt;/prim/sysaux01.dbf                1985183
+         4 /&lt;path&gt;/prim/undotbs01.dbf               1985194
+         5 /&lt;path&gt;/prim/pdbseed/system01.dbf        1733076
+         6 /&lt;path&gt;/prim/users01.dbf                 1985203
+         7 /&lt;path&gt;/prim/pdbseed/sysaux01.dbf        1733076
+         8 /&lt;path&gt;/prim/pdb1/system01.dbf           1985206
+         9 /&lt;path&gt;/prim/pdb1/sysaux01.dbf           1985212
+        10 /&lt;path&gt;/prim/pdb1/pdb1_users01.dbf       1985218
+        16 /&lt;path&gt;/prim/pdb3/system01.dbf           1985221
+        17 /&lt;path&gt;/prim/pdb3/sysaux01.dbf           1985343
+        18 /&lt;path&gt;/prim/pdb3/pdb3_users01.dbf       1985350
+        19 /&lt;path&gt;/prim/pdb3/test.dbf              1985354
+
+13 rows selected
+
+STANDBY:
+
+RMAN&gt; select HXFIL File_num,substr(HXFNM,1,40),fhscn from x$kcvfh;
+
+  FILE_NUM SUBSTR(HXFNM,1,40)                       FHSCN
+---------- ---------------------------------------- ----------------
+         1 /&lt;path&gt;/clone/system01.dbf                1985174
+         3 /&lt;path&gt;/clone/sysaux01.dbf                1985183
+         4 /&lt;path&gt;/clone/undotbs01.dbf               1985194
+         5 /&lt;path&gt;/clone/pdbseed/system01.dbf        1733076
+         6 /&lt;path&gt;/clone/users01.dbf                 1985203
+         7 /&lt;path&gt;/clone/pdbseed/sysaux01.dbf        1733076
+         8 /&lt;path&gt;/clone/pdb1/system01.dbf           1985206
+         9 /&lt;path&gt;/clone/pdb1/sysaux01.dbf           1985212
+        10 /&lt;path&gt;/clone/pdb1/pdb1_users01.dbf       1985218
+        16 /&lt;path&gt;/clone/pdb3/system01.dbf           1985221
+        17 /&lt;path&gt;/clone/pdb3/sysaux01/dbf           1985343
+        18 /&lt;path&gt;/clone/pdb3/pdb3_users01.dbf       1985350
+        19 /&lt;path&gt;/clone/pdb3/test.dbf               1985354
+
+13 rows selected</code></pre><p id="a525d792-8043-4ec8-bc9a-9a11d8485afa" class="">From above, you will observe that the primary and standby datafiles&#x27; SCNs are now matching or gap is reduced.</p><p id="135fac2e-b8c2-45d6-90d6-88e3bfe1fc21" class="">However, the standby control file still contains old SCN values which are lower than the SCN values in the standby datafiles.   Therefore, to complete the synchronization of the physical standby database, we must refresh the standby controlfile from the primary.  <strong>7. Use the following commands to shut down the standby database and then start it in NOMOUNT mode.</strong></p><pre id="16f13f93-bc5c-4993-a78f-6e1e35eb5024" class="code code-wrap"><code>RMAN&gt; SHUTDOWN IMMEDIATE;
+RMAN&gt; STARTUP NOMOUNT;</code></pre><p id="6cdbd11e-eff2-4de6-abd8-efe0d92d83c1" class="">Note:To achieve this in RAC, stop the standby database and start one instance of it in nomount state.</p><pre id="9804d3a2-4b87-40df-8272-93e32890452d" class="code code-wrap"><code>srvctl stop database -db &lt;db_name&gt;
+sqlplus / as sysdba
+startup nomount</code></pre><p id="e35ed656-2b08-4be0-92ba-8685fd09e144" class=""><strong>8. Restore the standby control file by using the control file on the primary database using service prim.</strong>The following command restores the control file on the physical standby database by using the primary database control file:</p><pre id="c50f62a1-88bb-4105-9bca-ba611a61a72c" class="code code-wrap"><code>RMAN&gt;  RESTORE STANDBY CONTROLFILE FROM SERVICE &lt;primary_tns_service&gt;;
+
+For example:
+
+RMAN&gt; restore standby controlfile from service PRIM;
+
+Starting restore at 09-MAR-15
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: SID=20 device type=DISK
+
+channel ORA_DISK_1: starting datafile backup set restore
+channel ORA_DISK_1: using network backup set from service prim
+channel ORA_DISK_1: restoring control file
+channel ORA_DISK_1: restore complete, elapsed time: 00:00:03
+output file name=/&lt;path&gt;/clone/control01.ctl
+output file name=/&lt;path&gt;/fast_recovery_area/clone/control02.ctl
+Finished restore at 09-MAR-15</code></pre><p id="395ae9d0-d00e-4762-86ae-100d366939e3" class="">After this step, the location and names of the datafiles in the standby controlfile are those of the primary database.  Depending on the configuration, if the path and names of the standby datafiles after the standby controlfile refresh are correct, steps #9 and #10 can be skipped.</p><p id="0d029c61-fd91-4b8f-ba43-ea7dab06be00" class="">Mount and check the location and datafile names of the standby datafiles by executing the following:</p><pre id="fe238527-90cf-4ba3-8a09-4f40185cba74" class="code code-wrap"><code>RMAN&gt; alter database mount;
+
+Statement processed
+released channel: ORA_DISK_1
+Note: In RAC, Shutdown the standby instance that was started earlier in step 7 before the restore of the controlfile and start the complete standby database in MOUNT state.
+RMAN&gt; report schema;
+
+Starting implicit crosscheck backup at 09-MAR-15
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: SID=21 device type=DISK
+Crosschecked 9 objects
+Finished implicit crosscheck backup at 09-MAR-15
+
+Starting implicit crosscheck copy at 09-MAR-15
+using channel ORA_DISK_1
+Crosschecked 2 objects
+Finished implicit crosscheck copy at 09-MAR-15
+
+searching for all files in the recovery area
+cataloging files...
+cataloging done
+
+List of Cataloged Files
+=======================
+File Name: /&lt;path&gt;/fast_recovery_area/CLONE/archivelog/2015_03_05/o1_mf_1_17_11q13dm8_.arc
+File Name: /&lt;path&gt;/fast_recovery_area/CLONE/archivelog/2015_03_05/o1_mf_1_16_10q13dm8_.arc
+File Name: /&lt;path&gt;/fast_recovery_area/CLONE/archivelog/2015_03_05/o1_mf_1_2_bhk1ctcz_.arc
+File Name: /&lt;path&gt;/fast_recovery_area/CLONE/archivelog/2015_03_05/o1_mf_1_1_bhk17cw8_.arc
+
+RMAN-06139: WARNING: control file is not current for REPORT SCHEMA
+Report of database schema for database with db_unique_name CLONE
+
+List of Permanent Datafiles
+===========================
+File Size(MB) Tablespace           RB segs Datafile Name
+---- -------- -------------------- ------- ------------------------
+1    780      SYSTEM               ***     /&lt;path&gt;/prim/system01.dbf                       &lt;=== datafiles are showing in PRIM directory rather than CLONE
+3    730      SYSAUX               ***     /&lt;path&gt;/prim/sysaux01.dbf
+4    90       UNDOTBS1             ***     /&lt;path&gt;/prim/undotbs01.dbf
+5    250      PDB$SEED:SYSTEM      ***     /&lt;path&gt;/prim/pdbseed/system01.dbf
+6    5        USERS                ***     /&lt;path&gt;/prim/users01.dbf
+7    590      PDB$SEED:SYSAUX      ***     /&lt;path&gt;/prim/pdbseed/sysaux01.dbf
+8    260      PDB1:SYSTEM          ***     /&lt;path&gt;/prim/pdb1/system01.dbf
+9    620      PDB1:SYSAUX          ***     /&lt;path&gt;/prim/pdb1/sysaux01.dbf
+10   5        PDB1:USERS           ***     /&lt;path&gt;/prim/pdb1/pdb1_users01.dbf
+16   260      PDB3:SYSTEM          ***     /&lt;path&gt;/prim/pdb3/system01.dbf
+17   620      PDB3:SYSAUX          ***     /&lt;path&gt;/prim/pdb3/sysaux01.dbf
+18   5        PDB3:USERS           ***     /&lt;path&gt;/prim/pdb3/pdb3_users01.dbf
+19   50       PDB3:TEST            ***     /&lt;path&gt;/prim/pdb3/test.dbf
+
+List of Temporary Files
+=======================
+File Size(MB) Tablespace           Maxsize(MB) Tempfile Name
+---- -------- -------------------- ----------- --------------------
+1    60       TEMP                 32767       /&lt;path&gt;/prim/temp01.dbf
+2    20       PDB$SEED:TEMP        32767       /&lt;path&gt;/prim/pdbseed/pdbseed_temp01.dbf
+3    373      PDB1:TEMP            32767       /&lt;path&gt;/prim/pdb1/temp01.dbf
+4    71       PDB3:TEMP            32767       /&lt;path&gt;/prim/pdb3/temp01.dbf</code></pre><p id="4ed6f8eb-86c2-4218-ab54-3b2d5a25c236" class=""><strong>9. Update the names of the data files and the temp files in the standby control file.</strong></p><p id="4f56328c-fe9d-4811-8402-4c654f982bf4" class="">Note: It is recommended to check the incarnation of the primary and standby prior to continuing:</p><p id="aa903f8d-9ff6-4e2d-91ce-cc70cdb7db02" class="">Since the controlfile is restored from PRIMARY the datafile location names in this restored STANDBY controlfile will be same as those of the PRIMARY database. If the directory structure is different between the standby and primary databases or if you are using Oracle managed file names OMF, catalog the STANDBY datafiles with RMAN to execute the rename operation. If the primary and standby have identical structure and datafile names, this step can be skipped.</p><pre id="33b221a9-536e-4453-87b6-0a9284bc2877" class="code code-wrap"><code>RMAN&gt; catalog start with &#x27;&lt;path where the actual standby datafile existed&gt;&#x27;;
+
+For Example:
+
+RMAN&gt; Catalog start with &#x27;/u01/app/oracle/oradata/clone/&#x27;;
+
+searching for all files that match the pattern /u01/app/oracle/oradata/clone
+
+List of Files Unknown to the Database
+=====================================
+File Name: /&lt;path&gt;/clone/pdb1/pdb1_users01.dbf
+File Name: /&lt;path&gt;/clone/pdb1/sysaux01.dbf
+File Name: /&lt;path&gt;/clone/pdb1/system01.dbf
+File Name: /&lt;path&gt;/clone/pdbseed/sysaux01.dbf
+File Name: /&lt;path&gt;/clone/pdbseed/system01.dbf
+File Name: /&lt;path&gt;/clone/sysaux01.dbf
+File Name: /&lt;path&gt;/clone/system01.dbf
+File Name: /&lt;path&gt;/clone/undotbs01.dbf
+File Name: /&lt;path&gt;/clone/users01.dbf
+File Name: /&lt;path&gt;/clone/pdb3/pdb3_users01.dbf
+File Name: /&lt;path&gt;/clone/pdb3/sysaux01.dbf
+File Name: /&lt;path&gt;/clone/pdb3/system01.dbf
+File Name: /&lt;path&gt;/clone/pdb3/test.dbf
+
+Do you really want to catalog the above files (enter YES or NO)? yes
+cataloging files...
+cataloging done
+
+List of Cataloged Files
+=======================
+File Name: /&lt;path&gt;/clone/pdb1/pdb1_users01.dbf
+File Name: /&lt;path&gt;/clone/pdb1/sysaux01.dbf
+File Name: /&lt;path&gt;/clone/pdb1/system01.dbf
+File Name: /&lt;path&gt;/clone/pdbseed/sysaux01.dbf
+File Name: /&lt;path&gt;/clone/pdbseed/system01.dbf
+File Name: /&lt;path&gt;/clone/sysaux01.dbf
+File Name: /&lt;path&gt;/clone/system01.dbf
+File Name: /&lt;path&gt;/clone/undotbs01.dbf
+File Name: /&lt;path&gt;/clone/users01.dbf
+File Name: /&lt;path&gt;/clone/pdb3/pdb3_users01.dbf
+File Name: /&lt;path&gt;/clone/pdb3/sysaux01.dbf
+File Name: /&lt;path&gt;/clone/pdb3/system01.dbf
+File Name: /&lt;path&gt;/clone/pdb3/test.dbf</code></pre><p id="72f99b3b-857e-49ae-8a8b-9bd65b64d624" class=""><strong>10. Switch to the cataloged datafile copy.</strong></p><pre id="808377f8-7d72-422a-8013-5e722d3adbf8" class="code code-wrap"><code>RMAN&gt; SWITCH DATABASE TO COPY;
+
+datafile 1 switched to datafile copy &quot;/&lt;path&gt;/clone/system01.dbf&quot;
+datafile 3 switched to datafile copy &quot;/&lt;path&gt;/clone/sysaux01.dbf&quot;
+datafile 4 switched to datafile copy &quot;/&lt;path&gt;/clone/undotbs01.dbf&quot;
+datafile 5 switched to datafile copy &quot;/&lt;path&gt;/clone/pdbseed/system01.dbf&quot;
+datafile 6 switched to datafile copy &quot;/&lt;path&gt;/clone/users01.dbf&quot;
+datafile 7 switched to datafile copy &quot;/&lt;path&gt;/clone/pdbseed/sysaux01.dbf&quot;
+datafile 8 switched to datafile copy &quot;/&lt;path&gt;/clone/pdb1/system01.dbf&quot;
+datafile 9 switched to datafile copy &quot;/&lt;path&gt;/clone/pdb1/sysaux01.dbf&quot;
+datafile 10 switched to datafile copy &quot;/&lt;path&gt;/clone/pdb1/pdb1_users01.dbf&quot;
+datafile 16 switched to datafile copy &quot;/&lt;path&gt;/clone/pdb3/system01.dbf&quot;
+datafile 17 switched to datafile copy &quot;/&lt;path&gt;/clone/pdb3/sysaux01.dbf&quot;
+datafile 18 switched to datafile copy &quot;/&lt;path&gt;/clone/pdb3/pdb3_users01.dbf&quot;
+datafile 19 switched to datafile copy &quot;/&lt;path&gt;/clone/pdb3/test.dbf&quot;</code></pre><p id="861af6fc-eb8b-4b1a-8e47-ad6c8fd18a9d" class="">Here, /u01/app/oracle/oradata/clone is the location of the data files on the physical standby database.   All data files must be stored in this location.  If the &#x27;switch database to copy&#x27; command fails with the &quot;RMAN-06571: datafile .. does not have recoverable copy&quot; error. This is an indication that either you have not cataloged all your standby datafiles OR some of your standby datafile&#x27;s location/name is the same as the primary.</p><p id="4d4ffd82-7d7c-4217-b9e9-ed713661e565" class="">If the latter, you will have to switch each individual datafile whose location/name are different than that of the primary. I.e:</p><pre id="98860e09-1b86-4da3-9275-5d6ebd2cb597" class="code code-wrap"><code>RMAN&gt; switch datafile &lt;number&gt; to copy;</code></pre><pre id="31018e77-884e-4364-b13f-750d7792e7ef" class="code code-wrap"><code>For example:
+RMAN&gt; switch datafile 5 to copy;</code></pre><p id="8dfc69ff-cdd3-4cb5-bc8b-ff56991336f4" class=""><strong>11. Use the current SCN returned in step 4 to determine if new data files were added to the primary database since the standby database was last refreshed. If yes, these datafiles need to be restored on the standby from the primary database.</strong></p><p id="acd4f063-949c-4640-b8a9-4848215f1804" class="">The following example assumes that the CURRENT_SCN returned in Step 6 is 1984232 and lists the data files that were created on the primary after the timestamp represented by this SCN:</p><p id="633f80ad-701c-4db5-9f54-2f2d361ce218" class="">SELECT file# FROM V$DATAFILE WHERE creation_change# &gt;= 1984232;</p><p id="fa5680d3-92da-473e-af53-077db718b927" class="">If no files are returned in above query, go to step 13.   If one or more files are returned in Step 11, then restore these datafiles from the primary database as in step 12.</p><p id="284b55ab-c248-4301-9fdd-a4e8012ffeda" class=""><strong>12. If you are not connected to a recovery catalog, then use the following commands to restore data files that were added to the primary after the standby was last refreshed. </strong>For example, assume datafile 21 was returned by the query in step 11.  Execute:</p><pre id="e19d1168-64bf-48b0-928f-d91629996835" class="code code-wrap"><code>RMAN&gt; RUN
+{
+SET NEWNAME FOR DATABASE TO &#x27;/&#x27;;
+RESTORE DATAFILE 21 FROM SERVICE prim;
+switch datafile 21 to copy;
+}</code></pre><p id="8d05bbee-fa32-4e56-a586-5c08d002aa11" class=""><strong>13. Update the names of the online redo logs and standby redo logs in the standby control file using one of the following methods:</strong></p><p id="3cf2e131-af0b-4941-add1-83e22b7ec626" class="">Clear the log files:</p><pre id="225ff122-8225-4bec-94e3-7dd7aa300922" class="code code-wrap"><code>SQL&gt; select GROUP# from v$logfile where TYPE=&#x27;STANDBY&#x27; group by GROUP#;
+SQL&gt; ALTER DATABASE CLEAR LOGFILE GROUP 1;
+SQL&gt; ALTER DATABASE CLEAR LOGFILE GROUP 2;
+SQL&gt; ALTER DATABASE CLEAR LOGFILE GROUP 3;
+....</code></pre><p id="5c089236-0518-40d5-ac24-964c1b9edfda" class="">NOTE:  Clearing log files is recommended only if the standby database does not have access to the online or standby redo log files of the primary database.  For example, the standby and primary are running on the same server and/or are using same ASM disk group.  If the standby database has access to the redo log files of the primary database and the primary database redo logs are using OMF names, then the ALTER DATABASE command will delete log files on the primary database.</p><p id="36e26e41-275a-47c6-b527-cbdf6c3b8eba" class="">If above is the case, the standby has access to the primary redo logs, then you must use the ALTER DATABASE RENAME FILE command to rename the redo log files.</p><p id="90591b5c-5924-4dc7-9636-572758870b31" class="">An individual command will be executed for each logfile member.   To rename log files, the STANDBY_FILE_MANAGEMENT initialization parameter must be set to MANUAL.</p><p id="7c8c97da-d3f6-409f-91cf-fee6a6f89cac" class="">NOTE: If using broker, you will need to start MRP through DGMGRL. I.e.:DGMGRL&gt; edit database &#x27;&lt;Standby db_unique_name&gt;&#x27; set STATE=&#x27;APPLY-ON&#x27; ;</p><p id="c32cb11d-d502-4cb8-bd90-899def17abfa" class=""><strong>14.  (Oracle Active Data Guard only) Perform the following steps to open the physical standby database:</strong></p><p id="657d8717-4d67-41aa-b1fe-fe8a325bd255" class="">On the primary database, switch the archived redo log files using the following command:</p><pre id="ff26afb6-fa7d-459b-9147-1491f58faf9f" class="code code-wrap"><code>SQL&gt;  ALTER SYSTEM ARCHIVE LOG CURRENT;</code></pre><p id="095bd860-bc10-4691-833e-9c27aa60c3a0" class="">On the physical standby database, run the following commands:</p><pre id="d31f4342-d7a7-47d4-87c1-e0ebb0b84eaa" class="code code-wrap"><code>SQL&gt;  RECOVER DATABASE;
+SQL&gt;  ALTER DATABASE OPEN READ ONLY;</code></pre><p id="17033598-7351-4e97-a018-6f11e897f16c" class="">Start the managed recovery processes on the physical standby database by using the following command:</p><pre id="6a28d016-cee7-46b6-a3db-91707b45dba4" class="code code-wrap"><code>SQL&gt;  ALTER DATABASE RECOVER MANAGED STANDBY DATABASE DISCONNECT FROM SESSION;</code></pre></div></article></body></html>

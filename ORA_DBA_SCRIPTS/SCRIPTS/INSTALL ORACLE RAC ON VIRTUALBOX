@@ -1,0 +1,501 @@
+SYSTEM IP WITH MTN: 192.168.136.123
+DEFAULT GATEWAY:192.168.136.76
+SUBNET MASK: 255.255.255.0
+
+
+USED NETWORK DETAILS ARE FROM SOURCE DOC PAGE
+
+ORACLE LINUX ROOT PWD: emmy12
+ORACLENODE1 USER PWD: Emmy1994#
+
+
+cat /etc/hosts
+
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1 localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+# Public
+
+192.168.24.1 oraclenode1.localdomain oraclenode1
+192.168.24.2 oraclenode2.localdomain oraclenode2
+
+# Private
+
+192.168.10.1 oraclenode1-priv.localdomain oraclenode1-priv
+192.168.10.2 oraclenode2-priv.localdomain oraclenode2-priv
+
+# Virtual
+
+192.168.24.31 oraclenode1-vip.localdomain oraclenode1-vip
+192.168.24.32 oraclenode2-vip.localdomain oraclenode2-vip
+
+# SCAN
+
+192.168.24.41 oraclenode-scan.localdomain oraclenode-scan
+192.168.24.42 oraclenode-scan.localdomain oraclenode-scan
+192.168.24.43 oraclenode-scan.localdomain oraclenode-scan
+
+Create various Oracle groups and permission
+groupadd -g 54327 asmdba
+groupadd -g 54328 asmoper
+groupadd -g 54329 asmadmin
+
+Changer Group and User permissions
+usermod -G asmdba,asmoper,asmadmin oracle 
+
+
+===Reset oracle user password===
+New password: oracle
+
+
+===Create Oracle software folders=====
+mkdir -p /u01/app/19c/grid
+mkdir -p /u01/app/oracle/product/19c/db_1
+chown -R oracle:oinstall /u01
+chmod -R 775 /u01/
+
+
+
+====Configure Bash Profile of Users.====
+
+We are going to install Grid and Oracle as oracle user.
+Update the bash profile file for grid and oracle respectively as below.
+
+Log in as the “oracle” user and add the following lines at the end of the “/home/oracle/.bash_profile” file.
+
+# Oracle Settings
+export TMP=/tmp
+export TMPDIR=$TMP
+export ORACLE_BASE=/u01/app/oracle
+export GRID_HOME=/u01/app/19c/grid
+export DB_HOME=$ORACLE_BASE/product/19c/db_1
+export ORACLE_HOME=$DB_HOME
+export ORACLE_SID=oradbcl
+export ORACLE_TERM=xterm
+export BASE_PATH=/usr/sbin:$PATH
+export PATH=$ORACLE_HOME/bin:$BASE_PATH
+export LD_LIBRARY_PATH=$ORACLE_HOME/lib:/lib:/usr/lib
+export CLASSPATH=$ORACLE_HOME/JRE:$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib
+
+alias grid=’. /home/oracle/grid.env’
+alias db=’. /home/oracle/db.env’
+
+===Grid Home bash profile===
+
+Create a file called “/home/oracle/grid.env” with the following contents.
+
+export ORACLE_SID=+ASM1
+export ORACLE_HOME=$GRID_HOME
+export PATH=$ORACLE_HOME/bin:$BASE_PATH
+export LD_LIBRARY_PATH=$ORACLE_HOME/lib:/lib:/usr/lib
+export CLASSPATH=$ORACLE_HOME/JRE:$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib
+
+===Oracle Home bash profile====
+
+Create a file called “/home/oracle/db.env” with the following contents.
+
+export ORACLE_SID=oradbcl
+export ORACLE_HOME=$DB_HOME
+export PATH=$ORACLE_HOME/bin:$BASE_PATH
+export LD_LIBRARY_PATH=$ORACLE_HOME/lib:/lib:/usr/lib
+export CLASSPATH=$ORACLE_HOME/JRE:$ORACLE_HOME/jlib:$ORACLE_HOME/rdbms/jlib
+
+
+
+=====Firewall Stop and Disable=====
+
+We can open firewall after installation
+
+systemctl stop firewalld.service
+systemctl disable firewalld.service
+
+====Chrony NTP Configuration=====
+
+systemctl enable chronyd.service]
+systemctl restart chronyd.service
+chronyc -a ‘burst 4/4’
+chronyc -a makestep
+
+
+FORWARD ZONE CONFIGUARTION
+oraclenode1 IN A 192.168.24.1
+oraclenode2 IN A 192.168.24.2
+oraclenode1-priv IN A 192.168.10.1
+oraclenode2-priv IN A 192.168.10.1
+oraclenode1-vip IN A 192.168.24.31
+oraclenode2-vip IN A 192.168.24.32
+oraclenode-scan IN A 192.168.24.41
+oraclenode-scan IN A 192.168.24.42
+oraclenode-scan IN A 192.168.24.43
+
+
+===RESERVED ZONE====
+$TTL 86400
+@ IN SOA oraclenode1.localdomain.com. root.localdomain.com. (
+2
+3H
+1H
+1W
+1H )
+@ IN NS oraclenode1.localdomain.com.
+@ IN PTR localdomain.com.
+oraclenode1 IN A 192.168.24.1
+oraclenode-scan IN A 192.168.24.41
+oraclenode-scan IN A 192.168.24.42
+oraclenode-scan IN A 192.168.24.43
+1 IN PTR oraclenode1.localdomain.com.
+41 IN PTR oraclenode-scan.localdomain.
+42 IN PTR oraclenode-scan.localdomain.
+43 IN PTR oraclenode-scan.localdomain.
+
+IP TABLES DETAILS
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A INPUT -p tcp --dport 22 -s 0/0 -j ACCEPT
+iptables -A INPUT -p tcp --dport 53 -s 0/0 -j ACCEPT
+iptables -A INPUT -p udp --dport 53 -s 0/0 -j ACCEPT
+iptables -A INPUT -j DROP
+
+
+
+iptables -A INPUT -p tcp -m state –state NEW -m tcp –dport 22 -j ACCEPT
+iptables -A INPUT -p tcp --dport 22 -s 0/0 -j ACCEPT
+
+
+usermod -aG sudo,adm oracle,
+
+usermod -aG sudo,adm oracle
+
+
+
+# man chattr
+# man lsattr
+Have look at some useful chattr command Options:
+
++i – A File with +i attribute cannot be delete, move, rename. in short cannot be modified.
+-i – This option allows to remove i attribute from the file.
+-V – To see the Verbose output
+-a – By using this attribute will only allow to append data on a file and cannot be delete or move.
+
+
+
+========Firewall Stop and Disable=======
+
+We can open firewall after installation
+
+systemctl start firewalld.service
+systemctl stop firewalld.service
+
+systemctl enable firewalld.service
+systemctl disable firewalld.service
+
+systemctl start firewalld.service
+systemctl enable firewalld.service
+
+
+====START UP named service======
+systemctl start named.service
+
+
+
+==SOLVING DNS ERROR===
+
+vim etc/default/bind9
+# run resolvconf?
+RESOLVCONF=yes
+# startup options for the server
+OPTIONS="-4 -u bind"
+
+
+
+I have also tried to flush my cache via
+$rndc flush
+
+
+
+===command to change os name=====
+nmcli general hostname
+
+nmcli general hostname new_hostname
+
+service systemd-hostnamed restart
+
+
+====ASM CONFIGUARTION=====
+
+oracleasm configure -i
+oracleasm init
+oracleasm listdisks
+oracleasm scandisks
+
+oracleasm renamedisk -f DISK1 ASMDISK_DATA
+
+oracleasm createdisk DISK_NAME /dev/sdb1
+oracleasm createdisk ARCHIVE_lOG /dev/sdd1
+
+Disk available
+
+/dev/sdd:10.7GB ========/dev/sdd1
+/dev/sdb:16.1GB  ====== /dev/sdb1 --DONE
+/dev/sdc:10.7GB =======/dev/sdc1 ---done
+
+
+
+=====SETTING UP PASSWORDLESS SSH CONFIGUARTION=====
+su - grid
+./sshUserSetup.sh -user oracle -hosts "oraclenode1 oraclenode2" -noPromptPassphrase -confirm -advanced
+
+
+======CLUSTER VERIFICATION UTILITY======
+Run 
+
+./runcluvfy.sh stage -pre crsinst -n oraclenode1,oraclenode2 -verbose
+
+dd if=/dev/zero of=/dev/sdb1 bs=8192 count=4
+
+=======
+$ORACLE_BASE and anything under it
+$ORACLE_HOME and anything under it (you might have several)
+/etc/ora* - this is the last thing to delete. /etc/oratab contains a list of your Oracle homes, so use it as a reference.
+Scan your system for files belonging to the Oracle owner and dba group and remove what is now unnecessary
+======================
+
+
+=====GRID INFRASTRATURE INSTALLATION=====
+--Export display
+$export DISPLAY=:0.0
+
+=====ROOT.SH RUN=======
+/u01/app/oraInventory/orainstRoot.sh   -----  on both nodes
+/u01/app/19c/grid/root.sh  --------   on both nodes
+/u01/app/19c/grid/root.sh
+
+oraclenode-cluster
+
+=====find Oracle Grid Infrastructure cluster stack inside --- cd /u01/app/19c/grid/bin/
+$./crsctl start crs
+$./crsctl start cluster
+$./crsctl check crs
+
+$./crsctl check cluster -all
+
+$./crsctl query crs activeversion
+
+====LIST ALL SCAN IP INFO=====
+./srvctl config scan
+
+./srvctl config scan_listener
+
+--Check various processes running both nodes(1 and 2)
+./crsctl stat res -t
+
+====log for error loaction====
+/u01/app/oracle/crsdata/oraclenode1/crsconfig/rootcrs_oraclenode1_2023-01-11_04-56-29PM.log
+
+
+(./deinstall [-silent] [-checkonly] [-paramfile complete path of input response file] 
+[-params name1=value name2=value . . .] 
+[-o complete path of directory for saving files] 
+[-tmpdir complete path of temporary directory to use] 
+[-logdir complete path of log directory to use] [-skipLocalHomeDeletion] [-skipRemoteHomeDeletion] [-help]
+
+
+
+===DATABASE INSTALLATION=====
+Global Database Name = racdb
+SID = racdb
+
+
+Check if DB Instances are running
+$srvctl status database -d racdb
+$srvctl config database -d racdb  ---Check Oracle DB instance config details.
+
+$ps auxww | grep ora
+
+
+---ARCHIVE LOG FILE PATH = +ARCHIVE_lOG
+---File Recovery Area(FRA) = +ASMDISK_DATA
+---Main Database Disk = +ASMDISK_OCR
+
+
+
+SELECT CURRENT_SCN,SWITCHOVER_STATUS, STATUS,GUARD_STATUS,INSTANCE_NAME,DATABASE_ROLE FROM V$DATABASE, V$INSTANCE;
+
+
+
+
+====DR INSTANCE DETAILS-======
+
+Single instance database
+Global name: drcdb
+listener name: yngdrcdb
+
+
+
+====COPYING A FILE FROM ONE SERVER TO ANOTHER SERVER===========
+
+Use python remote server on source file server  by running
+python3 -m http.server 8888
+
+Go to the server you want to download the file to
+wget http://192.168.213.123:8888/FILE_TO_BE_DOWNLOAD
+
+
+
+
+
+
+mkdir -p /u01/app/oracle/product/19c/db_1
+mkdir -p /u01/app/oracle/oradata
+mkdir -p /u01/app/oracle/FRA/
+mkdir -p /u01/app/oracle/ARCHIVE_LOG/
+chown -R oracle:oinstall /u01
+chmod -R 775 /u01/
+
+unzip -oq file_to_zip
+
+/etc/security/limits.conf
+oracle  soft  nofile  1024
+oracle  hard  nofile  65536
+oracle  soft  nproc  16384
+oracle  hard  nproc  16384
+oracle  soft  stack  16384
+oracle  hard  stack  32768
+oracle  hard  memlock  134217728
+oracle  soft  memlock  134217728
+
+--======START ORACLE DATABASE USING PFILE==========================
+startup clause=pfile="/u01/app/oracle/admin/oradrdb/pfile/init.ora"
+
+
+--USE netmgr to setup listener
+$netmgr
+
+--Clear SQL> screen using 
+! clear as the command
+
+
+set linesize 1200
+col member format a70
+select * from v$logfile;
+
+
+column member format a50
+select f.member,l.bytes/1024/1024 as "Size in MB" from v$log l,v$logfile f where l.group#=f.group#;
+
+
+alter system set db_recovery_file_dest_size=40g scope=both sid='*';
+alter system set db_recovery_file_dest='+fra' scope=both sid='*';
+alter system set log_archive_dest_1='location=+fra' scope=both sid='*';
+alter system set log_archive_format='arch_%t_%s_%r.arc' scope=spfile;
+
+
+
+
+/media/sf_ORACLEDRNODE/PATCH/34416665  --PATCH PRE CHECKS
+
+$ORACLE_HOME/OPatch/opatch prereq CheckConflictAgainstOHWithDetail -phBaseDir /home/oracle/PATCH/PATCH_OCT2022/34416665/33575402 --PASSED
+
+$ORACLE_HOME/OPatch/opatch prereq CheckConflictAgainstOHWithDetail -phBaseDir /home/oracle/PATCH/PATCH_OCT2022/34416665/34419443 --PASSED
+
+$ORACLE_HOME/OPatch/opatch prereq CheckConflictAgainstOHWithDetail -phBaseDir /home/oracle/PATCH/PATCH_OCT2022/34416665/34428761 --PASSED
+
+$ORACLE_HOME/OPatch/opatch prereq CheckConflictAgainstOHWithDetail -phBaseDir /home/oracle/PATCH/PATCH_OCT2022/34416665/34444834 --PASSED
+
+$ORACLE_HOME/OPatch/opatch prereq CheckConflictAgainstOHWithDetail -phBaseDir /home/oracle/PATCH/PATCH_OCT2022/34416665/34580338 --PASSED
+
+
+
+
+
+
+
+vim /tmp/patch_list_gihome.txt
+
+/home/oracle/PATCH/PATCH_OCT2022/34416665/33575402
+
+/home/oracle/PATCH/PATCH_OCT2022/34416665/34419443
+
+/home/oracle/PATCH/PATCH_OCT2022/34416665/34428761
+
+/home/oracle/PATCH/PATCH_OCT2022/34416665/34444834
+
+/home/oracle/PATCH/PATCH_OCT2022/34416665/34580338
+
+
+check prerequisite to check system space
+$ORACLE_HOME/OPatch/opatch prereq CheckSystemSpace -phBaseFile /tmp/patch_list_dbhome.txt
+
+
+$ORACLE_HOME/OPatch/opatch/opatchauto apply /home/oracle/PATCH/PATCH_OCT2022/34416665
+$ORACLE_HOME/OPatch/opatch/opatch apply /home/oracle/PATCH/PATCH_OCT2022/34416665
+
+
+
+alter session set “_exclude_seed_cdb_view”=FALSE;
+spool check_patches_19c.txt
+
+
+
+select CON_ID,TO_CHAR(action_time, ‘YYYY-MM-DD’) AS action_time,PATCH_ID,PATCH_TYPE,ACTION,DESCRIPTION,SOURCE_VERSION,TARGET_VERSION  from CDB_REGISTRY_SQLPATCH order by CON_ID, action_time, patch_id;
+
+
+===TAKE BACKUP OF ORACLE HOME ======
+tar -cvf ORACLE_HOME_07thFEB2023.tar $ORACLE_HOME
+
+
+===Export Opatch Utility================
+export PATH=/u01/app/oracle/product/19.3.0/db_1/OPatch:$PATH
+
+
+
+-=====SQLci(SQL Command Line)=======
+sql mekus/password@oracle:1521/racdb1
+
+info table_or_dictionary to see detail info. eg
+
+info v$parameter;
+
+create pfile='/home/oracle/spfileracdb1.ora' from spfile='+OCR_DISK/RACDB/PARAMETERFILE/spfile.271.1126010979';
+
+startup spfile='+OCR_DISK/RACDB/PARAMETERFILE/spfile.271.1126010979';
+
+srvctl modify database -d racdb1 -spfile +OCR_DISK/RACDB/PARAMETERFILE/spfile.271.1126010979
+
+====CREATE PDBs===========
+CREATE PLUGGABLE DATABASE pdb1 ADMIN USER emmy IDENTIFIED BY password ROLES=(dba)
+FILE_NAME_CONVERT = ('/u01/app/oracle/product/19c/db_1/PDBdbfiles/ORCLDB/pdbseed',
+'/u01/app/oracle/product/19c/db_1/PDBdbfiles/ORCLDB/pdb1');
+
+CREATE PLUGGABLE DATABASE PDB1 ADMIN USER emmy IDENTIFIED BY password ROLES=(dba) FILE_NAME_CONVERT = ('C:\ORACLE_21C\ORADATA\ORCL\PDBSEED\SYSTEM01.DBF','C:\ORACLE_21C\ORADATA\ORCL\PDBSEED\SYSAUX02.DBF','C:\ORACLE_21C\ORADATA\ORCL\PDBSEED\SYSAUX01.DBF','C:\ORACLE_21C\ORADATA\ORCL\PDBSEED\UNDOTBS01.DBF','C:/ORACLE_21C/ORADATA/ORCL/PDB1');
+C:\ORACLE_21C\ORADATA\ORCL\PDBSEED\SYSTEM01.DBF
+
+To specify the destination directory for the new PDB, we can use one of the following options:
+CREATE_FILE_DEST='PDB_DIR'(OMF)
+DB_CREATE_FILE_DEST='PDB_DIR'(OMF)
+FILE_NAME_CONVERT (MANUAL)
+
+CREATE PLUGGABLE DATABASE PDB1 ADMIN USER emmy IDENTIFIED BY password ROLES=(dba) CREATE_FILE_DEST = ('C:\ORACLE_21C\ORADATA\ORCL\PDBSEED\SYSTEM01.DBF');
+
+--CREATE PDB USING BELOW COMMAND. THE PDB1 WILL BE IN MOUNT MODE
+CREATE PLUGGABLE DATABASE PDB2 from ORCLPDB CREATE_FILE_DEST = 'C:\ORACLE_21C\ORADATA\ORCL\PDBSEED';
+
+--OPEN THE PDB
+ALTER PLUGGABLE DATABASE PDB1 OPEN;
+
+
+
+
+=======================
+Check window licensing information
+$slmgr -dlv
+
+Re-enable expired license using
+$slmgr -rearm
+
+$restart-compute
+
+=================

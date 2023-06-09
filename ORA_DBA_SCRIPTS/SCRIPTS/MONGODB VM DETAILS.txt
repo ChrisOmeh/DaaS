@@ -1,0 +1,4 @@
+====MONGODB VM=====
+Static IP: 10.0.0.13/24
+Broadcast Address: 10.0.0.255
+Subnet mask:255.255.255.0

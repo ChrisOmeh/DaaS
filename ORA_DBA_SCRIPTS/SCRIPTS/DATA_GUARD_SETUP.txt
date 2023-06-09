@@ -1,0 +1,230 @@
+====ORACLE DATABASE AND GRID INSTRASTURE PATCH=======
+
+--Check version of GRID running
+./crsctl query crs activeversion
+
+UAT DATABASES
+
+grid        7333       1  0 Jan08 ?        00:02:46 asm_pmon_+ASM
+oracle      7814       1  0 Jan08 ?        00:34:24 ora_pmon_tngfin
+oracle      7826       1  0 Jan08 ?        00:05:52 ora_pmon_ungsfdm
+oracle      7838       1  0 Jan08 ?        00:08:10 ora_pmon_ungagency
+oracle      7882       1  0 Jan08 ?        00:07:19 ora_pmon_ungctm
+oracle      7904       1  0 Jan08 ?        00:07:31 ora_pmon_ungcem
+oracle      7928       1  0 Jan08 ?        00:09:33 ora_pmon_ungfin
+oracle      8228       1  0 Jan08 ?        00:07:43 ora_pmon_ungremedy
+oracle     16081       1  0 Jan08 ?        00:11:04 ora_pmon_pngfin
+oracle     27708       1  0 Jan08 ?        00:19:21 ora_pmon_ungrdbox
+
+ORACLE UAT GRID HOME
+cd /u01/app/19.0.0/grid
+
+
+========SQL SERVER========  ---KB5017593
+For SQL Servers on 2019, we need to apply latest CPU for SQL Server 2019
+
+Patch one cluster of the 4  --Omniflow likely 10.234.19.99
+Pick a date and a change request will be logged. Date to be decided depending on schedules
+
+
+Cluster 1  ------  Date to be applied---  Change request
+
+==SQL SERVER ON 2014 AND 2016
+
+Upgrade all 2014 SQL server to 2019 and apply latest patch  ---Pick a date ---- Raise a change request to upgrade a couple of them based on usage.
+If the os(2012 in this case) is not on 2019, the os need to be upgraded first.
+
+Upgrade all 2016 to 2019  ----especially the  omniflow cluster. ---Engage Omniflow team to see if the application are now compatitable to 2019
+
+Aim to rasie a change request to patch one of the cluster by Tuesday(7 Fed, 2023). Depnding on outcome other clusters would be patched by Thursday(9 Feb, 2023)
+
+Aim two change request per week
+
+Send mail to affected team(App support for Omniflow)
+
+
+The change request and the detailed plan should caputure the upgrade and patches to de done in BATCHES.
+
+
+odacli-adm set-credential
+odacli-adm set-credential --password SQwer_1234# --username oda-admin
+====ORACLE
+
+----For ODAs----
+First is to upgrade the ODA software
+The current ODA is on 18 in DR
+
+=======ODA======
+Upgrade ODA software to version 19. Below are to be done under ODA
+--Grid and cluster
+--Upgrade database home
+--Firmware controller
+--Firmare Disk
+--Firmware Expander
+--ILOM
+--BIOS
+--RPMs
+
+
+10.234.178.81
+
+172.25.9.4
+172.25.9.4
+172.25.9.10
+
+
+
+172.25.9.8
+172.25.9.8
+172.25.9.9
+
+Reasson for change:
+To ensure the Service Accounts Password Age does not exceed 365 days, which will lead to violation of password security policy.
+
+Detailed Description
+In line with the Password Security Standard for Service Accounts Password Age which must not exceed 365 days, 
+this change request is  to reset the affected Service Accounts passwords.
+
+Implementation Procedure
+1. Login into the affected Database servers
+2. Reset the password Service Account for the SQL server 
+
+No impact on any service as this doesn't interfere with any running service
+
+It does not involve any service deployment and it not a new solution or enhancement implementation
+
+
+====GINA ALWAYSON SETUP====
+GINACLUSTERSVR.ng.sbicdirectory.com ----- 10.234.19.112
+
+PROD = 10.234.19.118
+
+DR = 10.234.179.142
+
+ePO6_00172NIGEPO001V
+
+Linux (sbsitlinuxcab, edmslinuxcab) instances? (sbsitlinuxcab, edmslinuxcab) instances
+
+ALTER TABLE CBNCCMSTB ADD COLUMN GENDER(varchar(6))
+
+This is to ensure our Oracle Database environment is patch compliant thereby making our databases more secured, bug and vulnerabilities free.
+
+This change is targeted towards applying Oracle CPU January 2023 release on Oracle DR environment. 
+The same patch has been successfully applied in the Oracle Database Home and Grid Home in UAT. 
+The importance of this patch is to ensure our Database environment is patch compliance and devoid of any vulnerabilities.
+
+USER ACCESS FORM NOT FOUND.
+A247999
+A235182
+A231207
+A225175 Access not found though user is disabled
+A204222
+A203892 Access not found though user is disabled
+A193979 Access not found though user is disabled
+
+A224360
+A228414
+A235182
+
+epoeventdatafile1
+epodatafile1
+
+
+NTNIGE\A184353 seen
+NTNIGE\A184353
+NTNIGE\A184353
+NTNIGE\A193979 seen. logged by John Akinyemi
+NTNIGE\A193979
+NTNIGE\A201865 seen
+NTNIGE\A203892
+NTNIGE\A203892 seen logged by John Akinyele
+NTNIGE\A203983 seen
+NTNIGE\A203983
+NTNIGE\A204222 access form seen. logged through chisom
+NTNIGE\A204222
+NTNIGE\A225175
+NTNIGE\A225175
+NTNIGE\A230820 seen
+NTNIGE\A230820
+NTNIGE\A231207  access seen, logged by self
+NTNIGE\A231207
+NTNIGE\A232537  seen
+NTNIGE\A232537
+NTNIGE\A235182 access from seen logged through Akinyele John
+NTNIGE\A235182
+NTNIGE\A242287  seen
+NTNIGE\A242287
+NTNIGE\A245121  seen
+NTNIGE\A245121
+NTNIGE\A247999 access from seen. logged through Chisom
+NTNIGE\A247999
+SBICZA01\SA000114  access form seen. Logged through Chisom
+SBICZA01\SA000114
+
+
+1 row created.
+1 row created.
+1 row created.
+1 row created.
+1 row created.
+1 row created.
+1 row created.
+
+>> Insert into TBAADM.EMRM (EMPLOYER_ID,ENTITY_CRE_FLG,DEL_FLG,CUST_ID,EMPLOYER_NAME,EMPR_ADDR1,EMPR_ADDR2,EMPR_CITY_CODE,EMPR_CNTRY_CODE,EMPR_POSTAL_CODE,EMPR_PHONE_NUM_1,EMPR_PHONE_NUM_2,EMPR_PHONE_NUM_3,EMPR_MOBILE_NUM,EMPR_FAX_NUM,EMPR_EMAIL_ID,EMPR_CONTACT_PERSON,SAL_FREQ_TYPE,
+SAL_FREQ_WEEK_NUM,SAL_FREQ_WEEK_DAY,SAL_FREQ_START_DD,SAL_FREQ_HLDY_STAT,NEXT_SAL_PAY_DATE,SAL_TOLERANCE_DAYS,OVERALL_LIMIT,OVERALL_LIMIT_CRNCY,ALWD_DELINQ_PCNT,ARRANGEMENT_TYPE,SANC_EXCEED_LIMIT_EXCP_CODE,
+DELINQ_EXCD_CUTOFF_PCNT_EXCP,LCHG_USER_ID,LCHG_TIME,RCRE_USER_ID,RCRE_TIME,TS_CNT,EMPR_STATE,OVERALL_LIMIT_START_DATE,OVERALL_LIMIT_END_DATE,OVERALL_REVOLVE_IND,BANK_ID,ALT1_EMPLOYER_NAME,EMPR_ADDR3)
+values ('0000124576','Y','N',null,'CHANNELS TELEVISION',null,null,null,null,null,null,null,null,null,null,null,null,'M',null,null,1,'N',null,0,0,'NGN',0,null,null,null,'SYSTEM',to_date('27/8/2020','DD/fmMM/RRRR')
+,'SYSTEM',to_date('27/8/2020','DD/fmMM/RRRR'),0,null,null,null,'N','NG',null,null)
+Error at line 22
+ORA-00001: unique constraint (TBAADM.IDX_EMPLOYER_MASTER_TABLE) violated
+
+
+
+--  There is no statement for index REDBOX.SYS_C0069572.
+--  The object is created when the parent object is created.
+
+ALTER TABLE REDBOX.RBX_T_FNDABL_WALLET_TXN_CHRGS
+  DROP CONSTRAINT SYS_C0069572;
+
+ALTER TABLE REDBOX.RBX_T_FNDABL_WALLET_TXN_CHRGS ADD (
+  PRIMARY KEY
+  (ID)
+  ENABLE VALIDATE);
+  
+  
+CREATE SEQUENCE t1_seq;
+CREATE TABLE t1 (
+  id          NUMBER DEFAULT REDBOX.RBX_T_FUNDABLE_VIRTUAL_ID_CHARGE_SEQUENCE.NEXTVAL,
+  description VARCHAR2(30)
+);
+
+
+DROP SEQUENCE REDBOX.RBX_T_FUNDABLE_VIRTUAL_ID_CHARGE_SEQUENCE;
+
+CREATE SEQUENCE REDBOX.RBX_T_FUNDABLE_VIRTUAL_ID_CHARGE_SEQUENCE
+  START WITH 300
+  MAXVALUE 9999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  CACHE 20
+  ORDER
+  NOKEEP
+  NOSCALE
+  GLOBAL;
+
+
+CREATE SEQUENCE REDBOX.RBX_T_FUNDABLE_VIRTUAL_ID_CHARGE_SEQUENCE
+  START WITH 81
+  MAXVALUE 9999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  CACHE 20
+  NOORDER
+  NOKEEP
+  NOSCALE
+  GLOBAL;
+
+
+
+C847053
+desc A247855;

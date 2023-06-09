@@ -1,0 +1,179 @@
+======================
+DAAS AZURE ASSIGNMENT
+======================
+1. Created a VN in VIRTAUL-NET-RG
+2. Created various RGs. One for ASEs, One for VN, One for NAT Gateway
+3. Create app service plan 1/VM for ASE 1
+4. Create app service plan 2/VM for ASE 2
+5. Create 2 app service for ASE 1
+6. Create 2 app service for ASE 2
+7. Create ASE Internal Load Balancer.
+
+Public IP for NAT Gateway:40.71.180.241
+Public IP Prefix: 52.170.215.168/29
+
+listener name: team-k8s
+
+https://app-services-3-ase2.azurewebsites.net/
+
+https://teamk8s-app-service-1.azurewebsites.net/
+
+The App Service plan is a container of apps. When you create an app in App Service, you choose or create an App Service plan. 
+App Service Environments hold App Service plans, and App Service plans hold apps.
+
+stanbic
+freelancer
+
+https://teamk8s-app-service-1.azurewebsites.net
+https://teamk8s-app-service-2-ase1.azurewebsites.net
+
+USING VM APPROACH
+1. Create 2VM in subnet-vm1
+2. Create 2VM in subnet-vm2
+3. Create a LB
+
+APP SERVICES
+teamk8s-app-service-1 associated with ASE1
+teamk8s-app-service-2 associated with ASE2
+
+VMSS 1:VMSS-1-USER
+VMSS-1 KEY: VMSS1-KEY
+
+
+$grp="AppGatewayTestRG"
+$location="eastus"
+$vnetName="VNET"
+$subnetName="SUBNET_1"
+$vmName="IMAGE_VM"
+$vmName2="VIDEO_VM"
+
+# CREATE RESOURCE GROUP
+az group create --name $grp --location $location
+
+# CREATE VIRTUAL NETWORK
+az network vnet create --address-prefixes 10.0.0.0/16 --name $vnetName --resource-group $grp
+
+# CREATING SUBNET
+az network vnet subnet create -g $grp --vnet-name $vnetName -n $subnetName --address-prefixes 10.0.0.0/24
+
+# CREATING VMs
+az vm create --resource-group $grp --name $vmName --image ubuntults --vnet-name $vnetName --subnet $subnetName --admin-username kamal --admin-password Hello@12345#
+az vm create --resource-group $grp --name $vmName2 --image ubuntults --vnet-name $vnetName --subnet $subnetName --admin-username kamal --admin-password Hello@12345#
+
+
+==========MAIN WORK============
+# SETTING UP WEB SERVERS
+apt-get update -y
+apt-get upgrade -y
+apt-get install apache2 -y
+
+echo "See all of your IMAGES here!" > /var/www/html/index.html
+echo "See all of your VIDEOS here!" > /var/www/html/index.html
+
+mkdir /var/www/html/images
+mv /var/www/html/index.html /var/www/html/images/index.html
+
+mkdir /var/www/html/videos
+mv /var/www/html/index.html /var/www/html/videos/index.
+
+VM1_NAME = 
+VM2_NAME = 
+
+pwd for both VM = Chuxian1994#
+
+connection: 
+ssh app1user@13.87.75.5
+ssh appuser2@20.117.82.134
+
+
+
+
+
+
+=========================================
+<!doctype html>
+<head>
+    <title>Hello Azure - Teamk8s Python App</title>
+</head>
+<html>
+   <body>
+     <main>
+		<div>
+            <h1 class="display-6 fw-bold text-primary">WELCOME TO TEAM KUBERNETES PAGE WEB APPLICATION 1</h1>            
+		</div>
+       
+        <br>
+        <br>
+        <br>
+        
+        <center>
+        <div>
+        <bold>TEAM MEMBERS DETAILS</bold>
+        <br><br>
+        <table>
+            <tr>
+                <th>NAME</th>
+                <th>TEAM</th>
+                <th>STATUS</th>
+            </tr>
+            <tr>
+                <td>Jemimah Sanu</td>
+                <td>K8S</td>
+                <td>TEAM REP</td>
+            </tr>
+            <tr>
+                <td>Omeh, Chukwuemeka</td>
+                <td>K8S</td>
+                <td>ACTIVE MEMBER</td>
+            </tr>
+            <tr>
+                <td>Victor Adewoye</td>
+                <td>K8S</td>
+                <td>ACTIVE MEMBER</td>
+            </tr>
+            <tr>
+                <td>Kenechukwu Nzute</td>
+                <td>K8S</td>
+                <td>ACTIVE MEMBER</td>
+            </tr>
+            <tr>
+                <td>Luke Ihuoma</td>
+                <td>K8S</td>
+                <td>ACTIVE MEMBER</td>
+            </tr>
+            <tr>
+                <td>Daniel Taiwo</td>
+                <td>K8S</td>
+                <td>ACTIVE MEMBER</td>
+            </tr>
+            <tr>
+                <td>David Emmanuel</td>
+                <td>K8S</td>
+                <td>ACTIVE MEMBER</td>
+            </tr>
+            <tr>
+                <td>Bamidele Idowu</td>
+                <td>K8S</td>
+                <td>ACTIVE MEMBER</td>
+            </tr>
+            <tr>
+                <td>Udemezue Uchegbu</td>
+                <td>K8S</td>
+                <td>ACTIVE MEMBER</td>
+            </tr>
+        </table> 
+        </div>
+    </center>
+     </main>      
+   </body>
+</html>
+SYSTEM TABLESPACE FOR PNGAUD IS 4% FREE
+UNDOTBS1 TABLESPACE FOR  iconcept is 1 % free
+
+
+
+Database Name BTPrimDB, BTSecDB
+Access Types Sys Admin, DB creator, DB Owner
+Database Username BTUser 
+
+STanbic_1234#

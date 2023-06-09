@@ -1,0 +1,45 @@
+
+
+
+
+--- take dump to backup current schema
+-- at the prompt input " / as sysdba " (without the quotes)
+	
+expdp directory=EXPDP_DIR schemas=SBSA_AXIA_SIT, SBSA_BIB_SIT dumpfile=AXIABIBSIT21JUL2022.dmp logfile=AXIABIBSIT21JUL2022.log
+
+
+
+-- connect as SBSA_AXIA_SIT user
+sqlplus SBSA_AXIA_SIT
+
+-- run the scripts and input the log path, index tablespace and data tablespace when prompted.
+
+data tablespace - FINNAXIA_TBS
+index tablespace - FINNAXIA_INDXTBS
+log path - /home/oracle/itms_patches/logs
+
+scripts
+@/home/oracle/itms_patches/AXIA/5.5.33.0_Axia_ServicePack/DB/Incremental/Run_in_AXIA.sql
+@/home/oracle/itms_patches/AXIA/5.5.34.0_Axia_ServicePack/DB/Incremental/Run_in_AXIA.sql
+@/home/oracle/itms_patches/AXIA/5.5.35.0_Axia_ServicePack/DB/Incremental/Run_in_AXIA.sql
+@/home/oracle/itms_patches/AXIA/5.5.36.0_Axia_ServicePack/DB/Incremental/Run_in_AXIA.sql
+@/home/oracle/itms_patches/AXIA/5.5.37.0_Axia_ServicePack/DB/Incremental/Run_in_AXIA.sql
+
+
+-- connect as SBSA_BIB_SIT user 
+sqlplus SBSA_BIB_SIT
+
+-- run the scripts and input the log path, index tablespace and data tablespace when prompted.
+
+data tablespace - BIB_TBS
+index tablespace - BIB_INDXTBS
+log path - /home/oracle/itms_patches/logs
+
+scripts
+@/home/oracle/itms_patches/BIB/4.5.33.0_BIB_ServicePack/DB/Incremental/Run_in_BIB.sql
+@/home/oracle/itms_patches/BIB/4.5.34.0_BIB_ServicePack/DB/Incremental/Run_in_BIB.sql
+@/home/oracle/itms_patches/BIB/4.5.35.0_BIB_ServicePack/DB/Incremental/Run_in_BIB.sql
+@/home/oracle/itms_patches/BIB/4.5.36.0_BIB_ServicePack/DB/Incremental/Run_in_BIB.sql
+@/home/oracle/itms_patches/BIB/4.5.37.0_BIB_ServicePack/DB/Incremental/Run_in_BIB.sql
+
+

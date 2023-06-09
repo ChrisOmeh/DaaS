@@ -1,0 +1,33 @@
+SESSION WITH MIKE
+
+JUMP BOX
+10.234.17.93  -- nu6'WY{bFD/j FOR SPOTLIGHT
+IF REDO WRITES TURN RED/YELLOW, IT MEANS THERE IS POSSIBLE ISSUE AT STORAGE LEVEL
+10.234.178.82 -- =U6/-}'NF7bgS(~
+
+ADDM FINDING IN ORACEL
+
+OPS Manager for Mongodb is on 10.234.19.125:8080
+
+10.234.18.27 is for EZ CASH
+
+Storage is Power Map
+
+PROD NODE 1:10.234.203.10
+PROD NODE 2: 10.234.203.11
+
+DR NODE1: 10.234.204.10
+DR NODE2: 10.234.204.11
+
+For fin,fib,rd
+Clear archive logs before taking bk in PROD AND DR.
+For other, clear only in DR.
+
+
+
+TDE
+root
+pwd
+oraenv pngfin
+
+

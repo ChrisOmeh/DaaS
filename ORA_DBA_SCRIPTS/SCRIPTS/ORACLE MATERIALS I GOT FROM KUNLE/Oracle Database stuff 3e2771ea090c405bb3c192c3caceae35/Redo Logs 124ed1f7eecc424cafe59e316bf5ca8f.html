@@ -1,0 +1,731 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Redo Logs</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="124ed1f7-eecc-424c-afe5-9e316bf5ca8f" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🔃</span></div><h1 class="page-title">Redo Logs</h1></header><div class="page-body"><p id="c81e2166-6d36-426a-8243-073ae5497475" class="">
+</p><h1 id="41f47042-42cd-42f4-992c-eadb26732a55" class=""><strong>What Is the Redo Log?</strong></h1><p id="302cce33-8072-4b29-8f2f-3abd9c85b575" class="">The most crucial structure for recovery operations is the <strong>redo log</strong>, which consists of two or more preallocated files that store all changes made to the database as they occur. Every instance of an Oracle Database has an associated redo log to protect the database in case of an instance failure.</p><h1 id="86a0927b-50dc-434c-be62-0d50dcfe4453" class=""><strong>Redo Threads</strong></h1><p id="34cc5a33-5a11-4ad6-b8f0-5382b9baa3ce" class="">When speaking in the context of multiple database instances, the redo log for each database instance is also referred to as a <em>redo thread</em>. In typical configurations, only one database instance accesses an Oracle Database, so only one thread is present. In an Oracle Real Application Clusters environment, however, two or more instances concurrently access a single database and each instance has its own thread of redo. A separate redo thread for each instance avoids contention for a single set of redo log files, thereby eliminating a potential performance bottleneck.</p><p id="d72f9033-ff45-41e3-b887-71f98975cd79" class="">This chapter describes how to configure and manage the redo log on a standard single-instance Oracle Database. The thread number can be assumed to be 1 in all discussions and examples of statements. For information about redo log groups in a Real Application Clusters environment, please refer to <a href="https://docs.oracle.com/cd/B19306_01/rac.102/b14197/dbinstmgt.htm#RACAD020"><em>Oracle Database Oracle Clusterware and Oracle Real Application Clusters Administration and Deployment Guide</em></a>.</p><h1 id="751ac4c8-e2ba-4ed5-a8f4-6bb7835b22f1" class=""><strong>Redo Log Contents</strong></h1><p id="cab3ef85-8980-40ba-94bf-792bc716017b" class="">Redo log files are filled with <strong>redo records</strong>. A redo record, also called a <strong>redo entry</strong>, is made up of a group of <strong>change vectors</strong>, each of which is a description of a change made to a single block in the database. For example, if you change a salary value in an employee table, you generate a redo record containing change vectors that describe changes to the data segment block for the table, the undo segment data block, and the transaction table of the undo segments.</p><p id="b8f21d33-bb1d-4fdf-8dc8-9dad4f08dbbd" class="">Redo entries record data that you can use to reconstruct all changes made to the database, including the undo segments. Therefore, the redo log also protects rollback data. When you recover the database using redo data, the database reads the change vectors in the redo records and applies the changes to the relevant blocks.</p><p id="c2e9d857-dde2-4d7f-83a6-6664772cb1a6" class="">Redo records are buffered in a circular fashion in the redo log buffer of the SGA (see <a href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/onlineredo.htm#i1006187">&quot;How Oracle Database Writes to the Redo Log&quot;</a>) and are written to one of the redo log files by the Log Writer (LGWR) database background process. Whenever a transaction is committed, LGWR writes the transaction redo records from the redo log buffer of the SGA to a redo log file, and assigns a <strong>system change number</strong> (SCN) to identify the redo records for each committed transaction. Only when all redo records associated with a given transaction are safely on disk in the online logs is the user process notified that the transaction has been committed.</p><p id="37cc48d4-d918-4127-8bec-2d8b33d9799c" class="">Redo records can also be written to a redo log file before the corresponding transaction is committed. If the redo log buffer fills, or another transaction commits, LGWR flushes all of the redo log entries in the redo log buffer to a redo log file, even though some redo records may not be committed. If necessary, the database can roll back these changes.</p><h1 id="70dfd389-2be0-4c9d-9273-aeb674f5b75e" class=""><strong>How Oracle Database Writes to the Redo Log</strong></h1><p id="0c669f30-1b60-4e70-92c5-e46991d83287" class="">The redo log of a database consists of two or more redo log files. The database requires a minimum of two files to guarantee that one is always available for writing while the other is being archived (if the database is in <code>ARCHIVELOG</code> mode). See <a href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/archredo.htm#g1015189">&quot;Managing Archived Redo Logs&quot;</a> for more information.</p><p id="e0edfd52-2da0-4906-8128-b9c34308f676" class="">LGWR writes to redo log files in a circular fashion. When the current redo log file fills, LGWR begins writing to the next available redo log file. When the last available redo log file is filled, LGWR returns to the first redo log file and writes to it, starting the cycle again. <a href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/onlineredo.htm#i1006202">Figure 6-1</a> illustrates the circular writing of the redo log file. The numbers next to each line indicate the sequence in which LGWR writes to each redo log file.</p><p id="00458748-92a3-455e-8dc7-b9d7016f22cf" class="">Filled redo log files are available to LGWR for reuse depending on whether archiving is enabled.</p><ul id="d8897533-e9a0-486f-9200-d549f0467c60" class="bulleted-list"><li style="list-style-type:disc">If archiving is disabled (the database is in <code>NOARCHIVELOG</code> mode), a filled redo log file is available after the changes recorded in it have been written to the datafiles.</li></ul><ul id="8f265663-cd82-4ae2-a5d3-5d187a5d66b2" class="bulleted-list"><li style="list-style-type:disc">If archiving is enabled (the database is in <code>ARCHIVELOG</code> mode), a filled redo log file is available to LGWR after the changes recorded in it have been written to the datafiles <em>and</em> the file has been archived.</li></ul><p id="c8e633ed-7f09-44fa-ad41-821182a09b62" class=""><em><strong>Figure 6-1 </strong></em><em><strong>Reuse of Redo Log Files by LGWR</strong></em></p><figure id="fc78af1e-0577-4044-b17e-bccadd66aa0c" class="image"><a href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/img/admin054.gif"><img src="https://docs.oracle.com/cd/B19306_01/server.102/b14231/img/admin054.gif"/></a></figure><p id="abb6dc90-e980-4da8-a5d9-a88fb2fef726" class=""><a href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/img_text/admin054.htm">Description of &quot;Figure 6-1 </a><a href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/img_text/admin054.htm"><strong>Reuse of Redo Log Files by LGWR</strong></a><a href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/img_text/admin054.htm">&quot;</a></p><h3 id="133ae4e8-ab2f-4c65-8fa5-f31170663fef" class=""><strong>Active (Current) and Inactive Redo Log Files</strong></h3><p id="93c239eb-3b64-459b-9069-9540234dd5dd" class="">Oracle Database uses only one redo log files at a time to store redo records written from the redo log buffer. The redo log file that LGWR is actively writing to is called the <strong>current</strong> redo log file.</p><p id="bdf27414-88de-4377-a448-8133816461dd" class="">Redo log files that are required for instance recovery are called <strong>active</strong> redo log files. Redo log files that are no longer required for instance recovery are called <strong>inactive</strong> redo log files.</p><p id="51086baa-2dc2-41a4-9380-c2f1c6ecb0fb" class="">If you have enabled archiving (the database is in <code>ARCHIVELOG</code> mode), then the database cannot reuse or overwrite an active online log file until one of the archiver background processes (ARC<em>n</em>) has archived its contents. If archiving is disabled (the database is in <code>NOARCHIVELOG</code> mode), then when the last redo log file is full, LGWR continues by overwriting the first available active file.</p><h3 id="80bb5c57-f854-405e-baa3-3d6e625bccc5" class=""><strong>Log Switches and Log Sequence Numbers</strong></h3><p id="680fe67c-1347-42f7-a919-6aca83d34b37" class="">A <strong>log switch</strong> is the point at which the database stops writing to one redo log file and begins writing to another. Normally, a log switch occurs when the current redo log file is completely filled and writing must continue to the next redo log file. However, you can configure log switches to occur at regular intervals, regardless of whether the current redo log file is completely filled. You can also force log switches manually.</p><p id="5afc2467-b46f-4900-a921-988ddca92a7f" class="">Oracle Database assigns each redo log file a new <strong>log sequence number</strong> every time a log switch occurs and LGWR begins writing to it. When the database archives redo log files, the archived log retains its log sequence number. A redo log file that is cycled back for use is given the next available log sequence number.</p><p id="d5423284-26b0-4a4d-a9dd-c316b3bffcee" class="">Each online or archived redo log file is uniquely identified by its log sequence number. During crash, instance, or media recovery, the database properly applies redo log files in ascending order by using the log sequence number of the necessary archived and redo log files.</p><h1 id="d9083f7d-9226-4d45-b80d-0527f48eb22c" class=""><strong>Planning the Redo Log</strong></h1><p id="2e180c58-a1c7-4d96-a804-826922036129" class="">This section provides guidelines you should consider when configuring a database instance redo log and contains the following topics:</p><ul id="dd6ee4cc-0a13-4515-b7b8-3ceeaa70f17a" class="bulleted-list"><li style="list-style-type:disc"><a href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/onlineredo.htm#i1006249">Multiplexing Redo Log Files</a></li></ul><ul id="165bcfa4-df7b-4b9c-ac13-206b7e67458c" class="bulleted-list"><li style="list-style-type:disc"><a href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/onlineredo.htm#i1106324">Placing Redo Log Members on Different Disks</a></li></ul><ul id="68556864-a74c-4112-9f04-b001cde593fb" class="bulleted-list"><li style="list-style-type:disc"><a href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/onlineredo.htm#i1006341">Setting the Size of Redo Log Members</a></li></ul><ul id="c977c0e7-40ac-43df-b2ad-40a816a4b64d" class="bulleted-list"><li style="list-style-type:disc"><a href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/onlineredo.htm#i1006351">Choosing the Number of Redo Log Files</a></li></ul><ul id="0970ec73-d3a2-4b9c-b5a1-aecf66754a26" class="bulleted-list"><li style="list-style-type:disc"><a href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/onlineredo.htm#i1006367">Controlling Archive Lag</a></li></ul><h1 id="7020f7b8-1bc3-45df-b904-0eac3b36bbae" class=""><strong>Multiplexing Redo Log Files</strong></h1><p id="3180fa38-5944-46a8-af1e-6d015e7a1adc" class="">To protect against a failure involving the redo log itself, Oracle Database allows a <strong>multiplexed</strong> redo log, meaning that two or more identical copies of the redo log can be automatically maintained in separate locations. For the most benefit, these locations should be on separate disks. Even if all copies of the redo log are on the same disk, however, the redundancy can help protect against I/O errors, file corruption, and so on. When redo log files are multiplexed, LGWR concurrently writes the same redo log information to multiple identical redo log files, thereby eliminating a single point of redo log failure.</p><p id="48a6d10e-0435-4c24-bb18-fffb7ab9363b" class="">Multiplexing is implemented by creating <em>groups</em> of redo log files. A <strong>group</strong> consists of a redo log file and its multiplexed copies. Each identical copy is said to be a <strong>member</strong> of the group. Each redo log group is defined by a number, such as group 1, group 2, and so on.</p><p id="60c53279-8fd8-4ecc-8399-7f88d5fcf6f0" class=""><em><strong>Figure 6-2 </strong></em><em><strong>Multiplexed Redo Log Files</strong></em></p><figure id="83e2e120-9a51-46b6-9f96-1f90a8b0445c" class="image"><a href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/img/admin052.gif"><img src="https://docs.oracle.com/cd/B19306_01/server.102/b14231/img/admin052.gif"/></a></figure><p id="2335e28b-8629-4124-acd7-c0d1519be683" class=""><a href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/img_text/admin052.htm">Description of &quot;Figure 6-2 </a><a href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/img_text/admin052.htm"><strong>Multiplexed Redo Log Files</strong></a><a href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/img_text/admin052.htm">&quot;</a></p><p id="42868b6c-3d0c-41c4-9120-591263cdf1ef" class="">In <a href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/onlineredo.htm#i1006259">Figure 6-2</a>, <code>A_LOG1</code> and <code>B_LOG1</code> are both members of Group 1, <code>A_LOG2</code> and <code>B_LOG2</code> are both members of Group 2, and so forth. Each member in a group must be exactly the same size.</p><p id="e5e6a7c0-2fed-457a-b646-531df5946154" class="">Each member of a log file group is concurrently active—that is, concurrently written to by LGWR—as indicated by the identical log sequence numbers assigned by LGWR. In <a href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/onlineredo.htm#i1006259">Figure 6-2</a>, first LGWR writes concurrently to both <code>A_LOG1</code> and <code>B_LOG1</code>. Then it writes concurrently to both <code>A_LOG2</code> and <code>B_LOG2</code>, and so on. LGWR never writes concurrently to members of different groups (for example, to <code>A_LOG1</code> and <code>B_LOG2</code>).</p><p id="26465d6a-91d0-45d6-b0e0-97fc215bb54f" class=""><strong>Note:</strong></p><p id="e2a1d2e5-1e20-4758-b28a-a36ae9bbe5e2" class="">Oracle recommends that you multiplex your redo log files. The loss of the log file data can be catastrophic if recovery is required. Note that when you multiplex the redo log, the database must increase the amount of I/O that it performs. Depending on your configuration, this may impact overall database performance.</p><h3 id="b37b3dbb-6554-421d-aaf5-3850ca0b2764" class=""><strong>Responding to Redo Log Failure</strong></h3><p id="768b37e2-5be1-4ec8-aec7-92a535ba83f9" class="">Whenever LGWR cannot write to a member of a group, the database marks that member as <code>INVALID</code> and writes an error message to the LGWR trace file and to the database alert log to indicate the problem with the inaccessible files. The specific reaction of LGWR when a redo log member is unavailable depends on the reason for the lack of availability, as summarized in the table that follows.</p><div id="373d3176-6805-40e1-a81c-f9777afd4719" class="collection-content"><h4 class="collection-title"></h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M7.73943662,8.6971831 C7.77640845,8.7834507 7.81338028,8.8943662 7.81338028,9.00528169 C7.81338028,9.49823944 7.40669014,9.89260563 6.91373239,9.89260563 C6.53169014,9.89260563 6.19894366,9.64612676 6.08802817,9.30105634 L5.75528169,8.33978873 L2.05809859,8.33978873 L1.72535211,9.30105634 C1.61443662,9.64612676 1.2693662,9.89260563 0.887323944,9.89260563 C0.394366197,9.89260563 0,9.49823944 0,9.00528169 C0,8.8943662 0.0246478873,8.7834507 0.0616197183,8.6971831 L2.46478873,2.48591549 C2.68661972,1.90669014 3.24119718,1.5 3.90669014,1.5 C4.55985915,1.5 5.12676056,1.90669014 5.34859155,2.48591549 L7.73943662,8.6971831 Z M2.60035211,6.82394366 L5.21302817,6.82394366 L3.90669014,3.10211268 L2.60035211,6.82394366 Z M11.3996479,3.70598592 C12.7552817,3.70598592 14,4.24823944 14,5.96126761 L14,9.07922535 C14,9.52288732 13.6549296,9.89260563 13.2112676,9.89260563 C12.8169014,9.89260563 12.471831,9.59683099 12.4225352,9.19014085 C12.028169,9.6584507 11.3257042,9.95422535 10.5492958,9.95422535 C9.60035211,9.95422535 8.47887324,9.31338028 8.47887324,7.98239437 C8.47887324,6.58978873 9.60035211,6.08450704 10.5492958,6.08450704 C11.3380282,6.08450704 12.040493,6.33098592 12.4348592,6.81161972 L12.4348592,5.98591549 C12.4348592,5.38204225 11.9172535,4.98767606 11.1285211,4.98767606 C10.6602113,4.98767606 10.2411972,5.11091549 9.80985915,5.38204225 C9.72359155,5.43133803 9.61267606,5.46830986 9.50176056,5.46830986 C9.18133803,5.46830986 8.91021127,5.1971831 8.91021127,4.86443662 C8.91021127,4.64260563 9.0334507,4.44542254 9.19366197,4.34683099 C9.87147887,3.90316901 10.6232394,3.70598592 11.3996479,3.70598592 Z M11.1778169,8.8943662 C11.6830986,8.8943662 12.1760563,8.72183099 12.4348592,8.37676056 L12.4348592,7.63732394 C12.1760563,7.29225352 11.6830986,7.11971831 11.1778169,7.11971831 C10.5616197,7.11971831 10.056338,7.45246479 10.056338,8.0193662 C10.056338,8.57394366 10.5616197,8.8943662 11.1778169,8.8943662 Z M0.65625,11.125 L13.34375,11.125 C13.7061869,11.125 14,11.4188131 14,11.78125 C14,12.1436869 13.7061869,12.4375 13.34375,12.4375 L0.65625,12.4375 C0.293813133,12.4375 4.43857149e-17,12.1436869 0,11.78125 C-4.43857149e-17,11.4188131 0.293813133,11.125 0.65625,11.125 Z"></path></svg></span>Condition</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>LGWR Action</th></tr></thead><tbody><tr id="71afffca-b183-4dc3-b960-353ba5b0521d"><td class="cell-title"><a href="Redo%20Logs%20124ed1f7eecc424cafe59e316bf5ca8f/Untitled%20Database%20373d3176680540e1a81cf9777afd4719/LGWR%20can%20successfully%20write%20to%20at%20least%20one%20member%2071afffcab1834dc3b960353ba5b0521d.html">LGWR can successfully write to at least one member in a group</a></td><td class="cell-:s;&gt;">Writing proceeds as normal. LGWR writes to the available members of a group and ignores the unavailable members.</td></tr><tr id="e60e6608-63c2-4550-8d4a-bf8b917a6a0b"><td class="cell-title"><a href="Redo%20Logs%20124ed1f7eecc424cafe59e316bf5ca8f/Untitled%20Database%20373d3176680540e1a81cf9777afd4719/LGWR%20cannot%20access%20the%20next%20group%20at%20a%20log%20switch%20%20e60e660863c245508d4abf8b917a6a0b.html">LGWR cannot access the next group at a log switch because the group needs to be archived</a></td><td class="cell-:s;&gt;">Database operation temporarily halts until the group becomes available or until the group is archived.</td></tr><tr id="2a5f32c3-347c-4da7-844e-513393847915"><td class="cell-title"><a href="Redo%20Logs%20124ed1f7eecc424cafe59e316bf5ca8f/Untitled%20Database%20373d3176680540e1a81cf9777afd4719/All%20members%20of%20the%20next%20group%20are%20inaccessible%20to%20%202a5f32c3347c4da7844e513393847915.html">All members of the next group are inaccessible to LGWR at a log switch because of media failure</a></td><td class="cell-:s;&gt;">Oracle Database returns an error, and the database instance shuts down. In this case, you may need to perform media recovery on the database from the loss of a redo log file.If the database checkpoint has moved beyond the lost redo log, media recovery is not necessary, because the database has saved the data recorded in the redo log to the datafiles. You need only drop the inaccessible redo log group. If the database did not archive the bad log, use <code>ALTER DATABASE CLEAR UNARCHIVED LOG</code> to disable archiving before the log can be dropped.</td></tr><tr id="5ef7b096-1255-41cd-9bc9-3f46edad5dc2"><td class="cell-title"><a href="Redo%20Logs%20124ed1f7eecc424cafe59e316bf5ca8f/Untitled%20Database%20373d3176680540e1a81cf9777afd4719/All%20members%20of%20a%20group%20suddenly%20become%20inaccessibl%205ef7b096125541cd9bc93f46edad5dc2.html">All members of a group suddenly become inaccessible to LGWR while it is writing to them</a></td><td class="cell-:s;&gt;">Oracle Database returns an error and the database instance immediately shuts down. In this case, you may need to perform media recovery. If the media containing the log is not actually lost--for example, if the drive for the log was inadvertently turned off--media recovery may not be needed. In this case, you need only turn the drive back on and let the database perform automatic instance recovery.</td></tr></tbody></table></div><h3 id="e17341a0-b043-49a2-8b82-0629af086afa" class=""><strong>Legal and Illegal Configurations</strong></h3><p id="28fe72a9-6db0-4ab1-a76a-40d62b4b62ff" class="">In most cases, a multiplexed redo log should be symmetrical: all groups of the redo log should have the same number of members. However, the database does not require that a multiplexed redo log be symmetrical. For example, one group can have only one member, and other groups can have two members. This configuration protects against disk failures that temporarily affect some redo log members but leave others intact.</p><p id="c6c3d4a4-4c91-44ee-8db5-33df3caa6fe8" class="">The only requirement for an instance redo log is that it have at least two groups. <a href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/onlineredo.htm#i1206318">Figure 6-3</a> shows legal and illegal multiplexed redo log configurations. The second configuration is illegal because it has only one group.</p><p id="4f5e5a34-4845-4b63-96a5-0cb119eebad1" class=""><em><strong>Figure 6-3 </strong></em><em><strong>Legal and Illegal Multiplexed Redo Log Configuration</strong></em></p><figure id="a9652fa3-f65b-4e9f-a3d2-f255aa8e03c8" class="image"><a href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/img/admin053.gif"><img src="https://docs.oracle.com/cd/B19306_01/server.102/b14231/img/admin053.gif"/></a></figure><p id="17b28dd5-2dc5-42d6-8d29-01d576ce9817" class=""><a href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/img_text/admin053.htm">Description of &quot;Figure 6-3 </a><a href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/img_text/admin053.htm"><strong>Legal and Illegal Multiplexed Redo Log Configuration</strong></a><a href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/img_text/admin053.htm">&quot;</a></p><h1 id="c6e02d55-66ee-4366-8405-a428a7ebb8ca" class=""><strong>Placing Redo Log Members on Different Disks</strong></h1><p id="b56969ac-ce95-4e3d-b64f-a0e9cc076fa9" class="">When setting up a multiplexed redo log, place members of a group on different physical disks. If a single disk fails, then only one member of a group becomes unavailable to LGWR and other members remain accessible to LGWR, so the instance can continue to function.</p><p id="c06d15ab-3f16-4174-9ddc-8998314cc06f" class="">If you archive the redo log, spread redo log members across disks to eliminate contention between the LGWR and ARC<em>n</em> background processes. For example, if you have two groups of multiplexed redo log members (a <em>duplexed</em> redo log), place each member on a different disk and set your archiving destination to a fifth disk. Doing so will avoid contention between LGWR (writing to the members) and ARC<em>n</em> (reading the members).</p><p id="ef967298-a7ae-4903-a043-d345ba0c2a97" class="">Datafiles should also be placed on different disks from redo log files to reduce contention in writing data blocks and redo records.</p><h1 id="3c0e29a5-fcd8-4f66-8d44-50545dd62011" class=""><strong>Setting the Size of Redo Log Members</strong></h1><p id="bb938230-2e56-4de5-aa9b-fb66a05c974b" class="">When setting the size of redo log files, consider whether you will be archiving the redo log. Redo log files should be sized so that a filled group can be archived to a single unit of offline storage media (such as a tape or disk), with the least amount of space on the medium left unused. For example, suppose only one filled redo log group can fit on a tape and 49% of the tape storage capacity remains unused. In this case, it is better to decrease the size of the redo log files slightly, so that two log groups could be archived on each tape.</p><p id="5a3074bd-2f70-4e1d-9bd5-94ff18882750" class="">All members of the same multiplexed redo log group must be the same size. Members of different groups can have different sizes. However, there is no advantage in varying file size between groups. If checkpoints are not set to occur between log switches, make all groups the same size to guarantee that checkpoints occur at regular intervals.</p><p id="5540b9d8-6116-4536-9b64-37d36579881e" class="">The minimum size permitted for a redo log file is 4 MB.</p><p id="9cbb6eff-7e02-47e9-8bd7-1c1f5db9cd94" class=""><strong>See Also:</strong></p><p id="d5c6eb2e-97b7-4067-b6db-657fa380a6de" class="">Your operating system–specific Oracle documentation. The default size of redo log files is operating system dependent.</p><h1 id="badfa5be-23b3-4d3e-b588-4556b860b06b" class=""><strong>Choosing the Number of Redo Log Files</strong></h1><p id="535da254-9c33-4409-bc59-7d44a68b522b" class="">The best way to determine the appropriate number of redo log files for a database instance is to test different configurations. The optimum configuration has the fewest groups possible without hampering LGWR from writing redo log information.</p><p id="f8459f54-5695-4d36-9c34-40399910d8a4" class="">In some cases, a database instance may require only two groups. In other situations, a database instance may require additional groups to guarantee that a recycled group is always available to LGWR. During testing, the easiest way to determine whether the current redo log configuration is satisfactory is to examine the contents of the LGWR trace file and the database alert log. If messages indicate that LGWR frequently has to wait for a group because a checkpoint has not completed or a group has not been archived, add groups.</p><p id="c56f49be-399f-4ac1-bc4b-f4580a790b8f" class="">Consider the parameters that can limit the number of redo log files before setting up or altering the configuration of an instance redo log. The following parameters limit the number of redo log files that you can add to a database:</p><ul id="30363b1f-efc3-4f4e-83f3-bb39ea4f9009" class="bulleted-list"><li style="list-style-type:disc">The <code>MAXLOGFILES</code> parameter used in the <code>CREATE</code> <code>DATABASE</code> statement determines the maximum number of groups of redo log files for each database. Group values can range from 1 to <code>MAXLOGFILES</code>. When the compatibility level is set earlier than 10.2.0, the only way to override this upper limit is to re-create the database or its control file. Therefore, it is important to consider this limit before creating a database. When compatibility is set to 10.2.0 or later, you can exceed the <code>MAXLOGFILES</code> limit, and the control files expand as needed. If <code>MAXLOGFILES</code> is not specified for the <code>CREATE</code> <code>DATABASE</code> statement, then the database uses an operating system specific default value.</li></ul><ul id="231c4c25-a199-40a1-b7c5-1d971f430914" class="bulleted-list"><li style="list-style-type:disc">The <code>MAXLOGMEMBERS</code> parameter used in the <code>CREATE</code> <code>DATABASE</code> statement determines the maximum number of members for each group. As with <code>MAXLOGFILES</code>, the only way to override this upper limit is to re-create the database or control file. Therefore, it is important to consider this limit before creating a database. If no <code>MAXLOGMEMBERS</code> parameter is specified for the <code>CREATE</code> <code>DATABASE</code> statement, then the database uses an operating system default value.<p id="a4a8f413-ef5e-4331-897c-5d70cf52b364" class=""><strong>See Also:</strong></p><ul id="8f5b73cc-97b7-42d9-a06c-29bb470ddbff" class="bulleted-list"><li style="list-style-type:circle"><a href="https://docs.oracle.com/cd/B19306_01/backup.102/b14191/rcmtunin.htm#BRADV13009"><em>Oracle Database Backup and Recovery Advanced User&#x27;s Guide</em></a> to learn how checkpoints and the redo log impact instance recovery</li></ul><ul id="dcc6a550-a430-4822-baa3-e95f7aea5413" class="bulleted-list"><li style="list-style-type:circle">Your operating system specific Oracle documentation for the default and legal values of the <code>MAXLOGFILES</code> and <code>MAXLOGMEMBERS</code> parameters</li></ul></li></ul><h1 id="55b14d06-f4d8-4838-a822-8e42f49412c1" class=""><strong>Controlling Archive Lag</strong></h1><p id="95e0ef2d-195d-48b6-9f44-c2e9fcb325a7" class="">You can force all enabled redo log threads to switch their current logs at regular time intervals. In a primary/standby database configuration, changes are made available to the standby database by archiving redo logs at the primary site and then shipping them to the standby database. The changes that are being applied by the standby database can lag behind the changes that are occurring on the primary database, because the standby database must wait for the changes in the primary database redo log to be archived (into the archived redo log) and then shipped to it. To limit this lag, you can set the <code>ARCHIVE_LAG_TARGET</code> initialization parameter. Setting this parameter lets you specify in seconds how long that lag can be.</p><h3 id="f2d54faf-b815-43f3-83ba-2d9e480d1247" class=""><strong>Setting the ARCHIVE_LAG_TARGET Initialization Parameter</strong></h3><p id="5c41c3da-88da-4e38-b72d-ce01858679c7" class="">When you set the <code>ARCHIVE_LAG_TARGET</code> initialization parameter, you cause the database to examine the current redo log of the instance periodically. If the following conditions are met, then the instance will switch the log:</p><ul id="0c3e3202-40a5-4dbe-a923-4b96c448dcaf" class="bulleted-list"><li style="list-style-type:disc">The current log was created prior to <em>n</em> seconds ago, and the estimated archival time for the current log is <em>m</em> seconds (proportional to the number of redo blocks used in the current log), where <em>n</em> + <em>m</em> exceeds the value of the <code>ARCHIVE_LAG_TARGET</code> initialization parameter.</li></ul><ul id="f4efbe70-35b1-406c-b0bd-67bc383c7dac" class="bulleted-list"><li style="list-style-type:disc">The current log contains redo records.</li></ul><p id="8a6f5459-f03a-4157-930a-6920e34b5c06" class="">In an Oracle Real Application Clusters environment, the instance also causes other threads to switch and archive their logs if they are falling behind. This can be particularly useful when one instance in the cluster is more idle than the other instances (as when you are running a 2-node primary/secondary configuration of Oracle Real Application Clusters).</p><p id="7ffe55d8-4285-4ac7-93a2-14486c601564" class="">The <code>ARCHIVE_LAG_TARGET</code> initialization parameter specifies the target of how many seconds of redo the standby could lose in the event of a primary shutdown or failure if the Oracle Data Guard environment is not configured in a no-data-loss mode. It also provides an upper limit of how long (in seconds) the current log of the primary database can span. Because the estimated archival time is also considered, this is not the exact log switch time.</p><p id="c065ad0e-4617-4f2c-adbc-a6a57729db81" class="">The following initialization parameter setting sets the log switch interval to 30 minutes (a typical value).</p><pre id="6bde2235-d725-45c9-88d3-ea84ef460111" class="code code-wrap"><code>ARCHIVE_LAG_TARGET = 1800
+
+</code></pre><p id="fdf017e5-a22f-4e83-8018-31217bade344" class="">A value of 0 disables this time-based log switching functionality. This is the default setting.</p><p id="25df6c40-4d14-472d-b364-d86bd7176977" class="">You can set the <code>ARCHIVE_LAG_TARGET</code> initialization parameter even if there is no standby database. For example, the <code>ARCHIVE_LAG_TARGET</code> parameter can be set specifically to force logs to be switched and archived.</p><p id="34ca7c7a-2064-4363-b5dd-8327925f3af1" class=""><code>ARCHIVE_LAG_TARGET</code> is a dynamic parameter and can be set with the <code>ALTER SYSTEM SET</code> statement.</p><p id="f3df6a04-1dbb-447a-b979-aca58ed7cbfc" class=""><strong>Caution:</strong></p><p id="396b198f-2283-445e-8ba0-7f94e3a98f9b" class="">The</p><pre id="1b8995f5-72a3-4ea1-9d53-daab04dad108" class="code code-wrap"><code>ARCHIVE_LAG_TARGET</code></pre><p id="a90a6e75-117c-4016-9207-1adb399c499f" class="">parameter must be set to the same value in all instances of an Oracle Real Application Clusters environment. Failing to do so results in unpredictable behavior.</p><h3 id="d91bcff8-35ec-434c-99cf-48dc243dab67" class=""><strong>Factors Affecting the Setting of ARCHIVE_LAG_TARGET</strong></h3><p id="1d59cc2f-381a-4a8e-ba8e-90c2095baf6e" class="">Consider the following factors when determining if you want to set the <code>ARCHIVE_LAG_TARGET</code> parameter and in determining the value for this parameter.</p><ul id="23d8cc32-2a42-425c-9422-0dac7e205a7b" class="bulleted-list"><li style="list-style-type:disc">Overhead of switching (as well as archiving) logs</li></ul><ul id="ebeb6eed-12cf-42de-870e-83b35fed2a1e" class="bulleted-list"><li style="list-style-type:disc">How frequently normal log switches occur as a result of log full conditions</li></ul><ul id="93f2b0fd-bec1-4fcb-9ba7-656b16ff9488" class="bulleted-list"><li style="list-style-type:disc">How much redo loss is tolerated in the standby database</li></ul><p id="bd292a55-ef48-49bf-86f9-d2f32e1adb0b" class="">Setting <code>ARCHIVE_LAG_TARGET</code> may not be very useful if natural log switches already occur more frequently than the interval specified. However, in the case of irregularities of redo generation speed, the interval does provide an upper limit for the time range each current log covers.</p><p id="627c807a-dd03-4e5e-be64-30b9245c44f0" class="">If the <code>ARCHIVE_LAG_TARGET</code> initialization parameter is set to a very low value, there can be a negative impact on performance. This can force frequent log switches. Set the parameter to a reasonable value so as not to degrade the performance of the primary database.</p><h1 id="94db7972-4c50-4730-91aa-f2cb4e98f0ac" class=""><strong>Creating Redo Log Groups and Members</strong></h1><p id="e27853ee-c427-4523-ab51-95a16b05de3c" class="">Plan the redo log of a database and create all required groups and members of redo log files during database creation. However, there are situations where you might want to create additional groups or members. For example, adding groups to a redo log can correct redo log group availability problems.</p><p id="868b4b44-240c-4f57-a17c-7f4e873d212a" class="">To create new redo log groups and members, you must have the <code>ALTER DATABASE</code> system privilege. A database can have up to <code>MAXLOGFILES</code> groups.</p><p id="29d41584-8d40-44e9-9a50-e45afafb8465" class=""><strong>See Also:</strong></p><p id="bbf2078a-ba43-40bf-ac73-38f0eb61fbd7" class=""><a href="https://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_1004.htm#SQLRF00802"><em>Oracle Database SQL Reference</em></a></p><p id="5aa4353a-242d-4478-8af1-0f123f2cb0c4" class="">for a complete description of the</p><pre id="5c42f576-91ea-4e4d-9894-579ba1678af7" class="code code-wrap"><code>ALTER DATABASE</code></pre><p id="ab6f1413-35a8-446b-8032-b5dad948eb59" class="">statement</p><h1 id="d369c42e-5f1b-462d-843f-5c0145142762" class=""><strong>Creating Redo Log Groups</strong></h1><p id="32ce7f46-3c2d-4de4-b156-4fa42d7b163b" class="">To create a new group of redo log files, use the SQL statement <code>ALTER DATABASE</code> with the <code>ADD LOGFILE</code> clause.</p><p id="29ea6449-c2bc-40a9-a0e9-2c6e296affd1" class="">The following statement adds a new group of redo logs to the database:</p><pre id="4ffd74d9-0961-444c-87e7-585389013bcf" class="code code-wrap"><code>ALTER DATABASE
+  ADD LOGFILE (&#x27;/oracle/dbs/log1c.rdo&#x27;, &#x27;/oracle/dbs/log2c.rdo&#x27;) SIZE 500K;
+</code></pre><p id="8924b719-a3b1-4d50-8477-9159cf48245e" class=""><strong>Note:</strong></p><p id="6a0e1dc0-8989-4af8-82d7-7879a2820ca8" class="">Use fully specify filenames of new log members to indicate where the operating system file should be created. Otherwise, the files will be created in either the default or current directory of the database server, depending upon your operating system.</p><p id="9ef51ca7-b0f5-43a5-9351-82335c78c3e1" class="">You can also specify the number that identifies the group using the <code>GROUP</code> clause:</p><pre id="3caff896-1725-4ab6-a2d3-d20f9b00c45f" class="code code-wrap"><code>ALTER DATABASE
+  ADD LOGFILE GROUP 10 (&#x27;/oracle/dbs/log1c.rdo&#x27;, &#x27;/oracle/dbs/log2c.rdo&#x27;)
+      SIZE 500K;
+
+</code></pre><p id="7c65604d-1eb7-41ab-90d2-530164921a81" class="">Using group numbers can make administering redo log groups easier. However, the group number must be between 1 and <code>MAXLOGFILES</code>. Do not skip redo log file group numbers (that is, do not number your groups 10, 20, 30, and so on), or you will consume unnecessary space in the control files of the database.</p><h1 id="5f8242aa-d023-403b-b502-e8a028884aed" class=""><strong>Creating Redo Log Members</strong></h1><p id="ef3a91fb-9013-4d36-bdef-e5df39b4ab15" class="">In some cases, it might not be necessary to create a complete group of redo log files. A group could already exist, but not be complete because one or more members of the group were dropped (for example, because of a disk failure). In this case, you can add new members to an existing group.</p><p id="10e9dba9-6b85-4ceb-9ad2-c18142d38041" class="">To create new redo log members for an existing group, use the SQL statement <code>ALTER DATABASE</code> with the <code>ADD LOGFILE MEMBER</code> clause. The following statement adds a new redo log member to redo log group number 2:</p><pre id="a6ee88c7-dbc2-421c-9421-ad8bb57d0e27" class="code code-wrap"><code>ALTER DATABASE ADD LOGFILE MEMBER &#x27;/oracle/dbs/log2b.rdo&#x27; TO GROUP 2;
+
+</code></pre><p id="49c16e36-0a7f-44e2-8b34-78a5b9abd568" class="">Notice that filenames must be specified, but sizes need not be. The size of the new members is determined from the size of the existing members of the group.</p><p id="b03500f1-1ef4-4d96-acba-bfe1cdb6762a" class="">When using the <code>ALTER DATABASE</code> statement, you can alternatively identify the target group by specifying all of the other members of the group in the <code>TO</code> clause, as shown in the following example:</p><pre id="e109c511-3159-4ee6-9bf9-008c995ee301" class="code code-wrap"><code>ALTER DATABASE ADD LOGFILE MEMBER &#x27;/oracle/dbs/log2c.rdo&#x27;
+    TO (&#x27;/oracle/dbs/log2a.rdo&#x27;, &#x27;/oracle/dbs/log2b.rdo&#x27;);
+</code></pre><p id="a3c6b9fa-4a07-486f-8800-b29ded667a2c" class=""><strong>Note:</strong></p><p id="2e1380d3-ffc7-4457-8be9-71ba8cce6ec9" class="">Fully specify the filenames of new log members to indicate where the operating system files should be created. Otherwise, the files will be created in either the default or current directory of the database server, depending upon your operating system. You may also note that the status of the new log member is shown as</p><pre id="6dcd5a34-b331-4294-a61c-28cde8494e62" class="code code-wrap"><code>INVALID</code></pre><p id="368e79d0-1e20-4430-bd55-c488830d7051" class="">. This is normal and it will change to active (blank) when it is first used.</p><h1 id="5c38a093-4e8b-4500-a49f-5732788737e5" class=""><strong>Relocating and Renaming Redo Log Members</strong></h1><p id="5bb920d6-4a32-4cb0-aac0-1ae82874bfcf" class="">You can use operating system commands to relocate redo logs, then use the <code>ALTER DATABASE</code> statement to make their new names (locations) known to the database. This procedure is necessary, for example, if the disk currently used for some redo log files is going to be removed, or if datafiles and a number of redo log files are stored on the same disk and should be separated to reduce contention.</p><p id="dd0bb197-76e0-45e0-a60c-34958b5f89a6" class="">To rename redo log members, you must have the <code>ALTER DATABASE</code> system privilege. Additionally, you might also need operating system privileges to copy files to the desired location and privileges to open and back up the database.</p><p id="a979b741-fdb2-43a1-bf42-912b9a976cc4" class="">Before relocating your redo logs, or making any other structural changes to the database, completely back up the database in case you experience problems while performing the operation. As a precaution, after renaming or relocating a set of redo log files, immediately back up the database control file.</p><p id="1ad27934-ca70-434b-8f01-1d97777b5ae0" class="">Use the following steps for relocating redo logs. The example used to illustrate these steps assumes:</p><ul id="3bfdcac4-9e2e-49e2-b1cb-902927602736" class="bulleted-list"><li style="list-style-type:disc">The log files are located on two disks: <code>diska</code> and <code>diskb</code>.</li></ul><ul id="5ac367b2-2bb5-48f4-a649-670a55b9a761" class="bulleted-list"><li style="list-style-type:disc">The redo log is duplexed: one group consists of the members <code>/diska/logs/log1a.rdo</code> and <code>/diskb/logs/log1b.rdo</code>, and the second group consists of the members <code>/diska/logs/log2a.rdo</code> and <code>/diskb/logs/log2b.rdo</code>.</li></ul><ul id="53db14c1-b32b-4372-be1f-1094ad5e32c6" class="bulleted-list"><li style="list-style-type:disc">The redo log files located on <code>diska</code> must be relocated to <code>diskc</code>. The new filenames will reflect the new location: <code>/diskc/logs/log1c.rdo</code> and <code>/diskc/logs/log2c.rdo</code>.</li></ul><p id="6ba5f418-75ce-4a79-8a3d-bc6c52404884" class=""><strong>Steps for Renaming Redo Log Members</strong></p><ol type="1" id="917a88ea-b47c-45b2-978d-a5b227f07087" class="numbered-list" start="1"><li>Shut down the database.<pre id="929c0bfb-9d26-4a5a-9826-35889158c5d4" class="code code-wrap"><code>SHUTDOWN
+
+</code></pre></li></ol><ol type="1" id="bd203147-4246-4162-ad33-563fb3e60459" class="numbered-list" start="2"><li>Copy the redo log files to the new location.You can execute an operating system command to copy a file (or perform other operating system commands) without exiting SQL*Plus by using the <code>HOST</code> command. Some operating systems allow you to use a character in place of the word <code>HOST</code>. For example, you can use an exclamation point (!) in UNIX.<p id="f797ea13-0957-4c15-8f42-602b8496a6ff" class="">Operating system files, such as redo log members, must be copied using the appropriate operating system commands. See your operating system specific documentation for more information about copying files.</p><p id="87f090cb-e3c6-4c43-91bb-0c2552e19211" class=""><strong>Note:</strong></p><p id="b3f1c36a-59fb-4384-bab5-c64c1e439f33" class="">The following example uses operating system commands (UNIX) to move the redo log members to a new location:</p><pre id="dae5f373-0736-4ea7-8c08-01b452e633b7" class="code code-wrap"><code>mv /diska/logs/log1a.rdo /diskc/logs/log1c.rdo
+mv /diska/logs/log2a.rdo /diskc/logs/log2c.rdo
+
+</code></pre></li></ol><ol type="1" id="8b17e0da-3b52-48ed-8358-8360154997b1" class="numbered-list" start="3"><li>Startup the database, mount, but do not open it.<pre id="ef42adb6-6258-4e3d-9091-4188cb7403f0" class="code code-wrap"><code>CONNECT / as SYSDBA
+STARTUP MOUNT
+
+</code></pre></li></ol><ol type="1" id="d7e3ec0b-f3d8-43b8-a914-97fd3204ff90" class="numbered-list" start="4"><li>Rename the redo log members.<p id="93d5a33d-557f-42ab-b77c-7b79b07a84fa" class="">Use the <code>ALTER DATABASE</code> statement with the <code>RENAME FILE</code> clause to rename the database redo log files.</p><pre id="5aea8306-8290-403e-93a9-df4116796f6e" class="code code-wrap"><code>ALTER DATABASE
+  RENAME FILE &#x27;/diska/logs/log1a.rdo&#x27;, &#x27;/diska/logs/log2a.rdo&#x27;
+           TO &#x27;/diskc/logs/log1c.rdo&#x27;, &#x27;/diskc/logs/log2c.rdo&#x27;;
+
+</code></pre></li></ol><ol type="1" id="c9098b52-e8bf-4b4d-9ec8-19bf59f65fde" class="numbered-list" start="5"><li>Open the database for normal operation.<p id="2dee1eaa-1157-45f1-9a0e-b06aa02e35dc" class="">The redo log alterations take effect when the database is opened.</p><pre id="52a1b467-9006-4d99-910e-395aa8a8d8c0" class="code code-wrap"><code>ALTER DATABASE OPEN;
+</code></pre></li></ol><h1 id="cfeb398e-c6e4-4755-9eda-8c43280b5ed8" class=""><strong>Dropping Redo Log Groups and Members</strong></h1><p id="706d2fd0-9b04-4446-b369-bd5539ee2228" class="">In some cases, you may want to drop an entire group of redo log members. For example, you want to reduce the number of groups in an instance redo log. In a different case, you may want to drop one or more specific redo log members. For example, if a disk failure occurs, you may need to drop all the redo log files on the failed disk so that the database does not try to write to the inaccessible files. In other situations, particular redo log files become unnecessary. For example, a file might be stored in an inappropriate location.</p><h1 id="af9e89fc-19b1-4699-9996-3001838f64b7" class=""><strong>Dropping Log Groups</strong></h1><p id="9a27d4b3-e193-4271-b708-9ed9d7f0ce79" class="">To drop a redo log group, you must have the <code>ALTER DATABASE</code> system privilege. Before dropping a redo log group, consider the following restrictions and precautions:</p><ul id="64433bca-93df-403c-803f-346a47a63249" class="bulleted-list"><li style="list-style-type:disc">An instance requires at least two groups of redo log files, regardless of the number of members in the groups. (A group comprises one or more members.)</li></ul><ul id="25cf5779-2903-44e9-910d-853416eb7d51" class="bulleted-list"><li style="list-style-type:disc">You can drop a redo log group only if it is inactive. If you need to drop the current group, first force a log switch to occur.</li></ul><ul id="ae0b56c5-5ab1-49b2-a4e7-1da555922f8b" class="bulleted-list"><li style="list-style-type:disc">Make sure a redo log group is archived (if archiving is enabled) before dropping it. To see whether this has happened, use the <code>V$LOG</code> view.<pre id="75abdfe2-eaa2-4b7c-a8ec-c3d5d8343dac" class="code code-wrap"><code>SELECT GROUP#, ARCHIVED, STATUS FROM V$LOG;
+
+   GROUP# ARC STATUS
+--------- --- ----------------
+        1 YES ACTIVE
+        2 NO  CURRENT
+        3 YES INACTIVE
+        4 YES INACTIVE
+
+</code></pre></li></ul><p id="7f2c74b0-9128-44f3-ae43-9f9e59d2e7cb" class="">Drop a redo log group with the SQL statement <code>ALTER DATABASE</code> with the <code>DROP LOGFILE</code> clause.</p><p id="aa505f5d-014a-4af5-8de3-f7ec5eba4899" class="">The following statement drops redo log group number 3:</p><pre id="4b3873b2-6d8b-4e4a-a8c4-07006e15356e" class="code code-wrap"><code>ALTER DATABASE DROP LOGFILE GROUP 3;
+
+</code></pre><p id="9707e2e5-adc0-49d1-8d70-b02c3d829a39" class="">When a redo log group is dropped from the database, and you are not using the Oracle-managed files feature, the operating system files are not deleted from disk. Rather, the control files of the associated database are updated to drop the members of the group from the database structure. After dropping a redo log group, make sure that the drop completed successfully, and then use the appropriate operating system command to delete the dropped redo log files.</p><p id="52e0ad24-072d-4b72-98d3-c5075d490863" class="">When using Oracle-managed files, the cleanup of operating systems files is done automatically for you.</p><h1 id="19138370-2aa0-4b74-81f6-45c5012b0185" class=""><strong>Dropping Redo Log Members</strong></h1><p id="bc9b0f89-aaa9-4679-8e67-a778023f1329" class="">To drop a redo log member, you must have the <code>ALTER DATABASE</code> system privilege. Consider the following restrictions and precautions before dropping individual redo log members:</p><ul id="5cc62935-b03d-4d90-8f6a-4381c29d34c2" class="bulleted-list"><li style="list-style-type:disc">It is permissible to drop redo log files so that a multiplexed redo log becomes temporarily asymmetric. For example, if you use duplexed groups of redo log files, you can drop one member of one group, even though all other groups have two members each. However, you should rectify this situation immediately so that all groups have at least two members, and thereby eliminate the single point of failure possible for the redo log.</li></ul><ul id="2d62d184-50a6-4d80-814c-e2f0ad3c41eb" class="bulleted-list"><li style="list-style-type:disc">An instance always requires at least two valid groups of redo log files, regardless of the number of members in the groups. (A group comprises one or more members.) If the member you want to drop is the last valid member of the group, you cannot drop the member until the other members become valid. To see a redo log file status, use the <code>V$LOGFILE</code> view. A redo log file becomes <code>INVALID</code> if the database cannot access it. It becomes <code>STALE</code> if the database suspects that it is not complete or correct. A stale log file becomes valid again the next time its group is made the active group.</li></ul><ul id="ddda3cc2-345e-4f5f-894f-6d24372c767e" class="bulleted-list"><li style="list-style-type:disc">You can drop a redo log member only if it is <em>not</em> part of an active or current group. If you want to drop a member of an active group, first force a log switch to occur.</li></ul><ul id="b09da709-0f95-4016-b1d6-5443e3a38dda" class="bulleted-list"><li style="list-style-type:disc">Make sure the group to which a redo log member belongs is archived (if archiving is enabled) before dropping the member. To see whether this has happened, use the <code>V$LOG</code> view.</li></ul><p id="58308f61-02ee-44bc-bc96-0ebb4f933526" class="">To drop specific inactive redo log members, use the <code>ALTER DATABASE</code> statement with the <code>DROP LOGFILE MEMBER</code> clause.</p><p id="58adcf42-c729-4bdb-9244-e6c744da44bc" class="">The following statement drops the redo log <code>/oracle/dbs/log3c.rdo</code>:</p><pre id="bfef508b-985a-4a12-ae8a-98a1de53bfc5" class="code code-wrap"><code>ALTER DATABASE DROP LOGFILE MEMBER &#x27;/oracle/dbs/log3c.rdo&#x27;;
+
+</code></pre><p id="2ad9f8b8-7fd5-472c-8f9c-f8b520cf6864" class="">When a redo log member is dropped from the database, the operating system file is not deleted from disk. Rather, the control files of the associated database are updated to drop the member from the database structure. After dropping a redo log file, make sure that the drop completed successfully, and then use the appropriate operating system command to delete the dropped redo log file.</p><p id="37f0e059-9996-446d-bf5a-21a5cb050ff7" class="">To drop a member of an active group, you must first force a log switch.</p><h1 id="44133c92-00e4-42f7-a056-1c03b3b11d59" class=""><strong>Forcing Log Switches</strong></h1><p id="eba382ae-9d34-46d6-9324-e2a35b4efcd7" class="">A log switch occurs when LGWR stops writing to one redo log group and starts writing to another. By default, a log switch occurs automatically when the current redo log file group fills.</p><p id="b7643cb2-7248-4d69-b723-8c0fe88baef5" class="">You can force a log switch to make the currently active group inactive and available for redo log maintenance operations. For example, you want to drop the currently active group, but are not able to do so until the group is inactive. You may also wish to force a log switch if the currently active group needs to be archived at a specific time before the members of the group are completely filled. This option is useful in configurations with large redo log files that take a long time to fill.</p><p id="b7180243-7a65-421c-90bb-d558628b572f" class="">To force a log switch, you must have the <code>ALTER SYSTEM</code> privilege. Use the <code>ALTER SYSTEM</code> statement with the <code>SWITCH LOGFILE</code> clause.</p><p id="de3e5ede-dbe7-499e-9dd0-5b487b7bdfb5" class="">The following statement forces a log switch:</p><pre id="cf4f9ec0-6369-4132-b6d8-a8c84e6c7a5e" class="code code-wrap"><code>ALTER SYSTEM SWITCH LOGFILE;
+</code></pre><h1 id="e6246f91-8e78-4b0b-ab3c-ee9bcfdde33c" class=""><strong>Verifying Blocks in Redo Log Files</strong></h1><p id="9d2d96a5-e7af-4c53-98dc-7d22f67027f9" class="">You can configure the database to use checksums to verify blocks in the redo log files. If you set the initialization parameter <code>DB_BLOCK_CHECKSUM</code> to <code>TRUE</code>, the database computes a checksum for each database block when it is written to disk, including each redo log block as it is being written to the current log. The checksum is stored the header of the block.</p><p id="35ff933d-5b4b-4084-8d9b-27cc62681cac" class="">Oracle Database uses the checksum to detect corruption in a redo log block. The database verifies the redo log block when the block is read from an archived log during recovery and when it writes the block to an archive log file. An error is raised and written to the alert log if corruption is detected.</p><p id="48ac3836-66d8-4a7e-a2e7-476d86e601c3" class="">If corruption is detected in a redo log block while trying to archive it, the system attempts to read the block from another member in the group. If the block is corrupted in all members of the redo log group, then archiving cannot proceed.</p><p id="0e434e6d-d7ae-4825-842c-298095201467" class="">The default value of <code>DB_BLOCK_CHECKSUM</code> is <code>TRUE</code>. The value of this parameter can be changed dynamically using the <code>ALTER SYSTEM</code> statement.</p><p id="9ecbe414-dcf1-4230-a635-c1d3f39ee78e" class=""><strong>Note:</strong></p><p id="4cae8485-40f1-4d14-ac4c-215fdae04109" class="">There is a slight overhead and decrease in database performance with</p><pre id="81c21a6d-d401-4630-9b3b-f94309bd8c2f" class="code code-wrap"><code>DB_BLOCK_CHECKSUM</code></pre><p id="6d3a9bd3-46e0-4d11-bae2-a8d2fd1dc29c" class="">enabled. Monitor your database performance to decide if the benefit of using data block checksums to detect corruption outweighs the performance impact.</p><p id="0b5b1dd2-4445-4c49-bfdd-db7346488d8e" class=""><strong>See Also:</strong></p><p id="2a01c62f-e7e0-41cb-a012-d9ed45751979" class=""><a href="https://docs.oracle.com/cd/B19306_01/server.102/b14237/initparams040.htm#REFRN10030"><em>Oracle Database Reference</em></a></p><p id="7f8e1f8b-b5a2-40ee-b09b-44ec864a314c" class="">for a description of the</p><pre id="26247164-bd20-4b2a-a9ed-ec8f24cb887a" class="code code-wrap"><code>DB_BLOCK_CHECKSUM</code></pre><p id="5de73614-bd44-427b-821e-c9e61f8708e9" class="">initialization parameter</p><h1 id="c0d1f2ed-2285-44b6-8b28-7e15e28ab891" class=""><strong>Clearing a Redo Log File</strong></h1><p id="7d385971-9bb3-4594-b0c6-7fb55bae12f1" class="">A redo log file might become corrupted while the database is open, and ultimately stop database activity because archiving cannot continue. In this situation the <code>ALTER DATABASE CLEAR LOGFILE</code> statement can be used to reinitialize the file without shutting down the database.</p><p id="da5bd2b5-1c66-49ef-ab75-d5d5a4729e3c" class="">The following statement clears the log files in redo log group number 3:</p><pre id="41f9d72c-c7f9-43a5-921a-089f435c5b63" class="code code-wrap"><code>ALTER DATABASE CLEAR LOGFILE GROUP 3;
+
+</code></pre><p id="4b4c6b3f-c081-4665-a91c-0bb93a030120" class="">This statement overcomes two situations where dropping redo logs is not possible:</p><ul id="47bd7a09-5cc4-47de-86be-6c2368b406b4" class="bulleted-list"><li style="list-style-type:disc">If there are only two log groups</li></ul><ul id="0f978fc8-b0cd-4367-8f3d-7a3c4639b620" class="bulleted-list"><li style="list-style-type:disc">The corrupt redo log file belongs to the current group</li></ul><p id="5944f91d-aac8-4ddf-b4b5-a5392aa80e77" class="">If the corrupt redo log file has not been archived, use the <code>UNARCHIVED</code> keyword in the statement.</p><pre id="b9ce637d-bac8-4a45-b695-42b75cc0922e" class="code code-wrap"><code>ALTER DATABASE CLEAR UNARCHIVED LOGFILE GROUP 3;
+
+</code></pre><p id="d664b716-fc62-4b68-92bd-a0b5834eb585" class="">This statement clears the corrupted redo logs and avoids archiving them. The cleared redo logs are available for use even though they were not archived.</p><p id="5895492f-7258-4c25-bc05-3c6da0518b68" class="">If you clear a log file that is needed for recovery of a backup, then you can no longer recover from that backup. The database writes a message in the alert log describing the backups from which you cannot recover.</p><p id="a179c279-c43e-4f90-88d9-ceb0565233ba" class=""><strong>Note:</strong></p><p id="36965886-d1dc-481f-afbc-9440e88d1d8b" class="">If you clear an unarchived redo log file, you should make another backup of the database.</p><p id="2e4bfad2-fa33-4dd7-a709-5d54fafed64f" class="">If you want to clear an unarchived redo log that is needed to bring an offline tablespace online, use the <code>UNRECOVERABLE DATAFILE</code> clause in the <code>ALTER DATABASE CLEAR LOGFILE</code> statement.</p><p id="aeec95ec-3a85-4ec7-9ce9-d8d08c42f364" class="">If you clear a redo log needed to bring an offline tablespace online, you will not be able to bring the tablespace online again. You will have to drop the tablespace or perform an incomplete recovery. Note that tablespaces taken offline normal do not require recovery.</p><h1 id="0589767d-aac2-4df2-96ba-757b3c26ef10" class=""><strong>Viewing Redo Log Information</strong></h1><p id="fbe4af29-a418-4329-9a06-d61215f4cdf1" class="">The following views provide information on redo logs.</p><div id="180f69cc-f130-4dbc-8b76-ce897599019d" class="collection-content"><h4 class="collection-title"></h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>View</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M7.73943662,8.6971831 C7.77640845,8.7834507 7.81338028,8.8943662 7.81338028,9.00528169 C7.81338028,9.49823944 7.40669014,9.89260563 6.91373239,9.89260563 C6.53169014,9.89260563 6.19894366,9.64612676 6.08802817,9.30105634 L5.75528169,8.33978873 L2.05809859,8.33978873 L1.72535211,9.30105634 C1.61443662,9.64612676 1.2693662,9.89260563 0.887323944,9.89260563 C0.394366197,9.89260563 0,9.49823944 0,9.00528169 C0,8.8943662 0.0246478873,8.7834507 0.0616197183,8.6971831 L2.46478873,2.48591549 C2.68661972,1.90669014 3.24119718,1.5 3.90669014,1.5 C4.55985915,1.5 5.12676056,1.90669014 5.34859155,2.48591549 L7.73943662,8.6971831 Z M2.60035211,6.82394366 L5.21302817,6.82394366 L3.90669014,3.10211268 L2.60035211,6.82394366 Z M11.3996479,3.70598592 C12.7552817,3.70598592 14,4.24823944 14,5.96126761 L14,9.07922535 C14,9.52288732 13.6549296,9.89260563 13.2112676,9.89260563 C12.8169014,9.89260563 12.471831,9.59683099 12.4225352,9.19014085 C12.028169,9.6584507 11.3257042,9.95422535 10.5492958,9.95422535 C9.60035211,9.95422535 8.47887324,9.31338028 8.47887324,7.98239437 C8.47887324,6.58978873 9.60035211,6.08450704 10.5492958,6.08450704 C11.3380282,6.08450704 12.040493,6.33098592 12.4348592,6.81161972 L12.4348592,5.98591549 C12.4348592,5.38204225 11.9172535,4.98767606 11.1285211,4.98767606 C10.6602113,4.98767606 10.2411972,5.11091549 9.80985915,5.38204225 C9.72359155,5.43133803 9.61267606,5.46830986 9.50176056,5.46830986 C9.18133803,5.46830986 8.91021127,5.1971831 8.91021127,4.86443662 C8.91021127,4.64260563 9.0334507,4.44542254 9.19366197,4.34683099 C9.87147887,3.90316901 10.6232394,3.70598592 11.3996479,3.70598592 Z M11.1778169,8.8943662 C11.6830986,8.8943662 12.1760563,8.72183099 12.4348592,8.37676056 L12.4348592,7.63732394 C12.1760563,7.29225352 11.6830986,7.11971831 11.1778169,7.11971831 C10.5616197,7.11971831 10.056338,7.45246479 10.056338,8.0193662 C10.056338,8.57394366 10.5616197,8.8943662 11.1778169,8.8943662 Z M0.65625,11.125 L13.34375,11.125 C13.7061869,11.125 14,11.4188131 14,11.78125 C14,12.1436869 13.7061869,12.4375 13.34375,12.4375 L0.65625,12.4375 C0.293813133,12.4375 4.43857149e-17,12.1436869 0,11.78125 C-4.43857149e-17,11.4188131 0.293813133,11.125 0.65625,11.125 Z"></path></svg></span>Description</th></tr></thead><tbody><tr id="fa2a63d1-4cd5-4661-bfd7-b00139619c3c"><td class="cell-J\Ff"><code>V$LOG</code></td><td class="cell-title"><a href="Redo%20Logs%20124ed1f7eecc424cafe59e316bf5ca8f/Untitled%20Database%20180f69ccf1304dbc8b76ce897599019d/Displays%20the%20redo%20log%20file%20information%20from%20the%20co%20fa2a63d14cd54661bfd7b00139619c3c.html">Displays the redo log file information from the control file</a></td></tr><tr id="b8f56801-50eb-4006-9cf2-f7876caca0e2"><td class="cell-J\Ff"><code>V$LOGFILE</code></td><td class="cell-title"><a href="Redo%20Logs%20124ed1f7eecc424cafe59e316bf5ca8f/Untitled%20Database%20180f69ccf1304dbc8b76ce897599019d/Identifies%20redo%20log%20groups%20and%20members%20and%20member%20%20b8f5680150eb40069cf2f7876caca0e2.html">Identifies redo log groups and members and member status</a></td></tr><tr id="6b63c624-28d9-4342-b745-ce04eaf132ae"><td class="cell-J\Ff"><code>V$LOG_HISTORY</code></td><td class="cell-title"><a href="Redo%20Logs%20124ed1f7eecc424cafe59e316bf5ca8f/Untitled%20Database%20180f69ccf1304dbc8b76ce897599019d/Contains%20log%20history%20information%206b63c62428d94342b745ce04eaf132ae.html">Contains log history information</a></td></tr></tbody></table></div><p id="e64db060-a765-45a0-b482-615f05222610" class="">The following query returns the control file information about the redo log for a database.</p><pre id="2f364627-e36c-405c-87a3-647e0a599366" class="code code-wrap"><code>SELECT * FROM V$LOG;
+
+GROUP# THREAD#   SEQ   BYTES  MEMBERS  ARC STATUS     FIRST_CHANGE# FIRST_TIM
+------ ------- ----- -------  -------  --- ---------  ------------- ---------
+     1       1 10605 1048576        1  YES ACTIVE          11515628 16-APR-00
+     2       1 10606 1048576        1  NO  CURRENT         11517595 16-APR-00
+     3       1 10603 1048576        1  YES INACTIVE        11511666 16-APR-00
+     4       1 10604 1048576        1  YES INACTIVE        11513647 16-APR-00
+
+</code></pre><p id="20c08dd5-5a5f-4ebf-82c1-0aa331cd6dce" class="">To see the names of all of the member of a group, use a query similar to the following:</p><pre id="b4eb97ca-ef9c-4d26-9436-d050e2df5c5e" class="code code-wrap"><code>SELECT * FROM V$LOGFILE;
+
+GROUP#   STATUS  MEMBER
+------  -------  ----------------------------------
+     1           D:\ORANT\ORADATA\IDDB2\REDO04.LOG
+     2           D:\ORANT\ORADATA\IDDB2\REDO03.LOG
+     3           D:\ORANT\ORADATA\IDDB2\REDO02.LOG
+     4           D:\ORANT\ORADATA\IDDB2\REDO01.LOG
+
+</code></pre><p id="b9370e17-04c5-43f9-b2a6-ba5ed23899db" class="">If <code>STATUS</code> is blank for a member, then the file is in use.</p></div></article></body></html>

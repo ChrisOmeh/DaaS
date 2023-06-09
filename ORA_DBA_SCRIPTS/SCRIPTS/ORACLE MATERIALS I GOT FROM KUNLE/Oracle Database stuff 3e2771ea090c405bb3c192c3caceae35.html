@@ -1,0 +1,684 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Oracle Database stuff</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="3e2771ea-090c-405b-b3c1-92c3caceae35" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🌒</span></div><h1 class="page-title">Oracle Database stuff</h1></header><div class="page-body"><figure id="ff64b0fc-c0a0-490f-a417-56c69a3d9920" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/How%20to%20setup%20a%20cron%20job%20to%20automatically%20delete%20ar%20ff64b0fcc0a0490fa41756c69a3d9920.html">How to setup a cron job to automatically delete archive logs after X days</a></figure><figure id="ede67aa7-3657-4f5f-b2dc-cd5721bdb623" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Corruption%20detected%20error%20in%20Redo%20log%20shipping%20ser%20ede67aa736574f5fb2dccd5721bdb623.html">Corruption detected error in Redo log shipping service (Dataguard)</a></figure><figure id="790b6991-f49f-437e-8c72-d4258b3071a5" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Checkpoint%20in%20Oracle%20database%20790b6991f49f437e8c72d4258b3071a5.html">&quot;Checkpoint&quot; in Oracle database</a></figure><figure id="124ed1f7-eecc-424c-afe5-9e316bf5ca8f" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Redo%20Logs%20124ed1f7eecc424cafe59e316bf5ca8f.html"><span class="icon">🔃</span>Redo Logs</a></figure><p id="f711e915-0024-4a0d-9b78-d4840dfa836e" class="">change vectors are  a description of a change made to a single block in the database</p><figure id="c239243e-7be0-4385-8945-765855de63e6" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Oracle%20Database%20Architecture%20c239243e7be043858945765855de63e6.html"><span class="icon">🎿</span>Oracle Database Architecture</a></figure><figure id="40b285c9-31a4-44b9-b78e-65790474ecad" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Cursors%2040b285c931a444b9b78e65790474ecad.html">Cursors</a></figure><h1 id="262906f1-f83d-4fb2-b6c9-a65e1667e01b" class="">Scripts</h1><figure id="cbdb9bc1-453c-4817-8a7a-a96cc9a05f3b" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/connect%20to%20pdb%20as%20sys%20without%20using%20password%20cbdb9bc1453c48178a7aa96cc9a05f3b.html">connect to pdb as sys without using password</a></figure><figure id="c2bfc2b6-4ad0-4e09-98bb-c3a5bb7b50a5" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Cpu%20usage%20by%20each%20session%20c2bfc2b64ad04e0998bbc3a5bb7b50a5.html"><span class="icon">🧼</span>Cpu usage by each session</a></figure><figure id="f6e7926c-5536-4af5-9ab0-217b695b9305" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Hang%20Analyze%20f6e7926c55364af59ab0217b695b9305.html">Hang Analyze</a></figure><figure id="b5f4c740-7da5-4cc1-ae73-42a607b38caa" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Table%20Compression%20b5f4c7407da54cc1ae7342a607b38caa.html"><span class="icon">🪵</span>Table Compression</a></figure><figure id="c34fcf57-a712-44b7-a1b3-2303cc8901ea" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Create%20HR%20Schema%20manually%20c34fcf57a71244b7a1b32303cc8901ea.html">Create HR Schema manually</a></figure><figure id="4dd0d73b-01e8-4455-8851-3805835cac46" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Find%20and%20remove%20fragmentation%204dd0d73b01e8445588513805835cac46.html"><span class="icon">💦</span>Find and remove fragmentation</a></figure><figure id="e7473870-cb59-4a37-b808-e280194647d0" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Reduce%20Fragmentation%20on%20Index%20e7473870cb594a37b808e280194647d0.html">Reduce Fragmentation on Index</a></figure><figure id="96ee7e9b-9adb-41bf-b36f-4ecb6baef5b4" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Spool%20output%20of%20a%20command%20to%20html%20file%2096ee7e9b9adb41bfb36f4ecb6baef5b4.html">Spool output of a command to html file</a></figure><figure id="84b8ef8b-58da-4753-a8d8-794fb5d81ff3" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Resolving%20invalid%20objects%2084b8ef8b58da4753a8d8794fb5d81ff3.html"><span class="icon">🏏</span>Resolving invalid objects</a></figure><figure id="f26056e2-1158-4028-a051-7c1728661bed" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Read%20about%20Materialized%20views%20f26056e211584028a0517c1728661bed.html">Read about Materialized views</a></figure><figure id="0c776e74-c841-4c22-9378-c035cbeeeed7" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Cursors%20in%20Oracle%200c776e74c8414c229378c035cbeeeed7.html">Cursors in Oracle</a></figure><figure id="22e569f4-fbc0-471e-965a-e3df69ee8a58" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Copy%20of%20Using%20RMAN%20Incremental%20Backups%20to%20Roll%20For%2022e569f4fbc0471e965ae3df69ee8a58.html">Copy of Using RMAN Incremental Backups to Roll Forward a Physical Standby Database</a></figure><figure id="5f7f3ceb-e8d9-4116-98a7-fb5378998718" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/flush%20shared%20pool%205f7f3cebe8d9411698a7fb5378998718.html">flush shared pool</a></figure><figure id="b5496f44-4651-46a0-9d33-eccc9566d744" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/flashback%20table%20when%20dropped%20b5496f44465146a09d33eccc9566d744.html">flashback table when dropped</a></figure><figure id="99532fb1-e567-4984-97fc-956a8cc33541" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Audit%20users%2099532fb1e567498497fc956a8cc33541.html">Audit users</a></figure><figure id="917bb33f-877f-4a82-9476-a151bbdbca54" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/RENAMING%20DATAFILES%20917bb33f877f4a829476a151bbdbca54.html"><span class="icon">🎳</span>RENAMING DATAFILES</a></figure><figure id="74323f8b-f637-4124-9e91-6ef8ea2c0109" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Modify%20init%20trans%20and%20pct%20free%2074323f8bf63741249e916ef8ea2c0109.html">Modify init trans and pct free</a></figure><figure id="f19c274c-6193-4b7f-a006-c789539c745a" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Gathering%20New%20Optimizer%20Statistics%20f19c274c61934b7fa006c789539c745a.html">Gathering New Optimizer Statistics</a></figure><figure id="04b9055a-0eba-4a41-8df6-75e9f6b93dda" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/backup%20database%2004b9055a0eba4a418df675e9f6b93dda.html">backup database</a></figure><p id="0c6d7e58-c4e5-49ed-bae2-42eca7b819f0" class="">
+</p><p id="77dcbd50-e3d7-4675-90e5-cb6c4a338fe3" class="">Memory usage related stuff</p><p id="caf67a7f-7317-4c39-bf65-e33879416d72" class=""><a href="https://www.linkedin.com/pulse/plsql-oracle-database-instance-memory-ihar-hryhoryeu">https://www.linkedin.com/pulse/plsql-oracle-database-instance-memory-ihar-hryhoryeu</a></p><h1 id="aa1cf068-88d1-4002-909a-e0a467a4e6fa" class="">Golden Gate</h1><figure id="8ecf30be-67f2-4f6c-a23b-0f665a1cfd16" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Golden%20gate%20stuff%208ecf30be67f24f6ca23b0f665a1cfd16.html">Golden gate stuff</a></figure><figure id="1902db9b-aa6a-421f-955e-ac6fde0f22b5" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Golden%20gate%201902db9baa6a421f955eac6fde0f22b5.html"><span class="icon">🎳</span>Golden gate </a></figure><figure id="e51ee0a0-a831-4443-8a51-f15d81e3979c" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Golden%20gate%20e51ee0a0a83144438a51f15d81e3979c.html">Golden gate</a></figure><h1 id="5deb4d05-c91d-4bde-a5b4-751fba8e76d5" class="">Data Guard</h1><figure id="eb67cd17-7d47-44c4-9285-3d518f482837" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Data%20guard%20eb67cd177d4744c492853d518f482837.html"><span class="icon">🎺</span>Data guard</a></figure><figure id="da0e5865-ead5-402d-91e6-9f2d72811fc6" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Resolve%20archival%20failure%20data%20guard%20da0e5865ead5402d91e69f2d72811fc6.html">Resolve archival failure data guard</a></figure><figure id="2172574a-8a7b-44ac-91c6-4876d0d0a685" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/ASM%202172574a8a7b44ac91c64876d0d0a685.html">ASM</a></figure><figure id="65412803-37ec-4386-ac52-f87c427aefc7" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Convert%20Physical%20Standby%20into%20Active%20Data%20Guard%206541280337ec4386ac52f87c427aefc7.html">Convert Physical Standby into Active Data Guard</a></figure><p id="2c541fc6-6355-4721-b9e5-3860c31df727" class="">Storage maintenance</p><figure id="29b63d30-da95-4cd8-8d9a-1f95406cbf71" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Resolve%20archiver%20error%2029b63d30da954cd88d9a1f95406cbf71.html">Resolve archiver error</a></figure><figure id="a576bf4e-ab7b-4717-b321-d48b6348f8b7" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Configure%20DB_BLOCK_CHECKING,%20DB_BLOCK_CHECKSUM,%20an%20a576bf4eab7b4717b321d48b6348f8b7.html">Configure DB_BLOCK_CHECKING, DB_BLOCK_CHECKSUM, and DB_LOST_WRITE_PROTECT in data guard to prevent data corruption</a></figure><figure id="5cb8a428-f345-40f1-8264-5e98592872dc" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Convert%20Physical%20Standby%20into%20Active%20Data%20Guard%205cb8a428f34540f182645e98592872dc.html"><span class="icon">⛴️</span>Convert Physical Standby into Active Data Guard</a></figure><figure id="f22bfbec-32e2-4b04-9789-7ee3558bc760" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Start%20MRP%20(data%20guard)%20f22bfbec32e24b0497897ee3558bc760.html">Start MRP (data guard)</a></figure><figure id="cd254353-0eb8-4ef2-ad9d-83aec615a839" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Using%20RMAN%20Incremental%20Backups%20to%20Roll%20Forward%20a%20P%20cd2543530eb84ef2ad9d83aec615a839.html">Using RMAN Incremental Backups to Roll Forward a Physical Standby Database 10.2.0.1 - 12.1.0.2</a></figure><figure id="a9393de9-e18b-4afd-9006-aa769ccc367b" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Rolling%20Forward%20a%20Physical%20Standby%20Database%20Using%20%20a9393de9e18b4afd9006aa769ccc367b.html">Rolling Forward a Physical Standby Database Using the RECOVER FROM SERVICE Command (12c and above)</a></figure><figure id="03ddf5de-7ed8-441b-99e7-f01e72e952eb" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Configure%20data%20guard%20and%20troubleshoot%2003ddf5de7ed8441b99e7f01e72e952eb.html">Configure data guard and troubleshoot</a></figure><figure id="860f0e82-8047-446f-8eb0-a705e7913a57" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/take%20full%20backup%20860f0e828047446f8eb0a705e7913a57.html">take full  backup</a></figure><figure id="e468a50e-b10f-41f2-90bc-9c1ffc54d1f0" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Data%20guard%20config%20from%20dba%20genesis%20e468a50eb10f41f290bc9c1ffc54d1f0.html">Data guard config from dba genesis</a></figure><figure id="549c3bcb-f894-40bb-8b68-0c29eb8a8d8b" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Oracle%20Data%20Guard%20Broker%20Configuration%20from%20dba%20ge%20549c3bcbf89440bb8b680c29eb8a8d8b.html">Oracle Data Guard Broker Configuration from dba genesis</a></figure><figure id="77d01bf4-4d2c-43d4-b074-55cf8a91b15e" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Convert%20database%20to%20snapshot%20in%20dgmgrl%2077d01bf44d2c43d4b07455cf8a91b15e.html">Convert database to snapshot in dgmgrl</a></figure><h2 id="34d8675a-ba81-4b3a-9f59-b32262d6f944" class="">Locks and killing locks</h2><figure id="e8e6c01f-a933-4171-836d-39a1121da0b0" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Check%20for%20locks%20and%20then%20kill%20e8e6c01fa9334171836d39a1121da0b0.html">Check for locks and then kill</a></figure><figure id="4e8fa18f-7c13-4060-a370-a12df8db2d6b" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/spool%20commands%20to%20kill%20locks%204e8fa18f7c134060a370a12df8db2d6b.html">spool commands to kill locks</a></figure><figure id="312a4051-86d4-4143-88fe-511f918c5aaf" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/take%20hang%20analyze%20312a405186d4414388fe511f918c5aaf.html">take hang analyze</a></figure><figure id="97b960a8-1255-4fd4-902e-981da5682efd" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/procedure%20to%20kill%20locks%2097b960a812554fd4902e981da5682efd.html">procedure to kill locks</a></figure><figure id="d070844a-9a37-487a-b738-215d5bf7ce8e" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/get%20lock%20by%20wait%20type%20and%20dbms%20row%20id%20d070844a9a37487ab738215d5bf7ce8e.html">get lock by wait type and dbms row id</a></figure><p id="773cf172-7084-4871-a5c9-29b778cd4206" class="">
+</p><p id="e233395f-2d1c-4453-9afe-a82e51272f2b" class="">SQL script samples</p><figure id="709017de-70f0-4235-a9e2-4456200c7fb2" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/procedure%20and%20cursors%20and%20all%20709017de70f04235a9e24456200c7fb2.html">procedure and cursors and all</a></figure><figure id="e224c909-3d32-4112-af74-a44f2c972715" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/custom%20data%20types%20e224c9093d324112af74a44f2c972715.html">custom data types</a></figure><figure id="ac979506-f7bc-47bb-a96b-1d067904ceb4" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/SQL%20ac979506f7bc47bba96b1d067904ceb4.html">SQL</a></figure><figure id="a68a9c48-028c-426b-869b-2c29fc340f32" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Create%20partitioned%20tables%20a68a9c48028c426b869b2c29fc340f32.html">Create partitioned tables</a></figure><figure id="8d91239f-b5f0-4852-932a-bf94e25110ac" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Constraints%20errors%208d91239fb5f04852932abf94e25110ac.html">Constraints errors</a></figure><figure id="dbb75d79-b739-4f16-93d3-a0629b6bf43a" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/triggers%20dbb75d79b7394f1693d3a0629b6bf43a.html">triggers</a></figure><figure id="a3a48bec-be8b-49dd-b532-a9897957b405" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/packages%20a3a48becbe8b49ddb532a9897957b405.html">packages</a></figure><figure id="8cd30e5e-da52-46c3-a7ab-0572e1a2de73" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Get%204%20highest%208cd30e5eda5246c3a7ab0572e1a2de73.html">Get 4 highest</a></figure><p id="515aa776-037e-4a2f-bf91-a4fff43087e6" class="">
+</p><p id="12f4d680-e0d5-4b58-a891-d764fa8d08d7" class="">
+</p><p id="a903f4dd-f3bf-4580-9970-bef310959993" class="">helpful links</p><p id="fe68e7b6-4241-4d8f-afac-c4a3cc54cd6f" class=""><a href="https://datacadamia.com/db/oracle">https://datacadamia.com/db/oracle</a></p><figure id="b8a9a55d-fecd-4e61-b0f3-94a17b224a4e" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/get%20user%20ddl%20b8a9a55dfecd4e61b0f394a17b224a4e.html">get user ddl</a></figure><p id="28748222-bae7-47c8-8d5a-2caf7ceb7fc1" class="">EM agent</p><p id="dc0a825d-d8e8-4847-a096-40ed1bcc7eda" class="">
+</p><figure id="5e9dfa88-8bae-4164-8da4-db8522b352ba" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Restart%20EM%20Agent%20on%20DB%20server%20side%205e9dfa888bae41648da4db8522b352ba.html">Restart EM Agent on DB server side</a></figure><p id="16563fe9-234b-470f-9daf-5f4fbed0cab0" class="">
+</p><p id="132a2b64-1779-4951-a11f-365b49bc7c02" class="">Space Maintenance </p><figure id="69dcf2f2-2dc5-4bb9-8455-d7724b95e8c5" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/add%20datafile%2069dcf2f22dc54bb98455d7724b95e8c5.html">add datafile</a></figure><figure id="ab769e89-713b-4403-9b18-fae6c50f47d6" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Sysaux%20tablespace%20maintenance%20ab769e89713b44039b18fae6c50f47d6.html">Sysaux tablespace maintenance</a></figure><p id="3d02b320-c0de-4cbf-9992-7d9b5eefd551" class=""><a href="https://support.purestorage.com/Solutions/Oracle/Oracle_on_FlashArray/Reclaiming_Unused_Space_with_Oracle_ASM">Reclaiming Unused Space in an Oracle Database - Pure Technical Services (purestorage.com)</a></p><figure id="2a888ae7-b99b-499e-b7e8-81ae9c4fc7f9" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/reclaim%20space%20to%20ASM%20by%20resizing%20datafile%202a888ae7b99b499eb7e881ae9c4fc7f9.html">reclaim space to ASM by resizing datafile</a></figure><p id="6a9b532a-0486-480e-9c19-e3b06372d4b2" class="">
+</p><p id="cae5f39e-fc9b-4465-8e76-15db13f58fe3" class="">RAC setup (lab)</p><figure id="fd87ba57-28f4-4dfa-ad8a-2996a7320d1a" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/RAC%20setup%20fd87ba5728f44dfaad8a2996a7320d1a.html">RAC setup</a></figure><p id="0e919123-dbbf-476e-a18f-6b8213554471" class="">
+</p><p id="a2d3ea5f-4b2f-4298-ba48-86051df2c480" class="">misc</p><figure id="07edb58c-ce79-415e-8441-91651e189489" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/awrr%20and%20some%20wait%20events%2007edb58cce79415e844191651e189489.html">awrr and some wait events</a></figure><figure id="20c8ae7c-0f94-41d0-8525-48eac23963c1" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/get%20user%20IP%20address%20and%20OS%20user%20name%2020c8ae7c0f9441d0852548eac23963c1.html">get user IP address and OS user name</a></figure><figure id="c0442f64-f058-4716-b815-868ee8c65e70" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/trigger%20to%20stop%20user%20from%20using%20production%20and%20onl%20c0442f64f0584716b815868ee8c65e70.html">trigger to stop user from using production and only allow physical standby</a></figure><figure id="69adf7bf-7a54-4f49-8613-4a1a2c59523a" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/lock%20script%2069adf7bf7a544f4986134a1a2c59523a.html">lock script</a></figure><figure id="19e100aa-bd3c-4233-b298-9a6f5b746800" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/unexpire%20user%20account%20without%20changing%20the%20passwor%2019e100aabd3c4233b2989a6f5b746800.html">unexpire user account without changing the password</a></figure><figure id="5a2e10b1-a0e4-4db6-81f9-9a6c3bce8697" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/run%20script%20straight%20from%20cli%20adn%20log%20output%205a2e10b1a0e44db681f99a6c3bce8697.html">run script straight from cli adn log output</a></figure><figure id="986f161e-9ac5-4bbb-8c00-a651d4ef0871" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Create%20tablespace%20with%202K%20block%20size%20986f161e9ac54bbb8c00a651d4ef0871.html">Create tablespace with 2K block size</a></figure><figure id="46d303c3-e6ec-4b59-8c18-0ae4692efd74" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Top%2010%20sessions%20from%20v$active_session_history%2046d303c3e6ec4b598c180ae4692efd74.html">Top 10 sessions from v$active_session_history</a></figure><figure id="366ef682-581b-4584-80a8-8043b39beda8" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Using%20TKPROF%20to%20make%20trace%20files%20more%20readable%20366ef682581b458480a88043b39beda8.html">Using TKPROF to make trace files more readable  </a></figure><figure id="9af3faa6-e0dc-4dfe-a843-fd9f47b1543a" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Find%20ILOM(s)%20for%20#exadata%209af3faa6e0dc4dfea843fd9f47b1543a.html"><span class="icon">🎍</span>Find ILOM(s) for #exadata</a></figure><figure id="f08d82ae-fd9e-496c-9cc4-aa60b7d22d2c" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Hang%20f08d82aefd9e496c9cc4aa60b7d22d2c.html">Hang</a></figure><figure id="2636c298-c3c3-4293-98ed-9a03c0d2cb89" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Library%20cache%202636c298c3c3429398ed9a03c0d2cb89.html">Library cache</a></figure><figure id="63cc3bd1-4b3f-4a3e-9d74-b722121767ad" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/log%20failed%20login%20attempts%20to%20database%20alert%20log%20us%2063cc3bd14b3f4a3e9d74b722121767ad.html">log failed login attempts to database alert log using a trigger</a></figure><figure id="e1056a83-e163-448c-9910-1e7780c69259" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/log%20switches%20per%20hour%20e1056a83e163448c99101e7780c69259.html">log switches per hour</a></figure><figure id="0be45346-7f8a-471e-a07f-b08c771dcfc3" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Get%20interconnect%20information%200be453467f8a471ea07fb08c771dcfc3.html">Get interconnect information</a></figure><figure id="ef7245e3-dbde-4d0f-a693-f17a4e5b3722" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/SGA%20usage%20and%20size%20ef7245e3dbde4d0fa693f17a4e5b3722.html">SGA usage and size</a></figure><figure id="8f793ca3-a767-4850-b7e5-5e5fef69abe7" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/huge%20pages%208f793ca3a7674850b7e55e5fef69abe7.html">huge pages</a></figure><figure id="ed1b0bbc-1c9b-496f-ac22-4722cb15c218" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Each%20oracle%20process%20consuming%20a%20lot%20of%20memory%20ed1b0bbc1c9b496fac224722cb15c218.html">Each oracle process consuming a lot of memory </a></figure><p id="5c64a0c5-945e-4f39-a60a-8f5ae90f13ee" class="">
+</p><p id="59cb2c55-5254-41f3-b4ad-76ece236b4ae" class="">Patching</p><figure id="16122ea4-d89b-4396-9eb8-b86a91569222" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Grid%20infrastructure%20release%20patch%2016122ea4d89b43969eb8b86a91569222.html">Grid infrastructure release patch</a></figure><p id="08d12e70-16ca-4f59-8703-0f8e2f07a83a" class="">
+</p><p id="2d55deb1-d302-44bf-9c34-0e7450b30dff" class="">
+</p><figure id="95c549e3-f686-45bf-83e2-62eaf1bfdf69"><div class="source"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/cpu_info_using_sql.sql">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ccc68fa7-b381-4ede-adc1-c25b626dcd20/cpu_info_using_sql.sql</a></div></figure><figure id="9b9bbe1b-38bc-42b9-8623-fb38d16c1640"><div class="source"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/cpu_per_session.sql">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6cfabfa2-1d37-40d5-b315-727d669832bf/cpu_per_session.sql</a></div></figure><figure id="ddbe45fd-d55c-4edb-8ec3-75b63aec828d"><div class="source"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/19c_Physical_Standby_Switchover_Best_Practices_using_SQL.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/caa81105-96da-43f4-9803-d8a063f51490/19c_Physical_Standby_Switchover_Best_Practices_using_SQL.pdf</a></div></figure><figure id="38163ad2-adf7-4daf-b0d7-6573519366e3"><div class="source"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Create_Physical_Standby_Database_using_duplicate.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ef00df55-819e-4566-be5d-36245fcd7cd8/Create_Physical_Standby_Database_using_duplicate.pdf</a></div></figure><figure id="ef084964-2aa9-4a59-bc48-8352412e52ca"><div class="source"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/How_to_Open_Physical_Standby_for_Read_Write_Testing_using_Flashback.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1acdaaaa-9363-40cf-ba6e-4740ce32b739/How_to_Open_Physical_Standby_for_Read_Write_Testing_using_Flashback.pdf</a></div></figure><figure id="c8ee9619-ecd5-45f2-937f-3ec234e66743"><div class="source"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/Rolling_Forward_a_Physical_Standby_Using_Recover_from_Service.pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4d59f52a-1829-40c3-a202-95cbf31c4aa9/Rolling_Forward_a_Physical_Standby_Using_Recover_from_Service.pdf</a></div></figure><p id="eb897cd9-1ae8-491d-9e5b-9e8170bf8be2" class="">
+</p><p id="097882b3-0292-40b2-b5c8-0c40932dd964" class="">
+</p><figure id="a83a8f3e-c14f-40d2-9432-df22f8eadfde"><div class="source"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/troubleshooting_library_cache_events_(pin_lock_load_lock_..etc).pdf">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8214904d-21c6-41f9-9394-b56efc344205/troubleshooting_library_cache_events_(pin_lock_load_lock_..etc).pdf</a></div></figure><p id="6cdff386-fae1-40b7-b3ab-f6f7de61da5c" class="">Github</p><figure id="5a5f8085-8e73-429a-aa42-c9ab81f0f107"><div class="source">https://github.com/fatdba/Oracle-Database-Scripts</div></figure><p id="9b870a7c-5922-4523-8b3e-3d97f9444c3b" class="">
+</p><p id="c8d35476-7bfd-4e7a-b6b2-693b099b126b" class="">from GT and learnings</p><figure id="e01e8847-1729-4303-906d-be69a4d63dcd"><div class="source"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/oooo.zip">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0d2c0b6c-7a4f-487f-800a-78a0a1575ae4/oooo.zip</a></div></figure><figure id="bfdbe770-3b79-4773-8b3f-bddbfbc06eaa"><div class="source"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/scripts.zip">https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bd40528a-9fc2-4c8d-8649-9c9d57de1f69/scripts.zip</a></div></figure><p id="1a2bc224-7ac7-47de-a490-b85bed166e70" class="">
+</p><figure id="01a882e9-454d-4bf7-a5a8-741a2463748c" class="link-to-page"><a href="Oracle%20Database%20stuff%203e2771ea090c405bb3c192c3caceae35/total%20dump%2001a882e9454d4bf7a5a8741a2463748c.html"><span class="icon">💯</span>total dump</a></figure></div></article></body></html>

@@ -1,0 +1,76 @@
+RUN AS ROOT
+------------------------------------------------ Remove current installation
+$ sudo yum erase $(rpm -qa | grep mongodb)
+
+RUN AS ROOT
+------------------------------------------------ install 4.2
+
+vi /etc/yum.repos.d/mongodb-enterprise-4.2.repo 
+
+[mongodb-enterprise-4.2]
+name=MongoDB Enterprise Repository
+baseurl=https://repo.mongodb.com/yum/redhat/$releasever/mongodb-enterprise/4.2/$basearch/
+gpgcheck=1
+enabled=1
+gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc
+proxy = http://10.234.172.26:8080
+
+
+$ sudo yum install -y mongodb-enterprise-4.2.18 mongodb-enterprise-server-4.2.18 mongodb-enterprise-shell-4.2.18 mongodb-enterprise-mongos-4.2.18 mongodb-enterprise-tools-4.2.18
+
+
+start service
+$ service mongod start
+---------------------------------------- upgrade to 4
+prerequisite
+1. check compatibility version
+$ mongo
+> db.adminCommand( { getParameter: 1, featureCompatibilityVersion: 1 } )
+
+2. shutdown
+$ service mongod stop
+
+$ vi /etc/yum.repos.d/mongodb-enterprise-4.4.repo
+
+[mongodb-enterprise-4.4]
+name=MongoDB Enterprise Repository
+baseurl=https://repo.mongodb.com/yum/redhat/$releasever/mongodb-enterprise/4.4/$basearch/
+gpgcheck=1
+enabled=1
+gpgkey=https://www.mongodb.org/static/pgp/server-4.4.asc
+proxy = http://10.234.172.26:8080
+
+
+$ sudo yum install -y mongodb-enterprise-4.4.15 mongodb-enterprise-server-4.4.15 mongodb-enterprise-shell-4.4.15 mongodb-enterprise-mongos-4.4.15 mongodb-enterprise-tools-4.4.15
+
+
+start service
+$ service mongod start
+
+---------------------------------------- upgrade to 5
+prerequisite
+1. check compatibility version
+$ mongo
+> db.adminCommand( { getParameter: 1, featureCompatibilityVersion: 1 } )
+
+change to 4.4 if it is not 4.4
+> db.adminCommand( { setFeatureCompatibilityVersion: "4.4" } )
+
+2. shutdown
+$ service mongod stop
+
+vi /etc/yum.repos.d/mongodb-enterprise-5.0.repo
+
+[mongodb-enterprise-5.0]
+name=MongoDB Enterprise Repository
+baseurl=https://repo.mongodb.com/yum/redhat/$releasever/mongodb-enterprise/5.0/$basearch/
+gpgcheck=1
+enabled=1
+gpgkey=https://www.mongodb.org/static/pgp/server-5.0.asc
+proxy = http://10.234.172.26:8080
+
+
+$ sudo yum install -y mongodb-enterprise-5.0.9 mongodb-enterprise-database-5.0.9 mongodb-enterprise-server-5.0.9 mongodb-enterprise-shell-5.0.9 mongodb-enterprise-mongos-5.0.9 mongodb-enterprise-tools-5.0.9
+
+start service
+$ service mongod start

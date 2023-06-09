@@ -1,0 +1,738 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Using RMAN Incremental Backups to Roll Forward a Physical Standby Database 10.2.0.1 - 12.1.0.2</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="cd254353-0eb8-4ef2-ad9d-83aec615a839" class="page sans"><header><h1 class="page-title"><strong>Using RMAN Incremental Backups to Roll Forward a Physical Standby Database 10.2.0.1 - 12.1.0.2</strong></h1></header><div class="page-body"><h2 id="571c95c2-0701-4089-aef5-14bf392c671e" class="">APPLIES TO:</h2><p id="be00130b-52a0-40e6-b2df-6df3e5a4ffe2" class="">Oracle Database - Enterprise Edition - Version 10.2.0.1 to 12.1.0.2 [Release 10.2 to 12.1]</p><p id="ce7cd5a4-a761-40ed-b4a6-de30af1c353a" class="">Information in this document applies to any platform.</p><p id="426ac5d5-5af4-48fa-8dc8-112afcc2460f" class="">Checked for relevance on 03-Dec-2019</p><h2 id="715eed35-6a01-4a26-919d-e3579961f46d" class="">GOAL</h2><p id="1769d3cb-01bf-40b0-9ce4-a8d52b6924b1" class="">The steps in this section can used to resolve problems of missing or corrupted archive log file, an unresolveable archive gap, or the need to roll the standby forward in time without applying a large number of archivelog files.</p><h2 id="fb348324-d765-4c0b-a123-634b83598e45" class="">SOLUTION</h2><p id="972098a8-90a5-46d3-a5ac-842ac1165936" class=""><strong>NOTE: In the images and/or the document content below, the user information and environment data used represents fictitious data from the Oracle sample schema(s), Public Documentation</strong><strong>delivered with an Oracle database product or other training material. Any similarity to actual environments, actual persons, living or dead, is purely coincidental and not intended in any manner.</strong></p><p id="00fbdbc3-9afc-416a-ae4f-df96c1a62e15" class="">For the purposes of this document, the following fictitious environment is used as an example to describe the procedure:</p><p id="d974e9da-473f-4c8e-a55f-8718b2adad54" class="">Primary Database:DB_NAME: PRIM (net service name &#x27;PRIM&#x27;)</p><p id="ddce40ac-0396-43ce-bbe8-c4b4d534db68" class="">Standby Database:DB_UNIQUE_NAME: STBY (net service name &#x27;STBY&#x27;)Disk Group Name:+DATA*********</p><p id="2978af29-fd25-4cda-8944-3bee7d89ac5d" class=""><strong>BEFORE YOU BEGIN:</strong></p><ul id="d1f9aee9-6ced-4709-b732-f62fbb149724" class="bulleted-list"><li style="list-style-type:disc"><strong>If you are running 12c or higher, consider using the new &#x27;recover from service&#x27; RMAN command. See:</strong><strong>Rolling Forward a Physical Standby Using Recover From Service Command in 12c (</strong><a href="https://support.oracle.com/epmos/faces/DocumentDisplay?parent=DOCUMENT&amp;sourceId=836986.1&amp;id=1987763.1"><strong>Note:1987763.1</strong></a><strong>)</strong></li></ul><ul id="d7792dca-24e7-424b-808f-e9c7c77d5221" class="bulleted-list"><li style="list-style-type:disc"><strong>To resolve only NOLOGGING operations, see:</strong><strong>Rolling a Standby Forward using an RMAN Incremental Backup To Fix The Nologging Changes (</strong><a href="https://support.oracle.com/epmos/faces/DocumentDisplay?parent=DOCUMENT&amp;sourceId=836986.1&amp;id=958181.1"><strong>Note:958181.1</strong></a><strong>)</strong></li></ul><ul id="617c897d-a41c-41fc-9523-1f84b7280a82" class="bulleted-list"><li style="list-style-type:disc"><strong>If datafiles have been added to the primary database, see:</strong><strong>Steps to perform for Rolling forward a standby database using RMAN incremental backup when datafile is added to primary (</strong><a href="https://support.oracle.com/epmos/faces/DocumentDisplay?parent=DOCUMENT&amp;sourceId=836986.1&amp;id=1531031.1"><strong>Note:1531031.1</strong></a><strong>)</strong></li></ul><h3 id="12757cce-d74d-4b8b-a9c4-4c7e0527082c" class=""><strong>1) Stop the managed recovery process (MRP) on the </strong><strong>STANDBY </strong><strong>database</strong></h3><pre id="17dee8b5-3154-475f-b583-be51c7da396a" class="code"><code>SQL&gt; ALTER DATABASE RECOVER MANAGED STANDBY DATABASE CANCEL;</code></pre><p id="c3d45071-259e-4873-a766-c4d14405d895" class="">NOTE:  If using broker, you will need to stop MRP through DGMGRL. I.e.:</p><pre id="54de7b7d-6775-4f8a-ab42-737cac630470" class="code"><code>DGMGRL&gt; edit database &#x27;&lt;Standby db_unique_name&gt;&#x27; set STATE=&#x27;APPLY-OFF&#x27; ;</code></pre><p id="67978a4e-dc89-42d0-b949-c60088fd5a97" class="">For the remaining steps, the standby database must be in a MOUNT state.  If the standby database is running RAC, ensure only one instance is mounted.</p><h3 id="cb331849-99f7-44c3-801f-21fd40b328b2" class=""><strong>2) Determine the SCN of the </strong><strong>STANDBY </strong><strong>database.</strong></h3><p id="12c3edeb-ca83-420a-9681-6854acb318dc" class="">On the standby database, find the SCN which will be used for the incremental backup taken off the primary database:</p><p id="699a12cd-0be7-4df6-8a5c-4f927222b5d4" class="">You need to use the LOWER of the two SCNs returned by the following queries:</p><pre id="b7701968-7d55-480c-bdb7-6104243836d7" class="code code-wrap"><code>SQL&gt; SELECT CURRENT_SCN FROM V$DATABASE;CURRENT_SCN--------------3164433
+SQL&gt; select min(checkpoint_change#) from v$datafile_headerwhere file# not in (select file# from v$datafile where enabled = &#x27;READ ONLY&#x27;);MIN(F.FHSCN)----------------3162298</code></pre><p id="0ff2429c-588e-48a0-8e2e-24ac0af92c70" class="">You need to use the &#x27;lowest SCN&#x27; from the above queries.  In the above example, that SCN would be 3162298.  <strong>Therefore, from the above example, the backup would be taken from SCN 3162298.</strong></p><h3 id="bbe4e3df-8ea4-461c-b8f2-bb26b8e01d4b" class=""><strong>3) Take an incremental backup off the </strong><strong>PRIMARY</strong><strong> database</strong></h3><p id="07417ed4-b13f-4e8f-901c-2399c8e505b7" class="">In RMAN, connect to the primary database and create an incremental backup from the SCN derived in the previous step:</p><pre id="824fd9e5-e4ef-46ee-b6c2-63ea6db074ec" class="code code-wrap"><code>RMAN&gt; BACKUP INCREMENTAL FROM SCN 3162298 DATABASE FORMAT &#x27;/tmp/ForStandby_%U&#x27; tag &#x27;FORSTANDBY&#x27;;</code></pre><h3 id="80c5bd60-1c4d-4da1-a7f8-44f3f03ecb5c" class=""><strong>4) Transfer all backup sets to </strong><strong>STANDBY</strong><strong> server</strong></h3><p id="43b6a649-6374-45ca-8044-081e0fb4fc44" class="">All backups created by step #3 must be transferred from the primary to the standby server.  If the backup is written to NFS device, this step can be skipped.</p><pre id="65e64bb1-62d3-4412-b66a-b235141645cf" class="code code-wrap"><code>$ scp /tmp/ForStandby_* standby:/tmp</code></pre><h3 id="97495fd0-3d09-41f1-a504-aa8f7454de28" class=""><strong>5) Catalog the backups in </strong><strong>STANDBY </strong><strong>controlfile.</strong></h3><p id="6279d29a-232e-4459-9267-2d873482bd6c" class="">In order for the standby database to know about the backups, catalog the backup pieces on the <strong>STANDBY</strong> database.</p><pre id="cf6006b6-69c8-4b39-93ef-250752c28cfa" class="code code-wrap"><code>RMAN&gt; CATALOG START WITH &#x27;/tmp/ForStandby&#x27;;
+
+using target database control file instead of recovery catalogsearching for all files that match the pattern /tmp/ForStandby
+
+List of Files Unknown to the Database
+=====================================
+File Name: /tmp/ForStandby_2lkglss4_1_1File Name: /tmp/ForStandby_2mkglst8_1_1Do you really want to catalog the above files (enter YES or NO)? YEScataloging files...cataloging done
+
+List of Cataloged Files
+=======================
+File Name: /tmp/ForStandby_2lkglss4_1_1File Name: /tmp/ForStandby_2mkglst8_1_1</code></pre><h3 id="077b844a-2075-4f89-89fe-cb2052f9e8d5" class=""><strong>6) Recover the </strong><strong>STANDBY </strong><strong>database with the cataloged incremental backup:</strong></h3><pre id="db81fc1d-4830-4072-a922-6298fe54ad14" class="code code-wrap"><code>RMAN&gt; RECOVER DATABASE NOREDO;
+
+
+starting recover at 03-JUN-09
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: sid=28 devtype=DISK
+channel ORA_DISK_1: starting incremental datafile backupset restore
+channel ORA_DISK_1: specifying datafile(s) to restore from backup set
+destination for restore of datafile 00001: +DATA/STBY/datafile/system.297.688213333
+destination for restore of datafile 00002: +DATA/STBY/datafile/undotbs1.268.688213335
+destination for restore of datafile 00003: +DATA/STBY/datafile/sysaux.267.688213333
+channel ORA_DISK_1: reading from backup piece /tmp/ForStandby_2lkglss4_1_1
+channel ORA_DISK_1: restored backup piece 1
+piece handle=/tmp/ForStandby_2lkglss4_1_1 tag=FORSTANDBY
+channel ORA_DISK_1: restore complete, elapsed time: 00:00:02
+Finished recover at 03-JUN-09</code></pre><h3 id="54cacd5a-519d-4ef8-94c8-43c276664afe" class=""><strong>7) In RMAN, connect to the </strong><strong>PRIMARY </strong><strong>database and create a standby control file backup:</strong></h3><pre id="8d80f758-96ce-4f77-b300-b4a6a69aa1c8" class="code code-wrap"><code>RMAN&gt; BACKUP CURRENT CONTROLFILE FOR STANDBY FORMAT &#x27;/tmp/ForStandbyCTRL.bck&#x27;;</code></pre><h3 id="987aaa84-dd9f-4aeb-89fa-01ef012d7b95" class=""><strong>8) Copy the standby control file backup to the </strong><strong>STANDBY </strong><strong>system. If the backup is written to NFS device, this step can be skipped.</strong></h3><pre id="4f585806-4634-4df1-bcfb-d3a3d967408e" class="code code-wrap"><code>$ scp /tmp/ForStandbyCTRL.bck standby:/tmp</code></pre><h3 id="c69075bd-f874-4daf-98b0-150df4834e58" class=""><strong>9) Capture datafile information in </strong><strong>STANDBY </strong><strong>database.</strong></h3><p id="9b9caf79-47b5-4d9f-882c-01c15a34c62d" class="">The standby controlfile will need to be refreshed from the backup taken at step #7.  Since the datafile names are likely different than primary, save the names of your standby datafile names for reference after restoring the controlfile from the primary backup.  Run below query in the standby database and save the results for further use.</p><pre id="08f015ed-90a6-4740-885b-b5735acffa6a" class="code code-wrap"><code>spool standby_datafile_names.txt
+set pagesize 1000;
+set lines 200
+col name format a60
+select file#, name from v$datafile order by file# ;
+spool off</code></pre><h3 id="35b63820-67a2-47df-a271-81ed9b393751" class=""><strong>10) From RMAN, connect to </strong><strong>STANDBY</strong><strong> database and restore the standby control file:</strong></h3><pre id="338e1e7f-b44d-41fe-922f-d8b4512239c2" class="code code-wrap"><code>RMAN&gt; SHUTDOWN IMMEDIATE ;
+RMAN&gt; STARTUP NOMOUNT;
+RMAN&gt; RESTORE STANDBY CONTROLFILE FROM &#x27;/tmp/ForStandbyCTRL.bck&#x27;;
+
+Starting restore at 03-JUN-09
+using target database control file instead of recovery catalog
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: sid=36 devtype=DISK
+
+channel ORA_DISK_1: restoring control file
+channel ORA_DISK_1: restore complete, elapsed time: 00:00:07
+output filename=+DATA/STBY/controlfile/current.257.688583989
+Finished restore at 03-JUN-09</code></pre><h3 id="4878ef97-9ded-4878-97f1-cc08987e1b26" class=""><strong>11) Mount the standby:</strong></h3><pre id="60e963ef-4896-4988-8750-f087f243c259" class="code code-wrap"><code>RMAN&gt; ALTER DATABASE MOUNT;</code></pre><h3 id="04054756-9355-4228-937c-009ca9b22515" class=""><strong>12) Catalog datafiles in </strong><strong>STANDBY</strong><strong> if location/name of datafiles is different</strong></h3><p id="cb0e9c30-cedf-47eb-bb69-63aae81bca03" class="">Note:  We recommend checking the incarnation for primary and standby before completing this step.</p><p id="8316ad9b-79e4-4b92-9207-6c3093a34b74" class="">example:  RMAN&gt; list incarnation;</p><p id="7ddb7eb7-5132-4ba2-a251-3c912442def6" class="">Since the controlfile is restored from PRIMARY the datafile location names in this restored STANDBY controlfile will be same as those of the PRIMARY database.  If the directory structure is different between the standby and primary databases or if you are using Oracle managed file names OMF, catalog the STANDBY datafiles with RMAN to execute the rename operation.  If the primary and standby have identical structure and datafile names, this step can be skipped.</p><p id="f4897c14-d56d-4b89-945f-bf671137b03a" class="">Perform the below step  in <strong>STANDBY </strong>for each diskgroup (or directory) where the standby datafiles reside.</p><pre id="d842d563-8892-48a5-8513-ac84c92fb1c3" class="code code-wrap"><code>RMAN&gt; CATALOG START WITH &#x27;+DATA/STBY/datafile/&#x27;;
+
+List of Files Unknown to the Database
+=====================================
+File Name: +DATA/STBY/DATAFILE/SYSTEM.309.685535773
+File Name: +DATA/STBY/DATAFILE/SYSAUX.301.685535773
+File Name: +DATA/STBY/DATAFILE/UNDOTBS1.302.685535775
+File Name: +DATA/STBY/DATAFILE/SYSTEM.297.688213333
+File Name: +DATA/STBY/DATAFILE/SYSAUX.267.688213333
+File Name: +DATA/STBY/DATAFILE/UNDOTBS1.268.688213335
+
+Do you really want to catalog the above files (enter YES or NO)? YES
+cataloging files...
+cataloging done
+
+List of Cataloged Files
+=======================
+File Name: +DATA/STBY/DATAFILE/SYSTEM.297.688213333
+File Name: +DATA/STBY/DATAFILE/SYSAUX.267.688213333
+File Name: +DATA/STBY/DATAFILE/UNDOTBS1.268.688213335</code></pre><p id="a93c866f-108f-4826-baf4-082f9f23eea4" class="">If any datafiles have been added to primary AFTER the backup SCN (in our example, scn 3162298) those datafiles will not be created on the standby server automatically regardless of standby_file_managementparameter setting.  The added datafiles will have to be restored to the standby server.  See the following for more details:<a href="https://support.oracle.com/epmos/faces/DocumentDisplay?parent=DOCUMENT&amp;sourceId=836986.1&amp;id=1531031.1">Note:1531031.1</a> Steps to perform for Rolling forward a standby database using RMAN incremental backup when datafile is added to primary)The restored datafiles will have to be cataloged as shown above before proceeding with the RMAN switch command.</p><p id="e409e50c-5191-4fcd-a896-c10508e6980b" class="">To determine if any files have been added to Primary since the standby current scn:</p><pre id="a24cced6-3ab9-4042-959d-7afe5e4671f6" class="code code-wrap"><code>SQL&gt;SELECT FILE#, NAME FROM V$DATAFILE WHERE CREATION_CHANGE# &gt; 3162298</code></pre><p id="26148892-8057-4f35-90e5-258119a40e41" class="">If the above query returns with 0 zero rows, no new datafiles have been added and you can switch the cataloged datafiles.   This &#x27;switch&#x27; will update the controlfile with the correct location and name of the datafiles in the standby controlfile.</p><pre id="0e8df44c-fadd-4f23-bd4a-f8b2f3aa1fb2" class="code code-wrap"><code>RMAN&gt; SWITCH DATABASE TO COPY;
+
+datafile 1 switched to datafile copy &quot;+DATA/STBY/datafile/system.297.688213333&quot;
+datafile 2 switched to datafile copy &quot;+DATA/STBY/datafile/undotbs1.268.688213335&quot;
+datafile 3 switched to datafile copy &quot;+DATA/STBY/datafile/sysaux.267.688213333&quot;</code></pre><p id="51a7f845-f1ce-4b46-bc1d-6f499c1ac17f" class="">Note:</p><p id="d07e93d9-8e89-41f9-97c5-51f3e75300aa" class="">a) If the &#x27;switch database to copy&#x27; command fails with the &quot;RMAN-06571: datafile .. does not have recoverable copy&quot; error.   This is an indication that either you have not cataloged all your standby datafiles OR some of your standby datafile&#x27;s location/name is the same as the primary.  If the latter, you will have to switch each individual datafile whose location/name are different than that of the primary.  I.e:</p><pre id="b1105113-37c3-4443-9bfe-1481cc3b6cdc" class="code code-wrap"><code>RMAN&gt;  switch datafile &lt;number&gt; to copy;For example:RMAN&gt;  switch datafile 5 to copy;</code></pre><p id="f22d046b-1395-44ea-bb74-5e3432199ee8" class="">b) At this point, you can compare the query output from step 9 for any discrepancy (other than newly added datafiles) to ensure we have all the datafiles added in standby.</p><p id="36fabf86-27a0-4b55-8a80-de1029605989" class="">c) Run the queries from step 2 again to confirm that the incremental apply has rolled the datafiles forward.   The SCN should now be bigger than the initial values.</p><h3 id="34634b70-a504-4cfb-8a52-a480cc5def04" class=""><strong>13) Configure the </strong><strong>STANDBY </strong><strong>database to use flashback (optional)</strong></h3><p id="e76f41c5-e49d-461c-8503-ccc0b14745f4" class="">If the <strong>STANDBY </strong>database needs to be configured for FLASHBACK run the following commands:</p><pre id="7cc999b0-9049-469f-93f7-b00ad53fcc5b" class="code code-wrap"><code>SQL&gt; ALTER DATABASE FLASHBACK OFF; SQL&gt; ALTER DATABASE FLASHBACK ON;</code></pre><p id="fb50c803-ee30-4752-a244-c9fd6e9fb13d" class="">NOTE:  This command may return the following:   ORA-38788 More standby database recovery is neededDepending on situation, this is expected.  Proceed with the remaining steps.</p><h3 id="23d467a5-d0f0-4430-87dc-13a646342565" class=""><strong>14) On </strong><strong>STANDBY </strong><strong>database, clear all standby redo log groups:</strong></h3><pre id="f66a1389-d46b-4084-a1c7-3bbffb4c7500" class="code code-wrap"><code>SQL&gt; select GROUP# from v$logfile where TYPE=&#x27;STANDBY&#x27; group by GROUP#;</code></pre><pre id="c2f9427a-7b2e-4af3-b3c5-d977bde31974" class="code code-wrap"><code>SQL&gt; ALTER DATABASE CLEAR LOGFILE GROUP 1;
+SQL&gt; ALTER DATABASE CLEAR LOGFILE GROUP 2;
+SQL&gt; ALTER DATABASE CLEAR LOGFILE GROUP 3;
+....</code></pre><h3 id="7061bd7e-af42-4636-bc99-c022d9a1ff5a" class=""><strong>15) On the </strong><strong>STANDBY </strong><strong>database, start the MRP</strong></h3><pre id="4c0d1f24-58a1-4014-9477-d85df9d68eab" class="code code-wrap"><code>SQL&gt; ALTER DATABASE RECOVER MANAGED STANDBY DATABASE DISCONNECT;</code></pre><p id="27608ee7-59d9-455b-9851-e5056016881a" class="">NOTE:  If using broker, you will need to start MRP through DGMGRL. I.e.:</p><pre id="a707f646-9324-416f-be99-e2e64ac81068" class="code code-wrap"><code>DGMGRL&gt; edit database &#x27;&lt;Standby db_unique_name&gt;&#x27; set STATE=&#x27;APPLY-ON&#x27; ;</code></pre></div></article></body></html>

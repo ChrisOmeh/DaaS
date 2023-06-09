@@ -1,0 +1,149 @@
+Archivelog switches on an hourly basis 
+
+SELECT to_date(first_time) DAY, to_char(sum(decode(to_char(first_time,'HH24'),'00',1,0)),'99') "00", 
+to_char(sum(decode(to_char(first_time,'HH24'),'01',1,0)),'99') "01",
+to_char(sum(decode(to_char(first_time,'HH24'),'02',1,0)),'99') "02", 
+to_char(sum(decode(to_char(first_time,'HH24'),'03',1,0)),'99') "03", 
+to_char(sum(decode(to_char(first_time,'HH24'),'04',1,0)),'99') "04", 
+to_char(sum(decode(to_char(first_time,'HH24'),'05',1,0)),'99') "05", 
+to_char(sum(decode(to_char(first_time,'HH24'),'06',1,0)),'99') "06", 
+to_char(sum(decode(to_char(first_time,'HH24'),'07',1,0)),'99') "07", 
+to_char(sum(decode(to_char(first_time,'HH24'),'08',1,0)),'99') "08", 
+to_char(sum(decode(to_char(first_time,'HH24'),'09',1,0)),'99') "09", 
+to_char(sum(decode(to_char(first_time,'HH24'),'10',1,0)),'99') "10", 
+to_char(sum(decode(to_char(first_time,'HH24'),'11',1,0)),'99') "11", 
+to_char(sum(decode(to_char(first_time,'HH24'),'12',1,0)),'99') "12", 
+to_char(sum(decode(to_char(first_time,'HH24'),'13',1,0)),'99') "13", 
+to_char(sum(decode(to_char(first_time,'HH24'),'14',1,0)),'99') "14", 
+to_char(sum(decode(to_char(first_time,'HH24'),'15',1,0)),'99') "15", 
+to_char(sum(decode(to_char(first_time,'HH24'),'16',1,0)),'99') "16", 
+to_char(sum(decode(to_char(first_time,'HH24'),'17',1,0)),'99') "17", 
+to_char(sum(decode(to_char(first_time,'HH24'),'18',1,0)),'99') "18", 
+to_char(sum(decode(to_char(first_time,'HH24'),'19',1,0)),'99') "19", 
+to_char(sum(decode(to_char(first_time,'HH24'),'20',1,0)),'99') "20", 
+to_char(sum(decode(to_char(first_time,'HH24'),'21',1,0)),'99') "21", 
+to_char(sum(decode(to_char(first_time,'HH24'),'22',1,0)),'99') "22", 
+to_char(sum(decode(to_char(first_time,'HH24'),'23',1,0)),'99') "23"
+from v$log_history where to_date(first_time) > sysdate -8 GROUP by to_char(first_time,'YYYY-MON-DD'), to_date(first_time) order by to_date(first_time)  
+
+
+OR
+
+
+select 
+  to_char(first_time,'YY-MM-DD') day, 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'00',1,0)),'999') "00", 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'01',1,0)),'999') "01", 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'02',1,0)),'999') "02", 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'03',1,0)),'999') "03", 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'04',1,0)),'999') "04", 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'05',1,0)),'999') "05", 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'06',1,0)),'999') "06", 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'07',1,0)),'999') "07", 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'08',1,0)),'999') "08", 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'09',1,0)),'999') "09", 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'10',1,0)),'999') "10", 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'11',1,0)),'999') "11", 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'12',1,0)),'999') "12", 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'13',1,0)),'999') "13", 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'14',1,0)),'999') "14", 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'15',1,0)),'999') "15", 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'16',1,0)),'999') "16", 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'17',1,0)),'999') "17", 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'18',1,0)),'999') "18", 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'19',1,0)),'999') "19", 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'20',1,0)),'999') "20", 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'21',1,0)),'999') "21", 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'22',1,0)),'999') "22", 
+  to_char(sum(decode(substr(to_char(first_time,'HH24'),1,2),'23',1,0)),'999') "23" ,
+  COUNT(*) TOT  from gv$log_history 
+group by to_char(first_time,'YY-MM-DD') 
+order by day desc;
+
+
+
+Archivelog generation on a daily basis:
+
+select trunc(COMPLETION_TIME,'DD') Day, thread#, round(sum(BLOCKS*BLOCK_SIZE)/1048576) MB,
+count(*) Archives_Generated from v$archived_log group by trunc(COMPLETION_TIME,'DD'),thread# order by 1; 
+
+Archive log generation on an hourly basis:
+
+select trunc(COMPLETION_TIME,'HH') Hour,thread# , round(sum(BLOCKS*BLOCK_SIZE)/1048576) MB,
+count(*) Archives from v$archived_log group by trunc(COMPLETION_TIME,'HH'),thread#  order by 1 ; 
+
+
+
+To drop logs
+
+ALTER DATABASE DROP LOGFILE GROUP 7;
+ALTER DATABASE DROP LOGFILE GROUP 8;
+ALTER DATABASE DROP LOGFILE GROUP 9;
+ALTER DATABASE DROP LOGFILE GROUP 10;
+ALTER DATABASE DROP LOGFILE GROUP 11;
+ALTER DATABASE DROP LOGFILE GROUP 12;
+ALTER DATABASE DROP LOGFILE GROUP 13;
+ALTER DATABASE DROP LOGFILE GROUP 14;
+
+
+To create additional online log files. 
+
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 1 ('+DATA(ONLINELOG)','+FRA(ONLINELOG)') SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 2 ('+DATA(ONLINELOG)','+FRA(ONLINELOG)') SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 3 ('+DATA(ONLINELOG)','+FRA(ONLINELOG)') SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 4 ('+DATA(ONLINELOG)','+FRA(ONLINELOG)') SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 5 ('+DATA(ONLINELOG)','+FRA(ONLINELOG)') SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 6 ('+DATA(ONLINELOG)','+FRA(ONLINELOG)') SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 7 ('+DATA(ONLINELOG)','+FRA(ONLINELOG)') SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 8 ('+DATA(ONLINELOG)','+FRA(ONLINELOG)') SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 9 ('+DATA(ONLINELOG)','+FRA(ONLINELOG)') SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 10 ('+DATA(ONLINELOG)','+FRA(ONLINELOG)') SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 2 GROUP 11 ('+DATA(ONLINELOG)','+FRA(ONLINELOG)') SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 2 GROUP 12 ('+DATA(ONLINELOG)','+FRA(ONLINELOG)') SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 2 GROUP 13 ('+DATA(ONLINELOG)','+FRA(ONLINELOG)') SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 2 GROUP 14 ('+DATA(ONLINELOG)','+FRA(ONLINELOG)') SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 15 ('+DATA(ONLINELOG)','+FRA(ONLINELOG)') SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 16 ('+DATA(ONLINELOG)','+FRA(ONLINELOG)') SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 17 ('+DATA(ONLINELOG)','+FRA(ONLINELOG)') SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 18 ('+DATA(ONLINELOG)','+FRA(ONLINELOG)') SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 19 ('+DATA(ONLINELOG)','+FRA(ONLINELOG)') SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 20 ('+DATA(ONLINELOG)','+FRA(ONLINELOG)') SIZE 262144000;
+
+
+
+Check users of the online log
+
+SELECT s.sid, s.username, s.program, t.value "redo blocks written"
+  FROM gv$session s, gv$sesstat t
+ WHERE s.sid = t.sid
+   AND t.value != 0
+   AND t.statistic# = (select statistic# from v$statname
+                        where name = 'redo size')
+ORDER BY 4
+
+
+
+
+ALTER DATABASE ADD LOGFILE THREAD 2 GROUP 11 SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 2 GROUP 12 SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 2 GROUP 13 SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 2 GROUP 14 SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 2 GROUP 15 SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 2 GROUP 16 SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 2 GROUP 17 SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 2 GROUP 18 SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 2 GROUP 19 SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 2 GROUP 20 SIZE 262144000;
+
+
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 1 SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 2 SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 3 SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 4 SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 5 SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 6 SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 7 SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 8 SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 9 SIZE 262144000;
+ALTER DATABASE ADD LOGFILE THREAD 1 GROUP 10 SIZE 262144000;
+

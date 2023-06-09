@@ -1,0 +1,1442 @@
+SQL> COL OWNER FOR A30
+SQL> COL OBJECT_NAME FOR A60
+SQL> COL OBJECT_TYPE FOR A50
+SQL>
+SQL> SET LINESIZE 1000
+SQL> /
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            ODM_UTIL                                                     PACKAGE BODY
+SYS                            DM$RQMOD_DETAILIMPL                                          TYPE BODY
+SYS                            DBMS_DATA_MINING_INTERNAL                                    PACKAGE
+SYS                            DBMS_DATA_MINING                                             PACKAGE BODY
+SYS                            DBMS_DATA_MINING_INTERNAL                                    PACKAGE BODY
+SYS                            DBMS_PREDICTIVE_ANALYTICS                                    PACKAGE BODY
+SYS                            DBMS_DST                                                     PACKAGE BODY
+SYS                            DBMS_FUSE                                                    PACKAGE BODY
+SYS                            DBMS_DBFS_SFS                                                PACKAGE BODY
+SYS                            DBMS_APBACKEND                                               PACKAGE BODY
+SYS                            DBMS_DBFS_HS                                                 PACKAGE BODY
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            XS_DATA_SECURITY_UTIL_INT                                    PACKAGE BODY
+SYS                            XS_DATA_SECURITY_UTIL                                        PACKAGE BODY
+SYS                            XS_DIAG_INT                                                  PACKAGE BODY
+SYS                            DBMS_SQL_TRANSLATOR_EXPORT                                   PACKAGE BODY
+SYS                            DBMS_APP_CONT_ADMIN                                          PACKAGE BODY
+SYS                            DBMS_INMEMORY                                                PACKAGE BODY
+SYS                            DBMS_DISRUPT                                                 PACKAGE BODY
+SYS                            DBMS_HADOOP_INTERNAL                                         PACKAGE BODY
+SYS                            DBMS_HADOOP                                                  PACKAGE BODY
+SYS                            DBMS_AUDIT_UTIL                                              PACKAGE BODY
+SYS                            DBMS_ISCHED_REMOTE_ACCESS                                    PACKAGE BODY
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            DBMS_ISCHED_AGENT                                            PACKAGE BODY
+SYS                            DBMS_GOLDENGATE_ADM                                          PACKAGE BODY
+SYS                            DBMS_GOLDENGATE_AUTH                                         PACKAGE BODY
+SYS                            DBMS_GOLDENGATE_EXP                                          PACKAGE BODY
+SYS                            DBMS_GOLDENGATE_IMP                                          PACKAGE BODY
+SYS                            DBMS_OPTIM_BUNDLE                                            PACKAGE BODY
+SYS                            DBMS_PREPLUGIN_BACKUP                                        PACKAGE BODY
+SYS                            DBMS_HS_PARALLEL_METADATA                                    PACKAGE BODY
+SYS                            DBMS_AW                                                      PACKAGE BODY
+SYS                            DBMS_AW_EXP                                                  PACKAGE BODY
+SYS                            DBMS_CUBE_LOG                                                PACKAGE BODY
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            OWA_UTIL                                                     PACKAGE BODY
+SYS                            OWA_OPT_LOCK                                                 PACKAGE BODY
+SYS                            WPG_DOCLOAD                                                  PACKAGE BODY
+SYS                            SCHEDULER$NTFY_SVC_METRICS                                   PROCEDURE
+SYS                            CHECK_UPGRADE                                                FUNCTION
+SYS                            GETXMLSCHEMADEPENDENCYLIST                                   FUNCTION
+SYS                            DBA_JSON_DATAGUIDES                                          VIEW
+SYS                            CDB_JSON_DATAGUIDES                                          VIEW
+SYS                            USER_JSON_DATAGUIDES                                         VIEW
+SYS                            INT$DBA_JSON_DG_COLS                                         VIEW
+SYS                            DBA_JSON_DATAGUIDE_FIELDS                                    VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            CDB_JSON_DATAGUIDE_FIELDS                                    VIEW
+SYS                            USER_JSON_DATAGUIDE_FIELDS                                   VIEW
+SYS                            ALL_JSON_DATAGUIDE_FIELDS                                    VIEW
+SYS                            DBMS_REGXDB                                                  PACKAGE BODY
+SYS                            DBMS_GSM_FIXED                                               PACKAGE BODY
+SYS                            EXECASUSERID                                                 PROCEDURE
+SYS                            EXECASUSER                                                   PROCEDURE
+SYS                            CLEANUP_DDL                                                  PROCEDURE
+SYS                            CLEANUP_DDL_DRIVER                                           PROCEDURE
+SYS                            DA_CUSTOMER_SECONDARY_EMAILS_ON_INSERT                       TRIGGER
+SYS                            UTL_RECOMP2                                                  PACKAGE BODY
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            DBMS_BLOCKCHAIN_TABLE                                        PACKAGE BODY
+SYS                            DBMS_TABLE_DATA                                              PACKAGE BODY
+SYS                            DBMS_MAINTPLAN                                               PACKAGE BODY
+SYS                            PLAN_PARAMS                                                  TYPE BODY
+SYS                            KU$_COLLIST_VIEW                                             VIEW
+SYS                            PRVTEMX_SQL                                                  PACKAGE BODY
+SYS                            AMGT$DATAPUMP                                                PACKAGE BODY
+SYS                            DBMS_FBT                                                     PACKAGE BODY
+SYS                            DBMS_HPROF                                                   PACKAGE BODY
+SYS                            AQ$_JMS_MESSAGE                                              TYPE BODY
+SYS                            AQ$_JMS_TEXT_MESSAGE                                         TYPE BODY
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            AQ$_JMS_BYTES_MESSAGE                                        TYPE BODY
+SYS                            AQ$_JMS_STREAM_MESSAGE                                       TYPE BODY
+SYS                            AQ$_JMS_MAP_MESSAGE                                          TYPE BODY
+SYS                            DBMS_AQJMS                                                   PACKAGE BODY
+SYS                            DBMS_AQJMS_INTERNAL                                          PACKAGE BODY
+SYS                            DBMS_AQ_IMP_INTERNAL                                         PACKAGE BODY
+SYS                            DBMS_AQELM                                                   PACKAGE BODY
+SYS                            DBMS_PRVTAQIP                                                PACKAGE BODY
+SYS                            DBMS_PRVTSQIS                                                PACKAGE BODY
+SYS                            DBMS_WLM                                                     PACKAGE BODY
+SYS                            DBMS_TRANSFORM                                               PACKAGE BODY
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            DBMS_RESOURCE_MANAGER                                        PACKAGE BODY
+SYS                            DBMS_JOB                                                     PACKAGE BODY
+SYS                            DBMS_IJOB                                                    PACKAGE BODY
+SYS                            JOB_DEFINITION                                               TYPE BODY
+SYS                            SCHEDULER$_BATCHERR_VIEW_T                                   TYPE BODY
+SYS                            SCHEDULER$_JOB_EVENT_HANDLER                                 PROCEDURE
+SYS                            DBMS_ISCHED_CHAIN_CONDITION                                  PACKAGE BODY
+SYS                            DBMS_CHAIN_INVOKER                                           PACKAGE BODY
+SYS                            DBMS_SCHED_MAIN_EXPORT                                       PACKAGE BODY
+SYS                            OUTLN_PKG_INTERNAL                                           PACKAGE BODY
+SYS                            DBMS_LOGMNR_LOGREP_DICT                                      PACKAGE BODY
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            DBMS_WRR_REPORT                                              PACKAGE BODY
+SYS                            DBMS_WRR_INTERNAL                                            PACKAGE BODY
+SYS                            DBMS_DBFS_CONTENT                                            PACKAGE BODY
+SYS                            DBMS_DBFS_CONTENT_ADMIN                                      PACKAGE BODY
+SYS                            DBMS_METADATA_BUILD                                          PACKAGE BODY
+SYS                            DBMS_METADATA_DPBUILD                                        PACKAGE BODY
+SYS                            DBMS_METADATA_DIFF                                           PACKAGE BODY
+SYS                            DBMS_PLUGTS                                                  PACKAGE BODY
+SYS                            DBMS_PITR                                                    PACKAGE BODY
+SYS                            DBMS_SUM_RWEQ_EXPORT_INTERNAL                                PACKAGE BODY
+SYS                            UTL_RECOMP                                                   PACKAGE BODY
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            DBMS_EDITIONS_UTILITIES                                      PACKAGE BODY
+SYS                            DBMS_SUMMARY                                                 PACKAGE BODY
+SYS                            DBMS_SUMVDM                                                  PACKAGE BODY
+SYS                            DBMS_REDEFINITION_INTERNAL                                   PACKAGE BODY
+SYS                            DBMS_REDEFINITION                                            PACKAGE BODY
+SYS                            DBMS_AUTO_TASK_IMMEDIATE                                     PACKAGE BODY
+SYS                            DBMS_AUTO_INDEX                                              PACKAGE BODY
+SYS                            DBMS_ADDM                                                    PACKAGE BODY
+SYS                            DBMS_UNDO_ADV                                                PACKAGE BODY
+SYS                            PRVT_TUNE_MVIEW                                              PACKAGE BODY
+SYS                            PRVT_SYS_TUNE_MVIEW                                          PACKAGE BODY
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            PRVT_PARTREC_NOPRIV                                          PACKAGE BODY
+SYS                            WRI$_REPT_OPTSTATS                                           TYPE BODY
+SYS                            DBMS_SQLTCB_INTERNAL                                         PACKAGE BODY
+SYS                            ODM_MODEL_UTIL                                               PACKAGE
+SYS                            ODM_MODEL_UTIL                                               PACKAGE BODY
+SYS                            DBMS_DATA_MINING_TRANSFORM                                   PACKAGE BODY
+SYS                            DMP_SEC                                                      PACKAGE
+SYS                            DMP_SYS                                                      PACKAGE
+SYS                            DMP_SEC                                                      PACKAGE BODY
+SYS                            DMP_SYS                                                      PACKAGE BODY
+SYS                            DBMS_DM_EXP_INTERNAL                                         PACKAGE
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            DBMS_DM_MODEL_EXP                                            PACKAGE BODY
+SYS                            DBMS_DM_MODEL_IMP                                            PACKAGE BODY
+SYS                            DBMS_DM_EXP_INTERNAL                                         PACKAGE BODY
+SYS                            DBMS_FILE_GROUP_UTL                                          PACKAGE
+SYS                            DBMS_CMP_INT                                                 PACKAGE
+SYS                            DBMS_IREFRESH                                                PACKAGE BODY
+SYS                            DBMS_SNAP_INTERNAL                                           PACKAGE BODY
+SYS                            DBMS_SNAPSHOT_KKXRCA                                         PACKAGE BODY
+SYS                            DBMS_ISYNCREF                                                PACKAGE BODY
+SYS                            DBMS_RECOVERABLE_SCRIPT                                      PACKAGE BODY
+SYS                            DBMS_RECO_SCRIPT_INVOK                                       PACKAGE BODY
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            DBMS_RECO_SCRIPT_INT                                         PACKAGE BODY
+SYS                            DBMS_STREAMS_MT                                              PACKAGE BODY
+SYS                            DBMS_STREAMS                                                 PACKAGE BODY
+SYS                            DBMS_STREAMS_ADM_UTL_INVOK                                   PACKAGE BODY
+SYS                            DBMS_STREAMS_AUTH                                            PACKAGE BODY
+SYS                            DBMS_APPLY_ADM                                               PACKAGE BODY
+SYS                            DBMS_APPLY_ERROR                                             PACKAGE BODY
+SYS                            DBMS_APPLY_POSITION                                          PACKAGE BODY
+SYS                            DBMS_APPLY_ADM_IVK                                           PACKAGE BODY
+SYS                            DBMS_CAPTURE_PROCESS                                         PACKAGE BODY
+SYS                            DBMS_PROPAGATION_ADM                                         PACKAGE BODY
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            DBMS_PROPAGATION_INTERNAL                                    PACKAGE BODY
+SYS                            DBMS_STREAMS_LCR_INT                                         PACKAGE BODY
+SYS                            DBMS_LOGREP_UTIL_INVOK                                       PACKAGE BODY
+SYS                            DBMS_LOGREP_EXP                                              PACKAGE BODY
+SYS                            DBMS_STREAMS_RPC                                             PACKAGE BODY
+SYS                            DBMS_STREAMS_PUB_RPC                                         PACKAGE BODY
+SYS                            DBMS_STREAMS_TBS_INT                                         PACKAGE BODY
+SYS                            DBMS_STREAMS_TBS_INT_INVOK                                   PACKAGE BODY
+SYS                            DBMS_STREAMS_TABLESPACE_ADM                                  PACKAGE BODY
+SYS                            DBMS_STREAMS_SM                                              PACKAGE BODY
+SYS                            DBMS_CAPTURE_SWITCH_INTERNAL                                 PACKAGE BODY
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            DBMS_CAPTURE_SWITCH_ADM                                      PACKAGE BODY
+SYS                            DBMS_FILE_GROUP_UTL                                          PACKAGE BODY
+SYS                            DBMS_FILE_GROUP_UTL_INVOK                                    PACKAGE BODY
+SYS                            DBMS_FILE_GROUP                                              PACKAGE BODY
+SYS                            DBMS_FILE_GROUP_INTERNAL_INVOK                               PACKAGE BODY
+SYS                            DBMS_FILE_GROUP_EXP                                          PACKAGE BODY
+SYS                            DBMS_FILE_GROUP_IMP                                          PACKAGE BODY
+SYS                            DBMS_FILE_GROUP_IMP_INTERNAL                                 PACKAGE BODY
+SYS                            DBMS_COMPARISON                                              PACKAGE BODY
+SYS                            DBMS_CMP_INT                                                 PACKAGE BODY
+SYS                            DBMS_XSTREAM_UTL_IVK                                         PACKAGE BODY
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            DBMS_XSTREAM_AUTH_IVK                                        PACKAGE BODY
+SYS                            DBMS_XSTREAM_AUTH                                            PACKAGE BODY
+SYS                            DBMS_XSTREAM_ADM_INTERNAL                                    PACKAGE BODY
+SYS                            DBMS_CREDENTIAL                                              PACKAGE BODY
+SYS                            UTL_TCP                                                      PACKAGE BODY
+SYS                            UTL_SMTP                                                     PACKAGE BODY
+SYS                            UTL_HTTP                                                     PACKAGE BODY
+SYS                            UTL_URL                                                      PACKAGE BODY
+SYS                            DBMS_PCLXUTIL_INTERNAL                                       PACKAGE BODY
+SYS                            DBMS_ERRLOG                                                  PACKAGE BODY
+SYS                            DBMS_DDL                                                     PACKAGE BODY
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            DBMS_PSP                                                     PACKAGE BODY
+SYS                            DBMS_PSWMG_IMPORT                                            PACKAGE BODY
+SYS                            DBMS_REPAIR                                                  PACKAGE BODY
+SYS                            DBMS_SQLHASH                                                 PACKAGE BODY
+SYS                            URITYPE                                                      TYPE BODY
+SYS                            FTPURITYPE                                                   TYPE BODY
+SYS                            HTTPURITYPE                                                  TYPE BODY
+SYS                            URIFACTORY                                                   PACKAGE BODY
+SYS                            DBMS_XMLGEN                                                  PACKAGE BODY
+SYS                            PRVTEMX_ADMIN                                                PACKAGE BODY
+SYS                            PRVTEMX_DBHOME                                               PACKAGE BODY
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            PRVTEMX_RSRCMGR                                              PACKAGE BODY
+SYS                            KU$_HIERARCHY_VIEW                                           VIEW
+SYS                            KU$_ANALYTIC_VIEW                                            VIEW
+SYS                            KU$_REFPAR_LEVEL                                             VIEW
+SYS                            DBMS_DATA_MINING_TRANSFORM                                   PACKAGE
+SYS                            DBMS_DATA_MINING                                             PACKAGE
+SYS                            DBMS_ITRIGGER_UTL                                            PACKAGE BODY
+SYS                            DBMSHSXP                                                     PACKAGE BODY
+SYS                            DBMS_AUTO_TASK_EXPORT                                        PACKAGE BODY
+SYS                            CDB_CAPTURE                                                  VIEW
+SYS                            DBA_STREAMS_SPLIT_MERGE                                      VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            CDB_STREAMS_SPLIT_MERGE                                      VIEW
+SYS                            _DBA_SXGG_SPLIT_MERGE_HIST                                   VIEW
+SYS                            DBA_STREAMS_SPLIT_MERGE_HIST                                 VIEW
+SYS                            CDB_STREAMS_SPLIT_MERGE_HIST                                 VIEW
+SYS                            DBA_XSTREAM_SPLIT_MERGE                                      VIEW
+SYS                            CDB_XSTREAM_SPLIT_MERGE                                      VIEW
+SYS                            DBA_XSTREAM_SPLIT_MERGE_HIST                                 VIEW
+SYS                            CDB_XSTREAM_SPLIT_MERGE_HIST                                 VIEW
+SYS                            ALL_CAPTURE_EXTRA_ATTRIBUTES                                 VIEW
+SYS                            CDB_XSTREAM_OUTBOUND                                         VIEW
+SYS                            DBA_XSTREAM_OUTBOUND_PROGRESS                                VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            CDB_XSTREAM_OUTBOUND_PROGRESS                                VIEW
+SYS                            ALL_XSTREAM_OUTBOUND_PROGRESS                                VIEW
+SYS                            _DBA_XSTREAM_OUTBOUND                                        VIEW
+SYS                            CDB_PROPAGATION                                              VIEW
+SYS                            ALL_PROPAGATION                                              VIEW
+SYS                            _ALL_STREAMS_PROCESSES                                       VIEW
+SYS                            ALL_STREAMS_GLOBAL_RULES                                     VIEW
+SYS                            ALL_STREAMS_SCHEMA_RULES                                     VIEW
+SYS                            ALL_STREAMS_TABLE_RULES                                      VIEW
+SYS                            ALL_STREAMS_MESSAGE_RULES                                    VIEW
+SYS                            CDB_STREAMS_RULES                                            VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            ALL_STREAMS_RULES                                            VIEW
+SYS                            ALL_SYNC_CAPTURE_TABLES                                      VIEW
+SYS                            CDB_XSTREAM_RULES                                            VIEW
+SYS                            ALL_XSTREAM_RULES                                            VIEW
+SYS                            CDB_GOLDENGATE_RULES                                         VIEW
+SYS                            ALL_GOLDENGATE_RULES                                         VIEW
+SYS                            ALL_GOLDENGATE_CONTAINER_RULES                               VIEW
+SYS                            DBA_STREAMS_TRANSFORMATIONS                                  VIEW
+SYS                            CDB_STREAMS_TRANSFORMATIONS                                  VIEW
+SYS                            DBA_XSTREAM_TRANSFORMATIONS                                  VIEW
+SYS                            CDB_XSTREAM_TRANSFORMATIONS                                  VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            ALL_STREAMS_TRANSFORMATIONS                                  VIEW
+SYS                            ALL_XSTREAM_TRANSFORMATIONS                                  VIEW
+SYS                            DBA_STREAMS_RENAME_SCHEMA                                    VIEW
+SYS                            CDB_STREAMS_RENAME_SCHEMA                                    VIEW
+SYS                            DBA_STREAMS_RENAME_TABLE                                     VIEW
+SYS                            CDB_STREAMS_RENAME_TABLE                                     VIEW
+SYS                            DBA_STREAMS_DELETE_COLUMN                                    VIEW
+SYS                            CDB_STREAMS_DELETE_COLUMN                                    VIEW
+SYS                            DBA_STREAMS_KEEP_COLUMNS                                     VIEW
+SYS                            CDB_STREAMS_KEEP_COLUMNS                                     VIEW
+SYS                            ALL_STREAMS_KEEP_COLUMNS                                     VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            DBA_STREAMS_RENAME_COLUMN                                    VIEW
+SYS                            CDB_STREAMS_RENAME_COLUMN                                    VIEW
+SYS                            DBA_STREAMS_ADD_COLUMN                                       VIEW
+SYS                            CDB_STREAMS_ADD_COLUMN                                       VIEW
+SYS                            ALL_COMPARISON_SCAN_SUMMARY                                  VIEW
+SYS                            CDB_STREAMS_UNSUPPORTED                                      VIEW
+SYS                            ALL_STREAMS_UNSUPPORTED                                      VIEW
+SYS                            DBA_STREAMS_NEWLY_SUPPORTED                                  VIEW
+SYS                            CDB_STREAMS_NEWLY_SUPPORTED                                  VIEW
+SYS                            ALL_STREAMS_NEWLY_SUPPORTED                                  VIEW
+SYS                            KU$_M_VIEW_PFH_VIEW                                          VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            KU$_ZM_VIEW_PFH_VIEW                                         VIEW
+SYS                            KU$_M_VIEW_IOT_VIEW                                          VIEW
+SYS                            KU$_ZM_VIEW_IOT_VIEW                                         VIEW
+SYS                            KU$_M_VIEW_PIOT_VIEW                                         VIEW
+SYS                            KU$_ZM_VIEW_PIOT_VIEW                                        VIEW
+SYS                            KU$_M_ZONEMAP_H_VIEW                                         VIEW
+SYS                            KU$_M_ZONEMAP_PH_VIEW                                        VIEW
+SYS                            KU$_M_ZONEMAP_FH_VIEW                                        VIEW
+SYS                            KU$_M_ZONEMAP_PFH_VIEW                                       VIEW
+SYS                            KU$_M_ZONEMAP_IOT_VIEW                                       VIEW
+SYS                            KU$_M_ZONEMAP_PIOT_VIEW                                      VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            KU$_M_VIEW_LOG_VIEW                                          VIEW
+SYS                            KU$_M_VIEW_LOG_H_VIEW                                        VIEW
+SYS                            KU$_M_VIEW_LOG_PH_VIEW                                       VIEW
+SYS                            KU$_M_VIEW_LOG_FH_VIEW                                       VIEW
+SYS                            KU$_M_VIEW_LOG_PFH_VIEW                                      VIEW
+SYS                            KU$_LIBRARY_VIEW                                             VIEW
+SYS                            KU$_DIMENSION_VIEW                                           VIEW
+SYS                            KU$_PWDVFC_VIEW                                              VIEW
+SYS                            KU$_10_1_COMMENT_VIEW                                        VIEW
+SYS                            KU$_CLUSTER_VIEW                                             VIEW
+SYS                            KU$_AUDIT_VIEW                                               VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            KU$_11_2_AUDIT_VIEW                                          VIEW
+SYS                            KU$_AUDIT_DEFAULT_VIEW                                       VIEW
+SYS                            KU$_JAVA_SOURCE_VIEW                                         VIEW
+SYS                            KU$_QTAB_STORAGE_VIEW                                        VIEW
+SYS                            KU$_QUEUE_TABLE_VIEW                                         VIEW
+SYS                            KU$_HISTGRM_VIEW                                             VIEW
+SYS                            KU$_COL_STATS_VIEW                                           VIEW
+SYS                            KU$_10_1_TAB_COL_STATS_VIEW                                  VIEW
+SYS                            KU$_10_1_PTAB_COL_STATS_VIEW                                 VIEW
+SYS                            KU$_TAB_ONLY_STATS_VIEW                                      VIEW
+SYS                            KU$_10_1_TAB_ONLY_STATS_VIEW                                 VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            KU$_PTAB_STATS_VIEW                                          VIEW
+SYS                            KU$_10_1_PTAB_STATS_VIEW                                     VIEW
+SYS                            KU$_TAB_COL_VIEW                                             VIEW
+SYS                            KU$_10_2_TAB_COL_VIEW                                        VIEW
+SYS                            KU$_TAB_STATS_VIEW                                           VIEW
+SYS                            KU$_11_2_TAB_STATS_VIEW                                      VIEW
+SYS                            KU$_10_2_TAB_STATS_VIEW                                      VIEW
+SYS                            KU$_10_1_TAB_STATS_VIEW                                      VIEW
+SYS                            KU$_IND_COL_VIEW                                             VIEW
+SYS                            KU$_IND_STATS_VIEW                                           VIEW
+SYS                            KU$_11_2_IND_STATS_VIEW                                      VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            KU$_10_2_IND_STATS_VIEW                                      VIEW
+SYS                            KU$_10_1_IND_STATS_VIEW                                      VIEW
+SYS                            KU$_JAVA_CLASS_VIEW                                          VIEW
+SYS                            KU$_JAVA_RESOURCE_VIEW                                       VIEW
+SYS                            KU$_ADD_SNAP_VIEW                                            VIEW
+SYS                            KU$_REFGROUP_VIEW                                            VIEW
+SYS                            KU$_PROC_GRANT_VIEW                                          VIEW
+SYS                            KU$_PROC_AUDIT_VIEW                                          VIEW
+SYS                            KU$_PROCOBJ_VIEW                                             VIEW
+SYS                            KU$_PROCOBJ_GRANT_VIEW                                       VIEW
+SYS                            KU$_PROCOBJ_AUDIT_VIEW                                       VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            KU$_PROCDEPOBJ_GRANT_VIEW                                    VIEW
+SYS                            KU$_PROCDEPOBJ_AUDIT_VIEW                                    VIEW
+SYS                            KU$_PROCACT_SYS_VIEW                                         VIEW
+SYS                            KU$_PROCACT_SCHEMA_VIEW                                      VIEW
+SYS                            KU$_PLUGTS_BLK_VIEW                                          VIEW
+SYS                            KU$_END_PLUGTS_BLK_VIEW                                      VIEW
+SYS                            KU$_PLUGTS_TABLESPACE_VIEW                                   VIEW
+SYS                            KU$_ATTRIBUTE_DIMENSION_VIEW                                 VIEW
+SYS                            KU$_OBJGRANT_VIEW                                            VIEW
+SYS                            KU$_10_1_OBJGRANT_VIEW                                       VIEW
+SYS                            KU$_10_1_HTABLE_VIEW                                         VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            KU$_10_1_PHTABLE_VIEW                                        VIEW
+SYS                            KU$_10_1_FHTABLE_VIEW                                        VIEW
+SYS                            KU$_10_1_PFHTABLE_VIEW                                       VIEW
+SYS                            KU$_10_1_IOTABLE_VIEW                                        VIEW
+SYS                            KU$_OV_TABPART_VIEW                                          VIEW
+SYS                            KU$_MAP_TABPART_VIEW                                         VIEW
+SYS                            KU$_IOT_PARTOBJ_VIEW                                         VIEW
+SYS                            KU$_10_1_PIOTABLE_VIEW                                       VIEW
+SYS                            KU$_XDB_NTABLE_OBJNUM_VIEW                                   VIEW
+SYS                            KU$_11_2_TABLE_OBJNUM_VIEW                                   VIEW
+SYS                            KU$_10_1_TABLE_OBJNUM_VIEW                                   VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            KU$_11_2_NTABLE_OBJNUM_VIEW                                  VIEW
+SYS                            KU$_11_2_XDB_NTBL_OBJNUM_VIEW                                VIEW
+SYS                            KU$_P2T_DOMIDX_OBJNUM_VIEW                                   VIEW
+SYS                            KU$_EXPREG                                                   VIEW
+SYS                            KU$_OPTION_OBJNUM_VIEW                                       VIEW
+SYS                            KU$_OPTION_VIEW_OBJNUM_VIEW                                  VIEW
+SYS                            KU$_MARKER_VIEW                                              VIEW
+SYS                            KU$_MVLPROP_VIEW                                             VIEW
+SYS                            KU$_EDITION_TRIG_EXISTS_VIEW                                 VIEW
+SYS                            KU$_EDITION_PROC_EXISTS_VIEW                                 VIEW
+SYS                            KU$_MV_DEPTBL_OBJNUM_VIEW                                    VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            KU$_10_2_TABLE_DATA_VIEW                                     VIEW
+SYS                            KU$_10_1_TABLE_DATA_VIEW                                     VIEW
+SYS                            KU$_10_2_STRMSUBCOLTYPE_VIEW                                 VIEW
+SYS                            KU$_10_2_STRMCOLTYPE_VIEW                                    VIEW
+SYS                            KU$_10_2_STRMCOL_VIEW                                        VIEW
+SYS                            KU$_10_2_STRMTABLE_VIEW                                      VIEW
+SYS                            KU$_BASE_PROC_VIEW                                           VIEW
+SYS                            KU$_BASE_PROC_OBJNUM_VIEW                                    VIEW
+SYS                            KU$_PROC_VIEW                                                VIEW
+SYS                            KU$_FUNC_VIEW                                                VIEW
+SYS                            KU$_PKG_OBJNUM_VIEW                                          VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            KU$_PKG_VIEW                                                 VIEW
+SYS                            KU$_PKGBDY_VIEW                                              VIEW
+SYS                            KU$_FULL_PKG_VIEW                                            VIEW
+SYS                            KU$_EXP_PKG_BODY_VIEW                                        VIEW
+SYS                            KU$_ALTER_PROC_VIEW                                          VIEW
+SYS                            KU$_ALTER_FUNC_VIEW                                          VIEW
+SYS                            KU$_ALTER_PKGSPC_VIEW                                        VIEW
+SYS                            KU$_ALTER_PKGBDY_VIEW                                        VIEW
+SYS                            KU$_12_1_TRIGGER_VIEW                                        VIEW
+SYS                            KU$_11_2_TRIGGER_VIEW                                        VIEW
+SYS                            KU$_10_2_TRIGGER_VIEW                                        VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            KU$_VIEW_VIEW                                                VIEW
+SYS                            KU$_11_2_VIEW_VIEW                                           VIEW
+SYS                            KU$_VIEW_OBJNUM_VIEW                                         VIEW
+SYS                            KU$_OUTLINE_VIEW                                             VIEW
+SYS                            KU$_SYNONYM_VIEW                                             VIEW
+SYS                            KU$_ROLLBACK_VIEW                                            VIEW
+SYS                            KU$_10_1_DBLINK_VIEW                                         VIEW
+SYS                            KU$_RLS_POLICY_VIEW                                          VIEW
+SYS                            KU$_M_VIEW_VIEW                                              VIEW
+SYS                            KU$_ZM_VIEW_VIEW                                             VIEW
+SYS                            KU$_M_ZONEMAP_VIEW                                           VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            KU$_M_VIEW_H_VIEW                                            VIEW
+SYS                            KU$_ZM_VIEW_H_VIEW                                           VIEW
+SYS                            KU$_M_VIEW_PH_VIEW                                           VIEW
+SYS                            KU$_ZM_VIEW_PH_VIEW                                          VIEW
+SYS                            KU$_M_VIEW_FH_VIEW                                           VIEW
+SYS                            KU$_ZM_VIEW_FH_VIEW                                          VIEW
+SYS                            DBMS_AUDIT_MGMT                                              SYNONYM
+SYS                            ORA_FI_T                                                     TYPE BODY
+SYS                            LOAD_UNDO_STAT                                               PROCEDURE
+SYS                            RESET_UNDO_STAT                                              PROCEDURE
+SYS                            CDB_SQL_PLAN_DIRECTIVES                                      VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            CDB_SQL_PLAN_DIR_OBJECTS                                     VIEW
+SYS                            ALL_TAB_STATISTICS                                           VIEW
+SYS                            CDB_TAB_STATISTICS                                           VIEW
+SYS                            USER_TAB_STATISTICS                                          VIEW
+SYS                            ALL_IND_STATISTICS                                           VIEW
+SYS                            CDB_IND_STATISTICS                                           VIEW
+SYS                            USER_IND_STATISTICS                                          VIEW
+SYS                            _user_stat                                                   VIEW
+SYS                            _user_stat_varray                                            VIEW
+SYS                            USER_EXPRESSION_STATISTICS                                   VIEW
+SYS                            ALL_EXPRESSION_STATISTICS                                    VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            DBA_EXPRESSION_STATISTICS                                    VIEW
+SYS                            CDB_EXPRESSION_STATISTICS                                    VIEW
+SYS                            DBMS_LOGMNR_D                                                PACKAGE BODY
+SYS                            LOGMNR_KRVRDREPDICT3                                         PROCEDURE
+SYS                            DBMS_LOGMNR_FFVTOLOGMNRT                                     PROCEDURE
+SYS                            LOGMNR_RMT_BLD                                               PROCEDURE
+SYS                            SYSLSBY_EDS_DDL_TRIG                                         TRIGGER
+SYS                            KU$_PCOLUMN_VIEW                                             VIEW
+SYS                            KU$_P2TPARTCOL_VIEW                                          VIEW
+SYS                            KU$_SP2TPARTCOL_VIEW                                         VIEW
+SYS                            KU$_P2TCOLUMN_VIEW                                           VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            KU$_SP2TCOLUMN_VIEW                                          VIEW
+SYS                            KU$_10_2_FHTABLE_VIEW                                        VIEW
+SYS                            KU$_PFHTABLE_VIEW                                            VIEW
+SYS                            KU$_ACPTABLE_VIEW                                            VIEW
+SYS                            KU$_PARTITION_VIEW                                           VIEW
+SYS                            KU$_SUBPARTITION_VIEW                                        VIEW
+SYS                            KU$_IOTABLE_VIEW                                             VIEW
+SYS                            KU$_PIOTABLE_VIEW                                            VIEW
+SYS                            KU$_M_VIEW_VIEW_BASE                                         VIEW
+SYS                            KU$_USER_BASE_VIEW                                           VIEW
+SYS                            KU$_USER_VIEW                                                VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            KU$_COLLECTION_VIEW                                          VIEW
+SYS                            KU$_ARGUMENT_VIEW                                            VIEW
+SYS                            KU$_METHOD_VIEW                                              VIEW
+SYS                            KU$_TYPE_ATTR_VIEW                                           VIEW
+SYS                            KU$_TYPE_VIEW                                                VIEW
+SYS                            KU$_TYPE_BODY_VIEW                                           VIEW
+SYS                            KU$_FULL_TYPE_VIEW                                           VIEW
+SYS                            KU$_EXP_TYPE_BODY_VIEW                                       VIEW
+SYS                            KU$_INC_TYPE_VIEW                                            VIEW
+SYS                            KU$_DEPTYPES_BASE_VIEW                                       VIEW
+SYS                            KU$_DEPTYPES_VIEW                                            VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            KU$_P2TLOB_VIEW                                              VIEW
+SYS                            KU$_SP2TLOB_VIEW                                             VIEW
+SYS                            KU$_PIOTLOBFRAG_VIEW                                         VIEW
+SYS                            KU$_PIOT_PART_VIEW                                           VIEW
+SYS                            KU$_INDEX_PARTITION_VIEW                                     VIEW
+SYS                            KU$_INDEX_SUBPARTITION_VIEW                                  VIEW
+SYS                            KU$_DOMIDX_PARTITION_VIEW                                    VIEW
+SYS                            KU$_10_2_INDEX_VIEW                                          VIEW
+SYS                            KU$_P2T_CON1A_VIEW                                           VIEW
+SYS                            KU$_SP2T_CON1A_VIEW                                          VIEW
+SYS                            KU$_P2T_CON1B_VIEW                                           VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+SYS                            KU$_P2T_CONSTRAINT1_VIEW                                     VIEW
+SYS                            KU$_SP2T_CONSTRAINT1_VIEW                                    VIEW
+SYS                            KU$_P2T_CONSTRAINT2_VIEW                                     VIEW
+SYS                            KU$_MAP_TABLE_VIEW                                           VIEW
+PUBLIC                         UTL_SMTP                                                     SYNONYM
+PUBLIC                         UTL_URL                                                      SYNONYM
+PUBLIC                         DBMS_STATS_INTERNAL_AGG                                      SYNONYM
+PUBLIC                         DBMS_DDL                                                     SYNONYM
+PUBLIC                         DBMS_AUDIT_MGMT                                              SYNONYM
+PUBLIC                         DBA_SQL_PLAN_DIRECTIVES                                      SYNONYM
+PUBLIC                         CDB_SQL_PLAN_DIRECTIVES                                      SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+PUBLIC                         DBA_SQL_PLAN_DIR_OBJECTS                                     SYNONYM
+PUBLIC                         CDB_SQL_PLAN_DIR_OBJECTS                                     SYNONYM
+PUBLIC                         ALL_TAB_STATISTICS                                           SYNONYM
+PUBLIC                         DBA_TAB_STATISTICS                                           SYNONYM
+PUBLIC                         CDB_TAB_STATISTICS                                           SYNONYM
+PUBLIC                         USER_TAB_STATISTICS                                          SYNONYM
+PUBLIC                         ALL_IND_STATISTICS                                           SYNONYM
+PUBLIC                         DBA_IND_STATISTICS                                           SYNONYM
+PUBLIC                         CDB_IND_STATISTICS                                           SYNONYM
+PUBLIC                         USER_IND_STATISTICS                                          SYNONYM
+PUBLIC                         USER_EXPRESSION_STATISTICS                                   SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+PUBLIC                         ALL_EXPRESSION_STATISTICS                                    SYNONYM
+PUBLIC                         DBA_EXPRESSION_STATISTICS                                    SYNONYM
+PUBLIC                         CDB_EXPRESSION_STATISTICS                                    SYNONYM
+PUBLIC                         DBMS_DATA_MINING_TRANSFORM                                   SYNONYM
+PUBLIC                         DBMS_DATA_MINING                                             SYNONYM
+PUBLIC                         CDB_CAPTURE                                                  SYNONYM
+PUBLIC                         DBA_STREAMS_SPLIT_MERGE                                      SYNONYM
+PUBLIC                         CDB_STREAMS_SPLIT_MERGE                                      SYNONYM
+PUBLIC                         DBA_STREAMS_SPLIT_MERGE_HIST                                 SYNONYM
+PUBLIC                         CDB_STREAMS_SPLIT_MERGE_HIST                                 SYNONYM
+PUBLIC                         DBA_XSTREAM_SPLIT_MERGE                                      SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+PUBLIC                         CDB_XSTREAM_SPLIT_MERGE                                      SYNONYM
+PUBLIC                         DBA_XSTREAM_SPLIT_MERGE_HIST                                 SYNONYM
+PUBLIC                         CDB_XSTREAM_SPLIT_MERGE_HIST                                 SYNONYM
+PUBLIC                         ALL_CAPTURE_EXTRA_ATTRIBUTES                                 SYNONYM
+PUBLIC                         _DBA_GGXSTREAM_OUTBOUND                                      SYNONYM
+PUBLIC                         DBA_XSTREAM_OUTBOUND                                         SYNONYM
+PUBLIC                         CDB_XSTREAM_OUTBOUND                                         SYNONYM
+PUBLIC                         ALL_XSTREAM_OUTBOUND                                         SYNONYM
+PUBLIC                         DBA_XSTREAM_OUTBOUND_PROGRESS                                SYNONYM
+PUBLIC                         CDB_XSTREAM_OUTBOUND_PROGRESS                                SYNONYM
+PUBLIC                         ALL_XSTREAM_OUTBOUND_PROGRESS                                SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+PUBLIC                         DBA_PROPAGATION                                              SYNONYM
+PUBLIC                         CDB_PROPAGATION                                              SYNONYM
+PUBLIC                         ALL_PROPAGATION                                              SYNONYM
+PUBLIC                         ALL_STREAMS_GLOBAL_RULES                                     SYNONYM
+PUBLIC                         ALL_STREAMS_SCHEMA_RULES                                     SYNONYM
+PUBLIC                         ALL_STREAMS_TABLE_RULES                                      SYNONYM
+PUBLIC                         ALL_STREAMS_MESSAGE_RULES                                    SYNONYM
+PUBLIC                         DBA_STREAMS_RULES                                            SYNONYM
+PUBLIC                         CDB_STREAMS_RULES                                            SYNONYM
+PUBLIC                         ALL_STREAMS_RULES                                            SYNONYM
+PUBLIC                         ALL_SYNC_CAPTURE_TABLES                                      SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+PUBLIC                         DBA_XSTREAM_RULES                                            SYNONYM
+PUBLIC                         CDB_XSTREAM_RULES                                            SYNONYM
+PUBLIC                         ALL_XSTREAM_RULES                                            SYNONYM
+PUBLIC                         DBA_GOLDENGATE_RULES                                         SYNONYM
+PUBLIC                         CDB_GOLDENGATE_RULES                                         SYNONYM
+PUBLIC                         ALL_GOLDENGATE_RULES                                         SYNONYM
+PUBLIC                         ALL_GOLDENGATE_CONTAINER_RULES                               SYNONYM
+PUBLIC                         DBA_STREAMS_TRANSFORMATIONS                                  SYNONYM
+PUBLIC                         CDB_STREAMS_TRANSFORMATIONS                                  SYNONYM
+PUBLIC                         DBA_XSTREAM_TRANSFORMATIONS                                  SYNONYM
+PUBLIC                         CDB_XSTREAM_TRANSFORMATIONS                                  SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+PUBLIC                         ALL_STREAMS_TRANSFORMATIONS                                  SYNONYM
+PUBLIC                         ALL_XSTREAM_TRANSFORMATIONS                                  SYNONYM
+PUBLIC                         DBA_STREAMS_RENAME_SCHEMA                                    SYNONYM
+PUBLIC                         CDB_STREAMS_RENAME_SCHEMA                                    SYNONYM
+PUBLIC                         DBA_STREAMS_RENAME_TABLE                                     SYNONYM
+PUBLIC                         CDB_STREAMS_RENAME_TABLE                                     SYNONYM
+PUBLIC                         DBA_STREAMS_DELETE_COLUMN                                    SYNONYM
+PUBLIC                         CDB_STREAMS_DELETE_COLUMN                                    SYNONYM
+PUBLIC                         DBA_STREAMS_KEEP_COLUMNS                                     SYNONYM
+PUBLIC                         CDB_STREAMS_KEEP_COLUMNS                                     SYNONYM
+PUBLIC                         ALL_STREAMS_KEEP_COLUMNS                                     SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+PUBLIC                         DBA_STREAMS_RENAME_COLUMN                                    SYNONYM
+PUBLIC                         CDB_STREAMS_RENAME_COLUMN                                    SYNONYM
+PUBLIC                         DBA_STREAMS_ADD_COLUMN                                       SYNONYM
+PUBLIC                         CDB_STREAMS_ADD_COLUMN                                       SYNONYM
+PUBLIC                         ALL_COMPARISON_SCAN_SUMMARY                                  SYNONYM
+PUBLIC                         DBA_STREAMS_UNSUPPORTED                                      SYNONYM
+PUBLIC                         CDB_STREAMS_UNSUPPORTED                                      SYNONYM
+PUBLIC                         ALL_STREAMS_UNSUPPORTED                                      SYNONYM
+PUBLIC                         DBA_STREAMS_NEWLY_SUPPORTED                                  SYNONYM
+PUBLIC                         CDB_STREAMS_NEWLY_SUPPORTED                                  SYNONYM
+PUBLIC                         ALL_STREAMS_NEWLY_SUPPORTED                                  SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+PUBLIC                         DMP_SYS                                                      SYNONYM
+PUBLIC                         ODM_MODEL_UTIL                                               SYNONYM
+PUBLIC                         DBMS_CLOBUTIL                                                SYNONYM
+PUBLIC                         DBA_JSON_DATAGUIDES                                          SYNONYM
+PUBLIC                         CDB_JSON_DATAGUIDES                                          SYNONYM
+PUBLIC                         USER_JSON_DATAGUIDES                                         SYNONYM
+PUBLIC                         ALL_JSON_DATAGUIDES                                          SYNONYM
+PUBLIC                         DBA_JSON_DATAGUIDE_FIELDS                                    SYNONYM
+PUBLIC                         CDB_JSON_DATAGUIDE_FIELDS                                    SYNONYM
+PUBLIC                         USER_JSON_DATAGUIDE_FIELDS                                   SYNONYM
+PUBLIC                         ALL_JSON_DATAGUIDE_FIELDS                                    SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+PUBLIC                         APPCONTEXTDATA                                               SYNONYM
+PUBLIC                         AUDLOGTAB                                                    SYNONYM
+PUBLIC                         CEDTAB                                                       SYNONYM
+PUBLIC                         DEPTAB                                                       SYNONYM
+PUBLIC                         MAKCHETAB                                                    SYNONYM
+PUBLIC                         UBSAPPTAB                                                    SYNONYM
+PUBLIC                         USERSESS                                                     SYNONYM
+PUBLIC                         INSTTAB                                                      SYNONYM
+PUBLIC                         LICAUDIT                                                     SYNONYM
+PUBLIC                         SSOCALENDAR                                                  SYNONYM
+PUBLIC                         CALENDAR_DET                                                 SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+PUBLIC                         ENTITYDEF                                                    SYNONYM
+PUBLIC                         MTF                                                          SYNONYM
+PUBLIC                         MTFT                                                         SYNONYM
+PUBLIC                         SERVERDETAILS                                                SYNONYM
+PUBLIC                         SERVER_DETAILS                                               SYNONYM
+PUBLIC                         SSOAUDIT                                                     SYNONYM
+PUBLIC                         SSO_AUDIT                                                    SYNONYM
+PUBLIC                         SSOENTITYRES                                                 SYNONYM
+PUBLIC                         SSO_ENTITY_RESOURCE                                          SYNONYM
+PUBLIC                         ENT_SOLN                                                     SYNONYM
+PUBLIC                         SSOINSTCLIENTIPMAP                                           SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+PUBLIC                         SSO_INST_CLIENTIP_MAP                                        SYNONYM
+PUBLIC                         LIC_USED                                                     SYNONYM
+PUBLIC                         MOD_ACCESS                                                   SYNONYM
+PUBLIC                         SSOMODDATA                                                   SYNONYM
+PUBLIC                         SSO_MOD_DATA                                                 SYNONYM
+PUBLIC                         SSO_RES_ACCESS                                               SYNONYM
+PUBLIC                         SSORESOURCE                                                  SYNONYM
+PUBLIC                         SSO_RESOURCE                                                 SYNONYM
+PUBLIC                         SSOROLES                                                     SYNONYM
+PUBLIC                         SSO_ROLES                                                    SYNONYM
+PUBLIC                         SSOSESSION                                                   SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+PUBLIC                         SOLN_MOD                                                     SYNONYM
+PUBLIC                         SSO_SOLN_MODULE                                              SYNONYM
+PUBLIC                         SSOTIMEZONE                                                  SYNONYM
+PUBLIC                         TFR                                                          SYNONYM
+PUBLIC                         TFRT                                                         SYNONYM
+PUBLIC                         USERCREDS                                                    SYNONYM
+PUBLIC                         USER_CREDS                                                   SYNONYM
+PUBLIC                         USERPROFILE                                                  SYNONYM
+PUBLIC                         VALTAB                                                       SYNONYM
+AUDSYS                         DBMS_AUDIT_MGMT                                              PACKAGE
+AUDSYS                         DBMS_AUDIT_MGMT                                              PACKAGE BODY
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+GSMADMIN_INTERNAL              DBMS_GSM_COMMON                                              PACKAGE BODY
+GSMADMIN_INTERNAL              GSMLOGOFF                                                    TRIGGER
+GSMADMIN_INTERNAL              DONE_TRIGGER                                                 TRIGGER
+GSMADMIN_INTERNAL              REQUEST_DELETE_TRIGGER                                       TRIGGER
+GSMADMIN_INTERNAL              CAT_ROLLBACK_TRIGGER                                         TRIGGER
+GSMADMIN_INTERNAL              DBMS_GSM_CLOUDADMIN                                          PACKAGE BODY
+GSMADMIN_INTERNAL              DBMS_GSM_POOLADMIN                                           PACKAGE BODY
+GSMADMIN_INTERNAL              DBMS_GSM_UTILITY                                             PACKAGE BODY
+GSMADMIN_INTERNAL              EXECUTEDDL                                                   PROCEDURE
+GSMADMIN_INTERNAL              DBMS_GSM_DBADMIN                                             PACKAGE BODY
+GSMADMIN_INTERNAL              EXCHANGE                                                     PACKAGE BODY
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+XDB                            DBMS_JSON                                                    PACKAGE BODY
+XDB                            DBMS_XDBZ0                                                   PACKAGE BODY
+XDB                            XIMETADATA_PKG                                               PACKAGE BODY
+XDB                            DBMS_XMLSTORAGE_MANAGE                                       PACKAGE BODY
+XDB                            DBMS_XDB_CONTENT                                             PACKAGE BODY
+XDB                            DBMS_XMLSCHEMA                                               PACKAGE BODY
+XDB                            DBMS_CLOBUTIL                                                PACKAGE
+XDB                            DBMS_CLOBUTIL                                                PACKAGE BODY
+XDB                            DBMS_XSLPROCESSOR                                            PACKAGE BODY
+XDB                            DBMS_XMLDOM                                                  PACKAGE BODY
+XDB                            DBMS_XMLPARSER                                               PACKAGE BODY
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+XDB                            DBMS_XDBRESOURCE                                             PACKAGE BODY
+XDB                            DBMS_XDB                                                     PACKAGE BODY
+XDB                            DBMS_XDBUTIL_INT                                             PACKAGE BODY
+XDB                            DBMS_XDB_REPOS                                               PACKAGE BODY
+XDB                            DBMS_XDB_ADMIN                                               PACKAGE BODY
+WMSYS                          UD_TRIGS                                                     PACKAGE BODY
+WMSYS                          WM_DDL_UTIL                                                  PACKAGE BODY
+WMSYS                          LTDTRG                                                       PACKAGE BODY
+WMSYS                          LTRIC                                                        PACKAGE BODY
+WMSYS                          OWM_CPKG_PKG                                                 PACKAGE BODY
+WMSYS                          LTUTIL                                                       PACKAGE BODY
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+WMSYS                          OWM_MP_PKG                                                   PACKAGE BODY
+WMSYS                          OWM_BULK_LOAD_PKG                                            PACKAGE BODY
+WMSYS                          LTADM                                                        PACKAGE BODY
+MISUSER                        MT940_PKG_BK                                                 PACKAGE BODY
+MISUSER                        MGV_ALL_VIEW_DETAILS                                         VIEW
+MISUSER                        MGV_ALL_VIEW_TRIGGERS                                        VIEW
+MISUSER                        MGV_DERIVATIVES                                              VIEW
+MISUSER                        MGV_DERIVED_DETAILS                                          VIEW
+MISUSER                        MGV_SCRATCH_DERIVATIVES                                      VIEW
+MISUSER                        IBC_REPORT_PKG                                               PACKAGE BODY
+MISUSER                        AUTOMATIONLEVEL_PKG                                          PACKAGE BODY
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+MISUSER                        FRR_PKG                                                      PACKAGE BODY
+MISUSER                        IST_POSTILION_PKG                                            PACKAGE BODY
+MISUSER                        SECURE_CODE_OPT_PKG                                          PACKAGE BODY
+MISUSER                        SMM_NOTIFICATION_GEN2_PKG_BKP                                PACKAGE BODY
+MISUSER                        STB_CARD_RECON_SYS_PKG                                       PACKAGE BODY
+MISUSER                        STB_ONLINE_EXPLORER_PKG                                      PACKAGE BODY
+MISUSER                        COT_TEMP_ALL_ACCOUNTS_TRG                                    TRIGGER
+MISUSER                        IBC_OFI_CUSTOMERS_TRG                                        TRIGGER
+MISUSER                        CARP_PKG_BAK                                                 PACKAGE BODY
+MISUSER                        CARP_PKG_BAKUP                                               PACKAGE BODY
+MISUSER                        AUTOMATIONLEVEL_PKG                                          PACKAGE
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+MISUSER                        MIGRATION                                                    PACKAGE
+MISUSER                        SMM_NOTIFICATION_GEN2_PKG_BKP                                PACKAGE
+MISUSER                        CONVERT_BLOB_TO_VCHAR                                        PROCEDURE
+MISUSER                        GET_ACCT_STMT                                                PROCEDURE
+MISUSER                        KYCM_ACKNOWLEDGED_DOCUMENT_VW                                VIEW
+MISUSER                        KYCM_CUST_ACCT_DOC_INFO_VW                                   VIEW
+MISUSER                        MGV_ALL_CAPTURED_SQL                                         VIEW
+MISUSER                        MGV_ALL_CATALOGS                                             VIEW
+MISUSER                        MGV_ALL_CATALOG_DETAILS                                      VIEW
+MISUSER                        MGV_ALL_COLUMNDT_DETAILS                                     VIEW
+MISUSER                        MGV_ALL_COLUMN_DETAILS                                       VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+MISUSER                        MGV_ALL_CONNECTIONS                                          VIEW
+MISUSER                        MGV_ALL_CONSTRAINTS_DETAILS                                  VIEW
+MISUSER                        MGV_ALL_DETAILS                                              VIEW
+MISUSER                        MGV_ALL_INDEX_DETAILS                                        VIEW
+MISUSER                        MGV_ALL_PARTITIONS_DETAILS                                   VIEW
+MISUSER                        MGV_ALL_PROGRAMS_DETAILS                                     VIEW
+MISUSER                        MGV_ALL_SCHEMA                                               VIEW
+MISUSER                        MGV_ALL_SCHEMA_DETAILS                                       VIEW
+MISUSER                        MGV_ALL_STORED_PROGRAMS                                      VIEW
+MISUSER                        MGV_ALL_TABLES                                               VIEW
+MISUSER                        MGV_ALL_TABLES_DETAILS                                       VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+MISUSER                        MGV_ALL_TABLE_TRIGGERS                                       VIEW
+MISUSER                        MGV_ALL_TRIGGER_DETAILS                                      VIEW
+MISUSER                        MGV_ALL_VIEWS                                                VIEW
+CRMUSER                        SP_UNTAGCORPCUSTOMERS                                        PROCEDURE
+CRMUSER                        SP_UNTAGCORPNONCUSTOMERS                                     PROCEDURE
+CRMUSER                        SP_UNTAGCORPSUSPECTS                                         PROCEDURE
+CRMUSER                        SP_UNTAGRETAILCONTACTS                                       PROCEDURE
+CRMUSER                        SP_UNTAGRETAILCUSTOMERS                                      PROCEDURE
+CRMUSER                        SP_UNTAGRETAILMASTER                                         PROCEDURE
+CRMUSER                        SP_UNTAGRETAILNONCUSTOMERS                                   PROCEDURE
+CRMUSER                        SP_UNTAGRETAILSUSPECTS                                       PROCEDURE
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+CRMUSER                        SP_UPDATENEXTRUNDATE                                         PROCEDURE
+CRMUSER                        SP_UNTAGCORPMASTER                                           PROCEDURE
+CRMBATCHUSER                   SP_UNTAGRETAILNONCUSTOMERS                                   SYNONYM
+CRMBATCHUSER                   SP_UNTAGCORPCUSTOMERS                                        SYNONYM
+CRMBATCHUSER                   SP_UNTAGCORPMASTER                                           SYNONYM
+CRMBATCHUSER                   SP_UNTAGCORPNONCUSTOMERS                                     SYNONYM
+CRMBATCHUSER                   SP_UNTAGRETAILSUSPECTS                                       SYNONYM
+CRMBATCHUSER                   SP_UNTAGRETAILCONTACTS                                       SYNONYM
+CRMBATCHUSER                   SP_UNTAGRETAILCUSTOMERS                                      SYNONYM
+CRMBATCHUSER                   SP_UNTAGRETAILMASTER                                         SYNONYM
+CRMBATCHUSER                   SP_UPDATENEXTRUNDATE                                         SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+CRMBATCHUSER                   SP_UNTAGCORPSUSPECTS                                         SYNONYM
+TBAGEN                         ECF_CONFIGURATION_PROC                                       SYNONYM
+TBAGEN                         CUST_ODS_SSO_AUDIT_DETAIL                                    SYNONYM
+TBAGEN                         CAMT_SRLNUM_SEQ_01                                           SYNONYM
+TBAGEN                         C_EIT_LEASING_FIN_2019                                       SYNONYM
+TBAGEN                         CONFIG_INSERT_PROC                                           SYNONYM
+TBAGEN                         CBJRT_CONFIGURATION_PROC                                     SYNONYM
+TBAGEN                         CUST_ODS_C_EIT_HIST                                          SYNONYM
+TBAGEN                         EITH                                                         SYNONYM
+TBAUTIL                        CAMT_SRLNUM_SEQ_01                                           SYNONYM
+TBAUTIL                        C_EIT_LEASING_FIN_2019                                       SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+TBAUTIL                        EITH                                                         SYNONYM
+TBAUTIL                        CUST_ODS_C_EIT_HIST                                          SYNONYM
+TBAUTIL                        CONFIG_INSERT_PROC                                           SYNONYM
+TBAUTIL                        CUST_ODS_SSO_AUDIT_DETAIL                                    SYNONYM
+TBAUTIL                        CBJRT_CONFIGURATION_PROC                                     SYNONYM
+TBAUTIL                        TBA_CAMT_SRLNUM_SEQ_01                                       SYNONYM
+TBAUTIL                        ECF_CONFIGURATION_PROC                                       SYNONYM
+DEDUPADM                       SP_UNTAGCORPNONCUSTOMERS                                     SYNONYM
+DEDUPADM                       SP_UNTAGCORPMASTER                                           SYNONYM
+DEDUPADM                       SP_UNTAGCORPCUSTOMERS                                        SYNONYM
+DEDUPADM                       SP_UNTAGRETAILMASTER                                         SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+DEDUPADM                       SP_UPDATENEXTRUNDATE                                         SYNONYM
+DEDUPADM                       SP_UNTAGRETAILCUSTOMERS                                      SYNONYM
+DEDUPADM                       SP_UNTAGRETAILSUSPECTS                                       SYNONYM
+DEDUPADM                       SP_UNTAGRETAILCONTACTS                                       SYNONYM
+DEDUPADM                       SP_UNTAGCORPSUSPECTS                                         SYNONYM
+DEDUPADM                       SP_UNTAGRETAILNONCUSTOMERS                                   SYNONYM
+TBAADM                         C_EIT_LEASING_FIN_2019                                       SYNONYM
+TBAADM                         CUST_ODS_SSO_AUDIT_DETAIL                                    SYNONYM
+TBAADM                         ECF_CONFIGURATION_PROC                                       SYNONYM
+TBAADM                         CUST_ODS_C_EIT_HIST                                          SYNONYM
+TBAADM                         CBJRT_CONFIGURATION_PROC                                     SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+TBAADM                         CONFIG_INSERT_PROC                                           SYNONYM
+TBAADM                         ODS_WMS_EXCHANGE_MASTER                                      VIEW
+TBAADM                         BALMPACKAGE                                                  PACKAGE BODY
+FIEJB                          SEQUENCENUMBER                                               SYNONYM
+FIEJB                          FIUSB_RULESET_PARAM_MAP_TABLE                                SYNONYM
+FIEJB                          SERVICE_CODE_FIELD                                           SYNONYM
+FIEJB                          SERVICE_CODES                                                SYNONYM
+FIEJB                          FIUSB_RULESET_TABLE                                          SYNONYM
+FIEJB                          FIUSB_RULESET_TABLE_PM_VIEW                                  SYNONYM
+FIEJB                          USER_GROUPS                                                  SYNONYM
+FIEJB                          FIUSB_RULESET_TABLE_V                                        SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+FIEJB                          USER_GROUPS_LIFECYCLE                                        SYNONYM
+FIEJB                          USER_GROUPS_MAPPING                                          SYNONYM
+FIEJB                          FIUSB_RULESET_TYPE_TABLE                                     SYNONYM
+FIEJB                          FIUSB_RULESET_TYPE_V                                         SYNONYM
+FIEJB                          USERSESSIONDATA_REF                                          SYNONYM
+FIEJB                          SERVICE_MASTER                                               SYNONYM
+FIEJB                          TEMPLATE_MASTER                                              SYNONYM
+FIEJB                          TEMPLATE_DATA                                                SYNONYM
+FIEJB                          CUSTOM_REQ_DATA                                              SYNONYM
+FIEJB                          FI_CUSTOMMAPPING_MASTER                                      SYNONYM
+FIEJB                          FI_CUSTOM_MAPPING                                            SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+FIEJB                          FIUSB_RULESET_TYPE_VIEW                                      SYNONYM
+FIEJB                          FIUSB_MESSAGE_FORMAT_TABLE                                   SYNONYM
+FIEJB                          ERROR_CODES_V                                                SYNONYM
+FIEJB                          REFERENCE_CODE_V                                             SYNONYM
+FIEJB                          EC_LANG_CHK_V                                                SYNONYM
+FIEJB                          BATCH_PROFILE_V                                              SYNONYM
+FIEJB                          BATCH_SERVICE_V                                              SYNONYM
+FIEJB                          USER_GROUPS_VIEW                                             SYNONYM
+FIEJB                          ERRM                                                         SYNONYM
+FIEJB                          CRDC                                                         SYNONYM
+FIEJB                          CMAP                                                         SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+FIEJB                          RCTI                                                         SYNONYM
+FIEJB                          CDFM                                                         SYNONYM
+FIEJB                          FMFC                                                         SYNONYM
+FIEJB                          RFMT                                                         SYNONYM
+FIEJB                          RQCT                                                         SYNONYM
+FIEJB                          SEQN                                                         SYNONYM
+FIEJB                          FLDT                                                         SYNONYM
+FIEJB                          BATCH_EVENTS                                                 SYNONYM
+FIEJB                          BATCH_JOB_ERROR                                              SYNONYM
+FIEJB                          BATCH_JOBS                                                   SYNONYM
+FIEJB                          BATCH_PROFILE                                                SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+FIEJB                          BATCH_SERVICE                                                SYNONYM
+FIEJB                          CODE_CATEGORY                                                SYNONYM
+FIEJB                          CODE_DEFINITION                                              SYNONYM
+FIEJB                          CURRENCY_DECIMAL                                             SYNONYM
+FIEJB                          CURRENCY_DECIMAL_LIFECYCLE                                   SYNONYM
+FIEJB                          ERROR_CODE_MAPPING                                           SYNONYM
+FIEJB                          ERROR_CODES_LIFECYCLE                                        SYNONYM
+FIEJB                          ERROR_LANG_CODE_MAPPING                                      SYNONYM
+FIEJB                          FI_BATCH_MAPPING                                             SYNONYM
+FIEJB                          FI_ENTITY                                                    SYNONYM
+FIEJB                          FI_LOGIN                                                     SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+FIEJB                          FIELDS_MAPPING_TABLE                                         SYNONYM
+FIEJB                          FIUSB_SERVICE_INTERFACE_TABLE                                SYNONYM
+FIEJB                          FIUSB_SERVICE_PROVIDER_TABLE                                 SYNONYM
+FIEJB                          FIUSB_SERVICE_REQUESTOR_TABLE                                SYNONYM
+FIEJB                          FIUSB_SRV_INT_LIFECYCLE                                      SYNONYM
+FIEJB                          FIUSB_SRV_PROV_LIFECYCLE                                     SYNONYM
+FIEJB                          FIUSB_SRV_REQ_LIFECYCLE                                      SYNONYM
+FIEJB                          FIUSB_SRV_REQ_MAPPING_TABLE                                  SYNONYM
+FIEJB                          FIUSB_TGRP_LIFECYCLE                                         SYNONYM
+FIEJB                          FIUSB_TGRP_MAPPING_TABLE                                     SYNONYM
+FIEJB                          ONSERRMAP                                                    SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+FIEJB                          PORT_TYPE_V                                                  SYNONYM
+FIEJB                          PORT_TYPE_VIEW                                               SYNONYM
+FIEJB                          PORTS_MASTER_NG_VIEW                                         SYNONYM
+FIEJB                          PORTS_MASTER_G_VIEW                                          SYNONYM
+FIEJB                          PORTS_MASTER_V                                               SYNONYM
+FIEJB                          INTERFACE_NODE_V                                             SYNONYM
+FIEJB                          USER_GROUPS_V                                                SYNONYM
+FIEJB                          FIUSB_SERVICE_PROVIDER_V                                     SYNONYM
+FIEJB                          FIUSB_SERVICE_INTERFACE_V                                    SYNONYM
+FIEJB                          FIUSB_SERVICE_REQUESTOR_V                                    SYNONYM
+FIEJB                          FIUSB_SRV_REQ_VIEW                                           SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+FIEJB                          FIUSB_TGRP_V                                                 SYNONYM
+FIEJB                          FIUSB_TGRP_VIEW                                              SYNONYM
+FIEJB                          INDT                                                         SYNONYM
+FIEJB                          BATCH_PROFILE_PARAMETER                                      SYNONYM
+FIEJB                          BATCH_SERVICE_PARAM_TYPE                                     SYNONYM
+FIEJB                          BATCH_SERVICE_PARAMETER                                      SYNONYM
+FIEJB                          SERVICE_VERSION_MAPPING                                      SYNONYM
+FIEJB                          FIBATCH_RESPONSE                                             SYNONYM
+FIEJB                          HOST_FI_ERROR_CODE_MAPPING                                   SYNONYM
+FIEJB                          CHANNEL_HOST_ERROR_CODE_MAPING                               SYNONYM
+FIEJB                          FIUSB_MESSAGE_TABLE_HISTORY                                  SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+FIEJB                          FIUSB_TRAN_TABLE_HISTORY                                     SYNONYM
+FIEJB                          FIUSB_TRANDET_TABLE_HIST                                     SYNONYM
+FIEJB                          FIUSB_ONLINE_PURGE_AUDIT_TABLE                               SYNONYM
+FIEJB                          LANGUAGE_CODE                                                SYNONYM
+FIEJB                          FI_CONFIG_DATA                                               SYNONYM
+FIEJB                          FI_CONFIG_ERROR_CODE                                         SYNONYM
+FIEJB                          FI_CONFIG_FLD_TYPES                                          SYNONYM
+FIEJB                          FISSOSESSIONDATA                                             SYNONYM
+FIEJB                          HOST_UBUS_MESSAGE_QUEUE                                      SYNONYM
+FIEJB                          BSA_TRECON_FIN_STATUS                                        SYNONYM
+FIEJB                          MEV_TRECON_LEG_STATUS                                        SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+FIEJB                          FIUSB_TRANDETAILS_TABLE                                      SYNONYM
+FIEJB                          FIUSB_MESSAGE_TABLE                                          SYNONYM
+FIEJB                          FIUSB_TRANSACTION_TABLE                                      SYNONYM
+FIEJB                          FIUSB_THREAD_GRP_TABLE                                       SYNONYM
+FIEJB                          FIUSB_THREAD_TABLE                                           SYNONYM
+FIEJB                          GENERIC_AUDIT                                                SYNONYM
+FIEJB                          FIUSB_GROUP_LOOKUP_TABLE                                     SYNONYM
+FIEJB                          INTERFACE_NODE                                               SYNONYM
+FIEJB                          INTERFACE_NODE_LIFECYCLE                                     SYNONYM
+FIEJB                          MESSAGEFORMATCONFIGTABLE                                     SYNONYM
+FIEJB                          ONSFIELDMAPPINGERRORTABLE                                    SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+FIEJB                          FIUSB_MAPPER_LC_TABLE                                        SYNONYM
+FIEJB                          PORT_GROUP                                                   SYNONYM
+FIEJB                          PORT_PARAM_MAPPING                                           SYNONYM
+FIEJB                          PORT_TYPE                                                    SYNONYM
+FIEJB                          FIUSB_MAPPER_TABLE                                           SYNONYM
+FIEJB                          PORT_TYPE_LIFECYCLE                                          SYNONYM
+FIEJB                          FIUSB_MAPPER_TABLE_V                                         SYNONYM
+FIEJB                          PORT_TYPE_PARAMETERS                                         SYNONYM
+FIEJB                          FIUSB_MAPPER_TABLE_VIEW                                      SYNONYM
+FIEJB                          PORTS_MASTER                                                 SYNONYM
+FIEJB                          PORTS_MASTER_LIFECYCLE                                       SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+FIEJB                          FIUSB_MPR_RLST_MAPPING_TABLE                                 SYNONYM
+FIEJB                          REFERENCE_CODE_LIFECYCLE                                     SYNONYM
+FIEJB                          FIUSB_RLST_TYPE_LC_TABLE                                     SYNONYM
+FIEJB                          REFERENCE_CODE_MAPPING                                       SYNONYM
+FIEJB                          REFERENCE_CODE_TYPE                                          SYNONYM
+FIEJB                          FIUSB_RLST_TYPE_PARAM_TABLE                                  SYNONYM
+FIEJB                          REQUEST_CONSTANTS_TABLE                                      SYNONYM
+FIEJB                          FIUSB_RULESET_LC                                             SYNONYM
+ODSUSER                        C_EIT_LEASING_FIN_2019                                       SYNONYM
+ODSUSER                        ODS_WMS_EXCHANGE_MASTER                                      SYNONYM
+ODSUSER                        CUST_ODS_SSO_AUDIT_DETAIL                                    SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+ODSUSER                        CUST_ODS_C_EIT_HIST                                          SYNONYM
+CUSTOM                         REP_ODS_CIO_OP01102DP001_PACK                                PACKAGE BODY
+CUSTOM                         REP_ODS_TAX_LI04235DP001_PACK                                PACKAGE BODY
+CUSTOM                         STB_STMNT_DT_PACK1                                           PACKAGE BODY
+CUSTOM                         WHTREPDP001_PACK_NG                                          PACKAGE BODY
+CUSTOM                         HTD_DTD_TEMP                                                 VIEW
+CUSTOM                         FN_HTD_MARK_REVERSAL_B                                       FUNCTION
+CUSTOM                         NIP_REVERSAL_REPORT1                                         VIEW
+CUSTOM                         NIP_REVERSAL_REPORT2                                         VIEW
+CUSTOM                         NIP_REVERSAL_REPORT3                                         VIEW
+CUSTOM                         NIP_REVERSAL_REPORT4                                         VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+CUSTOM                         NIP_REVERSAL_REPORT5                                         VIEW
+CUSTOM                         DCTD_ACLI_CORRECTION                                         VIEW
+CUSTOM                         EOD_ACCT_BAL_VAL_PKG                                         PACKAGE BODY
+CUSTOM                         SALESFORCE_DATA_MIGRATION_CLEANUP                            PROCEDURE
+CUSTOM                         TRANREQUEST                                                  FUNCTION
+CUSTOM                         FN_STRND_SDRAFT10                                            FUNCTION
+CUSTOM                         FN_STRND_SDRAFT_0                                            FUNCTION
+CUSTOM                         FN_STRND_SDRAFT_DTD01                                        FUNCTION
+CUSTOM                         FN_CATEGORY_CHECK4                                           FUNCTION
+CUSTOM                         FN_STRND_SDRAFT_DTD01_RUNM                                   FUNCTION
+CUSTOM                         RUN_PAST_TURNOVERS                                           FUNCTION
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+CUSTOM                         UPDT_STAMP_DUTY_BACKLOG_B                                    FUNCTION
+CUSTOM                         UPDT_STAMP_DUTY_BACKLOG_NULL                                 FUNCTION
+CUSTOM                         STAMPDUTY_INFLOWS_BACKLOG                                    FUNCTION
+CUSTOM                         V_PWHT                                                       FUNCTION
+CUSTOM                         STAMPDUTY_INFLOWS_PAST_PARTIA2                               FUNCTION
+CUSTOM                         FN_GLIR_REPORT_DROPPED_ADHOC                                 FUNCTION
+CUSTOM                         GETUSD_EQUIV_AMT                                             FUNCTION
+CUSTOM                         FN_STRND_ACHUP                                               FUNCTION
+CUSTOM                         FN_STRND_ACHUP1                                              FUNCTION
+CUSTOM                         FN_STRND_ACHUP10                                             FUNCTION
+CUSTOM                         STAMPDUTY_INFLOWS_PRESENT_1                                  FUNCTION
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+CUSTOM                         FN_STRND_ACHUP1_DTD01                                        FUNCTION
+CUSTOM                         FN_STRND_ACHUP1_DTD01_RUNM                                   FUNCTION
+CUSTOM                         FN_STRND_ACHUP2_DTD01                                        FUNCTION
+CUSTOM                         FN_STRND_ACHUP2_DTD01_RUNM                                   FUNCTION
+CUSTOM                         FN_STRND_ACHUP2_HTD01                                        FUNCTION
+CUSTOM                         STAMPDUTY_PROC_ACCT_CONSOL1                                  FUNCTION
+CUSTOM                         STAMPDUTY_PROC_CONSO1_LAST                                   FUNCTION
+CUSTOM                         WHTREPDP001_PACK_CUSTOM_NG_BK                                PROCEDURE
+CUSTOM                         CBJRT_CONFIGURATION_PROC                                     PROCEDURE
+CUSTOM                         CONFIG_INSERT_PROC                                           PROCEDURE
+CUSTOM                         CUSTOM.CORP_SIG_DATA                                         PROCEDURE
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+CUSTOM                         CUST_PROC_HIECM                                              PROCEDURE
+CUSTOM                         ECF_CONFIGURATION_PROC                                       PROCEDURE
+CUSTOM                         IAE_PHONEEMAIL_UPDATE                                        PROCEDURE
+CUSTOM                         RESETUSER_HOL                                                PROCEDURE
+CUSTOM                         STAMP_DURY_TRANS_RPT_CASH                                    PROCEDURE
+CUSTOM                         ST_DT_CONSOLIDT_OLD                                          PROCEDURE
+CUSTOM                         UNLOCK_SOL_USERS_MANUAL                                      PROCEDURE
+CUSTOM                         UNLOCK_USER_REPLAT                                           PROCEDURE
+CUSTOM                         WHTREPDP001_PACK_CUSTOM                                      PROCEDURE
+CUSTOM                         CUST_ODS_SSO_AUDIT_DETAIL                                    VIEW
+CUSTOM                         CUST_ODS_C_EIT_HIST                                          VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+CUSTOM                         C_EIT_LEASING_FIN_2019                                       VIEW
+CUSTOM                         ACHOUT_SETTLEMENTFILE_PACK_BW                                PACKAGE BODY
+CUSTOM                         ACHOUT_SETTLEMENTFILE_PACK                                   PACKAGE BODY
+CUSTOM                         ACHOUT_SETTLEMENTFILE_PACK1_BW                               PACKAGE BODY
+CUSTOM                         ACHOUT_SETTLEMENTFILE_PACK_TZ                                PACKAGE BODY
+CUSTOM                         CUST_STAMPDUTY_MANAGE                                        PACKAGE BODY
+CUSTOM                         FIN_ACH_EFT_DOWNLOAD_DUP_PACK                                PACKAGE BODY
+CUSTOM                         FIN_ACH_EFT_DOWNLOAD_PACK                                    PACKAGE BODY
+CUSTOM                         FIN_ACH_EFT_DWNLD_DUP_PACK_BW                                PACKAGE BODY
+CUSTOM                         FIN_ACH_EFT_DWNLD_DUP_PACK_UG                                PACKAGE BODY
+CUSTOM                         FIN_ACH_EFT_DWNLD_PACK_BW                                    PACKAGE BODY
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+CUSTOM                         FIN_ACH_EFT_DWNLD_PACK_TZ                                    PACKAGE BODY
+CUSTOM                         FIN_ACH_EFT_DWNLD_PACK_UG                                    PACKAGE BODY
+CUSTOM                         FIN_CLR_EJDOWNLOAD_BW_PACK2                                  PACKAGE BODY
+CUSTOM                         FIN_CLR_EJDOWNLOAD_BW_PACK3                                  PACKAGE BODY
+CUSTOM                         FIN_CLR_EJDOWNLOAD_NA_PACK2                                  PACKAGE BODY
+CUSTOM                         FIN_CLR_EJDOWNLOAD_NA_PACK3                                  PACKAGE BODY
+CUSTOM                         FIN_CLR_EJDOWNLOAD_UG_PACK2                                  PACKAGE BODY
+CUSTOM                         FIN_HLSAGP_RPT_PACK                                          PACKAGE BODY
+CUSTOM                         FIN_SPR_MIG_LIFTLIEN_PACK                                    PACKAGE BODY
+CUSTOM                         FIN_STBTBMSFCUSRDETPACK                                      PACKAGE BODY
+CUSTOM                         FIN_STBTBMSFSUBCHRGDETPACK                                   PACKAGE BODY
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+CUSTOM                         FIN_STMNT_DT_PACK                                            PACKAGE BODY
+CUSTOM                         LMS_LMBALDETPACK                                             PACKAGE BODY
+CUSTOM                         PSLSEQNUMPACK                                                PACKAGE BODY
+CUSTOM                         FN_STRND_CIF1_DTD01_RUNM                                     FUNCTION
+CUSTOM                         FN_STRND_CIF1_HTD01                                          FUNCTION
+CUSTOM                         FN_STRND_CIF2_DTD01                                          FUNCTION
+CUSTOM                         FN_STRND_CIF3_DTD01                                          FUNCTION
+CUSTOM                         FN_STRND_CIF3_DTD01_BR                                       FUNCTION
+CUSTOM                         FN_STRND_CIF3_DTD01_RUNM                                     FUNCTION
+CUSTOM                         FN_STRND_CIF3_DTD01_RUNM_KB                                  FUNCTION
+CUSTOM                         FN_STRND_CIF3_HTD01                                          FUNCTION
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+CUSTOM                         ACHOUT_SETTLEMENTFILE_PACK1                                  PACKAGE BODY
+CUSTOM                         FN_STRND_CIF_EOM_DAY                                         FUNCTION
+CUSTOM                         FN_STRND_DTD                                                 FUNCTION
+CUSTOM                         FN_CAM_RUN_BSA01_LV                                          FUNCTION
+CUSTOM                         FN_STRND_DTD01                                               FUNCTION
+CUSTOM                         FN_STRND_DTD01_RUNM                                          FUNCTION
+CUSTOM                         FN_STRND_DTD_10                                              FUNCTION
+CUSTOM                         FN_CAM_RUN_BSA02_LV                                          FUNCTION
+CUSTOM                         FN_STRND_EE                                                  FUNCTION
+CUSTOM                         FN_CAM_RUN_CONDP_LV                                          FUNCTION
+CUSTOM                         FN_STRND_EE1                                                 FUNCTION
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+CUSTOM                         FETCH_TRAN_DTLS                                              FUNCTION
+CUSTOM                         INSERT_ACCOUNTRECORD_03T                                     FUNCTION
+CUSTOM                         FN_STRND_EE10                                                FUNCTION
+CUSTOM                         FN_STRND_EE_DTD01                                            FUNCTION
+CUSTOM                         INSERT_ACCOUNTRECORD_04T                                     FUNCTION
+CUSTOM                         FN_STRND_EE_DTD01_RUNM                                       FUNCTION
+CUSTOM                         FN_CAM_RUN_CONSN_LV                                          FUNCTION
+CUSTOM                         FN_STRND_GRP_CIF1_DTD01                                      FUNCTION
+CUSTOM                         FN_STRND_GRP_CIF1_DTD01_RUNM                                 FUNCTION
+CUSTOM                         FN_STRND_GRP_CIF1_HTD01                                      FUNCTION
+CUSTOM                         FN_CAM_RUN_HYCAG_LV                                          FUNCTION
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+CUSTOM                         FN_CAM_RUN_HYCA_LV                                           FUNCTION
+CUSTOM                         FNDODAILYUPDT_ALL_ROUNDUP_2017                               FUNCTION
+CUSTOM                         STAMPDUTY_PROC_IS_CONSOLIDATE1                               FUNCTION
+CUSTOM                         FN_CAM_RUN_PAYAS_LV                                          FUNCTION
+CUSTOM                         FN_STRND_HTD01                                               FUNCTION
+CUSTOM                         FN_STRND_HTD1                                                FUNCTION
+CUSTOM                         FN_STRND_HTD_TEMP01                                          FUNCTION
+CUSTOM                         STAMP_DURY_TRANS_RPT2_NIP                                    FUNCTION
+CUSTOM                         STAMP_DURY_TRANS_RPT2_NIP0                                   FUNCTION
+CUSTOM                         STAMP_DURY_TRANS_RPT2_NIP1                                   FUNCTION
+CUSTOM                         STAMP_DURY_TRANS_RPT2_NIP2                                   FUNCTION
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+CUSTOM                         STAMP_DURY_TRANS_RPT2_NIP3                                   FUNCTION
+CUSTOM                         STAMP_DUTY_NIP_01JULY_2017                                   FUNCTION
+CUSTOM                         FN_STRND_PORD                                                FUNCTION
+CUSTOM                         STAMP_DUTY_NIP_2016JUL_2016APR                               FUNCTION
+CUSTOM                         FN_STRND_PORD1                                               FUNCTION
+CUSTOM                         FN_CAM_RUN_PRESET                                            FUNCTION
+CUSTOM                         STAMP_DUTY_NIP_2016JUL_2017APR                               FUNCTION
+CUSTOM                         FN_CAM_RUN_PRESET1_LV                                        FUNCTION
+CUSTOM                         FN_STRND_PORD10                                              FUNCTION
+CUSTOM                         FN_STRND_PORD1_DTD01                                         FUNCTION
+CUSTOM                         FN_STRND_PORD1_DTD01_RUNM                                    FUNCTION
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+CUSTOM                         STAMP_DUTY_NIP_2016MAR_2016MAY                               FUNCTION
+CUSTOM                         STAMP_DUTY_NIP_HISTORICAL2                                   FUNCTION
+CUSTOM                         FN_STRND_REV1_DTD01                                          FUNCTION
+CUSTOM                         FN_CAMENTRY_CREATE                                           FUNCTION
+CUSTOM                         STAMP_DUTY_NIP_MARMAY_2017                                   FUNCTION
+CUSTOM                         STAMP_DUTY_RPT2_NIP_18MAY_2017                               FUNCTION
+CUSTOM                         FN_STRND_REV1_DTD01_RUNM                                     FUNCTION
+CUSTOM                         FN_CASL_WITDH_DTD                                            FUNCTION
+CUSTOM                         PODA                                                         FUNCTION
+CUSTOM                         FN_STRND_REV2_DTD01                                          FUNCTION
+CUSTOM                         FN_STRND_SDRAFT1                                             FUNCTION
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+CUSTOM                         PURGECAMTB                                                   FUNCTION
+CUSTOM                         STAMPDUTY_INFLOWS_PRESENTNEW                                 FUNCTION
+CUSTOM                         SP_UNTAGCORPSUSPECTS                                         SYNONYM
+CUSTOM                         SP_UNTAGCORPNONCUSTOMERS                                     SYNONYM
+CUSTOM                         SP_UNTAGCORPMASTER                                           SYNONYM
+CUSTOM                         SP_UNTAGCORPCUSTOMERS                                        SYNONYM
+CUSTOM                         SP_UNTAGRETAILSUSPECTS                                       SYNONYM
+CUSTOM                         SP_UNTAGRETAILNONCUSTOMERS                                   SYNONYM
+CUSTOM                         SP_UNTAGRETAILMASTER                                         SYNONYM
+CUSTOM                         SP_UNTAGRETAILCUSTOMERS                                      SYNONYM
+CUSTOM                         SP_UNTAGRETAILCONTACTS                                       SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+CUSTOM                         SP_UPDATENEXTRUNDATE                                         SYNONYM
+CUSTOM                         TBA_CAMT_SRLNUM_SEQ_01                                       SYNONYM
+CUSTOM                         ODS_WMS_EXCHANGE_MASTER                                      SYNONYM
+CUSTOM                         EBK_GET_CHARGE_ACCOUNT                                       PACKAGE BODY
+CUSTOM                         FN_STRND_CIF1                                                FUNCTION
+CUSTOM                         FN_STRND_CIF1_DTD01                                          FUNCTION
+CUSTOM                         FN_STRND_CIF1_DTD01_BR                                       FUNCTION
+CUSTOM                         FN_HTD_MARK_REVERSAL                                         FUNCTION
+CUSTOM                         FN_DTD_MARK_REVERSAL                                         FUNCTION
+MIGADM                         SP_UNTAGCORPCUSTOMERS                                        SYNONYM
+MIGADM                         SP_UNTAGCORPMASTER                                           SYNONYM
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+MIGADM                         SP_UNTAGCORPNONCUSTOMERS                                     SYNONYM
+MIGADM                         SP_UNTAGCORPSUSPECTS                                         SYNONYM
+MIGADM                         SP_UNTAGRETAILCONTACTS                                       SYNONYM
+MIGADM                         SP_UNTAGRETAILCUSTOMERS                                      SYNONYM
+MIGADM                         SP_UNTAGRETAILNONCUSTOMERS                                   SYNONYM
+MIGADM                         SP_UNTAGRETAILSUSPECTS                                       SYNONYM
+MIGADM                         SP_UPDATENEXTRUNDATE                                         SYNONYM
+MIGADM                         SP_UNTAGRETAILMASTER                                         SYNONYM
+MIGADM                         TRANREQUEST                                                  FUNCTION
+STANBIC                        COT_PROC_GET_PRI_DATA                                        PROCEDURE
+STANBIC                        PARTITION_CHECK                                              PROCEDURE
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+APPLOGIN                       CURSOR_TYPE                                                  TYPE
+APPLOGIN                       ALERT_REMEDIATION                                            PROCEDURE
+APPLOGIN                       REMEDIATION_BADPHONE                                         PROCEDURE
+APPLOGIN                       UPLOAD_ALERT_REG                                             PROCEDURE
+APPLOGIN                       STMT_BKP                                                     PACKAGE BODY
+APPLOGIN                       STMT2                                                        PACKAGE BODY
+APPLOGIN                       ALERTS                                                       PACKAGE BODY
+APPLOGIN                       UPLOAD_ALERT_REG_BULK                                        PROCEDURE
+GGS                            LV_DTDTRANDETAILS_LV                                         VIEW
+A230590                        STAMPDUTY_INFLOWS_PAST                                       FUNCTION
+ALWAYSON                       QUEST_SOO_ALERTTRACE                                         PACKAGE BODY
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+ALWAYSON                       QUEST_SOO_SQLTRACE                                           PACKAGE BODY
+FIMASTER                       REFERENCE_CODE_V                                             VIEW
+FIMASTER                       RFMT                                                         VIEW
+FIMASTER                       RQCT                                                         VIEW
+FIMASTER                       SEQN                                                         VIEW
+FIMASTER                       USER_GROUPS_V                                                VIEW
+FIMASTER                       USER_GROUPS_VIEW                                             VIEW
+FIMASTER                       FIUSB_MAPPER_TABLE_V                                         VIEW
+FIMASTER                       FIUSB_MAPPER_TABLE_VIEW                                      VIEW
+FIMASTER                       FIUSB_RULESET_TABLE_PM_VIEW                                  VIEW
+FIMASTER                       FIUSB_RULESET_TABLE_V                                        VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+FIMASTER                       FIUSB_RULESET_TYPE_V                                         VIEW
+FIMASTER                       RCTI                                                         VIEW
+FIMASTER                       PORT_TYPE_VIEW                                               VIEW
+FIMASTER                       PORT_TYPE_V                                                  VIEW
+FIMASTER                       PORTS_MASTER_V                                               VIEW
+FIMASTER                       PORTS_MASTER_NG_VIEW                                         VIEW
+FIMASTER                       PORTS_MASTER_G_VIEW                                          VIEW
+FIMASTER                       ONSERRMAP                                                    VIEW
+FIMASTER                       INTERFACE_NODE_V                                             VIEW
+FIMASTER                       INDT                                                         VIEW
+FIMASTER                       FMFC                                                         VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+FIMASTER                       FLDT                                                         VIEW
+FIMASTER                       FIUSB_TGRP_VIEW                                              VIEW
+FIMASTER                       FIUSB_TGRP_V                                                 VIEW
+FIMASTER                       FIUSB_SRV_REQ_VIEW                                           VIEW
+FIMASTER                       FIUSB_SERVICE_REQUESTOR_V                                    VIEW
+FIMASTER                       FIUSB_SERVICE_PROVIDER_V                                     VIEW
+FIMASTER                       FIUSB_SERVICE_INTERFACE_V                                    VIEW
+FIMASTER                       ERROR_CODES_V                                                VIEW
+FIMASTER                       ERRM                                                         VIEW
+FIMASTER                       FIUSB_RULESET_TYPE_VIEW                                      VIEW
+FIMASTER                       CRDC                                                         VIEW
+
+OWNER                          OBJECT_NAME                                                  OBJECT_TYPE
+------------------------------ ------------------------------------------------------------ --------------------------------------------------
+FIMASTER                       CMAP                                                         VIEW
+FIMASTER                       CDFM                                                         VIEW
+FIMASTER                       BATCH_SERVICE_V                                              VIEW
+FIMASTER                       BATCH_PROFILE_V                                              VIEW
+FIMASTER                       EC_LANG_CHK_V                                                VIEW
+
+1072 rows selected.
+
+
+
+select PHONEEMAILID,PHONENO,EMAIL from crmuser.phoneemail 
+where ORGKEY = '200006522'
+and preferredflag='Y';
+
+
+
+select cif_id, a.acct_no, case CHG_STATUS when 'Y' then 'TAKEN' else 'PENDING' end CHRG_TAKEN,
+substr(UNIQUE_CODE,-11) PHONE_NO,
+case when upper(unique_code) like '%MTN%' then 'MTN' when upper(unique_code) like '%AIR%' then 'AIRTEL' end telco,
+sum(amount) TOTAL_CHRG
+from custom.ussd_charges_daily a, tbaadm.gam b
+where tran_date >= '01-NOV-2022'
+and tran_date <= '30-NOV-2022'
+and a.acct_no = b.foracid
+and length(acct_no) = 10
+group by cif_id, a.acct_no, case CHG_STATUS when 'Y' then 'TAKEN' else 'PENDING' end, substr(UNIQUE_CODE,-11), chg_status, to_char(tran_date, 'YYYY-MON'),
+case when upper(unique_code) like '%MTN%' then 'MTN' when upper(unique_code) like '%AIR%' then 'AIRTEL' end
+order by 1, 2;
+
+
+select CUST_LAST_NAME,CUST_DOB ,ADDRESS_LINE1 from crmuser.accounts
+where orgkey in(select cif_id from tbaadm.gam where foracid='0002636538');
+CRM_MASTER1,CRM_MASTER2,CRM_MASTER3, CRM_CORP1
+
+SELECT COUNT(*) FROM ALL_OBJECTS WHERE STATUS = 'INVALID';
+
+alter tablespace CRM_MASTER1 encryption online encrypt; --------Initiated but through error--done 1-2hrs 
+alter tablespace CRM_MASTER2 encryption online encrypt; done 30min
+alter tablespace CRM_CORP1 encryption online encrypt; done 30 mins
+alter tablespace CRM_MASTER3 encryption online encrypt; done but session was inactive 1-2hrs
+
+SELECT tablespace_name, encrypted, status FROM dba_tablespaces where tablespace_name = "CRM_MASTER1";
+
+SELECT NAME, ENCRYPTIONALG, ENCRYPTEDTS FROM V$ENCRYPTED_TABLESPACES, V$TABLESPACE WHERE V$ENCRYPTED_TABLESPACES.TS# = V$TABLESPACE.TS#;
+
+CREATE USER A224360 IDENTIFIED BY DEcember__2022;
+
+GRANT CREATE SESSION TO USER A224360;
+
+
+
+UNGRDBOX =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = ungcorora2)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = ungrdbox)
+    )
+  )
+
+
+window scheduler check for sql or oracle own
+
+
+select CUSTOMER_ID,AMOUNT,limit_date from redbox.RBX_T_REQ_MGR_TNX_LMT
+where limit_date='22-dec-2021'
+order by limit_date desc;
+
+
+select CUSTOMER_ID,AMOUNT,limit_date from redbox.RBX_T_REQ_MGR_TNX_LMT
+where limit_date='22-dec-2021';
+
+select CUSTOMER_ID,OPERATION_NAME from redbox.RBX_T_VISA_APPLICATION_LOG
+where OPERATION_NAME='GET VISA PACKAGES' AND ROWNUM <=2
+order by RESPONSE_TIME desc;

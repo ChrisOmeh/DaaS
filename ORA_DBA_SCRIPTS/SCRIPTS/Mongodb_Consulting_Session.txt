@@ -1,0 +1,141 @@
+======================
+MONGO DB CONSULTING
+=====================
+Query Targeting
+Query Targeting Ratio
+High Query Targeting Ratio leads to High IOPS and High IOPS leads to high WOPS.
+
+Setting up a metrics is under metrics in Ops manager
+You can view bad queries from 
+
+db.Logs.explan('executionStats').find()
+db.log.explan('executionStats').find()
+db.Logs.explan("executionStats").find("_Id":1)
+db.log.explain("executionStats").find(
+   { quantity: { $gt: 50 }, category: "apparel" }
+)
+db.Logs.explain("executionStats").find()
+
+
+Mongodb Collections Methods.
+https://www.mongodb.com/docs/manual/reference/method/db.collection.explain/#mongodb-method-db.collection.explain
+https://learn.mongodb.com/learning-paths/using-mongodb-with-c-sharp
+https://www.mongodb.com/docs/manual/reference/connection-string/#miscellaneous-configuration
+
+nc -v pngmobiledb01v.ng.sbicdirectory.com 27017
+nc -v pngmobiledb02v.ng.sbicdirectory.com 27017
+nc -v yngmobiledb02v.ng.sbicdirectory.com 27017
+nc -v yngmobiledb01v.ng.sbicdirectory.com 27017
+
+
+Do not have app db in same project as your deployment.
+To do above change project group and API to new project's own
+Do above for all member of the appdb node replicas
+Restart the mongod service
+
+If left side of index has what new index will have, the old index will become reduntant
+Order of index matters but order of query doesn't
+
+INDEXING IN Mongodb
+ESR <====> Equality first, Sorting  and Range
+
+=============================
+# Production notes
+=============================
+#Numa - CPU RAM access
+grep -q 'vm.zone_reclaim_mode' /etc/sysctl.conf || echo "vm.zone_reclaim_mode=0
+" | sudo tee --append /etc/sysctl.conf
+sudo sysctl -w  vm.zone_reclaim_mode=0
+ 
+#SWAP Usage
+grep -q 'vm.swappiness' /etc/sysctl.conf || echo "vm.swappiness=1" | sudo tee --append /etc/sysctl.conf
+sudo sysctl -w  vm.swappiness=1
+ 
+#Configure sufficient kernel pid limit
+sudo grep -q 'kernel.pid_max' /etc/sysctl.conf || echo "kernel.pid_max=64000" | sudo tee --append /etc/sysctl.conf
+sudo sysctl -w kernel.pid_max=64000
+ 
+#Modify keepalive time
+sudo grep -q 'net.ipv4.tcp_keepalive_time' /etc/sysctl.conf || echo "net.ipv4.tcp_keepalive_time=120" | sudo tee --append /etc/sysctl.conf
+sudo sysctl -w net.ipv4.tcp_keepalive_time=120
+
+#Configure sufficient file-handles
+sudo grep -q 'fs.file-max' /etc/sysctl.conf || echo "fs.file-max=98000" | sudo tee --append /etc/sysctl.conf
+sudo sysctl -w fs.file-max=98000
+ 
+#Configure maximum threads per process
+sudo grep -q 'kernel.threads-max' /etc/sysctl.conf || echo "kernel.threads-max=64000" | sudo tee --append /etc/sysctl.conf
+sudo sysctl -w kernel.threads-max=64000
+ 
+#Configure maximum number of memory map areas per process
+sudo grep -q 'vm.max_map_count' /etc/sysctl.conf || echo "vm.max_map_count=128000" | sudo tee --append /etc/sysctl.conf
+sudo sysctl -w vm.max_map_count=128000
+ 
+#User Resource Limit
+#fsize - file size
+for limit in fsize cpu as memlock
+do
+  grep "mongodb" /etc/security/limits.conf | grep -q $limit || echo -e "mongod     hard   $limit    unlimited\nmongod     soft    $limit   unlimited" | sudo tee --append /etc/security/limits.conf
+done
+#nofile - open files
+for limit in nofile noproc
+do
+  grep "mongodb" /etc/security/limits.conf | grep -q $limit || echo -e "mongod     hard   $limit    64000\nmongod     soft    $limit   64000" | sudo tee --append /etc/security/limits.conf
+done
+ 
+ 
+#configure THP and readahead
+SCRIPT=$(cat << 'ENDSCRIPT'
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          disable-transparent-hugepages
+# Required-Start:    $local_fs
+# Required-Stop:
+# X-Start-Before:    mongod mongodb-mms-automation-agent
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Disable Linux transparent huge pages
+# Description:       Disable Linux transparent huge pages, to improve
+#                    database performance.
+### END INIT INFO
+case $1 in
+  start)
+    if [ -d /sys/kernel/mm/transparent_hugepage ]; then
+      thp_path=/sys/kernel/mm/transparent_hugepage
+    elif [ -d /sys/kernel/mm/redhat_transparent_hugepage ]; then
+      thp_path=/sys/kernel/mm/redhat_transparent_hugepage
+    else
+      return 0
+    fi
+    echo 'never' > ${thp_path}/enabled
+    echo 'never' > ${thp_path}/defrag
+    re='^[0-1]+$'
+    if [[ $(cat ${thp_path}/khugepaged/defrag) =~ $re ]]
+    then
+      # RHEL 7
+      echo 0  > ${thp_path}/khugepaged/defrag
+    else
+      # RHEL 6
+      echo 'no' > ${thp_path}/khugepaged/defrag
+    fi
+    # Set Readahead for Data Disk, depends on the nodes, 3 versions
+    # Server 1 2 3
+   # blockdev --setra 8 </where-the-data-directory-mounted>
+    unset re
+    unset thp_path
+    ;;
+esac
+ENDSCRIPT
+)
+echo "$SCRIPT" | sudo tee /etc/init.d/disable-transparent-hugepages
+sudo chmod 755 /etc/init.d/disable-transparent-hugepages
+sudo chkconfig --add disable-transparent-hugepages
+
+sestatus
+ 
+sudo setenforce 0
+ 
+# disable in selinux config
+sudo sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
+
+sudo reboot

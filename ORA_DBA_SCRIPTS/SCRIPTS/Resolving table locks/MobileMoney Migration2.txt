@@ -1,0 +1,38 @@
+insert into test.CMigadmSecretWord (
+select a.member_id, d.username, a.owner_name,b.email Email_Address,c.string_value DateOfBirth,
+b.creation_date, b.member_activation_date ActivationDate,
+ a.upper_credit_limit CreditLimit , d.last_login
+from cyclone.accounts a, cyclone.members b, 
+cyclone.custom_field_values c, cyclone.users d
+where a.member_id= b.id
+and a.member_id = c.member_id
+and a.member_id = d.id
+and c.field_id = 1 );
+commit;
+
+
+
+
+insert into test.CMigadm (
+select a.member_id, d.username, a.owner_name,b.email Email_Address,c.string_value DateOfBirth,
+b.creation_date, b.member_activation_date ActivationDate,
+ a.upper_credit_limit CreditLimit , d.last_login
+from cyclone.accounts a, cyclone.members b, 
+cyclone.custom_field_values c, cyclone.users d
+where a.member_id= b.id
+and b.id = c.member_id
+and c.member_id = d.id
+and c.field_id = 1 );
+commit;
+
+insert into test.CMigadm (
+select a.member_id, d.username, a.owner_name,b.email Email_Address,c.string_value DateOfBirth,
+b.creation_date, b.member_activation_date ActivationDate,
+ a.upper_credit_limit CreditLimit , d.last_login
+from cyclone.accounts a, cyclone.members b, 
+cyclone.custom_field_values c, cyclone.users d
+where a.member_id= b.id
+and b.id = c.member_id
+and c.member_id = d.id
+and c.field_id = 1 );
+commit;

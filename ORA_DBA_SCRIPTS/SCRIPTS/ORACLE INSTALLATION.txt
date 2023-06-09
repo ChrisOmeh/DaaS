@@ -1,0 +1,94 @@
+--To activate Oracle DB Console:
+$systemctl enable --now cockpit.socket
+
+--Using of dbca command in Oracle
+We use dbca which means Database Configuration Assistant to lauch Oracle Configuration Assistant that helps us in installation of Oracle DBs.
+$dbca
+
+=====ORACLE INSTALLATION=====
+Login Details:
+Username: CHUXIAN
+PWD: Emmy1994#
+
+SYSTEM USER LOGIN Details
+USERNAME:systemctl
+pwd: Emmy1994#
+Hostname: CHUXIAN
+
+HR USERNAME LOGIN Details
+USERNAME: hr
+password:hr
+Hostname: localhost
+
+SYS USER LOGIN Details
+USERNAME: SYS
+PWD: Chuxian1994#
+Hostname: localhost
+OEM LOGIN DETAILS IS SAME AS ABOVE.
+
+Global db name: orcl
+Pluggable db name: orclpdb
+
+
+path to HR Schema:  C:\Oracle_21c\WINDOWS.X64_213000_db_home\demo\schema
+
+==Execute the following steps in the admin schema
+
+alter session set "_ORACLE_SCRIPT"=true;
+@ C:\Oracle_21c\WINDOWS.X64_213000_db_home\demo\schema\human_resources\hr_main.sql
+
+Parameter 1:
+------------------
+hr is password for user HR
+
+Parameter 2:
+-----------------
+users
+
+
+Parameter 3:
+-----------------
+temp
+
+Parameter 4:
+-----------------
+password for SYS: Chuxian1994#
+
+Parameter 5:: Specify log path
+---------------
+$ORACLE_HOME/demo/schema/log --used one
+
+C:/Oracle_21c/WINDOWS.X64_213000_db_home/demo/schema/log
+
+C:\Oracle_21c\WINDOWS.X64_213000_db_home\demo\schema\log
+
+Parameter 6::
+Specify connect string as parameter
+
+localhost:1521/ORCLPDB
+localhost:1521/ORCL --used one
+
+==After creating HR User, Execute belows steps in the schema
+
+select * from employees;
+
+--Execute 1
+@ C:\Oracle_21c\WINDOWS.X64_213000_db_home\demo\schema\human_resources\hr_cre.sql
+
+--Execute 2.
+@ C:\Oracle_21c\WINDOWS.X64_213000_db_home\demo\schema\human_resources\hr_popul.sql
+
+--Execute 3.
+@ C:\Oracle_21c\WINDOWS.X64_213000_db_home\demo\schema\human_resources\hr_idx.sql
+  
+--Execute 4.
+@ C:\Oracle_21c\WINDOWS.X64_213000_db_home\demo\schema\human_resources\hr_code.sql
+
+--Execute 5.
+@ C:\Oracle_21c\WINDOWS.X64_213000_db_home\demo\schema\human_resources\hr_comnt.sql
+
+--Execute 6.
+@ C:\Oracle_21c\WINDOWS.X64_213000_db_home\demo\schema\human_resources\hr_analz.sql
+
+
+

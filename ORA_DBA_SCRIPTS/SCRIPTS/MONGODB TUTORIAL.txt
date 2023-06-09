@@ -1,0 +1,78 @@
+1. use mydb -- To enter the mongdb environment
+2. db.author.find() ---Existing DB author's information.
+===When you create a mongodb collections and document, mongo automatically attach a unique identifier for identification. "_id":"ObjcetId("thewakjuj")
+
+
+alter user A246458 identified by june_2021 password unlock
+
+C:\Program Files\MongoDB\Server\6.0\bin\mongod.exe" --config "C:\Program Files\MongoDB\Server\6.0\bin\mongod.cfg" --service
+
+{"$and":[{"name": {"$ne":"Wetpaint"},"founded_year":{"$ne":2004}}]}
+
+CRUD CLASS QUESTION
+part 1 = {"$and": [{"founded_year":2004},{"$or":[{"category_code": "web","category_code": "social"}]}]}
+"$or"
+part 2 = {"$and": [{"founded_month":10},{"$or":[{"category_code": "web","category_code": "social"}]}]}
+
+
+
+{"$or": [{"$and": [{"founded_year":2004},{"$or":[{"category_code": "web","category_code": "social"}]}]},
+		 {"$and": [{"founded_month":10},{"$or":[{"category_code": "web","category_code": "social"}]}]}]}
+
+{"$and":[{"$or":[{"founded_month":10,"founded_year":2004}]},{"$or":[{"category_code": "web","category_code": "social"}]}]}
+
+db.updateUser(
+{
+  _id: 'admin.m001-student',
+  user: 'm001-student',
+  db: 'admin',
+  roles: [ { role: 'readWriteAnyDatabase', db: 'admin' } ]
+})
+
+=====NICE ACTIMIZE ISSUES========
+
+Identify the long running queries.  It can also happen with long running queries , when socket timeout is less than the query time
+
+ I also found that running off our wireless network maintained the connection, where wired did not (and both run through different routes/firewalls)
+ 
+ Resource wait metrics is pointing to network ASYNC_NETWORK_IO which means that 
+ Active Expensive queries on SAM_PRF
+ 
+This wait type indicates that sessions must wait for the client application to process the data received 
+from SQL Server before the client application can send signal to SQL Server that it can accept new data for processing. 
+This kind of experince may reflect a lag in the application design. This is the possible cause of resource wait pointing to 
+ASYNC_NETWORK_IO wait type.
+
+As we have previously stated, there are a long running queries identified in SAM_PRF. Long running queries can lead to intermittent connection
+failure especially when it is tend to cause lock to other sessions.
+ 
+Finally, we would like to confirm that you are running this on UAT environment. This is because a section of your mail said your didn't experience 
+this issue when you were on UAT.
+ Network performace.
+ 
+ P@ssw0rd
+ 
+ NOvember__2022
+ 
+ Hello @Donald Cameron
+
+Thanks for the feedback.
+
+The activities on the server and databases was carefully examined especially at time when the job was initiated. Our findings indicated 
+there is no server or database related issue that could trigger a connection failure that was referring/poining to ODBC. When connection failure is experienced regarding ODBC, it could be due to the following:
+
+•	Network related issue regarding that connection. We checked and observed a resource wait that is pointing to ASYNC_NETWORK_IO wait type. This waits type indicates that sessions must wait for the client application to process the data received from SQL Server before the client 
+	application can send signal to SQL Server that it can accept new data for processing. This kind of experience may reflect a lag in the application design. This is the possible cause of resource wait pointing to ASYNC_NETWORK_IO wait type.
+
+•	As we have previously stated, long running queries identified in SAM_PRF could also lead to connection timeout if there is no response gotten. 
+	Long running queries can lead to intermittent connection failure especially when it tends to cause lock to other sessions.
+
+FINDINGS
+10.208.26.82 on port 80 is having highest latency value.
+Server have 64GB memory, can it be increased?
+Can the database drives be increased?
+3GB free memory and 55+GB in use.
+
+recommendation
+Let addition hardware resources be provided for the. More Disk space and memory
+Let just replicate the exact resource usage of Actimize in prod in UAT(10.234.200.227)

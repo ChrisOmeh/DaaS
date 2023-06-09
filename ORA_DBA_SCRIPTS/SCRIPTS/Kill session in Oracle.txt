@@ -1,0 +1,88 @@
+=====Kill session in Oracle======
+
+
+This article describes in short how to kill a session in Oracle Database
+
+Generally there are two methods to kill a session in Oracle Database:
+
+do it directly in the database
+do it on OS level – kill dedicated server process for the database
+
+Before you kill a session you need to scan following views to find sid, serial#, inst_id for the session
+
+V$SESSION – used for non RAC databases to find sid, serial#
+GV$SESSION – used for RAC databases to find sid, serial#, inst_id
+where
+
+SID – session identifier
+SERIAL# – Session serial number. Used to uniquely identify a session’s objects. Guarantees that session-level commands are applied to the correct session objects if the session ends and another session begins with the same session ID
+INST_ID – instance number. Required only for RAC.
+--non RAC databases
+SELECT s.sid, s.serial#
+FROM v$session s
+WHERE username = 'SCOTT';
+
+--RAC databases
+SELECT s.inst_id, s.sid, s.serial#
+FROM gv$session s
+WHERE username = 'SCOTT';
+To kill a session outside database scan following views to find dedicated server process identifier spid on OS level
+
+V$PROCESS – non RAC databases to find spid
+GV$PROCESS – RAC databases to find spid
+--non RAC databases
+SELECT s.sid, s.serial#, p.spid
+FROM v$session s, v$process p
+WHERE s.paddr = p.addr
+  AND username = 'SCOTT';
+
+--RAC databases
+SELECT s.inst_id, s.sid, s.serial#, p.spid
+FROM gv$session s, gv$process p
+WHERE s.paddr = p.addr
+  AND s.inst_id = p.inst_id
+  AND username = 'SCOTT';
+Kill session from database level
+
+Following methods use sid, serial#, inst_id from view [G]V$SESSION.
+
+1. First method is to use ALTER SYSTEM KILL SESSION
+
+ALTER SYSTEM KILL SESSION 'SID, SERIAL#, @INSTANCE_ID' [IMMEDIATE]
+Above command marks a session as terminated, roll back ongoing transactions, release all session locks, and partially recover session resources. If this activity is going on it can hang for a minute. To avoid this hang use IMMEDIATE.
+
+Marked session will be killed by Oracle as soon as possible however sometimes it requires to kill dedicated process manually.
+
+--non rac kill example
+ALTER SYSTEM KILL SESSION '123,34216';
+ALTER SYSTEM KILL SESSION '123,34216' IMMEDIATE;
+
+--rac kill example
+ALTER SYSTEM KILL SESSION '123,34216,@2';
+ALTER SYSTEM KILL SESSION '123,34216,@1' IMMEDIATE;
+2. Second method is to use ALTER SYSTEM DISCONNECT SESSION
+
+ALTER SYSTEM DISCONNECT SESSION 'SID, SERIAL#' 
+POST_TRANSACTION | IMMEDIATE;
+This is more effective than ALTER SYSTEM KILL SESSION because it disconnect the current session by destroying the dedicated server process (or virtual circuit if the connection was made by way of a Shared Sever). It must be run on instance where you want to kill Oracle session.
+
+POST_TRANSACTION – waits for current transaction to complete, then kill dedicated process
+IMMEDIATE – kills immediately dedicated process
+ALTER SYSTEM DISCONNECT SESSION '123,34213' POST_TRANSACTION;
+ALTER SYSTEM DISCONNECT SESSION '123,34213' IMMEDIATE;
+Kill session from os level
+
+Other option to kill session is to kill dedicated process on OS. It will give the same very quick effect as ALTER SYSTEM DISCONNECT SESSION. SPID can be found in [G]V$PROCESS view.
+
+--windows
+c:\orakill ORACLE_SID spid
+
+--unix
+kill -9 spid
+It’s worth on Unix to check if the process really exists before executing kill -9
+
+ps -ef | grep spid
+
+
+
+https://oracle-base.com/articles/misc/killing-oracle-sessions

@@ -1,0 +1,74 @@
+ps -eaf
+
+Exercise to deploy Azure Resources to Azure using Terraform
+https://learn.microsoft.com/en-us/training/modules/deploy-java-azure-pipeline-terraform/4-exercise?pivots=github-actions
+
+https://learn.microsoft.com/en-us/training/modules/deploy-java-azure-pipeline-terraform/
+
+https://learn.microsoft.com/en-us/training/paths/best-practices-java-azure/
+
+https://learn.microsoft.com/en-us/training/modules/deploy-java-azure-pipeline-terraform/5-exercise?pivots=github-actions
+
+
+Migrate Azure Database for MySql
+https://learn.microsoft.com/en-us/azure/dms/tutorial-mysql-azure-single-to-flex-online-portal
+
+Azure Database for PostgreSQL
+QUESTION:
+Is it possible that there is potential data loss at point of cut over? Imagine a scenario where cut over takes me 1
+0secs to complete and within this 10secs, there is a transaction recorded in my source database. 
+Thus, leading to potential loss of that transaction to destination database(Azure db for MySql). Thanks
+
+ANSWER:
+Usually, in an online migration, before you perform the cutover, you wait for any pending transactions to be applied to the target. 
+Once you initiate the cutover, any incoming transaction to the source are stopped for that duration. 
+This might help : https://learn.microsoft.com/en-us/azure/dms/tutorial-mysql-azure-single-to-flex-online-portal
+
+AZURE DATABASE MIGRATION GUIDE
+https://learn.microsoft.com/en-us/data-migration/
+
+SYS@//localhost:1521/ORCL
+
+
+================================================
+MIGRATION OF LINUX OSS DATABASE TO AZURE PROJECT
+================================================
+Resources:
+https://learn.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-terraform
+
+Migrate Opstresql on premise to Azure Database for PostgreSQL:
+https://github.com/microsoft/OrcasNinjaTeam/tree/master/Postgres%20to%20Azure%20Database%20for%20Postgres%20Migration%20Guide?mkt_tok=MTU3LUdRRS0zODIAAAGH9ezKmmcDYFe4kTL9-6hBVAxaUkbYkNhEhnO056yKf1WMeo--gn8DMoDkvcqNhQdsVEVcPOd0sQPzBwISWwMLitchMYyiRrvwsiToRnlHyAxG52FDwnCk-oc
+
+Migrate MySql on premise to Azure Database for MySql:
+https://github.com/Azure/azure-mysql/tree/master/MigrationGuide?ocid=AID3032310_QSG_529841&mkt_tok=MTU3LUdRRS0zODIAAAGH9ezKmrrjz0T7Hd0UznA2FDoN5bkDkbldXZtTWbozIi79muo-it033FQ6w7SLSZWni-pVdex5WJM-d5xKzjxJvK_5kctD1QjaTfJEBCvCqwA4dOAoCsI7k90
+
+STEP 1: RESOURCE PROVISIONING BOTH FOR SOURCE DATABASE AND TARGET DB ON AZURE
+ 
+
+ssh -i id_rsa azureuser@4.227.237.38
+ssh -i <private key path> azureuser@20.106.151.165
+C:\Users\USER\Desktop\AZ_TERRAFORM_DEPLOY\deploy2-azlinux-vm\quickstart\101-vm-with-infrastructure
+
+
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC3dQfJSkytkIAnb3y+0+UwxcHTy49HdSDVF/FkSV82XT6eJCA0SXEuXfnQrmaw/WLCWjmCnNN5apLLNJYLc4KwmWdr9aAMDaEyv4cHOjwctav9d3JnJUwuMd92v0ImxosiEcczyIGt4rkVnTgkd6YJo9PwPC6kUTm1pIex4C66qobb7V9TVfctVfZDt68VunK77goEPt0v+FEWzX2Q9c/Ztx/WUZWCJfRndrDM3oI0w3WhVEtr4SFM7hSRa2rED/YZyFSCYGc84p5uZ/LL2CCEbL2jmgpnxF2x4bnfpOojCZDr3YhsXd/UAN93rPWHvEEce5jdw05UaP7joKvyiDW7 USER@CHUXIAN
+
+
+
+workshops.aws for all AWS related labs
+
+desc DBA_OBJECTS
+SELECT DISTINCT STATUS FROM DBA_OBJECTS
+
+SELECCT OWNER, OBJECT_NAME,FROM DBA_OBJECTS
+
+COL OWNER FOR A30
+COL OBJECT_NAME FOR A60
+COL OBJECT_TYPE FOR A50
+
+---SET TIMING ON 
+
+show parameter spfile
+select cdb from v$database;
+show parameter pfile;
+show parameter spfile;
+

@@ -1,0 +1,62 @@
+
+===============AUDIT PROCEDURE 1===================
+AUDIT PROCEDURE:To assess this recommendation, execute the following SQL statement.
+=======================================================================
+
+"""check for the presence of Oracle sample users by executing the following SQL statement"""
+
+SCRIPT: 
+["""SELECT USERNAME
+FROM DBA_USERS_WITH_DEFPWD
+WHERE USERNAME NOT LIKE '%XS$NULL%';"""]
+
+DESCRIPTION: ["""Checks for all database users making use of default passwords.""",
+	      """Ensure All Default Passwords Are Changed"""]
+
+REMEDIATION PROCEDURE
+To remediate this recommendation, you may perform either of the following actions.
+
+* Manually issue the following SQL statement for each USERNAME returned in the Audit Procedure:
+
+PASSWORD <username>
+
+* Execute the following SQL script to randomly assign passwords:
+
+SCRIPT
+["""begin
+    for r_user in
+    (select username from dba_users_with_defpwd where username not like '%XS$NULL%')
+    loop
+    DBMS_OUTPUT.PUT_LINE('Password for user '||r_user.username||' will be changed.');
+    execute immediate 'alter user "'||r_user.username||'" identified by "'||DBMS_RANDOM.string('a',16)||'"account lock password expire';
+    end loop;
+    end;"""]
+/
+
+
+===============AUDIT PROCEDURE 2===================
+AUDIT PROCEDURE: To assess this recommendation, check for the presence of Oracle sample users by executing the following SQL statement.
+====================================================================================
+
+SCRIPT: 
+["""SELECT USERNAME
+    FROM ALL_USERS
+    WHERE USERNAME IN ('BI','HR','IX','OE','PM','SCOTT','SH');"""]
+
+DESCRIPTION:
+["""Select  USERS from 'BI','HR','IX','OE','PM','SCOTT','SH' DBs """,
+"""Check for the presence of Oracle sample users by executing the following SQL statement""",
+"""Ensure All Default Passwords Are Changed"""]
+
+REMEDIATION PROCEDURE
+SCRIPT:
+["""DROP USER SCOTT CASCADE;"""]
+
+
+================================ TASK 1==================================
+RUN THE AUDIT PROCEDURE SCRIPT TO IDENTIFY USERS USING DEFAULT PASSWORDS
+RUN THE REMEDIATION PROCEDURE TO ADDRESS THE REMEDIATION STATEMENT
+
+==============================TASK 2=====================================
+ACCESS THE REMEDIATION CHECK BY RUNNING THE AUDIT PROCEDURE
+RUN THE REMEDIATION SQL SCRIPT TO EFFECT THE ABOVE

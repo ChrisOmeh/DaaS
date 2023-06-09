@@ -1,0 +1,222 @@
+=============================
+LINUX COMMANDS
+=============================
+-LINUX COMMAND TO READ, INSPECT AND WRITE A FILE
+$ Vi ---means Visual Inspection used for opening, writing into and inspecting a files
+
+$yum -- means Yellowdog Updated Modified used 
+
+--RPM means Redhat Package Manager. Redhat is most enterprise Linux Distro used for various work applications
+$rpm -qa --last | grep mongo -- Shows last installed mongodb version
+
+$history | grep yum --To check yum hsitory commands used.
+
+$rpm -qa | grep mongodb-org
+
+$yum erase $(rpm -qa | grep mongodb)
+
+$lscpu
+$dbca
+
+--Restart a Database Server
+$sudo reboot
+
+cat - Lists contents of files to the terminal window.
+cd - Change directory
+clear - Clear the terminal window.
+cp - Copy file
+curl - Retrieves information and files from URLs or internet addresses.
+date - Shows current date
+diff - Compares two text files and shows differences between them.
+echo - Prints a string of text in the terminal window.
+exit - Exit your current shell.
+finger - Shows information on user.
+find - Search for files.
+history - Brief list of the last few commands you have used.
+kill - Kill a running process.
+ls - List the files and folders in the current directory.
+man - Show man pages.
+mkdir - Create a directory
+mv - Move a file or directory.
+ping - Tool to help verify network connectivity.
+ps - List running processes.
+pwd - Prints current working directory to the terminal.
+rm - Remove a file.
+rmdir - Remove a directory.
+ssh - Connect to a remote computer.
+tar - Create archives.
+wget - Downloads files served with HTTP, HTTPS, or FTP over a network.
+whoami - Find out who you are logged in as.
+
+============================================================================
+ORACLE LISTENER COMMANDS
+1. # ps-ef | grep tns ---To check if LISTENER is up in OS level.
+2. # lsnrctl ---Command to connect listener utility.
+3. # cat$ORACLE_HOME/network/admin/listener.ora
+============================================================================
+
+=========================================
+ORACLE FULL COURSE ON UDEMY
+Course Name: Complete Oracle Database Administration course (19C,21C)
+
+1. login as root to oracle
+$su oracle
+
+2. Check process
+$ps auxww | grep ora
+
+3. sqlplus stores its environmental variable in orcl.env 
+$ cat orcl.env
+
+4. Oracle Home is a PATH in oracle where executables are stored.
+ORACLE SID is used to identify a particular oracle database in the Oracle Database System.
+
+5. To check PATH where Oracle executables are stored used echo $PATH
+
+6.Start an Oracle Database Instance
+$startup
+
+7. Oracle Database Files
+This is physical files structure of an oracle database.
+a) Data file b) Control files c) Parameter Files d) Online Redo log files e) Backup files f) Archive Redo Log files
+g) Alert and Trace Files.
+
+Using Backup file and Archive Redo Log files, we can restore the database.
+
+8. ORACLE_BASE = /uo1/app/oracle
+Inside ORACLE_BASE, We have: oradata, diag,product.
+--ORACLE_BASE/oradata: Contains physical files of ORACLE database
+--ORACLE_BASE/diag: Contains Diagnostic files like alert log and trace log
+--ORACLE_BASE/product --has the dbs which has spfile and password files
+--Oracle Home: dbhome_1 has oracle files and executables.
+--Oracle SID: Identifies the deafault Oracle Instance on a machine.
+
+9. Check databases in a server instance
+$svrctl config database
+$svrctl status database -d database_name
+
+===========================================================
+ORACLE DATABASE MAINTENANCE
+
+ALTER TABLESPACE TABLESPACE_NAME
+
+Disk group in ORACLE
+--TEMPSPACE used for sorting queries
+--UNDO TABLESPACE is used for to store uncommited queries
+
+check out this Oracle Data Dictionary
+v$session
+
+Maintenace Best Practices
+--Check visually to see if all is fine
+--Deleting unecessary log files in the system /uo1/app/oracle
+
+du -sh * to check disk usage
+
+--To login into ORACLE CLUSTER(NODE1 AND NODE 2) use
+su -grid
+--check disk usage
+du sh *
+
+Basic commands
+df -h  used to check datafiles
+cd ../../
+cd ../file_to_navigate_to
+
+=================================
+DELETE ORACLE ALERT LOGS AND TRACE FILES
+-----------Commands to delete .trc and .trm ----------------
+
+$du -sg * | sort -n --to check the largest file in a directory
+
+find . -type f -name "*.aud" -exec rm -f {} \;   --TO DELETE FILES WITH .aud extension from a particular directory
+
+find . -type f -name "*.trm" -exec rm -f {} \;
+
+find . -type f -name "*.tr*" -exec rm -f {} \;
+
+find . -type f -name "listener_*.log*" -exec rm -f {} \;
+
+find . -type f -name "listener_scan1_*.log*" -exec rm -f {} \;
+
+find . -type f -name "listener_scan2_*.log*" -exec rm -f {} \;
+
+find . -type f -name "listener_scan3_*.log*" -exec rm -f {} \;
+
+find . -type f -name "*.trc" -exec rm -f {} \;
+
+find . -type f -name "log_*.xml" -exec rm -f {} \;
+
+find . -type f -name "crsctl_*.trc" -exec rm -f {} \;
+
+find . -type f -name "+ASM1_m000_5*.tr*" -exec rm -f {} \;
+
+find . -type f -name "cvucheckreport__*.xml" -exec rm -f {} \;  
+
+find . -type f -name "*.log"
+
+find . -mtime +1 -name "*.dbf" -exec rm -f {} \;
+
+find . -type f -name "incdir_2*.xml" -exec rm -f {} \;
+
+===PURGE LOGS=====
+tail -5000 listener.log > listener.log.copy; cp -f listener.log.copy listener.log; cat /dev/null > listener.log.copy
+
+tail -5000 alert.log > alert.log.copy; cp -f alert.log.copy alert.log; cat /dev/null > alert.log.copy
+
+asmnet1lsnr_asm.log asmnet1lsnr_asm.log
+tail -5000 asmnet1lsnr_asm.log > asmnet1lsnr_asm.log.copy; cp -f asmnet1lsnr_asm.log.copy asmnet1lsnr_asm.log; cat /dev/null > asmnet1lsnr_asm.log.copy
+
+asmnet2lsnr_asm.log
+tail -5000 asmnet2lsnr_asm.log > asmnet2lsnr_asm.log.copy; cp -f asmnet2lsnr_asm.log.copy asmnet2lsnr_asm.log; cat /dev/null > asmnet2lsnr_asm.log.copy
+
+tail -5000 +ASM1_gmon_20148.trc > +ASM1_gmon_20148.trc.copy; cp -f +ASM1_gmon_20148.trc.copy +ASM1_gmon_20148.trc; cat /dev/null > +ASM1_gmon_20148.trc.copy
+
+
+tail -5000 iconhist1_mmon_27433.trc > iconhist1_mmon_27433.trc.copy; cp -f iconhist1_mmon_27433.trc.copy iconhist1_mmon_27433.trc; cat /dev/null > iconhist1_mmon_27433.trc.copy
+
+listener_scan1.log
+tail -5000 listener_scan1.log > listener_scan1.log.copy; cp -f listener_scan1.log.copy listener_scan1.log; cat /dev/null > listener_scan1.log.copy
+
+drciconcept2.log
+tail -5000 drciconcept2.log > drciconcept2.log.copy; cp -f drciconcept2.log.copy drciconcept2.log; cat /dev/null > drciconcept2.log.copy
+
+rm -rfv crsctl_3*
+
+********************************************
+TEST IF YOU HAVE TCP CONNECTION TO A SERVER 
+********************************************
+Test-NetConnection 10.234.200.193 -Port 1433
+
+rpm -qa | grep oracle-instantclient
+
+sqlplus db_username/h@10.234.206.141:1521/ungtfin1
+
+
+================================
+ORACLE COURSE CONTINUES
+================================
+
+--Update your yum packages
+$yum update
+
+--To install Oracle database instance, use.
+$dnf install oracle-database-preinstall-19c --downloads and installs all oracle packages needed to start oracle grid infrastrature and 
+database.
+
+--sysctl -a | less
+
+--Copy file from window server to linux server
+scp source_to_be_copied_file_path/* root@linux_server_ip:/root/
+
+--
+public_key = file("~/.ssh/id_rsa.pub")
+
+TO SOLVE VM ABORT PROBLEM
+sudo swapoff -a
+sudo dd if=/dev/zero of=/swapfile bs=1G count=8
+sudo chmod 0600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+
+24,685,809 rows created.

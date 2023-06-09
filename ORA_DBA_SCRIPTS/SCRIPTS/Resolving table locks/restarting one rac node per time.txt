@@ -1,0 +1,63 @@
+cd /uddora/app/oracle/product/11.1.0/crs_1/log/pngora1/crsd
+
+more /uddora/app/oracle/product/11.1.0/crs_1/log/pngora1/crsd/crsdOUT.log|grep -i reboot
+
+
+----------------------------Evition logs.
+
+/uddora/app/oracle/product/11.1.0/crs_1/log/pngora1
+/uddora/app/oracle/diag/asm/+asm/+ASM1/trace
+/uddora/app/oracle/diag/rdbms/pngfin/pngfin1/trace
+
+/uddora/app/oracle/product/11.1.0/crs_1/log/pngora2
+/uddora/app/oracle/diag/asm/+asm/+ASM2/trace
+/uddora/app/oracle/diag/rdbms/pngfin/pngfin2/trace
+
+
+
+------------------------------------------------------------------
+
+
+Start/stop an individual instance
+
+srvctl start instance -d <database name> -i <instance name>
+
+
+srvctl stop instance -d pngfin -i pngfin2
+
+srvctl stop instance -d +ASM -i +ASM2
+
+
+
+
+
+srvctl start instance -d pngfin -i pngfin2
+
+
+
+
+srvctl stop instance -d pngfin -i pngfin2
+
+srvctl start instance -d ungfin -i ungfin2
+
+
+
+srvctl start instance -d ungtbm -i ungtbm1
+
+srvctl start instance -d ungtbm -i ungtbm2
+
+
+
+****************DATABASE RESTART*************
+Start/stop a database (all nodes)
+srvctl start database -d pngfin
+
+srvctl stop database -d pngfib
+  
+***************INSTANCE RESTART**********************
+Start/stop an individual instance
+srvctl start instance -d pngfin -i pngfin1
+srvctl start instance -d <database name> -i <instance name>
+
+srvctl stop instance -d pngfin -i pngfin1
+

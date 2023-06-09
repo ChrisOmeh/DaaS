@@ -1,0 +1,7 @@
+AWS CERTIFICATION PATH FOR DevOps Engineer
+1. Cloud Practioner
+2. Solution Architect
+3. Sysops admin
+4. Developer
+5. Database Speciality
+5. DevOps Engineer.

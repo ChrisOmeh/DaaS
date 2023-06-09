@@ -1,0 +1,35 @@
+Digital fluency occurs in five key areas—thinking, skills, tools, data, and business model. 
+What is digital fluency? Most approaches to ‘going digital’ focus on only one or two elements
+of the larger equation of digital.
+
+Computational Thinking
+1.Decomposition
+2.Abstraction
+3.Patterns
+4.Algorithm
+
+Data Supply chain
+Acquire
+Store
+Aggregate
+Analyze
+Use
+Share/sell
+Dispose
+Disclosure
+Consumption
+
+
+Finacle (Oracle); 
+CAPS; 
+Redbox; 
+eBanking; 
+Agency Banking; 
+EZ Cash; 
+POSAUTO (POS); 
+MyStatement; 
+Ruby; 
+Device Financing; 
+Post Card; 
+Post Office; 
+CTS

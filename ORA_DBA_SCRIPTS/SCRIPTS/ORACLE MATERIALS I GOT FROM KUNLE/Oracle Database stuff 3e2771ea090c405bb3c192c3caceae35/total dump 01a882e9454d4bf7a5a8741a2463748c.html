@@ -1,0 +1,1049 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>total dump</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="01a882e9-454d-4bf7-a5a8-741a2463748c" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">💯</span></div><h1 class="page-title">total dump</h1></header><div class="page-body"><p id="a245c5f8-739b-4c35-a729-a75c2c5fdbac" class="">
+</p><pre id="cca59031-946f-4155-812c-938873ec80ea" class="code code-wrap"><code>--------------------------------------------PRODUCTION NOT SHIPPING LOGS---------------------------------------------------------------------------------
+set lines 999;
+select INST_ID, status,Error from gv$archive_dest where dest_id= 2; -- check if everything is VALID
+
+select STATUS, GAP_STATUS from V$ARCHIVE_DEST_STATUS where DEST_ID = 2;
+archive log list;
+
+select * from v$dataguard_status order by timestamp;
+
+---------------------------------------------------------DETECTING IF THERE IS A LAG (AT DR)------------------------------------------------------------------
+alter session set nls_date_format=&#x27;dd-mon-yyyy hh24:mi:ss&#x27;;
+select sequence#,THREAD#,applied,first_time from gv$archived_log order by 4;
+
+---------------------check if mrp is running
+select PROCESS, SEQUENCE#, STATUS from gv$managed_standby;
+
+On standby:
+===========
+select process, status, sequence# from v$managed_standby; --- check if MRP is running
+
+
+------------------------------------------RESTARTING MRP PROCESS (AT DR)-----------------------------------------------------------------------------------
+alter database recover managed standby database cancel;
+alter database recover managed standby database disconnect;
+
+alter database recover managed standby database cancel;
+alter database recover managed standby database nodelay;
+
+
+---------------------------------run a job manually
+exec dbms_scheduler.run_job(&#x27;MIDWAREUSR.PROCESS_PEND1&#x27;);
+
+exec dbms_scheduler.run_job(&#x27;MIDWAREUSR.PROCESS_PEND1&#x27;);
+
+
+-------------------------------------------------
+*/5 * * * *  /home/oracle/kill_job.sh
+
+------------------------------------------------- check syslog
+--- previous day
+sudo cat /var/log/messages | grep &quot;$(date --date=&quot;yesterday&quot; +&quot;%b %d&quot;)&quot; | grep failure
+--- current day
+sudo cat /var/log/messages | grep &quot;$(date &quot;+%b %d&quot;)&quot; | grep failure 
+
+----------------------------------------tfactl
+tfactl run managelogs -purge -older 5d
+
+---------------------------------- take hang analyze (RAC)
+SQL&gt; oradebug setmypid  
+SQL&gt; oradebug setinst all  
+SQL&gt; oradebug -g def hanganalyze 3  
+... Wait at least 2 minutes to give time to identify process state changes.   
+SQL&gt; oradebug -g def hanganalyze 3
+
+
+oradebug setmypid  
+oradebug setinst all  
+oradebug -g def hanganalyze 3  
+ait at least 2 minutes to give time to identify process state changes.   
+oradebug -g def hanganalyze 3
+--------------------------------- connecting to ASM
+$ export ORACLE_SID=+ASM
+$ export ORACLE_HOME=/u01/app/grid
+
+$ asmcmd
+ASMCMD&gt;
+
+---------------------------------- srvctl
+srvctl stop instance -d dwdb -i dwdb1 -o abort
+srvctl start instance -d dwdb -i dwdb1
+
+
+----------------------------------clusterware
+check clusterware crsctl
+/u01/app/grid/bin/crsctl stat res -t
+
+stop HAS 
+/u01/app/grid/bin/crsctl stop has
+
+
+-----------------------------------------tfa diagcollect
+/u01/app/grid/oracle.ahf/bin/tfactl print repository
+
+/u01/app/grid/oracle.ahf/bin/tfactl diagcollect &lt;diagnostics&gt;
+
+
+---------------------------------------- take snapshot
+EXEC DBMS_WORKLOAD_REPOSITORY.create_snapshot
+
+-------------------------------------start all resources in the cluster
+/u01/app/grid/bin/crsctl start res -all
+
+--------------------------------------------------- CLUSTER VERIFICATION HEALTHCHECK
+Kindly run the following on the customer server as grid owner from node1
+
+
+$ORACLE_HOME/bin/cluvfy comp healthcheck -collect cluster -bestpractice -deviations -html # review the html output
+
+$ORACLE_HOME/bin/cluvfy comp healthcheck -mandatory -deviations -html # review the html output
+
+$ORACLE_HOME/bin/cluvfy stage -post crsinst -n node1,node2 -verbose &gt;cluvfy_node1_node2.log # substitute node1 and node2 with the actual RAC nodes. # review the html output
+
+------------------------------------------------ SRVCTL
+--------------------------------ASM
+srvctl config asm -a
+ 
+-- remove unused diskgroup
+srvctl config database -d hobank -z
+
+-- check status of database
+srvctl status database -d HOBANK -verbose
+
+-- check listener status
+srvctl status listener
+
+-- show listener configuartion
+srvctl config listener
+  
+-- start listener
+
+---------------------------------------- Golden gate GG
+-- view replicat parameter
+info RNOW
+info RNOW detail
+
+--show replicat parameter
+view param RNOW
+
+--stop and start replicat
+kill RNOW
+
+start RNOW
+
+--reset replicat
+alter replicat RNOW extrba xxxx, extseqno xxxx;
+
+/*
+for ecall and fx you can copy the rba and extseqno from anyone of them that is wroking fine at that moment.
+
+extseqno is 49007 and rba is 309398356 from the below command
+
+GGSCI (exdb02.gtbank.com) 11&gt; info ECALL1
+
+REPLICAT   ECALL1    Last Started 2022-01-13 14:19   Status RUNNING
+INTEGRATED
+Checkpoint Lag       00:00:06 (updated 00:00:00 ago)
+Process ID           50512
+Log Read Checkpoint  File /u01/app/oracle/middleware/gg/dirdat/gg000049007
+                     2022-01-18 07:37:10.401736  RBA 309398356
+
+
+*/
+
+
+-- show checkpoints
+info GENS, showch
+
+--- show stats
+stats NON_TRX total
+/* The following example displays total and hourly statistics per minute for a specific table, 
+and it also resets the latest statistics. Statistics for discarded operations are not reported. */
+STATS REPLICAT NON_TRX, TOTAL, HOURLY, REPORTRATE MIN, RESET, NOREPORTDETAIL  
+
+--- misc gens notes
+
+Note 966181.1 	Installing GoldenGate For Oracle RAC  
+Note 965373.1 	Installing And Configuring OGG In A RAC Environment
+Note 970876.1 	Oracle ASM RAC EXTRACT Hanging  
+Note 967390.1 	Using Alternative Archived Log Destination On Oracle RAC  
+Note 1242965.1 	Re-enabling a RAC thread got extract abend with &#x27;begin time .. prior to oldest log in log history.&#x27;  
+Note 957112.1 	Encountered SCN That Is Not Greater Than The Highest SCN Already Processed
+Note 987379.1 	How to recover from Extract ERROR 180 encountered commit SCN that is not greater than the highest  
+Note 1059895.1 	Extract Processes Running In An Oracle RAC On Linux Environment
+Main Note - Oracle GoldenGate - RAC [ID 1304593.1]
+Primary Note - Oracle GoldenGate (Doc ID 1298817.1)
+Performance and Tuning (LAG):
+
+Note 1304557.1 Main Note - Oracle GoldenGate - Lag, Performance, Slow and Hung Processes
+
+
+
+--------------------------------------------------Restarting OEM Agent on basis
+Restart EM Agent on basis
+
+cd /u01/app/oracle/middleware/agent/agent_13.3.0.0.0/bin
+
+/u01/app/oracle/middleware/agent/agent_13.3.0.0.0/bin/emctl clearstate agent
+
+/u01/app/oracle/middleware/agent/agent_13.3.0.0.0/bin/emctl stop agent
+
+/u01/app/oracle/middleware/agent/agent_13.3.0.0.0/bin/emctl status agent
+
+/u01/app/oracle/middleware/agent/agent_13.3.0.0.0/bin/emctl start agent
+
+ Cloud1234
+ 
+ welcome1
+ 
+ --------------------------------------------------------- add datafile
+ alter tablespace TRANSACT_2022 add datafile &#x27;+DATA&#x27; size 31G;
+ 
+ ---------------------------------------------------------00 whitelist branch or service
+ select * from midwareusr.IPFILTER_BRANCH
+--where subnet  like &#x27;%10.21%&#x27;
+where bra_code in  (254)
+
+insert into midwareusr.IPFILTER_BRANCH
+values (254, &#x27;abc&#x27;, &#x27;10.2.87.68&#x27;)
+
+select * from midwareusr.IPFILTER_SERVICES
+--where subnet  like &#x27;%10.21%&#x27;
+where bra_code in  (254)
+
+insert into midwareusr.IPFILTER_BRANCH
+values (254, &#x27;abc&#x27;, &#x27;10.2.87.68&#x27;)
+
+---------------------------------------- find top 20 files by size in a path 
+sudo du -a /u01/app/oracle/diag/rdbms/gens/gens1/trace | sort -n -r | head -n 20
+
+
+---------------------------------------------------------- find and delete files older than X days
+find /u01/BEA/user_projects/domains/ClassicDomain/servers/ohs1/logs -type f -name &quot;*log*&quot; -mtime +30 
+
+find /u01/BEA/user_projects/domains/ClassicDomain/servers/ohs1/logs -type f -name &quot;*log*&quot; -mtime +30 -delete
+
+----------------------------------------------------------# find and archive files modified after 30 mins
+find /tmp/pt/collected/bluepm -type f -name &quot;*&quot; -mmin -30 | xargs zip archive.zip - 
+
+---------------------------------------- find delete greater than 1MB
+find /tmp/pt/collected/bluepm -type f \( -name &quot;*zip&quot; -o -name &quot;*tar&quot; -o -name &quot;*gz&quot; \) -size +1M -delete
+
+
+------------------------------------------------------------------ Point Business analytics report from mainsite to DR
+
+--- run on dwadm1 and dwadm2
+cd /u01/app/oracle/product/11.2.0.3/dbhome_1/network/admin/
+
+---- to point to dr
+cp tnsnames.ora_point_to_dr tnsnames.ora
+
+---- to point to mainsite
+cp tnsnames.ora_point_to_mainsite tnsnames.ora
+
+
+----------------------------------------------------------------------- ADG
+shutdown adg
+
+-- stop mrp 
+-- check status 
+/u01/app/grid/bin/crsctl stat res -t
+-- shut down db
+-- shutdown cluster (/u01/app/grid/bin/crsctl stop has)
+-- shutdown server
+
+
+
+-------------------------------------------------------
+
+--- start db in mount mode
+srvctl start database -d HOBANKREP -o mount
+
+--- start mrp
+alter database recover managed standby database disconnect; 
+
+--- wait till it catches up
+
+alter session set nls_date_format=&#x27;dd-mon-yyyy hh24:mi:ss&#x27;;
+select sequence#,THREAD#,applied,first_time from gv$archived_log order by 4;
+
+--- stop mrp, open database in read only, start mrp again
+alter database recover managed standby database cancel;
+alter database open
+
+alter pluggable database all open
+
+--set parameter to false (in banks pdb)
+alter session set container = banks
+show parameter trig
+alter system set &quot;_system_trig_enabled&quot;=FALSE scope=memory;
+
+alter database recover managed standby database disconnect;
+
+
+--- after restarting adg
+
+SQL&gt; show parameter listener
+
+NAME                                 TYPE        VALUE
+------------------------------------ ----------- ------------------------------
+forward_listener                     string
+listener_networks                    string
+local_listener                       string      (ADDRESS=(PROTOCOL=TCP)(HOST=1
+                                                 0.0.4.123)(PORT=1525))
+remote_listener                      string      10.0.4.124:1525
+
+SQL&gt; alter system set remote_listener=&#x27;&#x27; scope=memory;
+
+System altered.
+
+SQL&gt; show parameter listener
+
+NAME                                 TYPE        VALUE
+------------------------------------ ----------- ------------------------------
+forward_listener                     string
+listener_networks                    string
+local_listener                       string      (ADDRESS=(PROTOCOL=TCP)(HOST=1
+                                                 0.0.4.123)(PORT=1525))
+remote_listener                      string
+
+SQL&gt;
+
+[root@banksts1 j.ederhion]# ip route
+default via 25.25.25.1 dev bond1 proto static metric 300
+default via 10.0.4.1 dev bond0 proto static metric 301
+10.0.4.0/24 dev bond0 proto kernel scope link src 10.0.4.123 metric 301
+25.25.25.0/24 dev bond1 proto kernel scope link src 25.25.25.3 metric 300
+60.60.60.0/24 dev ens5f0 proto kernel scope link src 60.60.60.48 metric 100
+
+[root@banksts1 j.ederhion]# ip route del default via 25.25.25.1
+
+
+--------- restart net backup service as (root user)
+/usr/openv/netbackup/bin/bp.kill_all   -v   -f
+/usr/openv/netbackup/bin/bp.start_all   -v   -f
+/opt/VRTSpbx/bin/vxpbx_exchanged stop
+/opt/VRTSpbx/bin/vxpbx_exchanged start
+
+
+---------------------------------------------------------Restart DR node by node
+
+---stop mrp
+alter database recover managed standby database cancel;
+
+---shutdown instance
+srvctl stop instance -d HOBANKDR -i HOBANKDR1 -o abort
+
+--- stop cluster on that node (as root)
+/u01/app/grid/bin/crsctl stop cluster -n banksdb1dr
+
+--- reboot
+reboot
+
+--- start cluster on that node (as root)
+/u01/app/grid/bin/crsctl start cluster -n banksdb1dr
+
+--- check cluster status
+/u01/app/grid/bin/crsctl stat res -t
+
+--- start instance in mount mode 
+srvctl start instance -d HOBANKDR -i HOBANKDR1 -o mount
+
+
+REPEAT THE SAME STEPS FOR NODE 2
+
+
+----- start mrp 
+alter database recover managed standby database disconnect;
+
+-----------------------------------------------------------------FLUSH SHARED POOL
+alter system flush shared_pool;
+
+--------------------------------------------------------------------------LOCK USER AND ALL
+# lock user on OS
+https://www.2daygeek.com/lock-unlock-disable-enable-user-account-linux/
+
+# LOCK
+sudo usermod --lock o.oguns
+sudo usermod -s /sbin/nologin o.oguns
+
+
+# UNLOCK
+sudo usermod --unlock daygeek
+sudo usermod -s /bin/bash daygeek
+
+
+# create user 
+sudo useradd i.aina
+
+# Use the following syntax to force a user to change their password at next login on a Linux:
+chage -d 0 {user-name}</code></pre></div></article></body></html>

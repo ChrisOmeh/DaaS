@@ -1,0 +1,14 @@
+ADO PWD: ra47hn23wwmsr7y44qbgseih4zshjytsvg5qzsfo47zjzhfxmjvq
+
+ADO PUSH TO MAIN --ENTER PWD
+$git push -u ado main
+
+
+ADO ADD REMOTE
+$git remote add ado repo_url
+
+PUSH TO ADO BRANCH
+$git push -u ado branch_name
+
+
+mongod --keyFile /var/mongodb/pki/m103-keyfile --replSet m103-example --bind_ip localhost,192.168.213.185

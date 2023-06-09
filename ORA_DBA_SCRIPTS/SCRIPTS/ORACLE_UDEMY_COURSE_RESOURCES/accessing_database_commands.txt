@@ -1,0 +1,582 @@
+
+[root@oracle ~]# su oracle
+
+[oracle@oracle ~]$ . oraenv
+ORACLE_SID = [oracle] ? orcl
+The Oracle base has been set to /u01/app/oracle
+
+# to view the environment variables set by the oraenv command
+
+[oracle@oracle ~]$ set | grep ORACLE
+ORACLE_BASE=/u01/app/oracle
+ORACLE_HOME=/u01/app/oracle/product/19.0.0/db_1
+ORACLE_SID=orcl
+
+[oracle@oracle ~]$ sqlplus / as sysdba
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Fri May 28 05:31:14 2021
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+Connected to an idle instance.
+
+# To start an Oracle instance if it is not started like in my example (Connected to an idle instance message):
+
+SQL> startup;
+ORACLE instance started.
+
+Total System Global Area  327151856 bytes
+Fixed Size              	9134320 bytes
+Variable Size         	281018368 bytes
+Database Buffers       	33554432 bytes
+Redo Buffers            	3444736 bytes
+Database mounted.
+Database opened.
+
+
+# To check version of Oracle Database
+SQL> set markup csv on;
+SQL> SELECT banner FROM v$version;
+
+"BANNER"
+"Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production"
+
+# v$database:
+SQL> set markup csv on;
+SQL> select DBID, NAME, CREATED, OPEN_MODE, DB_UNIQUE_NAME, CDB, CON_ID from v$database;
+
+"DBID","NAME","CREATED","OPEN_MODE","DB_UNIQUE_NAME","CDB","CON_ID"
+2500688251,"ORCLDB","17-FEB-21","READ WRITE","orcldb","YES",0
+
+# v$containers
+SQL> select CON_ID,DBID,NAME,OPEN_MODE,RESTRICTED,OPEN_TIME from  v$containers;
+
+"CON_ID","DBID","NAME","OPEN_MODE","RESTRICTED","OPEN_TIME"
+1,2500688251,"CDB$ROOT","READ WRITE","NO","28-MAY-21 05.31.33.394 AM -04:00"
+2,852553007,"PDB$SEED","READ ONLY","NO","28-MAY-21 05.31.33.398 AM -04:00"
+3,3350100502,"PDB1","READ WRITE","NO","28-MAY-21 05.32.02.901 AM -04:00"
+
+SQL>
+
+
+#cdb_pdbs
+SQL>  SELECT pdb_name, status, creation_time  FROM cdb_pdbs;
+
+"PDB_NAME","STATUS","CREATION_TIME"
+"PDB1","NORMAL","17-FEB-21"
+"PDB$SEED","NORMAL","17-FEB-21"
+
+SQL>
+
+#CDB_DATA_FILES
+SQL> SELECT file_name, tablespace_name FROM cdb_data_files;
+
+"FILE_NAME","TABLESPACE_NAME"
+"/u01/app/oracle/product/19.0.0/db_1/mydbfiles/ORCLDB/users01.dbf","USERS"
+"/u01/app/oracle/product/19.0.0/db_1/mydbfiles/ORCLDB/undotbs01.dbf","UNDOTBS1"
+"/u01/app/oracle/product/19.0.0/db_1/mydbfiles/ORCLDB/system01.dbf","SYSTEM"
+"/u01/app/oracle/product/19.0.0/db_1/mydbfiles/ORCLDB/sysaux01.dbf","SYSAUX"
+"/u01/app/oracle/product/19.0.0/db_1/mydbfiles/ORCLDB/pdb1/undotbs01.dbf","UNDOTBS1"
+"/u01/app/oracle/product/19.0.0/db_1/mydbfiles/ORCLDB/pdb1/sysaux01.dbf","SYSAUX"
+"/u01/app/oracle/product/19.0.0/db_1/mydbfiles/ORCLDB/pdb1/system01.dbf","SYSTEM"
+"/u01/app/oracle/product/19.0.0/db_1/mydbfiles/ORCLDB/pdb1/users01.dbf","USERS"
+
+8 rows selected.
+
+SQL>
+
+#cdb_temp_files;
+SQL> SELECT file_name, tablespace_name FROM cdb_temp_files;
+
+"FILE_NAME","TABLESPACE_NAME"
+"/u01/app/oracle/product/19.0.0/db_1/mydbfiles/ORCLDB/temp01.dbf","TEMP"
+"/u01/app/oracle/product/19.0.0/db_1/mydbfiles/ORCLDB/pdb1/temp01.dbf","TEMP"
+
+SQL>
+
+#v$logfile
+SQL> SELECT group#, member, con_id FROM v$logfile;
+
+"GROUP#","MEMBER","CON_ID"
+3,"/u01/app/oracle/product/19.0.0/db_1/mydbfiles/ORCLDB/redo03.log",0
+2,"/u01/app/oracle/product/19.0.0/db_1/mydbfiles/ORCLDB/redo02.log",0
+1,"/u01/app/oracle/product/19.0.0/db_1/mydbfiles/ORCLDB/redo01.log",0
+
+#v$controlfile
+SQL> SELECT name, con_id FROM v$controlfile;
+
+"NAME","CON_ID"
+"/u01/app/oracle/product/19.0.0/db_1/mydbfiles/ORCLDB/control01.ctl",0
+"/u01/app/oracle/product/19.0.0/db_1/myreco/ORCLDB/control02.ctl",0
+
+#cdb_users
+SQL> SELECT DISTINCT username FROM cdb_users;
+
+"USERNAME"
+"SYS"
+"SYSTEM"
+"XS$NULL"
+"DBSNMP"
+"HR"
+...
+
+38 rows selected.
+
+SQL>
+
+#v$instance
+SQL> SELECT instance_name, status, con_id FROM v$instance;
+
+"INSTANCE_NAME","STATUS","CON_ID"
+"orcl","OPEN",0
+
+#v$services
+SQL> SELECT con_id, name FROM v$services ORDER BY 1;
+
+"CON_ID","NAME"
+1,"orclXDB"
+1,"orcldb"
+1,"SYS$BACKGROUND"
+1,"SYS$USERS"
+3,"pdb1"
+
+SQL>
+
+
+
+# connect to the  root container as sys user with sysdba privilege
+
+[oracle@oracle ~]$ sqlplus / as sysdba
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Sat May 29 14:58:51 2021
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+# Check container name you are connected to is CDB$ROOT
+
+SQL> show con_name;
+
+CON_NAME
+------------------------------
+CDB$ROOT
+
+# list all pdbs. In our case there is only one PDB - PDB1, and now it is in MOUNTED mode
+
+SQL> show pdbs;
+
+	CON_ID CON_NAME             OPEN MODE  RESTRICTED
+---------- ------------------------------ ---------- ----------
+     	2 PDB$SEED                   	READ ONLY  NO
+     	3 PDB1                       	            MOUNTED
+
+# lets open PDB1 in RW mode:
+
+SQL> alter pluggable database  PDB1 OPEN;
+
+Pluggable database altered.
+
+# list all pdbs and verify that PDB1 has RW mode now:
+
+SQL> show pdbs;
+
+	CON_ID CON_NAME              OPEN MODE  RESTRICTED
+---------- ------------------------------ ---------- ----------
+     	2 PDB$SEED                   	READ ONLY  NO
+     	3 PDB1                       	            READ WRITE NO
+
+# switch to PDB1. After this point your queries against the data dictionary will retrieve information for PDB1
+# only
+
+SQL> alter session set container=PDB1;
+
+Session altered.
+
+SQL> show con_name;
+
+CON_NAME
+------------------------------
+PDB1
+SQL>
+
+
+[oracle@oracle ~]$ lsnrctl start
+
+LSNRCTL for Linux: Version 19.0.0.0.0 - Production on 29-MAY-2021 15:45:55
+
+Copyright (c) 1991, 2019, Oracle.  All rights reserved.
+
+Starting /u01/app/oracle/product/19.0.0/db_1/bin/tnslsnr: please wait...
+
+TNSLSNR for Linux: Version 19.0.0.0.0 - Production
+System parameter file is /u01/app/oracle/product/19.0.0/db_1/network/admin/listener.ora
+Log messages written to /u01/app/oracle/diag/tnslsnr/oracle/listener/alert/log.xml
+Listening on: (DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=oracle)(PORT=1521)))
+Listening on: (DESCRIPTION=(ADDRESS=(PROTOCOL=ipc)(KEY=EXTPROC1521)))
+
+Connecting to (DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=oracle)(PORT=1521)))
+STATUS of the LISTENER
+------------------------
+Alias                 	LISTENER
+Version               	TNSLSNR for Linux: Version 19.0.0.0.0 - Production
+Start Date            	29-MAY-2021 15:45:56
+Uptime                	0 days 0 hr. 0 min. 0 sec
+Trace Level           	off
+Security              	ON: Local OS Authentication
+SNMP                  	OFF
+Listener Parameter File   /u01/app/oracle/product/19.0.0/db_1/network/admin/listener.ora
+Listener Log File     	/u01/app/oracle/diag/tnslsnr/oracle/listener/alert/log.xml
+Listening Endpoints Summary...
+  (DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=oracle)(PORT=1521)))
+  (DESCRIPTION=(ADDRESS=(PROTOCOL=ipc)(KEY=EXTPROC1521)))
+The listener supports no services
+The command completed successfully
+
+
+[oracle@oracle ~]$ sqlplus sys/OrAclE_2021@192.168.1.15:1521/pdb1 as sysdba
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Sat May 29 17:19:39 2021
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL>
+
+#How to query the data dictionary to view information about data files, temp files, and users in a PDB
+SQL> show con_name;
+
+"CON_NAME"
+"PDB1"
+
+SQL> set markup csv on;
+SQL> SELECT file_name, tablespace_name FROM dba_data_files;
+
+"FILE_NAME","TABLESPACE_NAME"
+"/u01/app/oracle/product/19.0.0/db_1/mydbfiles/ORCLDB/pdb1/undotbs01.dbf","UNDOTBS1"
+"/u01/app/oracle/product/19.0.0/db_1/mydbfiles/ORCLDB/pdb1/sysaux01.dbf","SYSAUX"
+"/u01/app/oracle/product/19.0.0/db_1/mydbfiles/ORCLDB/pdb1/system01.dbf","SYSTEM"
+"/u01/app/oracle/product/19.0.0/db_1/mydbfiles/ORCLDB/pdb1/users01.dbf","USERS"
+
+SQL> SELECT file_name, tablespace_name FROM dba_temp_files;
+
+"FILE_NAME","TABLESPACE_NAME"
+"/u01/app/oracle/product/19.0.0/db_1/mydbfiles/ORCLDB/pdb1/temp01.dbf","TEMP"
+
+SQL> SELECT username, account_status from  dba_users WHERE common='NO';
+
+"USERNAME","ACCOUNT_STATUS"
+"PDBADMIN","OPEN"
+"HR","LOCKED"
+
+SQL>
+
+SQL>  ALTER USER HR ACCOUNT UNLOCK;
+
+User altered.
+
+SQL> ALTER USER HR IDENTIFIED by "hr";
+
+User altered.
+
+SQL> SELECT username, account_status from  dba_users WHERE common='NO';
+
+"USERNAME","ACCOUNT_STATUS"
+"PDBADMIN","OPEN"
+"HR","OPEN"
+
+
+#How to write and run shell scripts?
+
+# Create directory if it doesn’t exist:
+
+[oracle@oracle scripts]$  mkdir /home/oracle/scripts
+[oracle@oracle scripts]$  cd  /home/oracle/scripts
+
+# Create a file and open it in you favorite editor: 
+
+[oracle@oracle scripts]$ vi update_emp.sh
+
+# Put the following content inside the file:
+
+# Count employees and give raises.
+sqlplus hr/hr@192.168.1.15:1521/pdb1 << EOF
+select count(*) from employees;
+update employees set salary = salary *2;
+commit;
+quit
+EOF
+
+# Grant execution permission to the file:
+
+[oracle@oracle scripts]$ chmod u+x update_emp.sh
+[oracle@oracle scripts]$ ls -lha update_emp.sh
+-rwxr--r--. 1 oracle oinstall 168 May 17 20:54 update_emp.sh
+
+# run the script and check out the output of sql commands.
+
+[oracle@oracle scripts]$ ./update_emp.sh
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Sat May 29 20:26:01 2021
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+Last Successful login time: Sat May 29 2021 20:25:37 -04:00
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL>
+  COUNT(*)
+----------
+   	107
+
+SQL>
+107 rows updated.
+
+SQL>
+Commit complete.
+
+SQL> Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+[oracle@oracle scripts]$
+
+
+#How to write and run SQL scripts?
+# Create a file and open in you favorite editor: 
+
+[oracle@oracle scripts]$ vi sql_script.sql
+
+# Put the following content inside the file:
+
+select * from departments where location_id=1400;
+
+# Connect to PDB1 as HR user
+
+[oracle@oracle scripts]$ sqlplus hr/hr@192.168.1.15:1521/pdb1
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Sat May 29 21:06:26 2021
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+Last Successful login time: Sat May 29 2021 20:26:01 -04:00
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+# Run sql script by specifying script name with @ sign at the beginning:
+
+SQL> @sql_script.sql
+
+DEPARTMENT_ID DEPARTMENT_NAME MANAGER_ID LOCATION_ID
+------------- ------------------------------ ---------- -----------
+       	60                          IT                                	103                  1400
+
+
+
+[oracle@oracle scripts]$ sqlplus hr/hr@192.168.1.15:1521/pdb1 @sql_script.sql
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Sat May 29 21:17:14 2021
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+Last Successful login time: Sat May 29 2021 21:06:26 -04:00
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+
+DEPARTMENT_ID DEPARTMENT_NAME MANAGER_ID LOCATION_ID
+------------- ------------------------------ ---------- -----------
+       	60                          IT                                	103                  1400
+
+SQL>
+
+#How to connect to CDB/PDB with SQLcl ?
+
+# connect to CDB as sysdba example:
+
+[oracle@oracle ~]$ sql  sys/OrAclE_2021@192.168.1.15:1521/orcldb as sysdba
+
+SQLcl: Release 19.1 Production on Fri Jun 04 10:52:25 2021
+
+Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL>
+
+# connect to PDB as HR user example:
+
+[oracle@oracle ~]$ sql hr/hr@192.168.1.15:1521/pdb1
+
+SQLcl: Release 19.1 Production on Fri Jun 04 10:51:36 2021
+
+Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL>
+
+
+# connect to PDB as sysdba example:
+
+[oracle@oracle ~]$ sql  sys/OrAclE_2021@192.168.1.15:1521/pdb1 as sysdba
+
+SQLcl: Release 19.1 Production on Fri Jun 04 10:52:01 2021
+
+Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL>
+
+
+SQL> help set sqlformat
+
+SET SQLFORMAT
+  SET SQLFORMAT { csv,html,xml,json,ansiconsole,insert,loader,fixed,default}  
+
+SQL> select * from departments where rownum < 5;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID
+------------- ------------------------------ ---------- -----------
+           10 Administration                        200        1700
+           20 Marketing                             201        1800
+           30 Purchasing                            114        1700
+           40 Human Resources                       203        2400
+
+SQL> set sqlformat json;
+
+SQL> select * from departments where rownum < 5;
+
+{"results":[{"columns":[{"name":"DEPARTMENT_ID","type":"NUMBER"},{"name":"DEPARTMENT_NAME","type":"VARCHAR2"},{"name":"MANAGER_ID","type":"NUMBER"},{"name":"LOCATION_ID","type":"NUMBER"}],"items":
+[
+{"department_id":10,"department_name":"Administration","manager_id":200,"location_id":1700}
+,{"department_id":20,"department_name":"Marketing","manager_id":201,"location_id":1800}
+,{"department_id":30,"department_name":"Purchasing","manager_id":114,"location_id":1700}
+,{"department_id":40,"department_name":"Human Resources","manager_id":203,"location_id":2400}
+]}]}
+SQL>
+
+SQL> info departments;
+
+TABLE: DEPARTMENTS
+         LAST ANALYZED:2021-04-05 19:20:41.0
+         ROWS         :27
+         SAMPLE SIZE  :27
+         INMEMORY     :DISABLED
+         COMMENTS     :Departments table that shows details of departments where employees
+                       work. Contains 27 rows; references with locations, employees, and job_history tables.
+
+Columns
+NAME              DATA TYPE           NULL  DEFAULT    COMMENTS
+*DEPARTMENT_ID    NUMBER(4,0)         No               Primary key column of departments table.
+ DEPARTMENT_NAME  VARCHAR2(30 BYTE)   No               A not null column that shows name of a department.
+                                                       Administration,Marketing, Purchasing, Human
+                                                       Resources, Shipping, IT, Executive,
+                                                       PublicRelations, Sales, Finance, and Accounting.
+ MANAGER_ID       NUMBER(6,0)         Yes              Manager_id of a department. Foreign key to
+                                                       employee_id column of employees table. The
+                                                       manager_id column of the employee table references
+                                                       this column.
+ LOCATION_ID      NUMBER(4,0)         Yes              Location id where a department is located. Foreign
+                                                       key to location_id column of locations table.
+
+Indexes
+INDEX_NAME            UNIQUENESS   STATUS   FUNCIDX_STATUS   COLUMNS
+HR.DEPT_ID_PK         UNIQUE       VALID                     DEPARTMENT_ID
+HR.DEPT_LOCATION_IX   NONUNIQUE    VALID                     LOCATION_ID
+
+
+References
+TABLE_NAME    CONSTRAINT_NAME   DELETE_RULE   STATUS    DEFERRABLE       VALIDATED   GENERATED
+EMPLOYEES     EMP_DEPT_FK       NO ACTION     ENABLED   NOT DEFERRABLE   VALIDATED   USER NAME
+JOB_HISTORY   JHIST_DEPT_FK     NO ACTION     ENABLED   NOT DEFERRABLE   VALIDATED   USER NAME
+
+SQL>
+
+How to connect to OEM (CDB)?
+
+[oracle@oracle ~]$ sqlplus / as sysdba
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Fri Jun 4 11:30:32 2021
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL> select dbms_xdb_config.gethttpsport() from dual;
+
+DBMS_XDB_CONFIG.GETHTTPSPORT()
+------------------------------
+                      	5500
+
+
+How to connect to OEM (PDB)?
+
+[oracle@oracle ~]$ sqlplus / as sysdba
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Fri Jun 4 11:48:38 2021
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL> alter session set container=PDB1;
+
+Session altered.
+
+SQL> select dbms_xdb_config.gethttpsport() from dual;
+
+DBMS_XDB_CONFIG.GETHTTPSPORT()
+------------------------------
+                         	0
+
+SQL> exec DBMS_XDB_CONFIG.SETHTTPSPORT(5503);
+
+PL/SQL procedure successfully completed.
+
+SQL> select dbms_xdb_config.gethttpsport() from dual;
+
+DBMS_XDB_CONFIG.GETHTTPSPORT()
+------------------------------
+                      	5503
+
+SQL>
+
+
+
+
+
+
