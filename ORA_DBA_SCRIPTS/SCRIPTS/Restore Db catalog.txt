@@ -1,0 +1,171 @@
+
+rman "target/"
+
+RMAN> catalog backuppiece '/flashback/rmanbkp/pngfin/20120301-101639/backupset/jjn4p7fh_1_1';
+
+
+OR
+
+RMAN> catalog start with ‘/flashback/rmanbkp/pngfin’;      ---- to catalog all files unknown to the DB
+RMAN> restore archivelog from sequence xxx thread 1;
+RMAN> restore archivelog from sequence xxx thread 2;
+
+restore archivelog from logseq=76291 until logseq=76298 thread 1;
+
+
+
+rman "target/"
+
+RMAN> list backup of archivelog all;
+
+
+BS Key  Size       Device Type Elapsed Time Completion Time
+------- ---------- ----------- ------------ ---------------
+1059    663.57M    DISK        00:02:08     20-JUL-11
+        BP Key: 1059   Status: AVAILABLE  Compressed: YES  Tag: TAG20110720T214914
+        Piece Name: /flashback/rmanbkp/pngfin/20110720-214755/backupset/7umhum2s_1_1
+
+  List of Archived Logs in backup set 1059
+  Thrd Seq     Low SCN    Low Time  Next SCN   Next Time
+  ---- ------- ---------- --------- ---------- ---------
+  1    18235   1506872518 20-JUL-11 1507265167 20-JUL-11
+  1    18236   1507265167 20-JUL-11 1507692538 20-JUL-11
+  1    18237   1507692538 20-JUL-11 1508159906 20-JUL-11
+  1    18238   1508159906 20-JUL-11 1508738792 20-JUL-11
+  1    18239   1508738792 20-JUL-11 1509511962 20-JUL-11
+  1    18240   1509511962 20-JUL-11 1510028691 20-JUL-11
+  1    18241   1510028691 20-JUL-11 1510430272 20-JUL-11
+  1    18242   1510430272 20-JUL-11 1511017043 20-JUL-11
+
+
+LIST BACKUP OF ARCHIVELOG  SEQUENCE=29778;
+
+
+
+RMAN> catalog backuppiece '/flashback/rmanbkp/pngfin/20110720-083947/backupset/7nmht7sm_1_1';
+
+
+      restore archivelog from logseq=29281 until logseq=29281 thread 2;
+
+
+************************GO TO PRODUCTION SERVER PNGFIN1*******************************
+
+select to_char(completion_time,'dd-mm-yyyy hh24:mi:ss') date_gen from V$ARCHIVED_LOG where SEQUENCE#=38300;
+
+COMPLETIO
+---------
+15-MAY-11
+20-JUL-11
+
+
+
+
+******************************************************************************************
+******************************************************************************************
+I GOT AN ERROR WHEN I ISSUES RESTORE COMMAND
+******************************************************************************************
+
+
+RMAN> restore database;
+
+
+Starting restore at 25-JUL-11
+using channel ORA_DISK_1
+using channel ORA_DISK_2
+using channel ORA_DISK_3
+using channel ORA_DISK_4
+using channel ORA_DISK_5
+using channel ORA_DISK_6
+using channel ORA_DISK_7
+using channel ORA_DISK_8
+
+RMAN-00571: ===========================================================
+RMAN-00569: =============== ERROR MESSAGE STACK FOLLOWS ===============
+RMAN-00571: ===========================================================
+RMAN-03002: failure of restore command at 07/25/2011 15:36:52
+RMAN-06026: some targets not found - aborting restore
+RMAN-06023: no backup or copy of datafile 4 found to restore
+RMAN-06023: no backup or copy of datafile 3 found to restore
+RMAN-06023: no backup or copy of datafile 2 found to restore
+RMAN-06023: no backup or copy of datafile 1 found to restore
+
+
+
+
+
+**********************
+SOLUTION
+**********************
+
+It seems a change was made between the PROD & DR
+
+Reset the database incarnation 
+RMAN> list incarnation of database;
+
+using target database control file instead of recovery catalog
+
+List of Database Incarnations
+DB Key  Inc Key DB Name  DB ID            STATUS  Reset SCN  Reset Time
+------- ------- -------- ---------------- --- ---------- ----------
+1       1       PNGFIN   3692171552       PARENT  1          26-SEP-08
+2       2       PNGFIN   3692171552       ORPHAN 914059     09-MAR-11
+3       3       PNGFIN   3692171552       CURRENT  1525650805 22-JUL-11
+
+
+
+RMAN>reset database to incarnation 2;
+
+
+
+
+
+list backup of datafile 4; 
+
+
+
+
+*************************************
+SECOND ERROR
+************************************
+
+SQL> alter database open resetlogs;
+alter database open resetlogs
+*
+ERROR at line 1:
+ORA-19809: limit exceeded for recovery files
+ORA-19804: cannot reclaim 263192576 bytes disk space from 7516192768 limit
+
+
+
+**************************
+This shows that the flash recovery area is full
+
+To verify this run the following query. It will show the size of the recovery area and how full it is: 
+set lines 100
+col name format a60
+select	name,floor(space_limit / 1024 / 1024) "Size MB",ceil(space_used  / 1024 / 1024) "Used MB"
+from	v$recovery_file_dest order by name
+/
+
+
+
+*****Solution
+**************
+
+SQL>  alter system set db_recovery_file_dest_size=70G;
+
+System altered.
+
+
+SQL> alter database open resetlogs;
+
+Database altered.
+
+
+
+
+*************************RENAMING THE DB********************************
+
+
+
+

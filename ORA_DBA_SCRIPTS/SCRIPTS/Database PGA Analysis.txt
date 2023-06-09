@@ -1,0 +1,11 @@
+SELECT
+  sid,
+  operation_type,
+  work_area_size,
+  expected_size,
+  actual_mem_used,
+  max_mem_used,
+  number_passes,
+  DECODE(NVL(tempseg_size,0),0,'Memory','Disk') AS operation_location
+FROM v$sql_workarea_active
+ORDER BY 1,2;

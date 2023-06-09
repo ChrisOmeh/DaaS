@@ -1,0 +1,98 @@
+http://www.shutdownabort.com/dbaqueries/Administration_RAC_10gR2.php
+
+
+
+
+
+*************************
+CHECK IF THE RAC/NODE WAS RESTARTED
+************************************
+
+PNGORA1
+
+---cd /uddora/app/oracle/product/11.1.0/crs_1/log/pngora1/crsd
+
+more /uddora/app/oracle/product/11.1.0/crs_1/log/pngora1/crsd/crsdOUT.log|grep -i reboot
+
+
+2011-03-07 10:48:44   : CRSD REBOOT
+2011-03-07 13:02:27   : CRSD REBOOT
+2011-03-07 13:06:59   : CRSD REBOOT
+2011-03-08 12:57:34   : CRSD REBOOT
+2011-03-09 07:32:50   : CRSD REBOOT
+2011-03-09 10:50:08   : CRSD REBOOT
+2011-03-09 21:23:11   : CRSD REBOOT
+2011-04-03 03:54:44   : CRSD REBOOT
+2011-04-03 05:08:29   : CRSD REBOOT
+
+
+PNGORA3
+cd /uddora/app/oracle/product/11.1.0/crs_1/log/pngora3/crsd
+
+ more crsdOUT.log|grep -i reboot
+
+
+
+****************DATABASE RESTART*************
+Start/stop a database (all nodes)
+srvctl start database -d pngfin
+
+srvctl stop database -d pngfib
+  
+***************INSTANCE RESTART**********************
+Start/stop an individual instance
+srvctl start instance -d pngfin -i pngfin1
+srvctl start instance -d <database name> -i <instance name>
+
+srvctl stop instance -d pngfin -i pngfin1
+
+
+
+
+srvctl stop database -d pngtbm
+
+srvctl stop database -d pngfib
+
+srvctl stop database -d pngfmb
+
+srvctl stop database -d pngpas
+
+srvctl stop database -d pngesb
+
+srvctl stop database -d pngfin
+
+srvctl stop instance -d pngfin -i pngfin2
+
+
+*******************START CLUSTER SERVICE ON BOTH NODES************
+
+root@ungora4/uddora/app/oracle/product/11.1.0/crs_1/bin #./crsctl start crs
+
+
+root@ungora4 /uddora/app/oracle/product/11.1.0/crs_1/bin #./crsctl check crs
+
+
+Register the DB to the cluster
+****************************
+make sure that the cluster parameter in init.ora=2
+
+/uddora/app/oracle/product/11.1.0/crs_1/bin/srvctl add database -d ungtbm -o /uddora/app/oracle/product/11.1.0/db_1
+
+
+Confirm by running command
+
+crs_stat
+crs_stat -t
+
+
+Add the DB instances on the cluster service
+*******************************************
+/uddora/app/oracle/product/11.1.0/crs_1/bin/srvctl add instance -d ungtbm -i ungtbm1 -n ungora3
+
+/uddora/app/oracle/product/11.1.0/crs_1/bin/srvctl add instance -d ungtbm -i ungtbm2 -n ungora4
+
+
+
+ 
+
+

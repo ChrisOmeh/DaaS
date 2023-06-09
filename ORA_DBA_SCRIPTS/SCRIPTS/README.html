@@ -1,0 +1,3623 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;
+      charset=windows-1252">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <meta http-equiv="Content-Script-Type" content="text/javascript">
+    <title>OracleÂ® Database Patch 25784424 </title>
+    <meta name="generator" content="Oracle DARB XHTML Converter (Mode =
+      document) - Version 5.1.2 Build 040">
+    <meta name="date" content="2012-04-13T22:46:28Z">
+    <meta name="robots" content="noarchive">
+    <meta name="doctitle" content="OracleÂ® Database Patch 25784424 -">
+    <meta name="relnum" content="">
+    <meta name="partnum" content="">
+    <!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <!-- Styles begin here --><!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+    <style>
+body, p, table, td, th, ol, ul, a, dl, dt, dd, blockquote, caption {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.25;
+  color: black;
+  background-color: white;
+  /* Fahrner Method. See Zeldman. Working with Web Standards. pp. 323-5. */
+  font-size: x-small;
+  /* janis changed following */
+  voice-family: "\"}\"";
+  
+  voice-family: inherit;
+  font-size: small;
+}
+html > body {
+  font-size: small;
+}
+
+a {
+  text-decoration: underline;
+}
+
+a:link {
+  color: #630;
+  background-color: white;
+}
+
+a:visited {
+  color: #963;
+  background-color: white;
+}
+
+a:hover {
+  color: #f60;
+  background-color: white;
+}
+
+a:active {
+  color: #f60;
+  background-color: white;
+}
+
+a.glossary-link {
+  border-bottom: 1px dotted;
+  text-decoration: none;
+}
+
+h1, h2, h3, h4 {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #369;
+  background-color: white;
+}
+
+h1 {
+  font-size: 1.6em;
+  font-weight: bold;
+  border: solid #cc9;
+  border-width: 0px 0px 1px 0px;
+  width: 100%;
+}
+
+h2 {
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+h4 {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+pre, code {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1em;
+}
+
+code {
+  color: #369;
+  background-color: white;
+}
+
+code *.code-comment {
+  color: black;
+  background-color: white;
+}
+
+a:link code {
+  color: #630;
+  background-color: white;
+}
+
+a:visited code {
+  color: #963;
+  background-color: white;
+}
+
+a:hover code {
+  color: #f60;
+  background-color: white;
+}
+
+a:active code {
+  color: #f60;
+  background-color: white;
+}
+
+caption {
+  text-align: center;
+  font-weight: bold;
+  width: auto;
+}
+
+dt {
+  font-weight: bold;
+}
+
+td {
+  vertical-align: top;
+}
+
+th {
+  font-weight: bold;
+  text-align: left;
+  vertical-align: bottom;
+  color: #369;
+  background-color: white;
+}
+
+ol ol {
+    list-style-type: lower-alpha;
+}
+
+ol ol ol {
+    list-style-type: lower-roman;
+}
+
+table.table-border {
+  border: 1px solid #cc9;
+}
+
+table.table-border td,
+table.table-border th {
+  padding: 2px 4px 2px 4px;
+  color: black;
+  background-color: white;
+  border: 1px solid #cc9;
+}
+
+table.table-border th.table-header-border-left,
+table.table-border th.table-header-border-middle,
+table.table-border th.table-header-border-right {
+  color: #369;
+  background-color: #cc9;
+}
+
+table.table-border th.table-header-border-left {
+  border-left: 1px solid #cc9;
+  border-right: 1px solid white;
+  color: black;
+  background-color: #cc9;
+}
+
+table.table-border th.table-header-border-middle {
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  color: black;
+  background-color: #cc9;
+}
+
+table.table-border th.table-header-border-right {
+  border-left: 1px solid white;
+  border-right: 1px solid #cc9;
+  color: black;
+  background-color: #cc9;
+}
+
+span.gui-object, span.gui-object-action {
+  font-weight: bold;
+}
+
+span.gui-object-title { }
+
+p.horizontal-rule {
+  width: 100%;
+  border: solid #cc9;
+  border-width: 0px 0px 1px 0px;
+  margin-bottom: 4ex;
+}
+
+p.booktitle {
+  font-weight: bold;
+  font-size: 125%;
+}
+
+div.zz-skip-header {
+  margin-bottom: 0px;
+  margin-top: -2px;
+  padding: 0px;
+  text-align: center;
+  line-height: 1px;
+}
+
+div.zz-skip-header a:link,
+div.zz-skip-header a:visited,
+div.zz-skip-header a:hover,
+div.zz-skip-header a:active {
+  color: white;
+  background-color: white;
+  text-decoration: none;
+  font-size: 0.2ex;
+  line-height: 1px;
+}
+
+td.zz-nav-header-cell {
+  text-align: left;
+  font-size: 0.95em;
+  width: 99%;
+  color: black;
+  background-color: white;
+  font-weight: normal;
+  vertical-align: top;
+  margin-top: 0ex;
+  padding-top: 0ex;
+}
+
+a.zz-nav-header-link {
+  font-size: 0.95em;
+}
+
+td.zz-nav-button-cell {
+  white-space: nowrap;
+  text-align: center;
+  width: 1%;
+  vertical-align: top;
+  padding-left: 4px;
+  padding-right: 4px;
+  margin-top: 0ex;
+  padding-top: 0ex;
+}
+
+a.zz-nav-button-link {
+  font-size: 0.9em;
+}
+
+div.zz-nav-footer-menu {
+  width: 100%;
+  text-align: center;
+  margin-top: 2ex;
+  margin-bottom: 4ex;
+}
+
+p.zz-legal-notice, a.zz-legal-notice-link {
+  font-size: 0.85em;
+  /* display: none; */  /* Uncomment to hide legal notice */
+}
+
+p.seghead {
+  font-weight: bold;
+  margin-left: -2pt;
+}
+
+/*************************************/
+/*  Begin DARB Formats          */
+/*************************************/
+
+h5, h6 {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #369;
+  background-color: white;
+  font-size: 0.95em;
+  font-weight: bold;
+}
+
+h6 {
+  font-weight: normal;
+}
+
+td li p {
+  display: inline;
+}
+
+/* lose the h1 underscore */
+/*
+h1 {
+  border-width : 0px 0px 0px 0px;
+}
+*/
+
+/* Increase contrast between visited and unvisited links. */
+/*
+a:visited {
+  color: #a30;
+  background-color: white;
+}
+*/
+
+.bold, .codeinlinebold, .syntaxinlinebold, .term, .glossterm,
+.glossaryterm, .keyword, .msg, .msgexplankw, .msgactionkw, .notep1 {
+  font-weight: bold;
+}
+
+.italic, .codeinlineitalic, .syntaxinlineitalic, .variable {
+  font-style: italic;
+}
+
+.bolditalic, .codeinlineboldital, .syntaxinlineboldital,
+.titleinfigure, .titleinexample, .titleintable, .titleinequation {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.bridgehead, .titleinrefsubsect, .subhead1, .subhead2, .subhead3 {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #369;
+  background-color: white;
+  font-weight: bold;
+}
+
+.titleinrefsubsect, .subhead1 {
+  font-size: 1.1em;
+}
+
+.subhead2 {
+  font-size: 1.0em;
+}
+
+.subhead3 {
+  font-size: 0.95em;
+  display: inline;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.superscript {
+  vertical-align: super;
+}
+
+.subscript {
+  vertical-align: sub;
+}
+
+.listofeft {
+  border: none;
+}
+
+.betadraft {
+  color: #f00;
+  background-color: white;
+}
+
+.betadraftsubtitle {
+  text-align: center;
+  font-weight: bold;
+  color: #f00;
+  background-color: white;
+}
+
+.comment {
+  color: #080;
+  background-color: white;
+  font-weight: bold;
+}
+
+.copyrightlogo {
+  text-align: center;
+  font-size: 0.85em;
+  border-style: none;
+}
+
+.tocsubheader {
+  list-style-type: none;
+}
+
+/*************************************/
+/*  End DARB Formats                 */
+/*************************************/
+
+ all {
+  * {
+    background-color: transparent;
+    line-height: 1.2;
+  }
+  body {
+    color: black;
+    background-color: white;
+  }
+/*
+  dd {
+    margin-bottom: 2ex;
+  }
+  dl:first-child {
+    margin-top: 2ex;
+  }
+*/
+}
+
+ print {
+  body, p, table, td, th, ol, ul, a, dl, dt, dd, blockquote, caption {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 11pt;
+  }
+
+  h1, h2, h3, h4, h5, h6, th, thead td {
+    font-family: Arial, Helvetica, serif;
+    color: black;
+    background-color: white;
+  }
+
+  div.zz-skip-header {
+    display: none;
+  }
+
+  code, a:link, a:visited, a:hover, a:active {
+    color: black;
+    background-color: white;
+    text-decoration: none;
+  }
+}
+  </style><!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++--><!-- Styles end here --><!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+  </head>
+  <body>
+    <div class="header"><a id="top" name="top"></a>
+      <div class="zz-skip-header"><a href="#BEGIN">Skip Headers</a></div>
+      <a name="BEGIN" id="BEGIN"></a></div>
+    <!-- class="header" -->
+    <div class="ind"><!-- End Header -->
+      <h1><font><font face="Arial">
+            <h1><span style="" name="OracleReview" id="1"
+                class="segment">Oracle Clusterware 12<font face="Arial">C</font>
+                Release 2 (12.2.0.1.0)</span></h1>
+          </font></font></h1>
+      <p class="booktitle"><font face="Arial"><span style=""
+            name="OracleReview" id="2" class="segment">Patch for Bug#
+            25784424 for  platform</span></font></p>
+      <p class="invpartnumber"><font face="Arial"><span style=""
+            name="OracleReview" id="3" class="segment">This patch is RAC
+            Rolling Installable.</span><br>
+          <br>
+          <span style="" name="OracleReview" id="4" class="segment">Released:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+             3 August , 2017</span></font></p>
+      <br>
+      <p>This document includes the following sections:</p>
+      <ul>
+        <li>
+          <p><a href="#CHDFIJIE">Section 1, "Patch Information"</a></p>
+        </li>
+        <li>
+          <p><a href="#CHDCBBFE">Section 2, "Patch Installation and
+              Deinstallation"</a></p>
+        </li>
+        <li>
+          <p><a href="#BGBGADGB">Section 3, "Known Issues"</a></p>
+        </li>
+        <li>
+          <p><a href="#CHDDJHFI">Section 4, "References"</a></p>
+        </li>
+        <li>
+          <p><a href="#BGBCJIBD">Section 5, "Manual Steps for
+              Apply/Rollback Patch"</a></p>
+        </li>
+        <li>
+          <p><a href="#BABCGCAB">Section 6, "Bugs Fixed by This Patch"</a></p>
+        </li>
+        <li>
+          <p><a href="#BGBJHGBI">Section 7, "Documentation
+              Accessibility"</a></p>
+        </li>
+      </ul>
+      <a id="CHDFIJIE" name="CHDFIJIE"></a>
+      <div class="sect1"><!-- infolevel="all" infotype="General" -->
+        <h2 class="sect1"><span class="secnum">1</span> Patch
+          Information</h2>
+        <font face="Arial"><span style="" name="OracleReview" id="5"
+            class="segment">This document describes how you can install
+            the patch for bug# 25784424 for  on your Oracle
+            Clusterware 12g Release 2 (12.2.0.1.0).</span><br>
+          <br>
+          <span style="" name="OracleReview" id="6" class="segment">You
+            can install this patch automatically using the "opatchauto"
+            command.</span><span style="" name="OracleReview" id="7"
+            class="segment"> Automatic patching helps you reduce the
+            number of manual steps involved in patching the Oracle
+            homes.</span><span style="" name="OracleReview" id="8"
+            class="segment"> Technically, as a preinstallation step,
+            automatic patching stops all the dependent databases, the
+            CRS resources, and the entire GI stack.</span><span style=""
+            name="OracleReview" id="9" class="segment"> It then patches
+            the Oracle Clusterware and all applicable databases, and
+            then, as a postinstallation step, it automatically restarts
+            the entire GI stack, the CRS Resources, the the dependent
+            databases.</span> <br>
+          <br>
+          <span name="OracleReview" id="10" class="segment">Note:</span><br>
+          <span style="" name="OracleReview" id="11" class="segment">-&nbsp;&nbsp;&nbsp;&nbsp;Oracle
+recommends
+you
+to
+avoid
+applying
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            any temporary patch unless you are directed by Oracle
+            Support who have reviewed your environment and determined
+            that it is applicable.</span><br>
+          <span style="" name="OracleReview" id="12" class="segment">-&nbsp;&nbsp;&nbsp;&nbsp;A
+non-clustered
+RDBMS
+home
+runing
+the
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            CSSD and ASM may also benefit from a number of the GI home
+            patches.</span><br>
+        </font><br>
+        <br>
+        <div class="tblruleformal"><br>
+        </div>
+        <!-- class="tblruleformal" --></div>
+      <!-- class="sect1" --> <a id="CHDCBBFE" name="CHDCBBFE"></a>
+      <div class="sect1"><!-- infolevel="all" infotype="General" -->
+        <h2 class="sect1"><span class="secnum">2</span> Patch
+          Installation and Deinstallation</h2>
+        <p>This section includes the following sections:</p>
+        <ul>
+          <li>
+            <p><a href="#BGBHHHIB">Section 2.1, "Patch Installation
+                Prerequisites"</a></p>
+          </li>
+          <li>
+            <p><a href="#BGBIHIHC">Section 2.2, "OPatch Automation for
+                GI"</a></p>
+          </li>
+          <li>
+            <p><a href="#BABBFHDD">Section 2.3, "Patch Installation"</a></p>
+          </li>
+          <li>
+            <p><a href="#BGBFHGBC">Section 2.4, "Patch Post-Installation
+                Instructions"</a></p>
+          </li>
+          <li>
+            <p><a href="#BABEHDHB">Section 2.5, "Patch Deinstallation"</a></p>
+          </li>
+          <li>
+            <p><a href="#BGBHCCJD">Section 2.6, "Unmounting ACFS File
+                Systems"</a></p>
+          </li>
+          <li>
+            <p><a href="#BGBEBCFH">Section 2.7, "Mounting ACFS File
+                Systems"</a></p>
+          </li>
+        </ul>
+        <a id="BGBHHHIB" name="BGBHHHIB"></a>
+        <div class="sect2"><!-- infolevel="all" infotype="General" -->
+          <h3 class="sect2"><span class="secnum">2.1</span> Patch
+            Installation Prerequisites</h3>
+          <p>You must satisfy the conditions in the following sections
+            before applying the patch:</p>
+          <ul>
+            <li>
+              <p><a href="#CBBFABAA">OPatch Utility Information</a></p>
+            </li>
+            <li>
+              <p><a href="#BGBECBJA">OCM Configuration</a></p>
+            </li>
+            <li>
+              <p><a href="#BGBGFGDG">Validation of Oracle Inventory</a></p>
+            </li>
+            <li>
+              <p><a href="#BGBCDEEC">Unzipping the Patch</a></p>
+            </li>
+            <li>
+              <p><a href="#BGBCEBGF">One-off Patch Conflict Detection
+                  and Resolution</a></p>
+            </li>
+          </ul>
+          <a id="CBBFABAA" name="CBBFABAA"></a>
+          <div class="sect3">
+            <h4 class="sect3"><span class="secnum">2.1.1</span> OPatch
+              Utility Information</h4>
+            <p>You must use the OPatch utility version 12.2.0.1.5 or
+              later to apply this patch. Oracle recommends that you use
+              the latest released OPatch for 12.1 releases, which is
+              available for download from My Oracle Support patch <a
+href="https://updates.oracle.com/ARULink/PatchDetails/process_form?patch_num=6880880">6880880</a>.
+              It is recommended that you download the Opatch utility and
+              the patch in a shared location to be able to access them
+              from any node in the cluster for the patch application on
+              each node.</p>
+            <div align="center">
+              <div class="inftblnote"><br>
+                <table class="Note oac_no_warn" summary=""
+                  frame="hsides" rules="groups" border="1"
+                  cellpadding="3" cellspacing="0" width="80%">
+                  <tbody>
+                    <tr>
+                      <td align="left">
+                        <p class="notep1">Note:</p>
+                        When patching the GI Home, a shared location on
+                        ACFS only needs to be unmounted on the node
+                        where the GI Home is being patched.
+                        <p>The new opatch utility should be updated in
+                          all the Oracle RAC database homes and the GI
+                          home that are being patched. To update Opatch,
+                          use the following instructions.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br>
+              </div>
+              <!-- class="inftblnote" --></div>
+            <ol>
+              <li>
+                <p>Download the OPatch utility to a temporary directory.</p>
+              </li>
+              <li>
+                <p>For each Oracle RAC database home and the GI home
+                  that is being patched, run the following commands as
+                  the home owner to extract the OPatch utility.</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ rm -rf &lt;ORACLE_HOME&gt;/OPatch/* <br>$ unzip &lt;OPATCH-ZIP&gt; -d &lt;ORACLE_HOME&gt;<br>$ &lt;ORACLE_HOME&gt;/OPatch/opatch version<br></pre>
+              </li>
+            </ol>
+            <p>The version output of the previous command should be
+              12.2.0.1.5 or later.</p>
+            <p>For information about OPatch documentation, including any
+              known issues, see My Oracle Support <a
+href="https://support.oracle.com/CSP/main/article?cmd=show&amp;type=NOT&amp;id=293369.1">Note
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                293369.1</a> <span class="italic">OPatch documentation
+                list</span>.</p>
+          </div>
+          <!-- class="sect3" --> <a id="BGBECBJA" name="BGBECBJA"></a>
+          <div class="sect3"><!-- infolevel="all" infotype="General" -->
+            <h4 class="sect3"><span class="secnum">2.1.2</span> OCM
+              Configuration</h4>
+            <p>The OPatch utility will prompt for your OCM (Oracle
+              Configuration Manager) response file when it is run. You
+              should enter a complete path of OCM response file if you
+              already have created this in your environment.</p>
+            <p>If you do not have the OCM response file (<code>ocm.rsp</code>),
+then
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              you should run the following command to create it.</p>
+            <p>As the GI home owner execute:</p>
+            <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/OPatch/ocm/bin/emocmrsp<br></pre>
+          </div>
+          <!-- class="sect3" --> <a id="BGBGFGDG" name="BGBGFGDG"></a>
+          <div class="sect3"><!-- infolevel="all" infotype="General" -->
+            <h4 class="sect3"><span class="secnum">2.1.3</span>
+              Validation of Oracle Inventory</h4>
+            <p>Before beginning patch application, check the consistency
+              of inventory information for GI home and each database
+              home to be patched. Run the following command as
+              respective Oracle home owner to check the consistency.</p>
+            <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/OPatch/opatch lsinventory  -oh &lt;ORACLE_HOME&gt;<br></pre>
+            <p>If this command succeeds, it lists the Oracle components
+              that are installed in the home. Save the output so you
+              have the status prior to the patch apply.</p>
+            <p>If you have not started patching, the output will also
+              print out the GI home on all the nodes along with its
+              patching level. The patching level must be identical for
+              all the nodes. If they are not, do not patch. Contact
+              Oracle Support Services for assistance.</p>
+            <p>If this command fails or the patching level is not the
+              same on all nodes, contact Oracle Support Services for
+              assistance.</p>
+          </div>
+          <!-- class="sect3" --> <a id="BGBCDEEC" name="BGBCDEEC"></a>
+          <div class="sect3"><!-- infolevel="all" infotype="General" -->
+            <h4 class="sect3"><span class="secnum">2.1.4</span>
+              Unzipping the Patch</h4>
+            <p>The patch application requires explicit user actions to
+              run 'opatchauto' command on each node of the cluster. So,
+              it is recommended that you download and unzip the patch in
+              a shared location to be able to access it from any node in
+              the cluster and then as the Grid home owner execute the
+              unzip command. To prevent installation failures, this
+              location should be an empty directory.</p>
+            <div align="center">
+              <div class="inftblnote"><br>
+                <table class="Note oac_no_warn" summary=""
+                  frame="hsides" rules="groups" border="1"
+                  cellpadding="3" cellspacing="0" width="80%">
+                  <tbody>
+                    <tr>
+                      <td align="left">
+                        <p class="notep1">Note:</p>
+                        Do not unzip the patch in the top level <code>/tmp</code>
+                        directory.</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br>
+              </div>
+              <!-- class="inftblnote" --></div>
+            <p>The unzipped patch location <span style="font-weight:
+                bold;">should have read permission for ORA_INSTALL group</span>
+              in order to patch Oracle homes owned by different owners.
+              The ORA_INSTALL group is the primary group of the user who
+              owns the GI home or the group owner of the Oracle central
+              inventory.</p>
+            <p>(In this readme, the downloaded patch location directory
+              is referred as <code>&lt;UNZIPPED_PATCH_LOCATION&gt;</code>.)</p>
+            <pre xml:space="preserve" class="oac_no_warn">$ cd &lt;UNZIPPED_PATCH_LOCATION&gt;<br></pre>
+            <p>Unzip the patch as grid home owner in a shared location.
+              As the Grid home owner execute:</p>
+            <pre xml:space="preserve" class="oac_no_warn">$ unzip <font face="Arial"><span style="" name="OracleReview" id="88" class="segment"></span></font></pre>
+            <p>For example, if <code>&lt;UNZIPPED_PATCH_LOCATION&gt;</code>
+              in your environment is <code>/u01/oracle/patches</code>,
+              enter the following command:</p>
+            <pre xml:space="preserve" class="oac_no_warn">$ cd /u01/oracle/patches<br></pre>
+            <p>Unzip the patch as grid home owner in a shared location.
+              As the Grid home owner execute:</p>
+            <pre xml:space="preserve" class="oac_no_warn">$ unzip <font face="Arial"><span style="" name="OracleReview" id="88" class="segment"><br></span></font>$ cd /u01/oracle/patches/25784424<br>(In this readme, <code>&lt;UNZIPPED_PATCH_LOCATION&gt;</code><code>/25784424 </code>location is referred as <code>&lt;UNZIPPED_PATCH_LOCATION&gt;/25784424</code>.)<br><br>In case the directory where the patch has been unzipped does not have read permissions for the group ORA_INSTALL execute the following to correct the permission<br>For example, for 'oracle' user, as root execute the following :<br>     # chown -R oracle:oinstall /u01/oracle/patches/25784424<font face="Arial"><span style="" name="OracleReview" id="88" class="segment"><br></span></font></pre>
+          </div>
+          <!-- class="sect3" --></div>
+        <!-- class="sect2" --> <a id="BGBEAGBJ" name="BGBEAGBJ"></a>
+        <div class="sect2"><br>
+        </div>
+        <!-- class="sect3" --> <a id="BGBCEBGF" name="BGBCEBGF"></a>
+        <div class="sect3"><!-- infolevel="all" infotype="General" -->
+          <h4 class="sect3"><span class="secnum">2.1.5</span> One-off
+            Patch Conflict Detection and Resolution</h4>
+          Determine whether any currently installed one-off patches
+          conflict with the PSU patch as follows:<br>
+          In the unzipped directory as in Section 2.1.4.<br>
+          <ol>
+            <li>The below command will check for conflicts in both 12.1
+              GI home and 12.1 DB homes. <br>
+            </li>
+            <ol>
+              <li>In case you are applying the patch <br>
+              </li>
+              <ol>
+                <li>$GRID_HOME/OPatch/opatchauto apply
+                  &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 â€“analyze;</li>
+              </ol>
+              <li>In case you are rolling back the patch</li>
+              <ol>
+                <li>$GRID_HOME/OPatch/opatchauto rollback
+                  &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 â€“analyze <br>
+                </li>
+              </ol>
+            </ol>
+            <li>Note that Oracle proactively provides PSU one-off
+              patches for common conflicts.</li>
+            <li>Use My Oracle Support Document 1061295.1 Patch Set
+              Updates - One-off Patch Conflict Resolution to determine,
+              for each conflicting patch, whether a conflict resolution
+              patch is already available, and if you need to request a
+              new conflict resolution patch or if the conflict may be
+              ignored.</li>
+            <li>When all the one-off patches that you have requested are
+              available at My Oracle Support, proceed with Section 2.3,
+              "Patch Installation".<a id="BGBIHIHC" name="BGBIHIHC"></a>
+            </li>
+          </ol>
+          <div class="sect2">
+            <h3 class="sect2"><span class="secnum">2.2</span> OPatch
+              Automation for GI</h3>
+            <p>The Opatch utility has automated the patch application
+              for the Oracle Grid Infrastructure (GI) home and the
+              Oracle RAC database homes. It operates by querying
+              existing configurations and automating the steps required
+              for patching each Oracle RAC database home of same version
+              and the GI home.</p>
+            <p>The utility must be executed by an operating system (OS)
+              user with root privileges (usually the user <code>root</code>),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              and it must be executed on each node in the cluster if the
+              GI home or Oracle RAC database home is in Non-shared
+              storage. The utility should not be run in parallel on the
+              cluster nodes.</p>
+            <p><span class="pinHistoryCommentText">Depending on command
+                line options specified, one invocation of opatchauto can
+                patch the GI home, Oracle RAC database homes, or both GI
+                and Oracle RAC database homes of the same Oracle release
+                version as the patch</span>. You can also roll back the
+              patch with the same selectivity.</p>
+            <p>Add the directory containing the opatch to the <code>$PATH</code>
+              environment variable. For example:</p>
+            <pre xml:space="preserve" class="oac_no_warn">$ export PATH=$PATH:&lt;GI_HOME&gt;/OPatch<br></pre>
+            <p>To patch GI home and all Oracle RAC database homes of the
+              same version:</p>
+            <pre xml:space="preserve" class="oac_no_warn"># opatchauto apply &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -ocmrf &lt;ocm response file&gt;<br></pre>
+            <p>To patch only the GI home:</p>
+            <pre xml:space="preserve" class="oac_no_warn"># opatchauto apply &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;GI_HOME&gt; -ocmrf &lt;ocm response file&gt;<br></pre>
+            <p>To patch one or more Oracle RAC database homes:</p>
+            <pre xml:space="preserve" class="oac_no_warn"># opatchauto apply &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;oracle_home1_path&gt;,&lt;oracle_home2_path&gt; -ocmrf &lt;ocm response file&gt;<br></pre>
+            <p>To roll back the patch from the GI home and each Oracle
+              RAC database home:</p>
+            <pre xml:space="preserve" class="oac_no_warn"># opatchauto rollback &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 <br></pre>
+            <p>To roll back the patch from the GI home:</p>
+            <pre xml:space="preserve" class="oac_no_warn"># opatchauto rollback &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;path to GI home&gt;  <br></pre>
+            <p>To roll back the patch from the Oracle RAC database home:</p>
+            <pre xml:space="preserve" class="oac_no_warn"># opatchauto rollback &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;oracle_home1_path&gt;,&lt;oracle_home2_path&gt; <br></pre>
+            <p>For more information about <code>opatchauto</code>, see
+              My Oracle Support <a
+href="https://support.oracle.com/CSP/main/article?cmd=show&amp;type=NOT&amp;id=293369.1">Note
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                293369.1</a> <span class="italic">OPatch documentation
+                list</span>.</p>
+            <p>For detailed patch installation instructions, see <a
+                href="#BABBFHDD">Section 2.3, "Patch Installation"</a>.</p>
+          </div>
+          <!-- class="sect2" --> <a id="BABBFHDD" name="BABBFHDD"></a>
+          <div class="sect2"><!-- infolevel="all" infotype="General" -->
+            <h3 class="sect2"><span class="secnum">2.3</span> Patch
+              Installation</h3>
+            <p>This section will guide you through the steps required to
+              apply this patch to Oracle RAC database homes, the Grid
+              home, or all relevant homes on the cluster.</p>
+            <p>The patch instructions will differ based on the
+              configuration of the Grid infrastructure and the Oracle
+              RAC database homes.</p>
+            <p>The patch installations will also differ based on
+              following aspects of your existing configuration:</p>
+            <ul>
+              <li>
+                <p>GI home is shared or non-shared</p>
+              </li>
+              <li>
+                <p>The Oracle RAC database home is shared or non-shared</p>
+              </li>
+              <li>
+                <p>The Oracle RAC database home software is on ACFS or
+                  non-ACFS file systems.</p>
+              </li>
+              <li>
+                <p>Patch all the Oracle RAC database and the GI homes
+                  together, or patch each home individually</p>
+              </li>
+            </ul>
+            <p>You must choose the most appropriate case that is
+              suitable based on the existing configurations and your
+              patch intention.</p>
+            <div align="center">
+              <div class="inftblnote"><br>
+              </div>
+              <!-- class="inftblnote" --></div>
+            <ul>
+              <li>
+                <p><a href="#BGBBAAII">Case 1: Patching Oracle RAC
+                    Database Homes and the GI Home Together</a></p>
+              </li>
+              <li>
+                <p><a href="#BGBGJBDH">Case 2: Patching Oracle RAC
+                    Database Homes</a></p>
+              </li>
+              <li>
+                <p><a href="#BGBJIIDH">Case 3: Patching GI Home Alone</a></p>
+              </li>
+              <li>
+                <p><a href="#BGBGCBGF">Case 4: Patching Oracle Restart
+                    Home</a></p>
+              </li>
+              <li>
+                <p><a href="#BGBJBJJJ">Case 5: Patching a Software Only
+                    GI Home Installation or Before the GI Home Is
+                    Configured</a></p>
+              </li>
+              <li><a href="#Case_6:_Patching_a_Flex_Cluster">Case 6:
+                  Patching a Flex Cluster</a><br>
+              </li>
+            </ul>
+            <a id="BGBBAAII" name="BGBBAAII"></a>
+            <p class="subhead2">Case 1: Patching Oracle RAC Database
+              Homes and the GI Home Together</p>
+            <p>Follow the instructions in this section if you would like
+              to patch all the Oracle RAC database homes of release
+              version <font face="Arial"><span style=""
+                  name="OracleReview" id="5" class="segment">12.2.0.1.0</span></font>
+              and the <font face="Arial"><span style=""
+                  name="OracleReview" id="5" class="segment">12.2.0.1.0</span></font>
+              GI home.</p>
+            <a id="sthref3" name="sthref3"></a>
+            <p class="subhead2">Case 1.1: GI Home Is Not Shared</p>
+            <a id="sthref4" name="sthref4"></a>
+            <p class="subhead2">Case 1.1.1: ACFS File System Is Not
+              Configured and Database Homes Are Not Shared</p>
+            <p>Follow these instructions in this section if the GI home
+              is not shared and none of the Oracle database homes is
+              shared.</p>
+            <p>As root user execute the following command on each node
+              of the cluster:</p>
+            <pre xml:space="preserve" class="oac_no_warn"># &lt;GI_HOME&gt;/OPatch/opatchauto apply &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -ocmrf &lt;ocm response file&gt;<br></pre>
+            <a id="sthref5" name="sthref5"></a>
+            <p class="subhead2">Case 1.1.2A: Patching the GI Home and
+              Database Home Together, the GI Home Is Not Shared, the
+              Database Home Is Shared, ACFS May Be Used</p>
+            <ol>
+              <li>
+                <p>From the Oracle database home, make sure to stop the
+                  Oracle RAC databases running on all nodes.</p>
+                <p>As the database home owner execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl stop database -d &lt;db-unique-name&gt;<br></pre>
+              </li>
+              <li>
+                <p>On the 1st node, unmount the ACFS file systems. Use
+                  instructions in <a href="#BGBHCCJD">Section 2.6</a>
+                  for unmounting ACFS file systems.</p>
+              </li>
+              <li>
+                <p>On the 1st node, apply the patch to the GI Home using
+                  the <code>opatchauto</code> command.</p>
+                <p>As root user, execute the following command:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># opatchauto apply &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;GI_HOME&gt; -ocmrf &lt;ocm response file&gt;<br></pre>
+              </li>
+              <li>
+                <p>If the message, "A system reboot is recommended
+                  before using ACFS is shown, then a reboot must be
+                  issued before continuing. Failure to do so will result
+                  in running with an unpatched ACFS\ADVM\OKS driver.</p>
+              </li>
+              <li>
+                <p>On the 1st node, remount ACFS file systems. See <a
+                    href="#BGBEBCFH">Section 2.7</a> for instructions.</p>
+              </li>
+              <li>
+                <p>On the 1st node, apply the patch to the Database home
+                  using the <code>opatchauto</code> command. Since the
+                  Database home is shared, this operation will patch the
+                  Database home across the cluster. Note that a USM only
+                  patch cannot be applied to a database home.</p>
+                <p>As root user, execute the following command:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># opatchauto apply &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;DATABASE_HOME&gt; -ocmrf &lt;ocm response file&gt;<br></pre>
+              </li>
+              <li>
+                <p>On the 1st node only, restart the Oracle instance
+                  which you have previously stopped in Step 1.</p>
+                <p>As the database home owner execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl start instance -d &lt;db-unique-name&gt; -n &lt;nodename&gt;<br></pre>
+              </li>
+              <li>
+                <p>On the 2nd (next) node, unmount the ACFS file
+                  systems. Use instructions in <a href="#BGBHCCJD">Section
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    2.6</a> for unmounting ACFS file systems.</p>
+              </li>
+              <li>
+                <p>On the 2nd node, apply the patch to GI Home using the
+                  <code>opatchauto</code> command.</p>
+                <p>As root user, execute the following command:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># opatchauto apply &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;GI_HOME&gt; -ocmrf &lt;ocm response file&gt;<br></pre>
+              </li>
+              <li>
+                <p>If the message, "A system reboot is recommended
+                  before using ACFS is shown, then a reboot must be
+                  issued before continuing. Failure to do so will result
+                  in running with an unpatched ACFS\ADVM\OKS driver.</p>
+              </li>
+              <ol>
+                <li>
+                  <p align="left">On the 2nd node, running the <code>opatchauto</code>
+                    command in Step 9 will restart the stack.</p>
+                </li>
+              </ol>
+              <li>
+                <p>On the 2nd node, remount ACFS file systems. See <a
+                    href="#BGBEBCFH">Section 2.7</a> for instructions.</p>
+              </li>
+              <li>
+                <p>On the 2nd node only, restart the Oracle instance
+                  which you have previously stopped in Step 1.</p>
+                <p>As the database home owner execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl start instance -d &lt;db-unique-name&gt; -n &lt;nodename&gt;<br></pre>
+              </li>
+              <li>
+                <p>Repeat Steps 8 through 13 for all remaining nodes of
+                  the cluster.</p>
+              </li>
+            </ol>
+            <a id="sthref6" name="sthref6"></a>
+            <p class="subhead2">Case 1.1.2B: Patching the GI Home and
+              the Database Home Together, the GI Home Is Not Shared, the
+              Database Home Is Not Shared, ACFS May Be Used</p>
+            <p>For each node, perform the following steps:</p>
+            <ol>
+              <li>
+                <p>On the local node, unmount the ACFS file systems. Use
+                  instructions in <a href="#BGBHCCJD">Section 2.6</a>
+                  for unmounting ACFS file systems.</p>
+              </li>
+              <li>
+                <p>On the local node, apply the patch to the GI home and
+                  to the Database home.</p>
+                <p>As root user, execute the following command:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># opatchauto apply &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -ocmrf &lt;ocm response file&gt;<br></pre>
+                <p>This operation will patch both the CRS home and the
+                  Database home.</p>
+              </li>
+              <li>
+                <p>If the message, "A system reboot is recommended
+                  before using ACFS is shown, then a reboot must be
+                  issued before continuing. Failure to do so will result
+                  in running with an unpatched ACFS\ADVM\OKS driver.</p>
+              </li>
+              <li>
+                <p>The <code>opatchauto</code> command will restart the
+                  stack on the local node and restart the Databases on
+                  the local node.</p>
+              </li>
+              <p>Repeat Steps 1 through 3 for all remaining nodes of the
+                cluster.</p>
+            </ol>
+            <a id="sthref7" name="sthref7"></a>
+            <p class="subhead2">Case 1.2: GI Home Is Shared</p>
+            <p>Follow these instructions in this section if the GI home
+              is shared.</p>
+            <div align="center">
+              <div class="inftblnote"><br>
+                <table class="Note oac_no_warn" summary=""
+                  frame="hsides" rules="groups" border="1"
+                  cellpadding="3" cellspacing="0" width="80%">
+                  <tbody>
+                    <tr>
+                      <td align="left">
+                        <p class="notep1">Note:</p>
+                        Patching a shared GI home requires shutdown of
+                        Oracle GI stack on all the remote nodes in the
+                        cluster. This also means you need to stop all
+                        Oracle RAC databases which depend on GI stack,
+                        ASM for data files, or an ACFS file system.</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br>
+              </div>
+              <!-- class="inftblnote" --></div>
+            <ol>
+              <li>
+                <p>From the Oracle database home, make sure to stop the
+                  Oracle RAC databases running on GI System being
+                  patched.</p>
+                <p>As Oracle database home owner:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl stop database -d &lt;db-unique-name&gt;<br></pre>
+                <p>ORACLE_HOME: Complete path of the Oracle database
+                  home.</p>
+              </li>
+              <li>
+                <p>Make sure the ACFS file systems are unmounted on all
+                  the nodes. Use instructions in <a href="#BGBHCCJD">Section
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    2.6</a> for unmounting ACFS file systems.</p>
+              </li>
+              <li>
+                <p>As root user, execute the following on all the remote
+                  nodes to stop the GI stack:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># &lt;GI_HOME&gt;/bin/crsctl stop crs</pre>
+              </li>
+              <li>Please ensure the the GI Stack is up on the local node
+                where patching is being performed.<br>
+              </li>
+              <li>
+                <p>Patch the GI home.</p>
+                <p>On local node, as root user, execute the following
+                  command:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># opatchauto apply &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;GI_HOME&gt; -ocmrf &lt;ocm response file&gt;<br></pre>
+                this command will take care of stopping and starting GI
+                stack on the local node.<br>
+              </li>
+              <li>
+                <p>If the message, "A system reboot is recommended
+                  before using ACFS is shown, then a reboot must be
+                  issued before continuing. Failure to do so will result
+                  in running with an unpatched ACFS\ADVM\OKS driver.</p>
+              </li>
+              <li>
+                <p>On each remote node:</p>
+                <ol>
+                  <li>
+                    <p>As root user, run:</p>
+                    <pre xml:space="preserve" class="oac_no_warn"># &lt;GI_HOME&gt;/crs/install/rootcrs.pl -postpatch -nonrolling<br></pre>
+                  </li>
+                  <li>
+                    <p>If the message, "A system reboot is recommended
+                      before using ACFS is shown, then a reboot must be
+                      issued before continuing. Failure to do so will
+                      result in running with an unpatched ACFS\ADVM\OKS
+                      driver.</p>
+                  </li>
+                </ol>
+              </li>
+              <li>
+                <p>Mount ACFS file systems. See <a href="#BGBEBCFH">Section
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    2.7</a>.</p>
+              </li>
+              <li>
+                <p>For each Oracle RAC database home, execute the
+                  following command on each node if the database home
+                  software is not shared. Note that a USM only patch
+                  cannot be applied to a Database home.</p>
+                <p>For each database home execute the following as root
+                  user:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># opatchauto apply &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;ORACLE_HOME&gt; -ocmrf &lt;ocm response file&gt;<br></pre>
+                <p>ORACLE_HOME: Complete path of Oracle database home.</p>
+                <div align="center">
+                  <div class="inftblnote"><br>
+                    <table class="Note oac_no_warn" summary=""
+                      frame="hsides" rules="groups" border="1"
+                      cellpadding="3" cellspacing="0" width="80%">
+                      <tbody>
+                        <tr>
+                          <td align="left">
+                            <p class="notep1">Note:</p>
+                            The previous command should be executed only
+                            once on any one node if the database home is
+                            shared.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <br>
+                  </div>
+                  <!-- class="inftblnote" --></div>
+              </li>
+              <li>
+                <p>Restart the Oracle databases that you have previously
+                  stopped in step 1.</p>
+                <p>As the database home owner execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl start database -d &lt;db-unique-name&gt;<br></pre>
+              </li>
+            </ol>
+            <a id="BGBGJBDH" name="BGBGJBDH"></a>
+            <p class="subhead2">Case 2: Patching Oracle RAC Database
+              Homes</p>
+            <p>You should use the following instructions if you prefer
+              to patch Oracle RAC databases alone with this patch. Note
+              that a USM only patch cannot be applied to a Database
+              Home.</p>
+            <a id="sthref8" name="sthref8"></a>
+            <p class="subhead2">Case 2.1: Non-Shared Oracle RAC Database
+              Homes</p>
+            <ol>
+              <li>
+                <p>Execute the following command on each node of the
+                  cluster.</p>
+                <p>As root user execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># opatchauto apply &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;Comma separated Oracle home paths&gt; -ocmrf &lt;ocm response file&gt;<br></pre>
+              </li>
+            </ol>
+            <a id="sthref9" name="sthref9"></a>
+            <p class="subhead2">Case 2.2: Shared Oracle RAC Database
+              Homes</p>
+            <ol>
+              <li>
+                <p>Make sure to stop the databases running from the
+                  Oracle RAC database homes that you would like to
+                  patch. Execute the following command to stop each
+                  database.</p>
+                <p>As Oracle database home owner execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl stop database -d &lt;db_unique_name&gt;<br></pre>
+              </li>
+              <li>
+                <p>As root user execute only on the local node.</p>
+                <pre xml:space="preserve" class="oac_no_warn"># opatchauto apply &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;Comma separated Oracle home paths&gt; -ocmrf &lt;ocm response file&gt;<br></pre>
+              </li>
+              <li>
+                <p>Restart the Oracle databases that were previously
+                  stopped in Step 1. Execute the following command for
+                  each database.</p>
+                <p>As Oracle database home owner execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl start database -d &lt;db_unique_name&gt;<br></pre>
+              </li>
+            </ol>
+            <a id="BGBJIIDH" name="BGBJIIDH"></a>
+            <p class="subhead2">Case 3: Patching GI Home Alone</p>
+            <p>You should use the following instructions if you prefer
+              to patch Oracle GI (Grid Infrastructure) home alone with
+              this patch.</p>
+            <a id="sthref10" name="sthref10"></a>
+            <p class="subhead2">Case 3.1: Non-Shared GI Home</p>
+            <p>If the GI home is not shared then use the following
+              instructions to patch the home.</p>
+            <a id="sthref11" name="sthref11"></a>
+            <p class="subhead2">Case 3.1.1: ACFS File System Is Not
+              Configured</p>
+            <p>Follow these instructions in this section if the GI home
+              is not shared and none of the Oracle database homes use
+              ACFS file system for its software files.</p>
+            <p>Execute the following on each node of the cluster.</p>
+            <p>As root user execute:</p>
+            <pre xml:space="preserve" class="oac_no_warn"># opatchauto apply &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;GI_HOME&gt; -ocmrf &lt;ocm response file&gt;<br></pre>
+            <a id="sthref12" name="sthref12"></a>
+            <p class="subhead2">Case 3.1.2: ACFS File System Is
+              Configured</p>
+            <p>Repeat Steps 1 through 6 for each node in the cluster:</p>
+            <ol>
+              <li>
+                <p>From the Oracle database home, stop the Oracle RAC
+                  database running on that node.</p>
+                <p>As the database home owner execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl stop instance â€“d &lt;db-unique-name&gt; -n &lt;node_name&gt;<br></pre>
+              </li>
+              <li>
+                <p>Unmount all ACFS file systems on this node using
+                  instructions in <a href="#BGBHCCJD">Section 2.6</a>.</p>
+              </li>
+              <li>
+                <p>Apply the patch to the GI home on that node using the
+                  <code>opatchauto</code> command.</p>
+                <p>Execute the following command on that node in the
+                  cluster.</p>
+                <p>As root user execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># opatchauto apply &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;GI_HOME&gt; -ocmrf &lt;ocm response file&gt;<br></pre>
+              </li>
+              <li>
+                <p>If the message, "A system reboot is recommended
+                  before using ACFS is shown, then a reboot must be
+                  issued before continuing. Failure to do so will result
+                  in running with an unpatched ACFS\ADVM\OKS driver.</p>
+              </li>
+              <li>
+                <p>Remount ACFS file systems on that node. See <a
+                    href="#BGBEBCFH">Section 2.7</a> for instructions.</p>
+              </li>
+              <li>
+                <p>Restart the Oracle database on that node that you
+                  have previously stopped in Step 1.</p>
+                <p>As the database home owner execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl start database â€“d &lt;db-unique-name&gt; -n &lt;nodename&gt;<br></pre>
+              </li>
+            </ol>
+            <a id="sthref13" name="sthref13"></a>
+            <p class="subhead2">Case 3.2: Shared GI Home</p>
+            <p>Follow these instructions in this section if the GI home
+              is shared.</p>
+            <div align="center">
+              <div class="inftblnote"><br>
+                <table class="Note oac_no_warn" summary=""
+                  frame="hsides" rules="groups" border="1"
+                  cellpadding="3" cellspacing="0" width="80%">
+                  <tbody>
+                    <tr>
+                      <td align="left">
+                        <p class="notep1">Note:</p>
+                        Patching a shared GI home requires shutdown of
+                        Oracle GI stack on all the remote nodes in the
+                        cluster. This also means you need to stop all
+                        Oracle RAC databases that depend on the GI
+                        stack, ASM for data file, or ACFS file system
+                        for database software.</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br>
+              </div>
+              <!-- class="inftblnote" --></div>
+            <ol>
+              <li>
+                <p>Make sure to stop the Oracle databases running from
+                  the Oracle RAC or Oracle RAC One Node database homes.</p>
+                <p>As Oracle database home owner:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl stop database â€“d &lt;db-unique-name&gt; <br></pre>
+              </li>
+              <li>
+                <p>Make sure the ACFS file systems are unmounted on all
+                  the nodes. Use instructions in <a href="#BGBHCCJD">Section
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    2.6</a> for unmounting ACFS file systems.</p>
+              </li>
+              <li>
+                <p>As root user, execute the following on all the remote
+                  nodes to stop the CRS stack:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># &lt;GI_HOME&gt;/bin/crsctl stop crs<br></pre>
+              </li>
+              <li>
+                <p>Execute the following command on the local node</p>
+                <p>As root user execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># opatchauto apply &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;GI_HOME&gt; -ocmrf &lt;ocm response file&gt;<br></pre>
+              </li>
+              <li>
+                <p>If the message, "A system reboot is recommended
+                  before using ACFS is shown, then a reboot must be
+                  issued before continuing. Failure to do so will result
+                  in running with an unpatched ACFS\ADVM\OKS driver.</p>
+              </li>
+              <li>
+                <p>On each remote node:</p>
+                <ol>
+                  <li>
+                    <p>As root user, run:</p>
+                    <pre xml:space="preserve" class="oac_no_warn"># &lt;GI_HOME&gt;/crs/install/rootcrs.pl -postpatch -nonrolling<br></pre>
+                  </li>
+                  <li>
+                    <p>If the message, "A system reboot is recommended
+                      before using ACFS is shown, then a reboot must be
+                      issued before continuing. Failure to do so will
+                      result in running with an unpatched ACFS\ADVM\OKS
+                      driver.</p>
+                  </li>
+                </ol>
+              </li>
+              <li>
+                <p>Mount ACFS file systems. See <a href="#BGBEBCFH">Section
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    2.7</a>.</p>
+              </li>
+              <li>
+                <p>Restart the Oracle databases that you have previously
+                  stopped in Step 1.</p>
+                <p>As the database home owner execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl start database â€“d &lt;db-unique-name&gt;<br></pre>
+              </li>
+            </ol>
+            <a id="BGBGCBGF" name="BGBGCBGF"></a>
+            <p class="subhead2">Case 4: Patching Oracle Restart Home</p>
+            <p>You must keep the Oracle Restart stack up and running
+              when you are patching. Use the following instructions to
+              patch Oracle Restart home.</p>
+            <p>As root user execute:</p>
+            <pre xml:space="preserve" class="oac_no_warn"># opatchauto apply &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -ocmrf &lt;ocm response file&gt;<br></pre>
+            <p>To patch the ACFS software in an Oracle Restart
+              environment:</p>
+            <ol>
+              <li>
+                <p>Unmount all ACFS file systems. Use instructions in <a
+                    href="#BGBHCCJD">Section 2.6</a> for unmounting ACFS
+                  file systems.</p>
+              </li>
+              <li>
+                <p>Run <code>&lt;GridHome&gt;/bin/acfsroot install</code>.</p>
+              </li>
+              <li>
+                <p>If the message, "A system reboot is recommended
+                  before using ACFS is shown, then a reboot must be
+                  issued before continuing. Failure to do so will result
+                  in running with an unpatched ACFS\ADVM\OKS driver.</p>
+              </li>
+              <li>
+                <p>Remount ACFS file systems. See <a href="#BGBEBCFH">Section
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    2.7</a> for instructions.</p>
+              </li>
+            </ol>
+            <a id="BGBJBJJJ" name="BGBJBJJJ"></a>
+            <p class="subhead2">Case 5: Patching a Software Only GI Home
+              Installation or Before the GI Home Is Configured</p>
+            <ol>
+              <li>
+                <p>Apply the CRS patch using.</p>
+                <p>As the GI home owner execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;GI_HOME&gt;/OPatch/opatch napply -oh &lt;GI_HOME&gt; -local &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424/25784424</pre>
+              </li>
+            </ol>
+            <ol>
+            </ol>
+          </div>
+          <br>
+          <p class="subhead2"><a name="Case_6:_Patching_a_Flex_Cluster"></a>Case
+
+
+
+
+
+
+            6: Patching a Flex Cluster<br>
+          </p>
+          Follow these instructions if the configuration is a Flex
+          Cluster<br>
+          <br>
+          First node must be a HUB node.The last node can be either
+          hub/leaf node.<br>
+          <p class="subhead2">Case 6.1: Patching a Flex cluster with 2
+            or more HUB nodes</p>
+          <ol>
+            <li>
+              <p>Make sure GI Stack is up on the first hub node and at
+                least one other hub node.</p>
+            </li>
+            <li>
+              <p>Make sure stack is up on all the leaf nodes</p>
+            </li>
+            <li>
+              <p>On the local node, unmount the ACFS file systems. Use
+                instructions in Section 2.6 for unmounting ACFS file
+                systems.</p>
+            </li>
+            <li>
+              <p>On the local node, apply the patch to the GI home and
+                to the Database home.</p>
+            </li>
+            <li>
+              <p>As root user, execute the following command:<br>
+                <br>
+                &nbsp;&nbsp;&nbsp; # opatchauto apply
+                &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -ocmrf &lt;ocm
+                response file&gt;<br>
+                <br>
+                &nbsp;&nbsp;&nbsp; This operation will patch both the
+                CRS home and the Database home.</p>
+            </li>
+            <li>
+              <p>If the message, "A system reboot is recommended before
+                using ACFS is shown, then a reboot must be issued
+                before continuing. Failure to do so will result in
+                running with an unpatched ACFS\ADVM\OKS driver.</p>
+            </li>
+            <li>
+              <p>The opatchauto command will restart the stack on the
+                local node and restart the Databases on the local node.<br>
+                <br>
+                &nbsp;&nbsp;&nbsp; Repeat Steps 3 through 6 for all
+                remaining nodes of the cluster.<br>
+              </p>
+            </li>
+          </ol>
+          <br>
+          <p class="subhead2">Case 6.2: Patching a Flex cluster with
+            Only one&nbsp; HUB nodes</p>
+          This configuration can be patched only in NON-Rolling fashion.<br>
+          <ol>
+            <li>
+              <p>Make sure GI Stack is down on all the leaf nodes</p>
+            </li>
+            <li>
+              <p>On the local node, unmount the ACFS file systems. Use
+                instructions in Section 2.6 for unmounting ACFS file
+                systems.</p>
+            </li>
+            <li>
+              <p>On the local node, apply the patch to the GI home and
+                to the Database home.</p>
+            </li>
+            <li>
+              <p>As root user, execute the following command:<br>
+                <br>
+                &nbsp;&nbsp;&nbsp; # opatchauto apply
+                &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -ocmrf &lt;ocm
+                response file&gt;<br>
+                <br>
+                &nbsp;&nbsp;&nbsp; This operation will patch both the
+                CRS home and the Database home.</p>
+            </li>
+            <li>
+              <p>If the message, "A system reboot is recommended before
+                using ACFS is shown, then a reboot must be issued
+                before continuing. Failure to do so will result in
+                running with an unpatched ACFS\ADVM\OKS driver.</p>
+            </li>
+            <li>
+              <p>The opatchauto command will restart the stack on the
+                local node and restart the Databases on the local node.<br>
+                <br>
+                &nbsp;&nbsp;&nbsp; Repeat Steps 2 through 5 for all
+                remaining nodes of the cluster.</p>
+            </li>
+          </ol>
+          <div class="sect2"><!-- infolevel="all" infotype="General" -->
+            <h3 class="sect2"><span class="secnum">2.4</span> Patch
+              Post-Installation Instructions</h3>
+            <p>After installing the patch, perform the following
+              actions:</p>
+            <ol>
+              <li>
+                <p>Remount ACFS file systems. See <a href="#BGBEBCFH">Section
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    2.7</a> for instructions.</p>
+              </li>
+            </ol>
+            <a id="BGBJAHIE" name="BGBJAHIE"></a><!-- class="sect2" -->
+            <a id="BABEHDHB" name="BABEHDHB"></a></div>
+          <br>
+          <div class="sect2"><!-- infolevel="all" infotype="General" -->
+            <h3 class="sect2"><span class="secnum">2.5</span> Patch
+              Deinstallation</h3>
+            <p>You can use the following steps to roll back patches.
+              Choose the instructions that apply to your needs.</p>
+            <div align="center">
+              <div class="inftblnote"><br>
+              </div>
+              <!-- class="inftblnote" --></div>
+            <ul>
+              <li>
+                <p><a href="#BGBGBFDB">Case D1: Rolling Back the Oracle
+                    RAC Database Homes and GI Homes Together</a></p>
+              </li>
+              <li>
+                <p><a href="#BGBIJCHA">Case D2: Rolling Back from the
+                    Oracle RAC Database Homes</a></p>
+              </li>
+              <li>
+                <p><a href="#BGBDIGEA">Case D3: Rolling Back from the GI
+                    Home Alone</a></p>
+              </li>
+              <li>
+                <p><a href="#BGBGGJCJ">Case D4: Rolling Back the Patch
+                    from Oracle Restart Home</a></p>
+              </li>
+              <li>
+                <p><a href="#BIHDBDFJ">Case D5: Rolling Back the Patch
+                    from a Software Only GI Home Installation or Before
+                    the GI Home is Configured</a></p>
+              </li>
+              <li><a href="#Case_D6:_Rolling_Back_the_Patch_from_a">Case
+                  D6:Rolling Back the Patch from a Flex Cluster</a><br>
+              </li>
+            </ul>
+            <a id="BGBGBFDB" name="BGBGBFDB"></a>
+            <p class="subhead2">Case D1: Rolling Back the Oracle RAC
+              Database Homes and GI Homes Together</p>
+            <p>Follow the instructions in this section if you would like
+              to rollback the patch from all the Oracle RAC database
+              homes of release version <font face="Arial"><span
+                  style="" name="OracleReview" id="5" class="segment">12.2.0.1.0</span></font>
+              and the <font face="Arial"><span style=""
+                  name="OracleReview" id="5" class="segment">12.2.0.1.0</span></font>
+              GI home.</p>
+            <a id="sthref14" name="sthref14"></a>
+            <p class="subhead2">Case D1.1: GI Home Is Not Shared</p>
+            <a id="sthref15" name="sthref15"></a>
+            <p class="subhead2">Case D1.1.1: ACFS File System Is Not
+              Configured and Database Homes Are Not Shared</p>
+            <p>Follow these instructions in this section if the GI home
+              is not shared and none of the Oracle database homes is
+              shared.</p>
+            <p>As root user, execute the following command on each node
+              of the cluster.</p>
+            <pre xml:space="preserve" class="oac_no_warn"># opatchauto rollback &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 <br></pre>
+            <p>If the message, "A system reboot is recommended before
+              using ACFS is shown, then a reboot must be issued before
+              continuing. Failure to do so will result in running with
+              an unpatched ACFS\ADVM\OKS driver.</p>
+            <a id="sthref16" name="sthref16"></a>
+            <p class="subhead2">Case D1.1.AB: GI Home and the Database
+              Home Together, the GI Home Is Not Shared, the Database
+              Home Is Not Shared</p>
+            <p>For each node, perform the following steps:</p>
+            <ol>
+              <li>
+                <p>On the local node, unmount the ACFS file systems. Use
+                  instructions in <a href="#BGBHCCJD">Section 2.6</a>
+                  for unmounting ACFS file systems.</p>
+              </li>
+              <li>
+                <p>On the local node, roll back the patch to the GI home
+                  and to the Database home.</p>
+                <p>As root user, execute the following command:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># opatchauto rollback &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 <br></pre>
+                <p>This operation will patch both the CRS home and the
+                  Database home.</p>
+              </li>
+              <li>
+                <p>If the message, "A system reboot is recommended
+                  before using ACFS is shown, then a reboot must be
+                  issued before continuing. Failure to do so will result
+                  in running with an unpatched ACFS\ADVM\OKS driver.</p>
+              </li>
+              <li>
+                <p>The <code>opatchauto</code> command will restart the
+                  stack on the local node and restarts the Database on
+                  the local node.</p>
+              </li>
+              <li>
+                <p>Repeat Steps 1 through 3 for all remaining nodes of
+                  the cluster.</p>
+              </li>
+            </ol>
+            <a id="sthref18" name="sthref18"></a>
+            <p class="subhead2">Case D1.1.2B: GI Home and Database Home
+              Together, the GI Home Is Not Shared, the Database Home Is
+              Shared</p>
+            <ol>
+              <li>
+                <p>From the Oracle database home, make sure to stop the
+                  Oracle RAC databases running on all nodes.</p>
+                <p>As the database home owner execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl stop database -d &lt;db-unique-name&gt;<br></pre>
+              </li>
+              <li>
+                <p>On the 1st node, unmount the ACFS file systems. Use
+                  instructions in <a href="#BGBHCCJD">Section
+
+
+
+
+
+
+
+
+                    2.6</a> for unmounting ACFS file systems.</p>
+              </li>
+              <li>
+                <p>On the 1st node, to roll back the patch from the GI
+                  Home using the <code>opatch auto</code> command.</p>
+                <p>As root user, execute the following command:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># opatchauto rollback &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;GI_HOME&gt; <br></pre>
+              </li>
+              <li>
+                <p>If the message, "A system reboot is recommended
+                  before using ACFS is shown, then a reboot must be
+                  issued before continuing. Failure to do so will result
+                  in running with an unpatched ACFS\ADVM\OKS driver.</p>
+              </li>
+              <li>
+                <p>On the 1st node, remount ACFS file systems. See <a href="#BGBEBCFH">Section 
+
+
+
+
+
+
+
+                    2.7</a> for instructions.</p>
+              </li>
+              <li>
+                <p>On the 1st node, roll back the patch to the Database
+                  home using the <code>opatch auto</code> command. This
+                  operation will rollback the patch to the Database home
+                  across the cluster given that it is a shared ACFS
+                  home. Note that a USM only patch cannot be applied to
+                  a Database home.</p>
+                <p>As root user, execute the following command:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># opatchauto rollback &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;DATABASE_HOME&gt; <br></pre>
+              </li>
+              <li>
+                <p>On the 1st node only, restart the Oracle instance
+                  which you have previously stopped in Step 1.</p>
+                <p>As the database home owner execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl start instance -d &lt;db-unique-name&gt; -n &lt;nodename&gt;<br></pre>
+              </li>
+              <li>
+                <p>On the 2nd (next) node, unmount the ACFS file
+                  systems. Use instructions in <a href="#BGBHCCJD">Section
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    2.6</a> for unmounting ACFS file systems.</p>
+              </li>
+              <li>
+                <p>On the 2nd node, roll back the patch to GI Home using
+                  the <code>opatch auto</code> command.</p>
+                <p>As root user, execute the following command:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># opatchauto rollback &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;GI_HOME&gt; <br></pre>
+              </li>
+              <li>
+                <p>If the message, "A system reboot is recommended
+                  before using ACFS is shown, then a reboot must be
+                  issued before continuing. Failure to do so will result
+                  in running with an unpatched ACFS\ADVM\OKS driver.</p>
+              </li>
+              <li>
+                <p>On the 2nd node, running the <code>opatch auto</code>
+                  command in Step 9 will restart the stack.</p>
+              </li>
+              <li>
+                <p>On the 2nd node, remount ACFS file systems. See <a href="#BGBEBCFH">Section
+
+
+
+
+
+
+
+
+                    2.7</a> for instructions.</p>
+              </li>
+              <li>
+                <p>On the 2nd node only, restart the Oracle instance
+                  which you have previously stopped in Step 1.</p>
+                <p>As the database home owner execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl start instance -d &lt;db-unique-name&gt; -n &lt;nodename&gt;<br></pre>
+              </li>
+              <li>
+                <p>Repeat Steps 7 through 13 for all remaining nodes of
+                  the cluster.</p>
+              </li>
+            </ol>
+            <p><a id="sthref17" name="sthref17"></a></p>
+            <p class="subhead2">Case D1.2 GI Home Is Shared</p>
+            <p>Follow these instructions in this section if the GI home
+              is shared.</p>
+            <div align="center">
+              <div class="inftblnote"><br>
+                <table class="Note oac_no_warn" summary=""
+                  frame="hsides" rules="groups" border="1"
+                  cellpadding="3" cellspacing="0" width="80%">
+                  <tbody>
+                    <tr>
+                      <td align="left">
+                        <p class="notep1">Note:</p>
+                        An operation on a shared GI home requires
+                        shutdown of the Oracle GI stack on all the
+                        remote nodes in the cluster. This also means you
+                        need to stop all Oracle RAC databases that
+                        depend on the GI stack, ASM for data file, or
+                        ACFS file system.</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br>
+              </div>
+              <!-- class="inftblnote" --></div>
+            <ol>
+              <li>
+                <p>Make sure to stop the Oracle databases running from
+                  the Oracle RAC database homes.</p>
+                <p>As Oracle database home owner:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl stop database -d &lt;db-unique-name&gt;<br></pre>
+                <p>ORACLE_HOME: Complete path of the Oracle database
+                  home.</p>
+              </li>
+              <li>
+                <p>Make sure the ACFS file systems are unmounted on all
+                  the nodes. Use instructions in <a href="#BGBHCCJD">Section
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    2.6</a> for un-mounting ACFS file systems.</p>
+              </li>
+              <li>
+                <p>As root user, execute the following on all the remote
+                  nodes to stop the CRS stack:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># &lt;GI_HOME&gt;/bin/crsctl stop crs<br></pre>
+              </li>
+              <li>
+                <p>Roll back the patch from the GI home.</p>
+                <p>On local node, as root user, execute the following
+                  command:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># opatchauto rollback &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;GI_HOME&gt; <br></pre>
+              </li>
+              <li>
+                <p>If the message, "A system reboot is recommended
+                  before using ACFS is shown, then a reboot must be
+                  issued before continuing. Failure to do so will result
+                  in running with an unpatched ACFS\ADVM\OKS driver.</p>
+              </li>
+              <li>
+                <p>Start the Oracle GI stack on all the remote nodes.</p>
+                <p>As root user execute:</p>
+                <ol>
+                  <li>
+                    <p>As root user, run:</p>
+                    <pre xml:space="preserve" class="oac_no_warn"># &lt;GI_HOME&gt;/crs/install/rootcrs.pl -postpatch -nonrolling<br></pre>
+                  </li>
+                  <li>
+                    <p>If the message, "A system reboot is recommended
+                      before using ACFS is shown, then a reboot must be
+                      issued before continuing. Failure to do so will
+                      result in running with an unpatched ACFS\ADVM\OKS
+                      driver.</p>
+                  </li>
+                </ol>
+              </li>
+              <li>
+                <p>Mount ACFS file systems. See <a href="#BGBEBCFH">Section
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    2.7</a>.</p>
+              </li>
+              <li>
+                <p>For each Oracle RAC database home, execute the
+                  following command on each node if the database home
+                  software is not shared. Note that a USM only patch
+                  cannot be applied to a Database home.</p>
+                <p>For each database home, execute the following as root
+                  user:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># opatchauto rollback &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;ORACLE_HOME&gt; <br></pre>
+                <p>ORACLE_HOME: Complete path of Oracle database home.</p>
+                <div align="center">
+                  <div class="inftblnote"><br>
+                    <table class="Note oac_no_warn" summary=""
+                      frame="hsides" rules="groups" border="1"
+                      cellpadding="3" cellspacing="0" width="80%">
+                      <tbody>
+                        <tr>
+                          <td align="left">
+                            <p class="notep1">Note:</p>
+                            The previous command should be executed only
+                            once on any one node if the database home is
+                            shared.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <br>
+                  </div>
+                  <!-- class="inftblnote" --></div>
+              </li>
+              <li>
+                <p>Restart the Oracle databases that you have previously
+                  stopped in Step 1.</p>
+                <p>As the database home owner execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl start database -d &lt;db-unique-name&gt;<br></pre>
+              </li>
+            </ol>
+            <a id="BGBIJCHA" name="BGBIJCHA"></a>
+            <p class="subhead2">Case D2: Rolling Back from the Oracle
+              RAC Database Homes</p>
+            <p>You should use the following instructions if you prefer
+              to roll back the patch from Oracle RAC databases homes
+              alone.</p>
+            <a id="sthref19" name="sthref19"></a>
+            <p class="subhead2">Case D2.1: Non-Shared Oracle RAC
+              Database Homes</p>
+            <p>Note that a USM only patch cannot be applied to a
+              Database home.</p>
+            <p>Execute the following command on each node of the
+              cluster.</p>
+            <p>As root user execute:</p>
+            <pre xml:space="preserve" class="oac_no_warn"># opatchauto rollback &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;Comma separated Oracle home paths&gt; <br></pre>
+            <a id="sthref20" name="sthref20"></a>
+            <p class="subhead2">Case D2.2: Shared Oracle RAC Database
+              Homes</p>
+            <p>Note that a USM only patch cannot be applied to a
+              Database home.</p>
+            <ol>
+              <li>
+                <p>Make sure to stop the databases running from the
+                  Oracle RAC database homes from which you would like to
+                  roll back the patch. Execute the following command to
+                  stop each database.</p>
+                <p>As Oracle database home owner execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl stop database -d &lt;db_unique_name&gt;<br></pre>
+              </li>
+              <li>
+                <p>As root user execute only on the local node.</p>
+                <pre xml:space="preserve" class="oac_no_warn"># opatchauto rollback &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;Comma separated Oracle home paths&gt; <br></pre>
+              </li>
+              <li>
+                <p>Restart the Oracle databases that were previously
+                  stopped in Step 1. Execute the following command for
+                  each database.</p>
+                <p>As Oracle database home owner execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl start database -d &lt;db_unique_name&gt;<br></pre>
+              </li>
+            </ol>
+            <a id="BGBDIGEA" name="BGBDIGEA"></a>
+            <p class="subhead2">Case D3: Rolling Back from the GI Home
+              Alone</p>
+            <p>You should use the following instructions if you prefer
+              to roll back the patch from the Oracle GI (Grid
+              Infrastructure) home alone.</p>
+            <a id="sthref21" name="sthref21"></a>
+            <p class="subhead2">Case D3.1 Shared GI Home</p>
+            <p>Follow these instructions in this section if the GI home
+              is shared.</p>
+            <div align="center">
+              <div class="inftblnote"><br>
+                <table class="Note oac_no_warn" summary=""
+                  frame="hsides" rules="groups" border="1"
+                  cellpadding="3" cellspacing="0" width="80%">
+                  <tbody>
+                    <tr>
+                      <td align="left">
+                        <p class="notep1">Note:</p>
+                        An operation in a shared GI home requires
+                        shutdown of Oracle GI stack on all the remote
+                        nodes in the cluster. This also means you need
+                        to stop all Oracle RAC databases that depend on
+                        the GI stack, ASM for data file, or ACFS file
+                        system for database software.</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br>
+              </div>
+              <!-- class="inftblnote" --></div>
+            <ol>
+              <li>
+                <p>Make sure to stop the Oracle databases running from
+                  the Oracle RAC database homes.</p>
+                <p>As Oracle database home owner:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl stop database -d &lt;db-unique-name&gt;<br></pre>
+              </li>
+              <li>
+                <p>Make sure the ACFS file systems are unmounted on all
+                  the nodes. Use instructions in <a href="#BGBHCCJD">Section
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    2.6</a> for unmounting ACFS file systems.</p>
+              </li>
+              <li>
+                <p>As root user, execute the following on all the remote
+                  nodes to stop the CRS stack:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># &lt;GI_HOME&gt;/bin/crsctl stop crs<br></pre>
+              </li>
+              <li>
+                <p>Execute the following command on the local node.</p>
+                <p>As root user execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># opatchauto rollback &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;GI_HOME&gt; <br></pre>
+              </li>
+              <li>
+                <p>If the message, "A system reboot is recommended
+                  before using ACFS is shown, then a reboot must be
+                  issued before continuing. Failure to do so will result
+                  in running with an unpatched ACFS\ADVM\OKS driver.</p>
+              </li>
+              <li>
+                <p>Start the Oracle GI stack on all the remote nodes.</p>
+                <p>As root user execute:</p>
+                <ol>
+                  <li>
+                    <p>As root user, run:</p>
+                    <pre xml:space="preserve" class="oac_no_warn"># &lt;GI_HOME&gt;/crs/install/rootcrs.pl -postpatch -nonrolling<br></pre>
+                  </li>
+                  <li>
+                    <p>If the message, "A system reboot is recommended
+                      before using ACFS is shown, then a reboot must be
+                      issued before continuing. Failure to do so will
+                      result in running with an unpatched ACFS\ADVM\OKS
+                      driver.</p>
+                  </li>
+                </ol>
+              </li>
+              <li>
+                <p>Mount ACFS file systems. See <a href="#BGBEBCFH">Section
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    2.7</a>.</p>
+              </li>
+              <li>
+                <p>Restart the Oracle databases that you have previously
+                  stopped in Step 1.</p>
+                <p>As the database home owner execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl start database -d &lt;db-unique-name&gt;<br></pre>
+              </li>
+            </ol>
+            <a id="BGBBIFHD" name="BGBBIFHD"></a>
+            <p class="subhead2">Case D3.2: Non-Shared GI Home</p>
+            <p>If the GI home is not shared, then use the following
+              instructions to roll back the patch from the GI home.</p>
+            <a id="sthref22" name="sthref22"></a>
+            <p class="subhead2">Case D3.2.1: ACFS File System Is Not
+              Configured</p>
+            <p>Follow these instructions in this section if the GI home
+              is not shared and none of the Oracle database homes is
+              shared.</p>
+            <p>Execute the following on each node of the cluster.</p>
+            <p>As root user execute:</p>
+            <pre xml:space="preserve" class="oac_no_warn"># opatchauto rollback &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;GI_HOME&gt; <br></pre>
+            <p>If the message, "A system reboot is recommended before
+              using ACFS is shown, then a reboot must be issued before
+              continuing. Failure to do so will result in running with
+              an unpatched ACFS\ADVM\OKS driver.</p>
+            <a id="sthref23" name="sthref23"></a>
+            <p class="subhead2">Case D3.2.2: ACFS File System Is
+              Configured</p>
+            <p>Repeat Steps 1 through 6 for each node in the cluster:</p>
+            <ol>
+              <li>
+                <p>From the Oracle database home, stop the Oracle RAC
+                  database running on that node.</p>
+                <p>As the database home owner execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl stop instance -d &lt;db-unique-name&gt; -n &lt;node_name&gt;<br></pre>
+              </li>
+              <li>
+                <p>Make sure the ACFS file systems are unmounted on that
+                  node. Use instructions in <a href="#BGBHCCJD">Section
+                    2.6</a> for unmounting ACFS file systems.</p>
+              </li>
+              <li>
+                <p>Roll back the patch to the GI home on that node using
+                  the <code>opatchauto</code> command.</p>
+                <p>Execute the following command on each node in the
+                  cluster.</p>
+                <p>As root user execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># opatchauto rollback &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;GI_HOME&gt; <br></pre>
+              </li>
+              <li>
+                <p>If the message, "A system reboot is recommended
+                  before using ACFS is shown, then a reboot must be
+                  issued before continuing. Failure to do so will result
+                  in running with an unpatched ACFS\ADVM\OKS driver.</p>
+              </li>
+              <li>
+                <p>Remount ACFS file systems on that node. See <a
+                    href="#BGBEBCFH">Section 2.7</a> for instructions.</p>
+              </li>
+              <li>
+                <p>Restart the Oracle database on that node that you
+                  have previously stopped in Step 1.</p>
+                <p>As the database home owner execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl start instance -d &lt;db-unique-name&gt; -n &lt;node_name&gt;<br></pre>
+              </li>
+            </ol>
+            <a id="BGBGGJCJ" name="BGBGGJCJ"></a>
+            <p class="subhead2">Case D4: Rolling Back the Patch from
+              Oracle Restart Home</p>
+            <p>You must keep the Oracle Restart stack up and running
+              when you are rolling back the patch from the Oracle
+              Restart home. Use the following instructions to roll back
+              the patch from the Oracle Restart home.</p>
+            <ol>
+              <li>
+                <p>As root user execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># opatchauto rollback &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 -oh &lt;Oracle-Restart-home&gt; <br></pre>
+              </li>
+              <li>
+                <p>If the message, "A system reboot is recommended
+                  before using ACFS is shown, then a reboot must be
+                  issued before continuing. Failure to do so will result
+                  in running with an unpatched ACFS\ADVM\OKS driver.</p>
+              </li>
+            </ol>
+            <p>To update ACFS software in an Oracle Restart
+              configuration:</p>
+            <ol>
+              <li>
+                <p>Unmount all ACFS file systems. Use instructions in <a
+                    href="#BGBHCCJD">Section 2.6</a> for unmounting ACFS
+                  file systems.</p>
+              </li>
+              <li>
+                <p>Update ACFS: <code>&lt;Oracle-Restart-home&gt;/bin/acfsroot
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    install</code></p>
+              </li>
+              <li>
+                <p>Remount ACFS file systems. See <a href="#BGBEBCFH">Section
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    2.7</a> for instructions.</p>
+              </li>
+            </ol>
+            <a id="BIHDBDFJ" name="BIHDBDFJ"></a>
+            <p class="subhead2">Case D5: Rolling Back the Patch from a
+              Software Only GI Home Installation or Before the GI Home
+              is Configured</p>
+            <ol>
+              <li>
+                <p>Roll back the CRS patch.</p>
+                <p>As the GI home owner execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn">$ &lt;GI_HOME&gt;/OPatch/opatch rollback -local -id 25784424 -oh &lt;GI_HOME&gt; <br></pre>
+              </li>
+            </ol>
+            <p><br>
+            </p>
+            <ol>
+            </ol>
+          </div>
+          <!-- class="sect2" --> <br>
+          <p class="subhead2"><a
+              name="Case_D6:_Rolling_Back_the_Patch_from_a"></a>Case D6:
+            Rolling Back the Patch from a Flex Cluster<br>
+          </p>
+          Follow these instructions if the configuration is a Flex
+          Cluster<br>
+          <br>
+          First node must be a HUB node.The last node can be either
+          hub/leaf node.<br>
+          <p class="subhead2">Case D6.1: Rolling Back the Patch from a
+            Flex cluster with 2 or more HUB nodes</p>
+          <ol>
+            <li>
+              <p>Make sure GI Stack is up on the first hub node and at
+                least one other hub node.</p>
+            </li>
+            <li>
+              <p>Make sure stack is up on all the leaf nodes</p>
+            </li>
+            <li>
+              <p>On the local node, unmount the ACFS file systems. Use
+                instructions in Section 2.6 for unmounting ACFS file
+                systems.</p>
+            </li>
+            <li>
+              <p>On the local node, apply the patch to the GI home and
+                to the Database home.</p>
+            </li>
+            <li>
+              <p>As root user, execute the following command:<br>
+                <br>
+                &nbsp;&nbsp;&nbsp; # opatchauto rollback
+                &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 <br>
+                <br>
+                &nbsp;&nbsp;&nbsp; This operation will patch both the
+                CRS home and the Database home.</p>
+            </li>
+            <li>
+              <p>If the message, "A system reboot is recommended before
+                using ACFS is shown, then a reboot must be issued
+                before continuing. Failure to do so will result in
+                running with an unpatched ACFS\ADVM\OKS driver.</p>
+            </li>
+            <li>
+              <p>The opatchauto command will restart the stack on the
+                local node and restart the Databases on the local node.<br>
+                <br>
+                &nbsp;&nbsp;&nbsp; Repeat Steps 3 through 6 for all
+                remaining nodes of the cluster.<br>
+              </p>
+            </li>
+          </ol>
+          <br>
+          <p class="subhead2">Case D6.2: Rolling Back the Patch from a
+            Flex cluster with Only one&nbsp; HUB nodes</p>
+          This configuration can be patched only in NON-Rolling fashion.<br>
+          <ol>
+            <li>
+              <p>Make sure GI Stack is down on all the leaf nodes</p>
+            </li>
+            <li>
+              <p>On the local node, unmount the ACFS file systems. Use
+                instructions in Section 2.6 for unmounting ACFS file
+                systems.</p>
+            </li>
+            <li>
+              <p>On the local node, apply the patch to the GI home and
+                to the Database home.</p>
+            </li>
+            <li>
+              <p>As root user, execute the following command:<br>
+                <br>
+                &nbsp;&nbsp;&nbsp; # opatchauto rollback
+                &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424 <br>
+                <br>
+                &nbsp;&nbsp;&nbsp; This operation will patch both the
+                CRS home and the Database home.</p>
+            </li>
+            <li>
+              <p>If the message, "A system reboot is recommended before
+                using ACFS is shown, then a reboot must be issued
+                before continuing. Failure to do so will result in
+                running with an unpatched ACFS\ADVM\OKS driver.</p>
+            </li>
+            <li>
+              <p>The opatchauto command will restart the stack on the
+                local node and restart the Databases on the local node.<br>
+                <br>
+                &nbsp;&nbsp;&nbsp; Repeat Steps 2 through 5 for all
+                remaining nodes of the cluster.</p>
+            </li>
+          </ol>
+          <a id="BGBHCCJD" name="BGBHCCJD"></a>
+          <div class="sect2"><!-- infolevel="all" infotype="General" -->
+            <h3 class="sect2"><span class="secnum">2.6</span> Unmounting
+              ACFS File Systems</h3>
+            <p>ACFS file systems can be used by Oracle RAC for hosting
+              software files for the database. It can also be used as a
+              general purpose file system for non-database files. The
+              ACFS file system is managed and administered by the Oracle
+              GRID Infrastructure. So ACFS file systems will be impacted
+              when shutting down the GI stack for patching GI homes.</p>
+            <p>Shut down the processes using the software files on ACFS
+              and then unmount the ACFS file system.</p>
+            <div align="center">
+              <div class="inftblnote"><br>
+                <table class="Note oac_no_warn" summary=""
+                  frame="hsides" rules="groups" border="1"
+                  cellpadding="3" cellspacing="0" width="80%">
+                  <tbody>
+                    <tr>
+                      <td align="left">
+                        <p class="notep1">Note:</p>
+                        Make sure to stop the non-Oracle processes that
+                        use ACFS file systems.</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br>
+              </div>
+              <!-- class="inftblnote" --></div>
+            <p>If the ACFS file system is used by Oracle database
+              software, then perform Steps 1 and 2.</p>
+            <ol>
+              <li>
+                <p>Execute the following command to find the names of
+                  the CRS managed ACFS file system resource.</p>
+                <pre xml:space="preserve" class="oac_no_warn"># crsctl stat res -w "TYPE = ora.acfs.type" -p | grep VOLUME<br></pre>
+              </li>
+              <li>
+                <p>Execute the following command to stop the CRS managed
+                  ACFS file system resource with the resource name found
+                  from Step 1.</p>
+                <p>As root user execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># srvctl stop filesystem -d &lt;volume device path&gt; -n &lt;node to stop file system on&gt;<br></pre>
+              </li>
+            </ol>
+            <p>If the ACFS file system is not used for Oracle Database
+              software and is registered in the ACFS registry, perform
+              the following steps.</p>
+            <ol>
+              <li>
+                <p>Execute the following command to find all ACFS file
+                  system mount points.</p>
+                <p>As the root user execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># /sbin/acfsutil registry<br></pre>
+              </li>
+              <li>
+                <p>Unmount ACFS file systems found in Step 1.</p>
+                <p>As the root user execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># /bin/umount &lt;mount-point&gt;<br></pre>
+                <div align="center">
+                  <div class="inftblnote"><br>
+                    <table class="Note oac_no_warn" summary=""
+                      frame="hsides" rules="groups" border="1"
+                      cellpadding="3" cellspacing="0" width="80%">
+                      <tbody>
+                        <tr>
+                          <td align="left">
+                            <p class="notep1">Note:</p>
+                            <p>On Solaris operating system use: <code>/sbin/umount</code>.</p>
+                            <p>On AIX operating system, use: <code>/etc/umount</code>.</p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <br>
+                  </div>
+                  <!-- class="inftblnote" --></div>
+              </li>
+              <li>
+                <p>Verify that the ACFS file systems are unmounted.
+                  Execute the following command to verify.</p>
+                <p>As the root user execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># /sbin/acfsutil info fs<br></pre>
+                <p>The previous command should return the following
+                  message if there is no ACFS file systems mounted.</p>
+                <pre xml:space="preserve" class="oac_no_warn">"acfsutil info fs: ACFS-03036: no mounted ACFS file systems"<br></pre>
+              </li>
+            </ol>
+          </div>
+          <!-- class="sect2" --> <a id="BGBEBCFH" name="BGBEBCFH"></a>
+          <div class="sect2"><!-- infolevel="all" infotype="General" -->
+            <h3 class="sect2"><span class="secnum">2.7</span> Mounting
+              ACFS File Systems</h3>
+            <p>If the ACFS file system is used by Oracle database
+              software, then perform Steps 1 and 2.</p>
+            <ol>
+              <li>
+                <p>Execute the following command to find the names of
+                  the CRS managed ACFS file system resource.</p>
+                <p>As root user execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># crsctl stat res -w "TYPE = ora.acfs.type" -p | grep VOLUME<br></pre>
+              </li>
+              <li>
+                <p>Execute the following command to start and mount the
+                  CRS managed ACFS file system resource with the
+                  resource name found from Step 1.</p>
+                <p>As root user execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># srvctl start filesystem -d &lt;volume device path&gt; -n &lt;node to start file system on&gt;<br></pre>
+              </li>
+            </ol>
+            <p>If the ACFS file system is not used for Oracle Database
+              software and is registered in the ACFS registry, these
+              file systems should get automatically mounted when the CRS
+              stack comes up. Perform Steps 1 and 2 if it is not already
+              mounted.</p>
+            <ol>
+              <li>
+                <p>Execute the following command to find all ACFS file
+                  system mount points.</p>
+                <p>As the root user execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># /sbin/acfsutil registry<br></pre>
+              </li>
+              <li>
+                <p>Mount ACFS file systems found in Step 1.</p>
+                <p>As the root user execute:</p>
+                <pre xml:space="preserve" class="oac_no_warn"># /bin/mount &lt;mount-point&gt;<br></pre>
+                <div align="center">
+                  <div class="inftblnote"><br>
+                    <table class="Note oac_no_warn" summary=""
+                      frame="hsides" rules="groups" border="1"
+                      cellpadding="3" cellspacing="0" width="80%">
+                      <tbody>
+                        <tr>
+                          <td align="left">
+                            <p class="notep1">Note:</p>
+                            <p>On Solaris operating system use: <code>/sbin/mount</code>.</p>
+                            <p>On AIX operating system, use: <code>/etc/mount</code>.</p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <br>
+                  </div>
+                  <!-- class="inftblnote" --></div>
+              </li>
+            </ol>
+          </div>
+          <!-- class="sect2" --> <a id="BGBCIBDB" name="BGBCIBDB"></a>
+          <div class="sect2"><br>
+          </div>
+          <!-- class="sect2" --></div>
+        <!-- class="sect1" --> <a id="BGBGADGB" name="BGBGADGB"></a>
+        <div class="sect1"><!-- infolevel="all" infotype="General" -->
+          <h2 class="sect1"><span class="secnum">3</span> Known Issues</h2>
+          <p>For information about OPatch issues, see My Oracle Support
+            <a
+href="https://support.oracle.com/CSP/main/article?cmd=show&amp;type=NOT&amp;id=293369.1">Note
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              293369.1</a> <span class="italic">OPatch documentation
+              list</span>.</p>
+          <p>For issues documented after the release of this PSUs, see
+            My Oracle Support Note <a
+href="https://support.oracle.com/CSP/main/article?cmd=show&amp;type=NOT&amp;id=1399142.1">1399142.1</a>
+            <span class="italic">11.2.0.3.X Grid Infrastructure
+              Bundle/PSU Known Issues</span>.</p>
+        </div>
+        <!-- class="sect1" --> <a id="CHDDJHFI" name="CHDDJHFI"></a>
+        <div class="sect1"><!-- infolevel="all" infotype="General" -->
+          <h2 class="sect1"><span class="secnum">4</span> References</h2>
+          <p>The following documents are references for this patch.</p>
+          <p>Note <a
+href="https://support.oracle.com/CSP/main/article?cmd=show&amp;type=NOT&amp;id=293369.1">293369.1</a>
+            <span class="italic">OPatch documentation list</span></p>
+          <p>Note <a
+href="https://support.oracle.com/CSP/main/article?cmd=show&amp;type=NOT&amp;id=360870.1">360870.1</a>
+            <span class="italic">Impact of Java Security Vulnerabilities
+              on Oracle Products</span></p>
+          <p>Note <a
+href="https://support.oracle.com/CSP/main/article?cmd=show&amp;type=NOT&amp;id=468959.1">468959.1</a>
+            <span class="italic">Enterprise Manager Grid Control Known
+              Issues</span></p>
+          <p>Note <a
+href="https://support.oracle.com/CSP/main/article?cmd=show&amp;type=NOT&amp;id=1339140.1">1339140.1</a>
+            <span class="italic">Opatch/Patch Questions/Issues for
+              Oracle Clusterware (Grid Infrastructure or CRS) and RAC
+              Environments</span></p>
+        </div>
+        <!-- class="sect1" --> <a id="BGBCJIBD" name="BGBCJIBD"></a>
+        <div class="sect1"><!-- infolevel="all" infotype="General" -->
+          <h2 class="sect1"><span class="secnum">5</span> Manual Steps
+            for Apply/Rollback Patch</h2>
+          <a id="sthref24" name="sthref24"></a>
+          <p class="subhead2">Steps for Applying the Patch</p>
+          <div align="center">
+            <div class="inftblnote"><br>
+              <br>
+            </div>
+            <!-- class="inftblnote" --></div>
+          <p>Execute the following on each node of the cluster in
+            non-shared CRS and DB home environment to apply the patch.</p>
+          <ol>
+            <li>
+              <p>Stop the CRS managed resources running from DB homes.</p>
+              <p>If this is a GI Home environment, as the database home
+                owner execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl stop home -o &lt;ORACLE_HOME&gt; -s &lt;status file location&gt; -n &lt;node name&gt;<br></pre>
+              <p>If this is an Oracle Restart Home environment, as the
+                database home owner execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl stop home -o &lt;ORACLE_HOME&gt; -s &lt;status file location&gt;<br></pre>
+              <div align="center">
+                <div class="inftblnote"><br>
+                  <table class="Note oac_no_warn" summary=""
+                    frame="hsides" rules="groups" border="1"
+                    cellpadding="3" cellspacing="0" width="80%">
+                    <tbody>
+                      <tr>
+                        <td align="left">
+                          <p class="notep1">Note:</p>
+                          You need to make sure that the Oracle ACFS
+                          file systems are unmounted (see <a
+                            href="#BGBHCCJD">Section 2.8</a>) and all
+                          other Oracle processes are shutdown before you
+                          proceed.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <br>
+                </div>
+                <!-- class="inftblnote" --></div>
+            </li>
+            <li>
+              <p>Run the pre root script.</p>
+              <p>If this is a GI Home, as the root user execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn"># &lt;GI_HOME&gt;/crs/install/rootcrs.pl -prepatch<br></pre>
+              <p>If this is an Oracle Restart Home, as the root user
+                execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn"># &lt;GI_HOME&gt;/crs/install/roothas.pl -prepatch<br></pre>
+            </li>
+            <li><a id="BIHCFBDB" name="BIHCFBDB"></a>
+              <p>Apply the CRS patch using.</p>
+              <p>As the GI home owner execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn">$ &lt;GI_HOME&gt;/OPatch/opatch apply -oh &lt;GI_HOME&gt; -local &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424/25784424<br></pre>
+            </li>
+            <li><a id="BIHIFHJF" name="BIHIFHJF"></a>
+              <p>Apply the DB patch.</p>
+              <p>As the database home owner execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/OPatch/opatch apply -oh &lt;ORACLE_HOME&gt; -local &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424/25784424<br></pre>
+            </li>
+            <li>
+              <p>Run the post script.</p>
+              <p>As the root user execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn"># &lt;GI_HOME&gt;/rdbms/install/rootadd_rdbms.sh<br></pre>
+              <p>If this is a GI Home, as the root user execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn"># &lt;GI_HOME&gt;/crs/install/rootcrs.pl -postpatch<br></pre>
+              <p>If this is an Oracle Restart Home, as the root user
+                execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn"># &lt;GI_HOME&gt;/crs/install/roothas.pl -postpatch<br></pre>
+            </li>
+            <li>
+              <p>If the message, "A system reboot is recommended before
+                using ACFS is shown, then a reboot must be issued
+                before continuing. Failure to do so will result in
+                running with an unpatched ACFS\ADVM\OKS driver.</p>
+            </li>
+            <li>
+              <p>Start the CRS managed resources that were earlier
+                running from DB homes.</p>
+              <p>If this is a GI Home environment, as the database home
+                owner execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl start home -o &lt;ORACLE_HOME&gt; -s &lt;status file location&gt; -n &lt;node name&gt;<br></pre>
+              <p>If this is an Oracle Restart Home environment, as the
+                database home owner execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl start home -o &lt;ORACLE_HOME&gt; -s &lt;status file location&gt;&nbsp;<span style="" name="OracleReview" id="317" class="segment"></span></pre>
+            </li>
+            <li>
+              <pre xml:space="preserve" class="oac_no_warn"><span style="" name="OracleReview" id="317" class="segment">For each database instance running on the Oracle home being patched, run the </span><code><span name="OracleReview" id="318" class="segment">datapatch</span></code><span style="" name="OracleReview" id="319" class="segment"> utility as described in </span><a href="http://review.us.oracle.com/review/hosted/2013/10/10/review193105_173322_868885960/st-doc.us.oracle.com/id_common/review/db_cpu/october2013/PSU_README_121011_Unix.html#BABCJFBA"><span name="OracleReview" id="320" class="segment">Table 3</span></a><span name="OracleReview" id="321" class="segment">.</span></pre>
+            </li>
+          </ol>
+          <ol>
+            <li>
+              <div class="tblformal">
+                <p class="titleintable"><span style=""
+                    name="OracleReview" id="322" class="segment">Table 3
+                    Steps to Run the datapatch Utility for Single Tenant
+                    Versus Multitenant (CDB/PDB)</span></p>
+                <table class="Formal" title="Steps to Run the datapatch
+                  Utility for Single Tenant Versus Multitenant
+                  (CDB/PDB)" summary="Steps to run datapatch script for
+                  single tenant versus multitenant (CDB/PDB)." dir="ltr"
+                  frame="hsides" rules="groups" border="1"
+                  cellpadding="3" cellspacing="0" width="100%">
+                  <colgroup><col width="10%"> <col width="*"> <col
+                      width="10%"> <col width="38%"> </colgroup><thead>
+                    <tr align="left" valign="top">
+                      <th id="r1c1-t4" align="left" valign="bottom"><span
+                          style="" name="OracleReview" id="323"
+                          class="segment">Steps</span></th>
+                      <th id="r1c2-t4" align="left" valign="bottom"><span
+                          style="" name="OracleReview" id="324"
+                          class="segment">Single Tenant (non-CDB/PDB)</span></th>
+                      <th id="r1c3-t4" align="left" valign="bottom"><span
+                          name="OracleReview" id="325" class="segment">Steps</span></th>
+                      <th id="r1c4-t4" align="left" valign="bottom"><span
+                          name="OracleReview" id="326" class="segment">Multitenant
+
+
+
+
+
+                          (CDB/PDB)</span></th>
+                    </tr>
+                  </thead> <tbody>
+                    <tr align="left" valign="top">
+                      <td id="r2c1-t4" headers="r1c1-t4" align="left">
+                        <p><span name="OracleReview" id="327"
+                            class="segment">1</span></p>
+                      </td>
+                      <td headers="r2c1-t4 r1c2-t4" align="left">
+                        <p><code><span style="" name="OracleReview"
+                              id="328" class="segment">% sqlplus /nolog</span></code></p>
+                      </td>
+                      <td headers="r2c1-t4 r1c3-t4" align="left">
+                        <p><span name="OracleReview" id="329"
+                            class="segment">1</span></p>
+                      </td>
+                      <td headers="r2c1-t4 r1c4-t4" align="left">
+                        <p><code><span name="OracleReview" id="330"
+                              class="segment">% sqlplus /nolog</span></code></p>
+                      </td>
+                    </tr>
+                    <tr align="left" valign="top">
+                      <td id="r3c1-t4" headers="r1c1-t4" align="left">
+                        <p><span name="OracleReview" id="331"
+                            class="segment">2</span></p>
+                      </td>
+                      <td headers="r3c1-t4 r1c2-t4" align="left">
+                        <p><code><span style="" name="OracleReview"
+                              id="332" class="segment">SQL&gt; Connect /
+                              as sysdba</span></code></p>
+                      </td>
+                      <td headers="r3c1-t4 r1c3-t4" align="left">
+                        <p><span name="OracleReview" id="333"
+                            class="segment">2</span></p>
+                      </td>
+                      <td headers="r3c1-t4 r1c4-t4" align="left">
+                        <p><code><span name="OracleReview" id="334"
+                              class="segment">SQL&gt; Connect / as
+                              sysdba</span></code></p>
+                      </td>
+                    </tr>
+                    <tr align="left" valign="top">
+                      <td id="r4c1-t4" headers="r1c1-t4" align="left">
+                        <p><span name="OracleReview" id="335"
+                            class="segment">3</span></p>
+                      </td>
+                      <td headers="r4c1-t4 r1c2-t4" align="left">
+                        <p><code><span style="" name="OracleReview"
+                              id="336" class="segment">SQL&gt; startup</span></code></p>
+                      </td>
+                      <td headers="r4c1-t4 r1c3-t4" align="left">
+                        <p><span style="" name="OracleReview" id="337"
+                            class="segment">3</span></p>
+                      </td>
+                      <td headers="r4c1-t4 r1c4-t4" align="left">
+                        <p><code><span name="OracleReview" id="338"
+                              class="segment">SQL&gt; startup</span></code></p>
+                      </td>
+                    </tr>
+                    <tr align="left" valign="top">
+                      <td id="r5c1-t4" headers="r1c1-t4" align="left">
+                        <p><span name="OracleReview" id="339"
+                            class="segment">4</span></p>
+                      </td>
+                      <td headers="r5c1-t4 r1c2-t4" align="left">
+                        <p><code><span name="OracleReview" id="340"
+                              class="segment">SQL&gt; quit</span></code></p>
+                      </td>
+                      <td headers="r5c1-t4 r1c3-t4" align="left">
+                        <p><span name="OracleReview" id="341"
+                            class="segment">4</span></p>
+                      </td>
+                      <td headers="r5c1-t4 r1c4-t4" align="left">
+                        <p><code><span name="OracleReview" id="342"
+                              class="segment">SQL&gt; alter pluggable
+                              database all</span></code> <code><span
+                              name="OracleReview" id="343"
+                              class="segment">open</span></code><code><span
+                              name="OracleReview" id="344"
+                              class="segment">;</span></code><a
+                            id="sthref7" name="sthref7"
+href="http://review.us.oracle.com/review/hosted/2013/10/10/review193105_173322_868885960/st-doc.us.oracle.com/id_common/review/db_cpu/october2013/PSU_README_121011_Unix.html#sthref7"
+                            onclick="footdisplay(1,&quot;It is
+                            recommended the Post Install step be run on
+                            all pluggable databases; however, the
+                            following command (\u003ccode\u003eSQL\u003e
+                            alter pluggable database\u003c/code\u003e
+                            \u003ccode\u003e\u003cspan
+                            class=\&quot;codeinlineitalic\&quot;\u003ePDB_NAME\u003c/span\u003e\u003c/code\u003e
+
+
+
+
+
+                            \u003ccode\u003eopen\u003c/code\u003e )
+                            could be substituted to only open certain
+                            PDBs in the multitenant database. Doing so
+                            will result in the Post Install step only
+                            being run on the CDB and opened PDB's. To
+                            update a pluggable database at a later date
+                            (skipped or newly plugged in), open the
+                            database using the \u003ccode\u003ealter
+                            pluggable database\u003c/code\u003e command
+                            mentioned previously and rerun the datapatch
+                            utility.&quot;)"><sup class="tablefootnote"><span
+                                style="" name="OracleReview" id="345"
+                                class="segment">Foot&nbsp;1&nbsp;</span></sup></a></p>
+                      </td>
+                    </tr>
+                    <tr align="left" valign="top">
+                      <td id="r6c1-t4" headers="r1c1-t4" align="left">
+                        <p><span name="OracleReview" id="346"
+                            class="segment">5</span></p>
+                      </td>
+                      <td headers="r6c1-t4 r1c2-t4" align="left">
+                        <p><code><span style="" name="OracleReview"
+                              id="347" class="segment">% cd
+                              $ORACLE_HOME/OPatch</span></code></p>
+                      </td>
+                      <td headers="r6c1-t4 r1c3-t4" align="left">
+                        <p><span name="OracleReview" id="348"
+                            class="segment">5</span></p>
+                      </td>
+                      <td headers="r6c1-t4 r1c4-t4" align="left">
+                        <p><code><span name="OracleReview" id="349"
+                              class="segment">SQL&gt; quit</span></code></p>
+                      </td>
+                    </tr>
+                    <tr align="left" valign="top">
+                      <td id="r7c1-t4" headers="r1c1-t4" align="left">
+                        <p><span name="OracleReview" id="350"
+                            class="segment">6</span></p>
+                      </td>
+                      <td headers="r7c1-t4 r1c2-t4" align="left">
+                        <p><code><span name="OracleReview" id="351"
+                              class="segment">% ./datapatch -verbose</span></code></p>
+                      </td>
+                      <td headers="r7c1-t4 r1c3-t4" align="left">
+                        <p><span name="OracleReview" id="352"
+                            class="segment">6</span></p>
+                      </td>
+                      <td headers="r7c1-t4 r1c4-t4" align="left">
+                        <p><code><span name="OracleReview" id="353"
+                              class="segment">% cd $ORACLE_HOME/OPatch</span></code></p>
+                      </td>
+                    </tr>
+                    <tr align="left" valign="top">
+                      <td id="r8c1-t4" headers="r1c1-t4" align="left"><br>
+                      </td>
+                      <td headers="r8c1-t4 r1c2-t4" align="left"><br>
+                      </td>
+                      <td headers="r8c1-t4 r1c3-t4" align="left">
+                        <p><span style="" name="OracleReview" id="354"
+                            class="segment">7</span></p>
+                      </td>
+                      <td headers="r8c1-t4 r1c4-t4" align="left">
+                        <p><code><span style="" name="OracleReview"
+                              id="355" class="segment">% ./datapatch
+                              -verbose</span></code></p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br>
+              </div>
+              <p class="tablefootnote"><sup class="tablefootnote"><span
+                    name="OracleReview" id="356" class="segment">Footnote&nbsp;1&nbsp;</span></sup><span
+                  style="" name="OracleReview" id="357" class="segment">It
+
+
+
+
+
+                  is recommended the Post Install step be run on all
+                  pluggable databases; however, the following command (</span><code><span
+                    style="" name="OracleReview" id="358"
+                    class="segment">SQL&gt; alter pluggable database</span></code>
+                <code><span class="codeinlineitalic"><span
+                      name="OracleReview" id="359" class="segment">PDB_NAME</span></span></code>
+                <code><span name="OracleReview" id="360" class="segment">open</span></code><span
+                  name="OracleReview" id="361" class="segment"> ) could
+                  be substituted to only open certain PDBs in the
+                  multitenant database.</span><span style=""
+                  name="OracleReview" id="362" class="segment"> Doing so
+                  will result in the Post Install step only being run on
+                  the CDB and opened PDB's.</span><span style=""
+                  name="OracleReview" id="363" class="segment"> To
+                  update a pluggable database at a later date (skipped
+                  or newly plugged in), open the database using the </span><code><span
+                    style="" name="OracleReview" id="364"
+                    class="segment">alter pluggable database</span></code><span
+                  style="" name="OracleReview" id="365" class="segment">
+                  command mentioned previously and rerun the datapatch
+                  utility.</span></p>
+              <p><span name="OracleReview" id="366" class="segment">The
+                </span><code><span name="OracleReview" id="367"
+                    class="segment">datapatch</span></code><span
+                  name="OracleReview" id="368" class="segment"> utility
+                  will then run the necessary rollback scripts.</span><span
+                  name="OracleReview" id="369" class="segment"> An entry
+                  will be added to the </span><code><span
+                    name="OracleReview" id="370" class="segment">dba_registry_sqlpatch</span></code><span
+                  style="" name="OracleReview" id="371" class="segment">
+                  view reflecting the patch rollback.</span></p>
+            </li>
+            <li>
+              <p><span name="OracleReview" id="372" class="segment">Check
+
+
+
+
+
+                  the following log files in </span><code><span
+                    name="OracleReview" id="373" class="segment">$ORACLE_HOME/sqlpatch/17027533/</span></code><span
+                  name="OracleReview" id="374" class="segment"> for
+                  errors:</span></p>
+              <pre xml:space="preserve" class="oac_no_warn"><span name="OracleReview" id="375" class="segment">17027533_apply_&lt;database SID&gt;_&lt;CDB name&gt;_&lt;timestamp&gt;.log
+</span></pre>
+              <p><span name="OracleReview" id="376" class="segment">where
+
+
+
+
+
+                </span><code><span class="codeinlineitalic"><span
+                      name="OracleReview" id="377" class="segment">database
+
+
+
+
+
+                      SID</span></span></code><span name="OracleReview"
+                  id="378" class="segment"> is the database SID, </span><code><span
+                    class="codeinlineitalic"><span name="OracleReview"
+                      id="379" class="segment">CDB name</span></span></code><span
+                  name="OracleReview" id="380" class="segment"> is the
+                  name of the multitenant container database, and </span><code><span
+                    class="codeinlineitalic"><span name="OracleReview"
+                      id="381" class="segment">timestamp</span></span></code><span
+                  name="OracleReview" id="382" class="segment"> is of
+                  the form YYYYMMMDD_HH_MM_SS.</span></p>
+              <p><span name="OracleReview" id="383" class="segment">In
+                  addition, you can check the log files found in </span><code><span
+                    name="OracleReview" id="384" class="segment">$ORACLE_BASE/cfgtoollogs/catbundle</span></code><span
+                  style="" name="OracleReview" id="385" class="segment">
+                  and is named </span><code><span style=""
+                    name="OracleReview" id="386" class="segment">catbundle_PSU_</span></code><code><span
+                    class="codeinlineitalic"><span style=""
+                      name="OracleReview" id="387" class="segment">&lt;database
+
+
+
+
+
+                      SID&gt;</span></span></code><code><span
+                    name="OracleReview" id="388" class="segment">_ROLLBACK_</span></code><code><span
+                    class="codeinlineitalic"><span name="OracleReview"
+                      id="389" class="segment">&lt;TIMESTAMP&gt;</span></span></code><code><span
+                    name="OracleReview" id="390" class="segment">.log</span></code><span
+                  name="OracleReview" id="391" class="segment"> where </span><span
+                  class="italic"><span name="OracleReview" id="392"
+                    class="segment">TIMESTAMP</span></span><span
+                  name="OracleReview" id="393" class="segment"> is of
+                  the form </span><span class="italic"><span style=""
+                    name="OracleReview" id="394" class="segment">YYYYMMMDD_HH_MM_SS</span></span><span
+                  style="" name="OracleReview" id="395" class="segment">.</span><span
+                  style="" name="OracleReview" id="396" class="segment"></span></p>
+            </li>
+          </ol>
+          <ol>
+          </ol>
+          <a id="sthref25" name="sthref25"></a>
+          <p class="subhead2">Steps for Rolling Back the Patch From a GI
+            Home</p>
+          <p>Execute the following on each node of the cluster in
+            non-shared CRS and DB home environment to rollback the
+            patch.</p>
+          <ol>
+            <li>
+              <p>Stop the CRS managed resources running from DB homes.</p>
+              <p>If this is a GI Home environment, as the database home
+                owner execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl stop home -o &lt;ORACLE_HOME&gt; -s &lt;status file location&gt; -n &lt;node name&gt;<br></pre>
+              <p>If this is an Oracle Restart Home environment, as the
+                database home owner execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl stop home -o &lt;ORACLE_HOME&gt; -s &lt;status file location&gt; <br></pre>
+              <div align="center">
+                <div class="inftblnote"><br>
+                  <table class="Note oac_no_warn" summary=""
+                    frame="hsides" rules="groups" border="1"
+                    cellpadding="3" cellspacing="0" width="80%">
+                    <tbody>
+                      <tr>
+                        <td align="left">
+                          <p class="notep1">Note:</p>
+                          You need to make sure that the Oracle ACFS
+                          file systems are unmounted (see <a
+                            href="#BGBHCCJD">Section 2.8</a>) and all
+                          other Oracle processes are shut down before
+                          you proceed.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <br>
+                </div>
+                <!-- class="inftblnote" --></div>
+            </li>
+            <li>
+              <p>Run the pre root script.</p>
+              <p>If this is a GI Home, as the root user execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn"># &lt;GI_HOME&gt;/crs/install/rootcrs.pl -prepatch<br></pre>
+              <p>If this is an Oracle Restart Home, as the root user
+                execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn"># &lt;GI_HOME&gt;/crs/install/roothas.pl -prepatch<br></pre>
+            </li>
+            <li><a id="BIHGEHJD" name="BIHGEHJD"></a>
+              <p>Roll back the CRS patch.</p>
+              <p>As the GI home owner execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn">$ &lt;GI_HOME&gt;/OPatch/opatch rollback -local -id 25784424 -oh &lt;GI_HOME&gt; </pre>
+            </li>
+            <li><a id="BIHIDGIG" name="BIHIDGIG"></a>
+              <p>Roll back the DB patch from the database home.</p>
+              <p>As the database home owner execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/OPatch/opatch rollback -local -id 25784424 -oh &lt;ORACLE_HOME&gt; </pre>
+            </li>
+            <li>
+              <p>Run the post script.</p>
+              <p>As the root user execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn"># &lt;GI_HOME&gt;/rdbms/install/rootadd_rdbms.sh<br></pre>
+              <p>If this is a GI Home, as the root user execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn"># &lt;GI_HOME&gt;/crs/install/rootcrs.pl -postpatch<br></pre>
+              <p>If this is an Oracle Restart Home, as the root user
+                execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn"># &lt;GI_HOME&gt;/crs/install/roothas.pl -postpatch<br></pre>
+            </li>
+            <li>
+              <p>If the message, "A system reboot is recommended before
+                using ACFS is shown, then a reboot must be issued
+                before continuing. Failure to do so will result in
+                running with an unpatched ACFS\ADVM\OKS driver.</p>
+            </li>
+            <li>
+              <p>Start the CRS managed resources that were earlier
+                running from DB homes.</p>
+              <p>If this is a GI Home environment, as the database home
+                owner execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl start home -o &lt;ORACLE_HOME&gt; -s &lt;status file location&gt; -n &lt;node name&gt;<br></pre>
+              <p>If this is an Oracle Restart Home environment, as the
+                database home owner execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/bin/srvctl start home -o &lt;ORACLE_HOME&gt; -s &lt;status file location&gt; <br></pre>
+            </li>
+            <li><span style="" name="OracleReview" id="317"
+                class="segment">For each database instance running on
+                the Oracle home being patched, run the </span><code><span
+                  name="OracleReview" id="318" class="segment">datapatch</span></code><span
+                style="" name="OracleReview" id="319" class="segment">
+                utility as described in </span><a
+href="http://review.us.oracle.com/review/hosted/2013/10/10/review193105_173322_868885960/st-doc.us.oracle.com/id_common/review/db_cpu/october2013/PSU_README_121011_Unix.html#BABCJFBA"><span
+                  name="OracleReview" id="320" class="segment">Table 3</span></a><span
+                name="OracleReview" id="321" class="segment">.</span></li>
+          </ol>
+          <br>
+          <span name="OracleReview" id="321" class="segment"></span>
+          <ol>
+            <li>
+              <div class="tblformal"><span style="" name="OracleReview"
+                  id="322" class="segment">Table 3 Steps to Run the
+                  datapatch Utility for Single Tenant Versus Multitenant
+                  (CDB/PDB)</span>
+                <table class="Formal" title="Steps to Run the datapatch
+                  Utility for Single Tenant Versus Multitenant
+                  (CDB/PDB)" summary="Steps to run datapatch script for
+                  single tenant versus multitenant (CDB/PDB)." dir="ltr"
+                  frame="hsides" rules="groups" border="1"
+                  cellpadding="3" cellspacing="0" width="100%">
+                  <colgroup><col width="10%"> <col width="*"> <col
+                      width="10%"> <col width="38%"> </colgroup><thead>
+                    <tr align="left" valign="top">
+                      <th id="r1c1-t4" align="left" valign="bottom"><span
+                          style="" name="OracleReview" id="323"
+                          class="segment">Steps</span></th>
+                      <th id="r1c2-t4" align="left" valign="bottom"><span
+                          style="" name="OracleReview" id="324"
+                          class="segment">Single Tenant (non-CDB/PDB)</span></th>
+                      <th id="r1c3-t4" align="left" valign="bottom"><span
+                          name="OracleReview" id="325" class="segment">Steps</span></th>
+                      <th id="r1c4-t4" align="left" valign="bottom"><span
+                          name="OracleReview" id="326" class="segment">Multitenant
+
+
+
+
+
+                          (CDB/PDB)</span></th>
+                    </tr>
+                  </thead> <tbody>
+                    <tr align="left" valign="top">
+                      <td id="r2c1-t4" headers="r1c1-t4" align="left">
+                        <p><span name="OracleReview" id="327"
+                            class="segment">1</span></p>
+                      </td>
+                      <td headers="r2c1-t4 r1c2-t4" align="left">
+                        <p><code><span style="" name="OracleReview"
+                              id="328" class="segment">% sqlplus /nolog</span></code></p>
+                      </td>
+                      <td headers="r2c1-t4 r1c3-t4" align="left">
+                        <p><span name="OracleReview" id="329"
+                            class="segment">1</span></p>
+                      </td>
+                      <td headers="r2c1-t4 r1c4-t4" align="left">
+                        <p><code><span name="OracleReview" id="330"
+                              class="segment">% sqlplus /nolog</span></code></p>
+                      </td>
+                    </tr>
+                    <tr align="left" valign="top">
+                      <td id="r3c1-t4" headers="r1c1-t4" align="left">
+                        <p><span name="OracleReview" id="331"
+                            class="segment">2</span></p>
+                      </td>
+                      <td headers="r3c1-t4 r1c2-t4" align="left">
+                        <p><code><span style="" name="OracleReview"
+                              id="332" class="segment">SQL&gt; Connect /
+                              as sysdba</span></code></p>
+                      </td>
+                      <td headers="r3c1-t4 r1c3-t4" align="left">
+                        <p><span name="OracleReview" id="333"
+                            class="segment">2</span></p>
+                      </td>
+                      <td headers="r3c1-t4 r1c4-t4" align="left">
+                        <p><code><span name="OracleReview" id="334"
+                              class="segment">SQL&gt; Connect / as
+                              sysdba</span></code></p>
+                      </td>
+                    </tr>
+                    <tr align="left" valign="top">
+                      <td id="r4c1-t4" headers="r1c1-t4" align="left">
+                        <p><span name="OracleReview" id="335"
+                            class="segment">3</span></p>
+                      </td>
+                      <td headers="r4c1-t4 r1c2-t4" align="left">
+                        <p><code><span style="" name="OracleReview"
+                              id="336" class="segment">SQL&gt; startup</span></code></p>
+                      </td>
+                      <td headers="r4c1-t4 r1c3-t4" align="left">
+                        <p><span style="" name="OracleReview" id="337"
+                            class="segment">3</span></p>
+                      </td>
+                      <td headers="r4c1-t4 r1c4-t4" align="left">
+                        <p><code><span name="OracleReview" id="338"
+                              class="segment">SQL&gt; startup</span></code></p>
+                      </td>
+                    </tr>
+                    <tr align="left" valign="top">
+                      <td id="r5c1-t4" headers="r1c1-t4" align="left">
+                        <p><span name="OracleReview" id="339"
+                            class="segment">4</span></p>
+                      </td>
+                      <td headers="r5c1-t4 r1c2-t4" align="left">
+                        <p><code><span name="OracleReview" id="340"
+                              class="segment">SQL&gt; quit</span></code></p>
+                      </td>
+                      <td headers="r5c1-t4 r1c3-t4" align="left">
+                        <p><span name="OracleReview" id="341"
+                            class="segment">4</span></p>
+                      </td>
+                      <td headers="r5c1-t4 r1c4-t4" align="left">
+                        <p><code><span name="OracleReview" id="342"
+                              class="segment">SQL&gt; alter pluggable
+                              database all</span></code> <code><span
+                              name="OracleReview" id="343"
+                              class="segment">open</span></code><code><span
+                              name="OracleReview" id="344"
+                              class="segment">;</span></code><a
+                            id="sthref7" name="sthref7"
+href="http://review.us.oracle.com/review/hosted/2013/10/10/review193105_173322_868885960/st-doc.us.oracle.com/id_common/review/db_cpu/october2013/PSU_README_121011_Unix.html#sthref7"
+                            onclick="footdisplay(1,&quot;It is
+                            recommended the Post Install step be run on
+                            all pluggable databases; however, the
+                            following command (\u003ccode\u003eSQL\u003e
+                            alter pluggable database\u003c/code\u003e
+                            \u003ccode\u003e\u003cspan
+                            class=\&quot;codeinlineitalic\&quot;\u003ePDB_NAME\u003c/span\u003e\u003c/code\u003e
+
+
+
+
+
+                            \u003ccode\u003eopen\u003c/code\u003e )
+                            could be substituted to only open certain
+                            PDBs in the multitenant database. Doing so
+                            will result in the Post Install step only
+                            being run on the CDB and opened PDB's. To
+                            update a pluggable database at a later date
+                            (skipped or newly plugged in), open the
+                            database using the \u003ccode\u003ealter
+                            pluggable database\u003c/code\u003e command
+                            mentioned previously and rerun the datapatch
+                            utility.&quot;)"><sup class="tablefootnote"><span
+                                style="" name="OracleReview" id="345"
+                                class="segment">Foot&nbsp;1&nbsp;</span></sup></a></p>
+                      </td>
+                    </tr>
+                    <tr align="left" valign="top">
+                      <td id="r6c1-t4" headers="r1c1-t4" align="left">
+                        <p><span name="OracleReview" id="346"
+                            class="segment">5</span></p>
+                      </td>
+                      <td headers="r6c1-t4 r1c2-t4" align="left">
+                        <p><code><span style="" name="OracleReview"
+                              id="347" class="segment">% cd
+                              $ORACLE_HOME/OPatch</span></code></p>
+                      </td>
+                      <td headers="r6c1-t4 r1c3-t4" align="left">
+                        <p><span name="OracleReview" id="348"
+                            class="segment">5</span></p>
+                      </td>
+                      <td headers="r6c1-t4 r1c4-t4" align="left">
+                        <p><code><span name="OracleReview" id="349"
+                              class="segment">SQL&gt; quit</span></code></p>
+                      </td>
+                    </tr>
+                    <tr align="left" valign="top">
+                      <td id="r7c1-t4" headers="r1c1-t4" align="left">
+                        <p><span name="OracleReview" id="350"
+                            class="segment">6</span></p>
+                      </td>
+                      <td headers="r7c1-t4 r1c2-t4" align="left">
+                        <p><code><span name="OracleReview" id="351"
+                              class="segment">% ./datapatch -verbose</span></code></p>
+                      </td>
+                      <td headers="r7c1-t4 r1c3-t4" align="left">
+                        <p><span name="OracleReview" id="352"
+                            class="segment">6</span></p>
+                      </td>
+                      <td headers="r7c1-t4 r1c4-t4" align="left">
+                        <p><code><span name="OracleReview" id="353"
+                              class="segment">% cd $ORACLE_HOME/OPatch</span></code></p>
+                      </td>
+                    </tr>
+                    <tr align="left" valign="top">
+                      <td id="r8c1-t4" headers="r1c1-t4" align="left"><br>
+                      </td>
+                      <td headers="r8c1-t4 r1c2-t4" align="left"><br>
+                      </td>
+                      <td headers="r8c1-t4 r1c3-t4" align="left">
+                        <p><span style="" name="OracleReview" id="354"
+                            class="segment">7</span></p>
+                      </td>
+                      <td headers="r8c1-t4 r1c4-t4" align="left">
+                        <p><code><span style="" name="OracleReview"
+                              id="355" class="segment">% ./datapatch
+                              -verbose</span></code></p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br>
+              </div>
+              <p class="tablefootnote"><sup class="tablefootnote"><span
+                    name="OracleReview" id="356" class="segment">Footnote&nbsp;1&nbsp;</span></sup><span
+                  style="" name="OracleReview" id="357" class="segment">It
+
+
+
+
+
+                  is recommended the Post Install step be run on all
+                  pluggable databases; however, the following command (</span><code><span
+                    style="" name="OracleReview" id="358"
+                    class="segment">SQL&gt; alter pluggable database</span></code>
+                <code><span class="codeinlineitalic"><span
+                      name="OracleReview" id="359" class="segment">PDB_NAME</span></span></code>
+                <code><span name="OracleReview" id="360" class="segment">open</span></code><span
+                  name="OracleReview" id="361" class="segment"> ) could
+                  be substituted to only open certain PDBs in the
+                  multitenant database.</span><span style=""
+                  name="OracleReview" id="362" class="segment"> Doing so
+                  will result in the Post Install step only being run on
+                  the CDB and opened PDB's.</span><span style=""
+                  name="OracleReview" id="363" class="segment"> To
+                  update a pluggable database at a later date (skipped
+                  or newly plugged in), open the database using the </span><code><span
+                    style="" name="OracleReview" id="364"
+                    class="segment">alter pluggable database</span></code><span
+                  style="" name="OracleReview" id="365" class="segment">
+                  command mentioned previously and rerun the datapatch
+                  utility.</span></p>
+              <p><span name="OracleReview" id="366" class="segment">The
+                </span><code><span name="OracleReview" id="367"
+                    class="segment">datapatch</span></code><span
+                  name="OracleReview" id="368" class="segment"> utility
+                  will then run the necessary rollback scripts.</span><span
+                  name="OracleReview" id="369" class="segment"> An entry
+                  will be added to the </span><code><span
+                    name="OracleReview" id="370" class="segment">dba_registry_sqlpatch</span></code><span
+                  style="" name="OracleReview" id="371" class="segment">
+                  view reflecting the patch rollback.</span></p>
+            </li>
+            <li>
+              <p><span name="OracleReview" id="372" class="segment">Check
+
+
+
+
+
+                  the following log files in </span><code><span
+                    name="OracleReview" id="373" class="segment">$ORACLE_HOME/sqlpatch/17027533/</span></code><span
+                  name="OracleReview" id="374" class="segment"> for
+                  errors:</span></p>
+              <pre xml:space="preserve" class="oac_no_warn"><span name="OracleReview" id="375" class="segment">17027533_apply_&lt;database SID&gt;_&lt;CDB name&gt;_&lt;timestamp&gt;.log
+</span></pre>
+              <p><span name="OracleReview" id="376" class="segment">where
+
+
+
+
+
+                </span><code><span class="codeinlineitalic"><span
+                      name="OracleReview" id="377" class="segment">database
+
+
+
+
+
+                      SID</span></span></code><span name="OracleReview"
+                  id="378" class="segment"> is the database SID, </span><code><span
+                    class="codeinlineitalic"><span name="OracleReview"
+                      id="379" class="segment">CDB name</span></span></code><span
+                  name="OracleReview" id="380" class="segment"> is the
+                  name of the multitenant container database, and </span><code><span
+                    class="codeinlineitalic"><span name="OracleReview"
+                      id="381" class="segment">timestamp</span></span></code><span
+                  name="OracleReview" id="382" class="segment"> is of
+                  the form YYYYMMMDD_HH_MM_SS.</span></p>
+              <p><span name="OracleReview" id="383" class="segment">In
+                  addition, you can check the log files found in </span><code><span
+                    name="OracleReview" id="384" class="segment">$ORACLE_BASE/cfgtoollogs/catbundle</span></code><span
+                  style="" name="OracleReview" id="385" class="segment">
+                  and is named </span><code><span style=""
+                    name="OracleReview" id="386" class="segment">catbundle_PSU_</span></code><code><span
+                    class="codeinlineitalic"><span style=""
+                      name="OracleReview" id="387" class="segment">&lt;database
+
+
+
+
+
+                      SID&gt;</span></span></code><code><span
+                    name="OracleReview" id="388" class="segment">_ROLLBACK_</span></code><code><span
+                    class="codeinlineitalic"><span name="OracleReview"
+                      id="389" class="segment">&lt;TIMESTAMP&gt;</span></span></code><code><span
+                    name="OracleReview" id="390" class="segment">.log</span></code><span
+                  name="OracleReview" id="391" class="segment"> where </span><span
+                  class="italic"><span name="OracleReview" id="392"
+                    class="segment">TIMESTAMP</span></span><span
+                  name="OracleReview" id="393" class="segment"> is of
+                  the form </span><span class="italic"><span style=""
+                    name="OracleReview" id="394" class="segment">YYYYMMMDD_HH_MM_SS</span></span><span
+                  style="" name="OracleReview" id="395" class="segment">.</span><span
+                  style="" name="OracleReview" id="396" class="segment"></span></p>
+            </li>
+          </ol>
+          <p class="subhead2">Patching an Oracle RAC Home Installation
+            Manually</p>
+          <p>Note that ACFS only patches cannot be applied to a Database
+            home.</p>
+          <ol>
+            <li>
+              <p>Apply the DB patch.</p>
+              <p>As the database home owner execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn">$ &lt;GI_HOME&gt;/OPatch/opatch apply -oh &lt;GI_HOME&gt; -local &lt;UNZIPPED_PATCH_LOCATION&gt;/25784424/25784424<br></pre>
+            </li>
+          </ol>
+          <a id="sthref27" name="sthref27"></a>
+          <p class="subhead2">Rolling Back the Patch from an Oracle RAC
+            Home Installation Manually</p>
+          <ol>
+            <li>
+              <p>Roll back the DB patch from the database home.</p>
+              <p>As the database home owner execute:</p>
+              <pre xml:space="preserve" class="oac_no_warn">$ &lt;ORACLE_HOME&gt;/OPatch/opatch rollback -local -id 25784424 -oh &lt;ORACLE_HOME&gt; </pre>
+            </li>
+          </ol>
+        </div>
+        <br>
+        <div class="sect1"><!-- infolevel="all" infotype="General" -->
+          <h2 class="sect1"><span class="secnum">6</span> Bugs Fixed by
+            This Patch</h2>
+          <p>This patch includes the following bug fixes:</p>
+          <ul>
+          </ul>
+          <font face="Arial"><span style="" name="OracleReview" id="551"
+              class="segment">25784424 - PRVG-0802 : STORAGE TYPE FOR PATH "" COULD NOT BE DETERMINED ON NODE</span></font>
+          <ul>
+          </ul>
+          <a id="BGBJCFJJ" name="BGBJCFJJ"></a>
+          <div class="sect2"><!-- infolevel="all" infotype="General" --><!-- class="sect2" --></div>
+          <br>
+        </div>
+        <!-- class="sect1" --> <a id="BGBJHGBI" name="BGBJHGBI"></a>
+        <div class="sect1">
+          <h2 class="sect1"><span class="secnum">7</span> Documentation
+            Accessibility</h2>
+          <p>For information about Oracle's commitment to accessibility,
+            visit the Oracle Accessibility Program website at <code><a
+href="http://www.oracle.com/pls/topic/lookup?ctx=acc&amp;id=docacc">http://www.oracle.com/pls/topic/lookup?ctx=acc&amp;id=docacc</a></code>.</p>
+          <a id="sthref36" name="sthref36"></a>
+          <p class="subhead2">Access to Oracle Support</p>
+          <p>Oracle customers have access to electronic support through
+            My Oracle Support. For information, visit <code><a
+                href="http://www.oracle.com/pls/topic/lookup?ctx=acc&amp;id=info">http://www.oracle.com/pls/topic/lookup?ctx=acc&amp;id=info</a></code>
+            or visit <code><a
+                href="http://www.oracle.com/pls/topic/lookup?ctx=acc&amp;id=trs">http://www.oracle.com/pls/topic/lookup?ctx=acc&amp;id=trs</a></code>
+            if you are hearing impaired.</p>
+        </div>
+        <!-- class="sect1" --> <a id="sthref37" name="sthref37"></a>
+        <hr>
+        <p>Patch <font face="Arial"><span style="" name="OracleReview"
+              id="643" class="segment">25784424 - PRVG-0802 : STORAGE TYPE FOR PATH "" COULD NOT BE DETERMINED ON NODE</span><br>
+          </font></p>
+        <p>Copyright Â© 2006, 2012,&nbsp;Oracle and/or its affiliates.
+          All rights reserved.</p>
+        <p>This software and related documentation are provided under a
+          license agreement containing restrictions on use and
+          disclosure and are protected by intellectual property laws.
+          Except as expressly permitted in your license agreement or
+          allowed by law, you may not use, copy, reproduce, translate,
+          broadcast, modify, license, transmit, distribute, exhibit,
+          perform, publish, or display any part, in any form, or by any
+          means. Reverse engineering, disassembly, or decompilation of
+          this software, unless required by law for interoperability, is
+          prohibited.</p>
+        <p>The information contained herein is subject to change without
+          notice and is not warranted to be error-free. If you find any
+          errors, please report them to us in writing.</p>
+        <p>If this is software or related documentation that is
+          delivered to the U.S. Government or anyone licensing it on
+          behalf of the U.S. Government, the following notice is
+          applicable:</p>
+        <p>U.S. GOVERNMENT RIGHTS Programs, software, databases, and
+          related documentation and technical data delivered to U.S.
+          Government customers are "commercial computer software" or
+          "commercial technical data" pursuant to the applicable Federal
+          Acquisition Regulation and agency-specific supplemental
+          regulations. As such, the use, duplication, disclosure,
+          modification, and adaptation shall be subject to the
+          restrictions and license terms set forth in the applicable
+          Government contract, and, to the extent applicable by the
+          terms of the Government contract, the additional rights set
+          forth in FAR 52.227-19, Commercial Computer Software License
+          (December 2007). Oracle America, Inc., 500 Oracle Parkway,
+          Redwood City, CA 94065.</p>
+        <p>This software or hardware is developed for general use in a
+          variety of information management applications. It is not
+          developed or intended for use in any inherently dangerous
+          applications, including applications that may create a risk of
+          personal injury. If you use this software or hardware in
+          dangerous applications, then you shall be responsible to take
+          all appropriate fail-safe, backup, redundancy, and other
+          measures to ensure its safe use. Oracle Corporation and its
+          affiliates disclaim any liability for any damages caused by
+          use of this software or hardware in dangerous applications.</p>
+        <p>Oracle and Java are registered trademarks of Oracle and/or
+          its affiliates. Other names may be trademarks of their
+          respective owners.</p>
+        <p>Intel and Intel Xeon are trademarks or registered trademarks
+          of Intel Corporation. All SPARC trademarks are used under
+          license and are trademarks or registered trademarks of SPARC
+          International, Inc. AMD, Opteron, the AMD logo, and the AMD
+          Opteron logo are trademarks or registered trademarks of
+          Advanced Micro Devices. UNIX is a registered trademark of The
+          Open Group.</p>
+        <p>This software or hardware and documentation may provide
+          access to or information on content, products, and services
+          from third parties. Oracle Corporation and its affiliates are
+          not responsible for and expressly disclaim all warranties of
+          any kind with respect to third-party content, products, and
+          services. Oracle Corporation and its affiliates will not be
+          responsible for any loss, costs, or damages incurred due to
+          your access to or use of third-party content, products, or
+          services.</p>
+      </div>
+      <!-- class="ind" --><!-- Start Footer -->
+      <div class="footer">
+        <hr>
+        <div width="34%" align="center"><font size="-2">Copyright&nbsp;Â©&nbsp;2006,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            2012,&nbsp;Oracle and/or its
+            affiliates.&nbsp;All&nbsp;rights&nbsp;reserved. </font></div>
+        <!-- class="footer" --></div>
+    </div>
+  </body>
+</html>

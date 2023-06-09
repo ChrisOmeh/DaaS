@@ -1,0 +1,109 @@
+
+To fix this issue :
+
+ 
+1. Shutdown immediate      
+
+SQL> Shutdown immediate 
+
+2. Remark the parameter in initMYDB.ora:   
+
+    - UNDO_MANAGEMENT=AUTO - UNDO_TABLESPACE=OLD_UNDOTS
+
+
+3. Add the parameter in initMYDB.ora :          
+
+  
+*.UNDO_MANAGEMENT=MANUAL
+*._ALLOW_RESETLOGS_CORRUPTION = TRUE
+*._ALLOW_ERROR_SIMULATION = TRUE
+
+
+
+4. Startup database with new init.ora :          
+
+$ sqlplus '/as sysdba' 
+SQL*Plus: Release 10.2.0.4.0 - Production on Tue Apr 13 16:06:56 2010 
+Copyright (c) 1982, 2007, Oracle. All Rights Reserved. 
+Connected to an idle instance. 
+SQL> startup mount pfile=initMYDB.ora
+ORACLE instance started. 
+Total System Global Area 5251268608 bytes
+Fixed Size 2091368 bytes
+Variable Size 1040189080 bytes
+Database Buffers 4194304000 bytes
+Redo Buffers 14684160 bytes
+Database mounted.
+
+
+SQL> recover database using backup controlfile until cancel;
+ORA-00279: change 5991183372639 generated at 04/13/2010 13:51:42 needed for
+thread 1
+ORA-00289: suggestion :
+/u02/db/10.2.0/dbs/arch1_1125_714320021.dbf
+ORA-00280: change 5991183372639 for thread 1 is in sequence #1125 
+Specify log: {=suggested | filename | AUTO | CANCEL}
+cancel
+ORA-01547: warning: RECOVER succeeded but OPEN RESETLOGS would get error below
+ORA-01194: file 1 needs more recovery to be consistent
+ORA-01110: data file 1: '/u01/system01.dbf' 
+ORA-01112: media recovery not started 
+SQL> alter database open resetlogs; 
+Database altered. 
+
+
+
+5. Now the database already startup with Manual undo management. 
+
+
+6. Create new UNDO Tablespace   
+
+
+SQL> Create UNDO tablespace NEW_UNDOTS datafile '/u02/undo01.dbf' size 2048M; 
+
+
+7. Take offline the OLD Undo Tablespace :   
+ 
+ 
+ 
+
+SQL> alter tablespace OLD_UNDOTS offline; 
+
+8. Take online the NEW Undo Tablespace :   
+
+SQL> alter tablespace NEW_UNDOTS ; 
+
+
+9. Shutdown the database :       
+
+SQL> shutdown immediate; 
+
+10. Edit the initMYDB.ora :   
+
+    + Remark the parameter :
+
+  # *.UNDO_MANAGEMENT=MANUAL
+  # *._ALLOW_RESETLOGS_CORRUPTION = TRUE
+   #*._ALLOW_ERROR_SIMULATION = TRUE
+
+        + Add and edit the parameter : 
+
+    UNDO_MANAGEMENT=AUTO
+    UNDO_TABLESPACE=NEW_UNDOTS  
+
+11. Startup the database : 
+
+ 
+
+SQL> startup 
+
+12. The database will startup with the NEW Undo tablespace, change the default undo tablespace :  
+ 
+
+ 
+
+SQL> alter system set undo_tablespace=NEW_UNDOTS; 
+
+13. Then we can drop the OLD Undo tablespace :    
+
+SQL> drop tablespace OLD_UNDOTS including contents and datafiles;

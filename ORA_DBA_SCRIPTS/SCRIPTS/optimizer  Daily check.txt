@@ -1,0 +1,7 @@
+
+********************************************************
+CHECK IF THE DBMS.SQL WAS RUN FOR A PARTICULAR DAY
+********************************************************
+select last_analyzed from dba_tables where table_name 
+in (select table_name from tbl where table_abbr in ('DTD','TDTD','DTH'))
+

@@ -1,0 +1,231 @@
+From the Primary database
+**************************
+shutdown immediate
+startup mount;
+
+SQL> ALTER DATABASE CREATE STANDBY CONTROLFILE AS '/flashback/rmanbkp/ungtbm/ungpascontrol01_bkp.ctl';
+
+OR Using RMAN prompt
+
+
+RMAN> backup current controlfile for standby format '/flashback/rmanbkp/pngtbm/todaypngtbm_control.ctl';
+
+
+ftp the control file to target
+
+*************************************
+*************************************
+ON THE TARGET
+*************************************
+
+vi /etc/oratab   --------ungtbmS:/uddora/app/oracle/product/11.1.0/db_1:N
+
+rman "target/"
+
+startup nomount pfile='/uddora/app/oracle/product/11.1.0/db_1/dbs/initpngtbmsdg.ora';
+
+restore standby controlfile from '/flashback/rmanbkp/pngfib/march13fib.ctl';
+
+
+restore controlfile from '/flashback/pngtbmcontrol.ctl';
+
+ rmanbkp/daily/pngtbm/20130102-025806/autobackup/todaypngtbm_control.ctl';
+
+alter database mount;
+
+
+[confirm the database mode by]
+-------------------------------
+SQL> select open_mode,database_role from v$database;
+
+OPEN_MODE  DATABASE_ROLE
+---------- ----------------
+MOUNTED    PHYSICAL STANDBY
+
+
+
+restore database;      
+
+
+
+STATE OD DR- LAST TRANSACTION
+*****************************
+****************************
+
+select max(to_char(ENTRY_DATE,'dd-mm-yyyy hh24:mis')) from tbaadm.dtd
+
+
+
+
+*************************
+ON THE PRIMARY
+*************************
+
+SQL> ALTER DATABASE FORCE LOGGING;
+
+Database altered.
+
+SQL> select force_logging from v$database;
+	FOR
+	---
+	YES
+
+
+***PAsswod file***
+
+alter user sys identified by manager234 account unlock;
+
+orapwd file=orapwpngfin1 password=march1234$ force=y
+
+ftp the file orapwungtbm1from primary to target /uddora/app/oracle/product/11.1.0/db_1/dbs
+
+On the target ----mv orapwungtbm1 orapwungtbmS
+
+
+****************ON THE PRIMARY
+
+ALTER DATABASE ADD STANDBY LOGFILE THREAD 1 GROUP 5 ('+DATA/ungpas/onlinelog/group_5.log','+FRA/ungpas/onlinelog/group_5.log') size 50m;
+
+ALTER DATABASE ADD STANDBY LOGFILE THREAD 1 GROUP 6 ('+DATA/ungpas/onlinelog/group_6.log','+FRA/ungpas/onlinelog/group_6.log') size 50m;
+
+
+ALTER DATABASE ADD STANDBY LOGFILE THREAD 2 GROUP 7 ('+DATA/ungpas/onlinelog/group_7.log','+FRA/ungpas/onlinelog/group_7.log') size 50m;
+
+ALTER DATABASE ADD STANDBY LOGFILE THREAD 2 GROUP  8 ('+DATA/ungpas/onlinelog/group_8.log','+FRA/ungpas/onlinelog/group_8.log') size 50m;
+
+
+SQL> select * from  v$log;
+
+    GROUP#    THREAD#  SEQUENCE#      BYTES    MEMBERS ARC STATUS           FIRST_CHANGE# FIRST_TIM
+---------- ---------- ---------- ---------- ---------- --- ---------------- ------------- ---------
+         1          1       2945   52428800          2 YES INACTIVE              88220059 22-MAY-11
+         2          1       2946   52428800          2 NO  CURRENT               88367965 22-MAY-11
+         3          2       1711   52428800          2 YES INACTIVE              88256480 22-MAY-11
+         4          2       1712   52428800          2 NO  CURRENT               88294813 22-MAY-11
+
+
+
+
+
+
+
+alter system set log_archive_dest_state_2=enable scope=both;   ----run on Primary
+
+
+
+***On the Target check 
+
+alter database recover managed standby database disconnect;
+
+alter database recover managed standby database cancel;
+
+select sequence#,applied from v$archived_log;
+
+
+***To change the recovery path, cancel recovery and issue command*****************
+
+alter database recover automatic from '/flashback/'standby database;
+
+
+
+Chech if primary & standby is in sync or not?
+*********************************************
+
+post from primary:-
+select thread#,max(sequence#) from v$archived_log group by thread#;
+
+Post from Standby:-
+select thread#,max(sequence#) from v$archived_log where applied='YES' group by thread#;
+
+
+ON PRIMARY ---alter system switch logfile;
+
+
+Remember to do same 
+
+*.db_unique_name='ungpasS'
+*.fal_server='ungpas'
+*.fal_client='ungpasS'
+*.job_queue_processes=10
+*.LOG_ARCHIVE_CONFIG='DG_CONFIG=(ungpas,ungpasS)'
+*.LOG_ARCHIVE_DEST_1='LOCATION=+FRA/
+VALID_FOR=(ALL_LOGFILES,ALL_ROLES)
+DB_UNIQUE_NAME=ungpasS'
+*.LOG_ARCHIVE_DEST_2='SERVICE=ungpas LGWR ASYNC
+VALID_FOR=(ONLINE_LOGFILES,PRIMARY_ROLE)
+DB_UNIQUE_NAME=ungpas'
+*.LOG_ARCHIVE_DEST_STATE_1='ENABLE'                          
+*.LOG_ARCHIVE_DEST_STATE_2='ENEBLE'     
+*.db_recovery_file_dest_size=21474836480
+*.dg_broker_config_file1='+DATA/dr1ungpas.dat'
+*.dg_broker_config_file2='+DATA/dr2ungpas.dat'
+*.diagnostic_dest='/uddora/app/oracle'
+*.dg_broker_start=true
+*.standby_file_management='auto'
+
+
+
+*.db_unique_name='ungpas'
+*.fal_server='ungpasS'
+*.fal_client='ungpas'
+*.job_queue_processes=10
+*.LOG_ARCHIVE_CONFIG='DG_CONFIG=(ungpasS,ungpas)'
+*.LOG_ARCHIVE_DEST_1='LOCATION=+FRA/
+VALID_FOR=(ALL_LOGFILES,ALL_ROLES)
+DB_UNIQUE_NAME=ungpas'
+*.LOG_ARCHIVE_DEST_2='SERVICE=ungpasS LGWR ASYNC
+VALID_FOR=(ONLINE_LOGFILES,PRIMARY_ROLE)
+DB_UNIQUE_NAME=ungpasS'
+*.LOG_ARCHIVE_DEST_STATE_1='ENABLE'                          
+*.LOG_ARCHIVE_DEST_STATE_2='ENEBLE'     
+*.db_recovery_file_dest_size=21474836480
+*.dg_broker_config_file1='+DATA/dr1ungpas.dat'
+*.dg_broker_config_file2='+DATA/dr2ungpas.dat'
+*.diagnostic_dest='/uddora/app/oracle'
+*.dg_broker_start=true
+*.standby_file_management='auto'
+
+
+
+
+
+
+****************************************
+  TO Open DR
+******************************
+
+On the primary 
+
+show parameter LOG_ARCHIVE_DEST_STATE_2
+
+
+alter system set log_archive_dest_state_2='DEFER' scope=both;
+
+************** 
+
+ON DR
+********
+alter database recover managed standby database finish;
+
+ALTER DATABASE ACTIVATE STANDBY DATABASE; 
+
+select name,open_mode,database_role from v$database;
+
+
+
+RMAN> Configure archive log deletion policy on standby
+
+
+
+
+
+
+*************************************
+For FINACLE SERVICE TO START, MAKE THIS CHANGE
+
+************************************************
+
+update ceadm.fcsceubsapptab set field_value='jdbc:oracle:thin:@YNGORA1:1521:PNGFIN1S' where field_name = 'FI_STANDALONE_URL';
+
+
+

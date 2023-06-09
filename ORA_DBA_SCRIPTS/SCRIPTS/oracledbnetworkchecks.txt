@@ -1,0 +1,56 @@
+column TOTAL_WAITS format 999,999,999,999
+column PCT_WAITS   format 99.99
+column TIME_WAITED format 999,999,999
+column PCT_TIME    format 99.99
+column WAIT_CLASS  format A20
+
+SELECT wait_class,
+   total_waits,
+   ROUND(100 * (total_waits / sum_waits),2) pct_waits,
+    time_waited,
+   ROUND(100 * (time_waited / sum_time),2) pct_time
+FROM
+(SELECT wait_class,
+total_waits,
+time_waited
+FROM 
+   v$system_wait_class
+WHERE
+   wait_class = 'Network' 
+and
+   wait_class != 'Idle'),
+(SELECT SUM(total_waits) sum_waits,
+SUM(time_waited) sum_time
+FROM v$system_wait_class
+WHERE wait_class != 'Idle')
+ORDER BY 5 DESC;
+
+
+
+
+
+
+
+
+col c1 heading 'end|time' format a10
+col c2 heading 'wait|class' format a20
+col c3 heading 'time|waited' format 999,999,999,999
+
+--break on c1 skip 2
+
+select 
+   trunc(end_interval_time) c1,
+   wait_class c2,
+   sum(time_waited) c3
+from
+   dba_hist_service_wait_class
+join 
+   dba_hist_snapshot USING(snap_id)
+where
+   wait_class = 'Network'
+group by
+   trunc(end_interval_time),
+   wait_class
+order by 
+   trunc(end_interval_time),
+c3 desc;

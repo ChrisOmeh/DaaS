@@ -1,0 +1,164 @@
+ASM commands
+**************
+select  GROUP_NUMBER ,NAME,STATE,TYPE ,TOTAL_MB,FREE_MB,USABLE_FILE_MB  from v$asm_diskgroup;
+
+
+select GROUP_NUMBER,DISK_NUMBER , MOUNT_STATUS,STATE,TOTAL_MB,FREE_MB from v$asm_disk;
+
+
+
+select GROUP_NUMBER,INSTANCE_NAME,DB_NAME,STATUS,SOFTWARE_VERSION,  COMPATIBLE_VERSION  from  v$asm_client;
+
+
+TNGORA1 as at 9th Jan 2010
+**************************
+ 
+
+select  GROUP_NUMBER ,NAME,STATE,TYPE ,TOTAL_MB,FREE_MB,USABLE_FILE_MB from v$asm_diskgroup;
+
+
+GROUP_NUMBER NAME                           STATE       TYPE     TOTAL_MB    FREE_MB
+------------ ------------------------------ ----------- ------ ---------- ----------
+           1 DATA                           CONNECTED   EXTERN     921600     534044
+           2 FRA                            CONNECTED   EXTERN     102400       3442
+
+
+ERROR: UNABLE TO EXTEND EXTENT ON A TABLE/TABLESPACE
+****************************************************
+ 
+select name,state,DISK_NUMBER , STATE,TOTAL_MB,FREE_MB,path from v$asm_disk;
+
+
+DATA_0009                      NORMAL             9 NORMAL        51200          0 /dev/UNGORA_ASM12
+DATA_0010                      NORMAL            10 NORMAL        51200      51188 /dev/UNGORA_ASM13
+DATA_0011                      NORMAL            11 NORMAL        51200      51190 /dev/UNGORA_ASM14
+DATA_0012                      NORMAL            12 NORMAL        51200      51188 /dev/UNGORA_ASM15
+DATA_0013                      NORMAL            13 NORMAL        51200      51187 /dev/UNGORA_ASM16
+                               NORMAL            17 NORMAL            0          0 /dev/UNGORA_ASM18
+                               NORMAL            16 NORMAL            0          0 /dev/UNGORA_ASM17
+
+select name,state,FAILGROUP, STATE,TOTAL_MB,FREE_MB,path from v$asm_disk;
+
+
+**************************
+AS RECOMMENDED BY SOLLY
+**************************
+alter diskgroup DATA add FAILGROUP data_failure_san1 disk '/dev/PNGORA12_ASM24_1' FAILGROUP data_failure_san2 DISK '/dev/PNGORA12_ASM24_2';
+
+
+alter diskgroup  FRA add FAILGROUP FRA_FAILURE_SAN1 disk '/dev/PNGORA34_ASM07_1' FAILGROUP FRA_FAILURE_SAN2 DISK '/dev/PNGORA34_ASM08_1';
+
+
+
+************************************************************************************************************************************************
+
+alter  diskgroup DATA add disk '/dev/TNGORA1_ASM42'
+
+alter  diskgroup FRA add disk '/dev/YNGORA1_ASM21'
+
+
+
+
+*******DROP/REMOVE Disk from a group*****************
+*****************************************************
+
+alter  diskgroup  FRA drop disk FRA_0002;
+
+alter  diskgroup DATA drop disk DATA_0018;
+
+
+ALTER DISKGROUP DATA REBALANCE POWER 11;
+
+select * from v$asm_operation   ----To display the current ASM operation
+
+
+SELECT group_number, operation, state, power, est_minutes FROM v$asm_operation;
+
+
+
+select * from V$flash_recovery_area_usage
+
+Sum(percent_space_reclaimable) "PCT_SPACE_USED_NOT_FREEABLE"
+FROM v$flash_recovery_area_usage;
+
+
+
+
+**************************
+This shows that the flash recovery area is full
+
+To verify this run the following query. It will show the size of the recovery area and how full it is: 
+set lines 100
+col name format a60
+select	name,floor(space_limit / 1024 / 1024) "Size MB",ceil(space_used  / 1024 / 1024) "Used MB"
+from	v$recovery_file_dest order by name
+
+
+
+
+
+
+******************************************
+SOME DISKS SHOWING 0 VALUES
+******************************************
+SQL> select name,state,DISK_NUMBER , STATE,TOTAL_MB,FREE_MB,path from v$asm_disk;
+
+NAME                           STATE    DISK_NUMBER STATE      TOTAL_MB    FREE_MB PATH
+------------------------------ -------- ----------- -------- ---------- ---------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+DATA_0000                      NORMAL             0 NORMAL        51200          0 /dev/UNGORA_ASM01
+DATA_0001                      NORMAL             1 NORMAL        51200          0 /dev/UNGORA_ASM02
+FRA_0000                       NORMAL             0 NORMAL        51200      50247 /dev/UNGORA_ASM03
+FRA_0001                       NORMAL             1 NORMAL        51200      50247 /dev/UNGORA_ASM04
+DATA_0002                      NORMAL             2 NORMAL        51200          0 /dev/UNGORA_ASM05
+DATA_0003                      NORMAL             3 NORMAL        51200          0 /dev/UNGORA_ASM06
+DATA_0004                      NORMAL             4 NORMAL        51200          0 /dev/UNGORA_ASM07
+DATA_0005                      NORMAL             5 NORMAL        51200      50595 /dev/UNGORA_ASM08
+DATA_0006                      NORMAL             6 NORMAL        51200      50578 /dev/UNGORA_ASM09
+DATA_0007                      NORMAL             7 NORMAL        51200      50539 /dev/UNGORA_ASM10
+DATA_0008                      NORMAL             8 NORMAL        51200      50615 /dev/UNGORA_ASM11
+
+
+
+
+ALTER DISKGROUP DATA REBALANCE POWER 11;
+
+SELECT group_number, operation, state, power, est_minutes FROM v$asm_operation;
+
+
+
+
+
+***************************REBALANCING THE DISK***********************
+**********************************************************************
+
+SQL> alter diskgroup DATA rebalance power 11;
+
+or alter diskgroup DATA rebalance;
+
+
+Diskgroup altered.
+
+SQL> SELECT group_number, operation, state, power, est_minutes FROM v$asm_operation;
+
+GROUP_NUMBER OPERA STAT      POWER EST_MINUTES
+------------ ----- ---- ---------- -----------
+           1 REBAL RUN          11          14
+
+
+
+
+
+***************************************
+DROP DISKGROUP DATA INCLUDING CONTENTS;
+
+
+
+CREATE DISKGROUP DATA EXTERNAL REDUNDANCY DISK '/dev/UNGORA_ASM34' ATTRIBUTE 'AU_SIZE' = '4M';
+
+CREATE DISKGROUP FRA EXTERNAL REDUNDANCY DISK '/dev/UNGORA_ASM33'  ATTRIBUTE 'AU_SIZE' = '4M';
+
+
+
+alter diskgroup DATA add disk '/dev/UNGORA_ASM12','/dev/UNGORA_ASM13','/dev/UNGORA_ASM14','/dev/UNGORA_ASM15','/dev/UNGORA_ASM16','/dev/UNGORA_ASM17',
+'/dev/UNGORA_ASM18','/dev/UNGORA_ASM22','/dev/UNGORA_ASM23','/dev/UNGORA_ASM24','/dev/UNGORA_ASM25','/dev/UNGORA_ASM26';
+

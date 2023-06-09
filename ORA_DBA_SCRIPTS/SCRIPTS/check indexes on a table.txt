@@ -1,0 +1,5 @@
+ Select TABLE_owner, table_name, index_name, column_name
+FROM dba_ind_columns
+ Where TABLE_owner='TBAADM' AND table_name='HIST_TRAN_DTL_TABLE'
+ and index_name ='IDX_HTD_ACCT_ID'
+  Order by TABLE_owner, table_name, column_name

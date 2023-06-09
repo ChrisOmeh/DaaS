@@ -1,0 +1,6 @@
+****************************************************
+Recover a database using a particular log sequence
+****************************************************
+ select a.member, SEQUENCE#
+ from v$logfile a,v$log b
+ where a.GROUP# =b.GROUP#;

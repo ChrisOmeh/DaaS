@@ -1,0 +1,4 @@
+select sys_context ('USERENV', 'OS_USER')  from dual ;    where audsid != 0  ;
+   select sys_context ('USERENV', 'HOST')  from dual ; 
+
+   SELECT sys_context('USERENV','SESSION_USER') FROM DUAL  ;

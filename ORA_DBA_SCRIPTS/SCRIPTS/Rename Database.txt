@@ -1,0 +1,84 @@
+***********************************
+RENAMING A DATABASE
+***********************************
+
+
+Rename database using nid 
+Shutdown immediate
+
+startup mount
+
+D:\>nid target=sys/database@dba dbname=ORCL setname=yes
+
+DBNEWID: Release 10.2.0.1.0 - Production on Thu Jun 18 2009
+
+Copyright (c) 1982, 2005, Oracle. All rights reserved.
+
+Connected to database DBA (DBID=1149114175)
+
+Connected to server version 10.2.0
+
+Control Files in database:
+D:\ORACLE\PRODUCT\10.2.0\ORADATA\DBA\CONTROL01.CTL
+D:\ORACLE\PRODUCT\10.2.0\ORADATA\DBA\CONTROL02.CTL
+D:\ORACLE\PRODUCT\10.2.0\ORADATA\DBA\CONTROL03.CTL
+
+Change database name of database DBA to ORCL? (Y/[N]) => Y
+
+Proceeding with operation
+Changing database name from DBA to ORCL
+Control File D:\ORACLE\PRODUCT\10.2.0\ORADATA\DBA\CONTROL01.CTL - modified
+Control File D:\ORACLE\PRODUCT\10.2.0\ORADATA\DBA\CONTROL02.CTL - modified
+Control File D:\ORACLE\PRODUCT\10.2.0\ORADATA\DBA\CONTROL03.CTL - modified
+Datafile D:\ORACLE\PRODUCT\10.2.0\ORADATA\DBA\SYSTEM01.DBF - wrote new name
+Datafile D:\ORACLE\PRODUCT\10.2.0\ORADATA\DBA\UNDOTBS01.DBF - wrote new name
+Datafile D:\ORACLE\PRODUCT\10.2.0\ORADATA\DBA\SYSAUX01.DBF - wrote new name
+Datafile D:\ORACLE\PRODUCT\10.2.0\ORADATA\DBA\USERS01.DBF - wrote new name
+Datafile D:\ORACLE\PRODUCT\10.2.0\ORADATA\DBA\TEMP01.DBF - wrote new name
+Control File D:\ORACLE\PRODUCT\10.2.0\ORADATA\DBA\CONTROL01.CTL - wrote new name
+Control File D:\ORACLE\PRODUCT\10.2.0\ORADATA\DBA\CONTROL02.CTL - wrote new name
+Control File D:\ORACLE\PRODUCT\10.2.0\ORADATA\DBA\CONTROL03.CTL - wrote new name
+Instance shut down
+
+Database name changed to ORCL.
+Modify parameter file and generate a new password file before restarting.
+Succesfully changed database name.
+DBNEWID - Completed succesfully.
+
+
+D:\>orapwd
+Usage: orapwd file= password= entries= force=
+
+where
+file - name of password file (mand),
+password - password for SYS (mand),
+entries - maximum number of distinct DBA and force - whether to overwrite existing file (opt),
+OPERs (opt),
+There are no spaces around the equal-to (=) character.
+
+D:\>orapwd file=D:\oracle\product\10.2.0\db\database\PWDorcl.ora password=database entries=5
+
+D:\>sc delete OracleServiceDBA
+
+D:\>oradim -new -sid orcl -pfile 'D:\oracle\product\10.2.0\admin\dba\pfile\init.ora.5182009184446'
+
+D:\>set oracle_sid=orcl
+
+D:\>lsnrctl
+
+LSNRCTL> reload
+
+LSNRCTL> exit
+
+D:\>sqlplus
+
+SQL> startup mount pfile='D:\oracle\product\10.2.0\admin\dba\pfile\init.ora.5182009184446';
+
+SQL> create spfile from pfile='D:\oracle\product\10.2.0\admin\dba\pfile\init.ora.5182009184446';
+
+SQL> shutdown immediate
+
+SQL> startup
+
+SQL> select name from v$database;
+Reference: http://www.oracle-base.com/articles/9i/DBNEWID.php 

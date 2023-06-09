@@ -1,0 +1,472 @@
+HOW TO RESIZE THE ONLINE REDOLOGS ON A RAC ENVIRONMENT 
+
+http://kb.dbatoolz.com/tp/3374.how_to_resize_and_multiplex_redo_group_members.html
+
+http://jackwangdba.blogspot.com/2010/09/how-to-resize-online-redologs-on-rac.html
+
+
+
+
+
+SQL> select GROUP#,STATUS,TYPE,MEMBER,IS_RECOVERY_DEST_FILE from v$logfile;
+
+    GROUP# STATUS  TYPE    MEMBER                                                       IS_RECOVERY_DEST_FIL
+---------- ------- ------- ------------------------------------------------------------ --------------------
+         2         ONLINE  +DATA/pngfib/onlinelog/group_2.307.745417927                 NO
+         2         ONLINE  +FRA/pngfib/onlinelog/group_2.296.745417927                  YES
+         1         ONLINE  +DATA/pngfib/onlinelog/group_1.306.745417927                 NO
+         1         ONLINE  +FRA/pngfib/onlinelog/group_1.295.745417927                  YES
+         3         ONLINE  +DATA/pngfib/onlinelog/group_3.310.745418089                 NO
+         3         ONLINE  +FRA/pngfib/onlinelog/group_3.297.745418091                  YES
+         4         ONLINE  +DATA/pngfib/onlinelog/group_4.311.745418091                 NO
+         4         ONLINE  +FRA/pngfib/onlinelog/group_4.298.745418091                  YES
+
+8 rows selected.
+
+SQL> select * from  v$log;
+
+    GROUP#    THREAD#  SEQUENCE#      BYTES    MEMBERS ARC STATUS           FIRST_CHANGE# FIRST_TIM
+---------- ---------- ---------- ---------- ---------- --- ---------------- ------------- ---------
+         1          1       2945   52428800          2 YES INACTIVE              88220059 22-MAY-11
+         2          1       2946   52428800          2 NO  CURRENT               88367965 22-MAY-11
+         3          2       1711   52428800          2 YES INACTIVE              88256480 22-MAY-11
+         4          2       1712   52428800          2 NO  CURRENT               88294813 22-MAY-11
+
+
+
+
+
+******************************
+CREATE THE NEW REDOLOGS
+******************************
+
+ALTER DATABASE ADD LOGFILE THREAD 1
+GROUP 5 ('+DATA/PNGFIB/ONLINELOG/group_5.log','+FRA/PNGFIB/ONLINELOG/group_5.log') size 250m;
+
+ALTER DATABASE ADD LOGFILE THREAD 1
+GROUP 6 ('+DATA/PNGFIB/ONLINELOG/group_6.log','+FRA/PNGFIB/ONLINELOG/group_6.log') size 250m;
+
+
+ALTER DATABASE ADD LOGFILE THREAD 2
+GROUP 7 ('+DATA/PNGFIB/ONLINELOG/group_7.log','+FRA/PNGFIB/ONLINELOG/group_7.log') size 250m;
+
+ALTER DATABASE ADD LOGFILE THREAD 2
+GROUP  8 ('+DATA/PNGFIB/ONLINELOG/group_8.log','+FRA/PNGFIB/ONLINELOG/group_8.log') size 250m;
+
+
+**********
+CONFIRM
+**********
+ select * from v$log;
+
+    GROUP#    THREAD#  SEQUENCE#      BYTES    MEMBERS ARC STATUS           FIRST_CHANGE# FIRST_TIM
+---------- ---------- ---------- ---------- ---------- --- ---------------- ------------- ---------
+         1          1       2945   52428800          2 YES INACTIVE              88220059 22-MAY-11
+         2          1       2946   52428800          2 NO  CURRENT               88367965 22-MAY-11
+         3          2       1711   52428800          2 YES INACTIVE              88256480 22-MAY-11
+         4          2       1712   52428800          2 NO  CURRENT               88294813 22-MAY-11
+         5          1          0  262144000          2 YES UNUSED                       0
+         6          1          0  262144000          2 YES UNUSED                       0
+         7          1          0  262144000          2 YES UNUSED                       0
+         8          1          0  262144000          2 YES UNUSED                       0
+
+
+*******************
+SWITCH THE LOGFILES
+*******************
+
+-- now run "alter system switch logfile;" on all instances
+-- untill all of the GROUP 1-8 become "INACTIVE"
+-- like shown below:
+
+alter system switch logfile;
+
+
+
+Continue this until all the UNUSED become either current or Inactive or active
+
+select * from v$log;
+SQL> select * from v$log;
+
+    GROUP#    THREAD#  SEQUENCE#      BYTES    MEMBERS ARC STATUS           FIRST_CHANGE# FIRST_TIM
+---------- ---------- ---------- ---------- ---------- --- ---------------- ------------- ---------
+         1          1       2951   52428800          2 YES INACTIVE              88434754 22-MAY-11
+         2          1       2952   52428800          2 YES INACTIVE              88434776 22-MAY-11
+         3          2       1713   52428800          2 YES INACTIVE              88434729 22-MAY-11
+         4          2       1714   52428800          2 NO  CURRENT               88434792 22-MAY-11
+         5          1       2953  262144000          2 YES INACTIVE              88434782 22-MAY-11
+         6          1       2954  262144000          2 YES ACTIVE                88434785 22-MAY-11
+         7          1       2955  262144000          2 YES ACTIVE                88435372 22-MAY-11
+         8          1       2956  262144000          2 NO  CURRENT               88435392 22-MAY-11
+
+
+To ensure all non current groups are inactive execute a global checkpoint.
+
+alter system checkpoint global;
+
+SQL> select * from v$log;
+
+    GROUP#    THREAD#  SEQUENCE#      BYTES    MEMBERS ARC STATUS           FIRST_CHANGE# FIRST_TIM
+---------- ---------- ---------- ---------- ---------- --- ---------------- ------------- ---------
+         3          2       1744   52428800          2 YES INACTIVE              88444530 22-MAY-11
+         4          2       1743   52428800          2 YES INACTIVE              88444326 22-MAY-11
+         5          1       3060  262144000          2 NO  CURRENT               88446004 22-MAY-11
+         6          1       3059  262144000          2 YES INACTIVE              88445864 22-MAY-11
+         7          2       1742  262144000          2 YES INACTIVE              88444266 22-MAY-11
+         8          2       1745  262144000          2 NO  CURRENT               88445814 22-MAY-11
+
+
+
+
+*********************
+DROP THE LOG FILE
+*********************
+alter database drop logfile group 2;
+
+
+ALTER DISKGROUP DATA DROP FILE '+DATA/PNGFIB/ONLINELOG/group_6.log';
+
+ALTER DISKGROUP FRA DROP FILE '+FRA/PNGFIB/ONLINELOG/group_6.log';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+HOW TO RESIZE THE ONLINE REDOLOGS ON A RAC ENVIRONMENT (Method 2)
+
+Introduction
+This is a step-by-step example showing how to resize the online redologs on a RAC environment. Although the
+procedure is quite simple it is always convenient to be careful, because the online redologs are a critical structure
+that in case of being damaged may affect the whole database.
+In addition we will review also a little bit some concepts related to the redo logs on RAC.
+Make a Full Backup
+Before starting this procedure on a production database make a full backup, or validate you last available backup.
+Understand The Redolog Configuration of your Database
+This is the list of the resources of this RAC database
+A Resource Target State
+----------- ------ -----
+ora.rac1.ASM1.asm ONLINE ONLINE on rac1
+ora.rac1.LISTENER_RAC1.lsnr ONLINE ONLINE on rac1
+ora.rac1.gsd ONLINE ONLINE on rac1
+ora.rac1.ons ONLINE ONLINE on rac1
+ora.rac1.vip ONLINE ONLINE on rac1
+ora.rac2.ASM2.asm ONLINE ONLINE on rac2
+ora.rac2.LISTENER_RAC2.lsnr ONLINE ONLINE on rac2
+ora.rac2.gsd ONLINE ONLINE on rac2
+ora.rac2.ons ONLINE ONLINE on rac2
+ora.rac2.vip ONLINE ONLINE on rac2
+ora.sati.db ONLINE ONLINE on rac2
+ora.sati.dbserv.cs ONLINE ONLINE on rac2
+ora.sati.dbserv.sati1.srv ONLINE ONLINE on rac1
+ora.sati.dbserv.sati2.srv ONLINE ONLINE on rac2
+ora.sati.sati1.inst ONLINE ONLINE on rac1
+ora.sati.sati2.inst ONLINE ONLINE on rac2
+
+Review of the redolog related parameters on both instances, in this case instance 1 has assigned thread 1 and
+instance 2 thread 2
+[oracle@rac2 ~/av]$ sqlplus 'sys/oracle@sati1 as sysdba' ;
+SQL> show parameters instance
+NAME TYPE VALUE
+------------------------------------ ----------- ------------------------------
+cluster_database_instances integer 2
+instance_name string sati1
+instance_number integer 1
+SQL> show parameters "thread"
+NAME TYPE VALUE
+------------------------------------ ----------- ------------------------------
+thread integer 1
+[oracle@rac2 ~/av]$ sqlplus 'sys/oracle@sati2 as sysdba' ;
+SQL> show parameters instance
+NAME TYPE VALUE
+------------------------------------ ----------- ------------------------------
+cluster_database_instances integer 2
+instance_name string sati2
+instance_number integer 2
+SQL> show parameters thread;
+NAME TYPE VALUE
+------------------------------------ ----------- ------------------------------
+thread integer 2
+Check which are the redolog members and groups.
+
+In this case we have 5 groups with 2 members each, located on two different ASM diskgroups, +datadg and
++recodg.
+Note that each group appear as available for both instances, as an example look at the highlighted group 2
+member 1, the same happen with each member.
+This is because we are using public threads.
+SQL> select inst_id,group#,status,type,member from gv$logfile;
+INST_ID GROUP# STATUS TYPE MEMBER
+---------- ---------- ------- ------- --------------------------------------------------
+2 2 ONLINE +DATADG/sati/onlinelog/group_2.303.646839827
+2 2 ONLINE +RECODG/sati/onlinelog/group_2.258.646839831
+2 3 ONLINE +DATADG/sati/onlinelog/group_3.299.646840037
+2 3 ONLINE +RECODG/sati/onlinelog/group_3.257.646840041
+2 4 ONLINE +DATADG/sati/onlinelog/group_4.297.646840047
+2 4 ONLINE +RECODG/sati/onlinelog/group_4.261.646840051
+2 5 ONLINE +DATADG/sati/onlinelog/group_5.295.647564931
+1 2 ONLINE +DATADG/sati/onlinelog/group_2.303.646839827
+1 2 ONLINE +RECODG/sati/onlinelog/group_2.258.646839831
+1 3 ONLINE +DATADG/sati/onlinelog/group_3.299.646840037
+1 3 ONLINE +RECODG/sati/onlinelog/group_3.257.646840041
+1 4 ONLINE +DATADG/sati/onlinelog/group_4.297.646840047
+1 4 ONLINE +RECODG/sati/onlinelog/group_4.261.646840051
+1 5 ONLINE +DATADG/sati/onlinelog/group_5.295.647564931
+14 rows selected.
+Looking into gv$log we can see again that groups 2 and 3 are current for both instances.
+Group 2 is assigned to thread 1 and keeps the redolog activity of instance 1; group 2 is assigned to thread 2 and it
+keeps the redolog activity of instance 2.
+Still both groups appears to be ‘Current’ for the other instance also, that is because in the case of a crash they will
+need to perform recovery from the current of the other instance.
+SQL> select inst_id,group#,thread#,sequence#,bytes,members,status from gv$log
+/
+INST_ID GROUP# THREAD# SEQUENCE# BYTES MEMBERS STATUS
+---------- ---------- ---------- ---------- ---------- ---------- ----------------
+2 2 1 15 52428800 2 CURRENT
+2 3 2 27 52428800 2 CURRENT
+2 4 2 26 52428800 2 INACTIVE
+2 5 1 13 52428800 1 INACTIVE
+1 2 1 15 52428800 2 CURRENT
+1 3 2 27 52428800 2 CURRENT
+1 4 2 26 52428800 2 INACTIVE
+1 5 1 13 52428800 1 INACTIVE
+8 rows selected.
+Add New Redolog Members
+When adding the new redologs you need to take into account the following items: Thread, Location, and Number of
+Members.
+In this example I’m adding 6 new redolog groups of 250M each, three of them are assigned to thread 2 and the
+other 3 to thread 1, I’m also creating only one member per group on ASM diskgroup +datadg
+If you have more than 2 instances you will need to more groups, assigned to other threads up to the number of
+instances on your configuration.
+Its is convenient to have at least three groups per instance/thread; the minimum is two groups per instance/thread.
+SQL> alter database add logfile thread 2 group 10 '+DATADG' size 250M;
+Database altered.
+SQL> alter database add logfile thread 2 group 11 '+DATADG' size 250M;
+Database altered.
+SQL> alter database add logfile thread 2 group 12 '+DATADG' size 250M;
+Database altered.
+SQL> alter database add logfile thread 1 group 13 '+DATADG' size 250M;
+Database altered.
+SQL> alter database add logfile thread 1 group 14 '+DATADG' size 250M;
+Database altered.
+SQL> alter database add logfile thread 1 group 15 '+DATADG' size 250M;
+Database altered.
+Note that if you want to create 2 or more members you can use the following sintax:
+alter database add logfile thread 1 group 15 ('+DATADG',’+DATADG’) size 250M;
+If you want to create three members on two different ASM diskgroups you may use the following sintax:
+alter database add logfile thread 1 group 15 ('+DATADG',’+RECODG’,’+DATADG’) size 250M;
+Check the new Redologs
+SQL> select inst_id,group#,thread#,sequence#,bytes,members,status from gv$log
+/
+INST_ID GROUP# THREAD# SEQUENCE# BYTES MEMBERS STATUS
+---------- ---------- ---------- ---------- ---------- ---------- ----------------
+2 2 1 15 52428800 2 CURRENT
+2 3 2 27 52428800 2 CURRENT
+2 4 2 26 52428800 2 INACTIVE
+2 5 1 13 52428800 1 INACTIVE
+2 10 2 0 262144000 1 UNUSED
+2 11 2 0 262144000 1 UNUSED
+2 12 2 0 262144000 1 UNUSED
+2 13 1 0 262144000 1 UNUSED
+2 14 1 0 262144000 1 UNUSED
+2 15 1 0 262144000 1 UNUSED
+1 2 1 15 52428800 2 CURRENT
+1 3 2 27 52428800 2 CURRENT
+1 4 2 26 52428800 2 INACTIVE
+1 5 1 13 52428800 1 INACTIVE
+1 10 2 0 262144000 1 UNUSED
+1 11 2 0 262144000 1 UNUSED
+1 12 2 0 262144000 1 UNUSED
+1 13 1 0 262144000 1 UNUSED
+1 14 1 0 262144000 1 UNUSED
+1 15 1 0 262144000 1 UNUSED
+20 rows selected.
+Switch logfiles until the current is located on the new groups.
+To be able to remove the old logfiles you need to switch the redologs for each instance until all current online
+redologs are located on the new groups.
+Switch logfiles on instance 1, then connect to instance 2 and repeat, if there is more instances switch on them also,
+SQL> alter system switch logfile;
+System altered.
+SQL> select inst_id,group#,thread#,sequence#,bytes,members,status from gv$log
+where status='CURRENT'
+/
+INST_ID GROUP# THREAD# SEQUENCE# BYTES MEMBERS STATUS
+---------- ---------- ---------- ---------- ---------- ---------- ----------------
+1 10 2 33 262144000 1 CURRENT
+1 14 1 22 262144000 1 CURRENT
+2 10 2 33 262144000 1 CURRENT
+2 14 1 22 262144000 1 CURRENT
+Remove the Old Redologs
+Before removing the old redolog groups confirm that none of them have a status of 'ACTIVE'
+SQL> select inst_id,group#,thread#,sequence#,bytes,members,status from gv$log
+/
+INST_ID GROUP# THREAD# SEQUENCE# BYTES MEMBERS STATUS
+---------- ---------- ---------- ---------- ---------- ---------- ----------------
+1 2 1 20 52428800 2 INACTIVE
+1 3 2 32 52428800 2 ACTIVE
+1 4 2 31 52428800 2 INACTIVE
+1 5 1 19 52428800 1 INACTIVE
+1 10 2 33 262144000 1 ACTIVE
+1 11 2 34 262144000 1 CURRENT
+1 12 2 30 262144000 1 INACTIVE
+1 13 1 21 262144000 1 ACTIVE
+1 14 1 22 262144000 1 CURRENT
+1 15 1 18 262144000 1 INACTIVE
+2 2 1 20 52428800 2 INACTIVE
+2 3 2 32 52428800 2 ACTIVE
+2 4 2 31 52428800 2 INACTIVE
+2 5 1 19 52428800 1 INACTIVE
+2 10 2 33 262144000 1 ACTIVE
+2 11 2 34 262144000 1 CURRENT
+2 12 2 30 262144000 1 INACTIVE
+2 13 1 21 262144000 1 ACTIVE
+2 14 1 22 262144000 1 CURRENT
+2 15 1 18 262144000 1 INACTIVE
+20 rows selected.
+To ensure all non current groups are inactive execute a global checkpoint.
+SQL> alter system checkpoint global;
+System altered.
+SQL> select inst_id,group#,thread#,sequence#,bytes,members,status from gv$log
+/
+INST_ID GROUP# THREAD# SEQUENCE# BYTES MEMBERS STATUS
+---------- ---------- ---------- ---------- ---------- ---------- ----------------
+1 2 1 20 52428800 2 INACTIVE
+1 3 2 37 52428800 2 INACTIVE
+1 4 2 36 52428800 2 INACTIVE
+1 5 1 19 52428800 1 INACTIVE
+1 10 2 38 262144000 1 CURRENT
+1 11 2 34 262144000 1 INACTIVE
+1 12 2 35 262144000 1 INACTIVE
+1 13 1 21 262144000 1 INACTIVE
+1 14 1 22 262144000 1 INACTIVE
+1 15 1 23 262144000 1 CURRENT
+2 2 1 20 52428800 2 INACTIVE
+2 3 2 37 52428800 2 INACTIVE
+2 4 2 36 52428800 2 INACTIVE
+2 5 1 19 52428800 1 INACTIVE
+2 10 2 38 262144000 1 CURRENT
+2 11 2 34 262144000 1 INACTIVE
+2 12 2 35 262144000 1 INACTIVE
+2 13 1 21 262144000 1 INACTIVE
+2 14 1 22 262144000 1 INACTIVE
+2 15 1 23 262144000 1 CURRENT
+20 rows selected.
+Now that all old members are inactive you can drop them.
+SQL> alter database drop logfile group 2;
+Database altered.
+SQL> alter database drop logfile group 3;
+Database altered.
+SQL> alter database drop logfile group 4;
+Database altered.
+SQL> alter database drop logfile group 5;
+Database altered.
+SQL> select inst_id,group#,status,type,member from gv$logfile
+order by member
+/
+INST_ID GROUP# STATUS TYPE MEMBER
+---------- ---------- ------- ------- --------------------------------------------------
+2 10 ONLINE +DATADG/sati/onlinelog/group_10.293.647967703
+1 10 ONLINE +DATADG/sati/onlinelog/group_10.293.647967703
+2 11 ONLINE +DATADG/sati/onlinelog/group_11.286.647967857
+1 11 ONLINE +DATADG/sati/onlinelog/group_11.286.647967857
+1 12 ONLINE +DATADG/sati/onlinelog/group_12.256.647968587
+2 12 ONLINE +DATADG/sati/onlinelog/group_12.256.647968587
+2 13 ONLINE +DATADG/sati/onlinelog/group_13.289.647968765
+1 13 ONLINE +DATADG/sati/onlinelog/group_13.289.647968765
+1 14 ONLINE +DATADG/sati/onlinelog/group_14.288.647968793
+2 14 ONLINE +DATADG/sati/onlinelog/group_14.288.647968793
+1 15 ONLINE +DATADG/sati/onlinelog/group_15.290.647968821
+2 15 ONLINE +DATADG/sati/onlinelog/group_15.290.647968821
+12 rows selected.
+Add a new member to each redolog group
+If you did create the redologs with only one member you can add more members later
+SQL> alter database add logfile member '+DATADG' to group 11;
+Database altered.
+SQL> alter database add logfile member '+DATADG' to group 12;
+Database altered.
+SQL> alter database add logfile member '+DATADG' to group 13;
+Database altered.
+SQL> alter database add logfile member '+DATADG' to group 14;
+Database altered.
+SQL> alter database add logfile member '+DATADG' to group 15;
+Database altered.
+QL> select thread#,status,enabled,groups,inst_id,instance,current_group# from gv$thread;
+THREAD# STATUS ENABLED GROUPS INST_ID INSTANCE CURRENT_GROUP#
+---------- ------ -------- ---------- ---------- ---------- --------------
+1 OPEN PUBLIC 3 2 sati1 13
+2 OPEN PUBLIC 3 2 sati2 11
+1 OPEN PUBLIC 3 1 sati1 13
+2 OPEN PUBLIC 3 1 sati2 11
+SQL> select inst_id,group#,thread#,sequence#,bytes,members,status from gv$log order by
+status,inst_id,thread#
+2 /
+INST_ID GROUP# THREAD# SEQUENCE# BYTES MEMBERS STATUS
+---------- ---------- ---------- ---------- ---------- ---------- ----------------
+1 13 1 24 262144000 2 CURRENT
+1 11 2 39 262144000 2 CURRENT
+2 13 1 24 262144000 2 CURRENT
+2 11 2 39 262144000 2 CURRENT
+1 14 1 22 262144000 2 INACTIVE
+1 15 1 23 262144000 2 INACTIVE
+1 12 2 35 262144000 2 INACTIVE
+1 10 2 38 262144000 2 INACTIVE
+2 14 1 22 262144000 2 INACTIVE
+2 15 1 23 262144000 2 INACTIVE
+2 10 2 38 262144000 2 INACTIVE
+2 12 2 35 262144000 2 INACTIVE
+1* select inst_id,group#,status,type,member from gv$logfile order by 1,2
+SQL> /
+INST_ID GROUP# STATUS TYPE MEMBER
+---------- ---------- ------- ------- --------------------------------------------------
+1 10 ONLINE +DATADG/sati/onlinelog/group_10.293.647967703
+1 10 ONLINE +DATADG/sati/onlinelog/group_10.295.647971813
+1 11 ONLINE +DATADG/sati/onlinelog/group_11.286.647967857
+1 11 ONLINE +DATADG/sati/onlinelog/group_11.297.647978737
+1 12 ONLINE +DATADG/sati/onlinelog/group_12.256.647968587
+1 12 ONLINE +DATADG/sati/onlinelog/group_12.299.647978953
+1 13 ONLINE +DATADG/sati/onlinelog/group_13.303.647979135
+1 13 ONLINE +DATADG/sati/onlinelog/group_13.289.647968765
+1 14 ONLINE +DATADG/sati/onlinelog/group_14.291.647979159
+1 14 ONLINE +DATADG/sati/onlinelog/group_14.288.647968793
+1 15 ONLINE +DATADG/sati/onlinelog/group_15.283.647979553
+1 15 ONLINE +DATADG/sati/onlinelog/group_15.290.647968821
+2 10 ONLINE +DATADG/sati/onlinelog/group_10.295.647971813
+2 10 ONLINE +DATADG/sati/onlinelog/group_10.293.647967703
+2 11 ONLINE +DATADG/sati/onlinelog/group_11.286.647967857
+2 11 ONLINE +DATADG/sati/onlinelog/group_11.297.647978737
+2 12 ONLINE +DATADG/sati/onlinelog/group_12.256.647968587
+2 12 ONLINE +DATADG/sati/onlinelog/group_12.299.647978953
+2 13 ONLINE +DATADG/sati/onlinelog/group_13.289.647968765
+2 13 ONLINE +DATADG/sati/onlinelog/group_13.303.647979135
+2 14 ONLINE +DATADG/sati/onlinelog/group_14.288.647968793
+2 14 ONLINE +DATADG/sati/onlinelog/group_14.291.647979159
+2 15 ONLINE +DATADG/sati/onlinelog/group_15.283.647979553
+2 15 ONLINE +DATADG/sati/onlinelog/group_15.290.647968821 
+Posted by Jack Wang at 7:59 PM  Email This
+ BlogThis!
+ Share to Twitter
+ Share to Facebook
+ Share to Google Buzz
+ 

@@ -1,0 +1,120 @@
+***********To Solve the  restore error ************
+
+RMAN-00569: =============== ERROR MESSAGE STACK FOLLOWS ===============
+RMAN-00571: ===========================================================
+RMAN-03002: failure of restore command at 01/10/2013 09:16:07
+RMAN-06026: some targets not found - aborting restore
+RMAN-06023: no backup or copy of datafile 4 found to restore
+RMAN-06023: no backup or copy of datafile 3 found to restore
+RMAN-06023: no backup or copy of datafile 2 found to restore
+RMAN-06023: no backup or copy of datafile 1 found to restore
+
+
+
+After reseting the incarnation and the error persist
+
+list incarnation of database;
+
+
+reset database to incarnation 2;
+
+
+RMAN> list backup of datafile 1;
+
+
+List of Backup Sets
+===================
+
+
+BS Key  Type LV Size       Device Type Elapsed Time Completion Time
+------- ---- -- ---------- ----------- ------------ ---------------
+2545    Full    1.36G      DISK        00:06:21     28-AUG-11
+        BP Key: 2545   Status: EXPIRED  Compressed: YES  Tag: TAG20110828T023617
+        Piece Name: /flashback/rmanbkp/pngfin/20110828-020120/backupset/mkml3d5a_1_1
+
+
+
+****This shows that the controlfile is older than the datafiles
+Then create a new spfile form the controlfile
+
+
+First delet all the spfiles and inint file
+
+
+***************RESTORING SPFIFLE FROM CONTROLFILE******************************
+
+RMAN> startup force nomount;
+
+
+startup failed: ORA-01078: failure in processing system parameters
+LRM-00109: could not open parameter file '/uddora/app/oracle/product/11.1.0/db_1/dbs/initpngfin1.ora'
+
+starting Oracle instance without parameter file for retrieval of spfile
+Oracle instance started
+
+Total System Global Area     158662656 bytes
+
+Fixed Size                     2151848 bytes
+Variable Size                 83888728 bytes
+Database Buffers              67108864 bytes
+Redo Buffers                   5513216 bytes
+
+
+
+RMAN> restore spfile from '/flashback/rmanbkp/pngfin/20110831-164613/autobackup/c-3692171552-20110831-05';
+
+
+
+
+RMAN>  sql 'create pfile from spfile';
+
+sql statement: create pfile from spfile
+
+RMAN> shutdown immediate;
+
+Oracle instance shut down
+
+****************************************************************************************************************
+
+RMAN> startup nomount pfile='/uddora/app/oracle/product/11.1.0/db_1/dbs/initpngfin1.ora';
+
+Oracle instance started
+
+Total System Global Area    3206836224 bytes
+
+Fixed Size                     2152248 bytes
+Variable Size                805308616 bytes
+Database Buffers            2348810240 bytes
+Redo Buffers                  50565120 bytes
+
+
+****************************************************************************************************************
+
+
+RMAN> restore controlfile from '/flashback/rmanbkp/pngfin/20110831-164613/autobackup/c-3692171552-20110831-05';
+
+Starting restore at 10-JAN-13
+allocated channel: ORA_DISK_1
+channel ORA_DISK_1: SID=1306 device type=DISK
+
+channel ORA_DISK_1: restoring control file
+channel ORA_DISK_1: restore complete, elapsed time: 00:00:02
+output file name=+DATA/pngfin/controlfile/current.1895.804341125
+output file name=+FRA/pngfin/controlfile/current.6820.804341125
+Finished restore at 10-JAN-13
+
+
+****************************************************************************************************************
+After restoration of new control file, there is no need editing the init.ora file- go stright and mount the DB
+
+
+RMAN> alter database mount;
+
+database mounted
+released channel: ORA_DISK_1
+
+RMAN> restore database;
+
+
+
+

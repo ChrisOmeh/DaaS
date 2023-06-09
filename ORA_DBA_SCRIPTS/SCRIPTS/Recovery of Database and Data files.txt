@@ -1,0 +1,78 @@
+****************************************************
+RECOVERING THE DATABASE OR DATA FILE IN RECOVER MODE
+***************************************************** 
+
+SQL>  select SEQUENCE#,GROUP#,members from v$log
+  2  /
+
+ SEQUENCE#     GROUP#    MEMBERS
+---------- ---------- ----------
+        13          1          2
+        14          2          2
+        15          3          2
+
+SQL> select GROUP#,STATUS,MEMBER  from v$logfile;
+
+    GROUP# STATUS  MEMBER
+---------- ------- ----------------------------------------
+         3         /DW_datalog/redolog/dwh/redo03.log
+         3         /DW_datalog2/redolog/dwh/redo03b.log
+         2         /DW_datalog/redolog/dwh/redo02.log
+         2         /DW_datalog2/redolog/dwh/redo02b.log
+         1         /DW_datalog/redolog/dwh/redo01.log
+         1         /DW_datalog2/redolog/dwh/redo01b.log
+
+  1* select FILE#,name,status from v$datafile
+SQL> /
+
+     FILE# NAME                                                         STATUS
+---------- ------------------------------------------------------------ -------
+         1 /DW_datafile1/oradata/dwh/system01.dbf                       SYSTEM
+         2 /DW_datafile2/oradata/dwh/dwhtbspac04.dbf                    RECOVER
+         3 /DW_datafile1/oradata/dwh/sysaux01.dbf                       ONLINE
+         4 /DW_datafile1/oradata/dwh/users01.dbf                        ONLINE
+
+
+
+***********************************************************
+Try recovering the database by using the following methods.
+**************************************************************
+
+Recover database
+
+or 
+
+alter database recover datafile '/DW_datafile1/oradata/dwh/dwhtbspac01.dbf'
+
+or
+alter database datafile '/DW_datafile1/oradata/dwh/dwhtbspac01.dbf' online
+
+or 
+
+set autorecovery off
+
+recover database using backup controlfile - - - Then supply one of the log members listed above.
+
+
+************************************
+show logsource
+
+show parameter recover
+
+
+NAME                                 TYPE        VALUE
+------------------------------------ ----------- ------------------------------
+db_recovery_file_dest                string      /DW_oracle/product/ora10g/DWB/
+                                                 flash_recovery_area
+db_recovery_file_dest_size           big integer 2G
+recovery_parallelism                 integer     0
+
+
+**********************************************
+set logsource='DW_arch/dwh' 
+set db_recovery_file_dest = 'DW_arch/dwh'  scope=spfile
+
+
+
+
+ 

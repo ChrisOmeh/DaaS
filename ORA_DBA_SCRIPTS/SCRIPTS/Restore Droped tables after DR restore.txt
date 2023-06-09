@@ -1,0 +1,279 @@
+*************************FINACLE DB IN DR - YNGORA1 (PNGFIN) *********************
+*******************************************************************
+--------cd /flashback/rmanbkp/pngfin to see the backup
+
+oraenv pngfin;
+
+sysdba;
+
+shutdown abort;
+exit
+rman "target/"
+
+startup nomount pfile='/uddora/app/oracle/product/11.1.0/db_1/dbs/initpngfin.ora';
+
+
+----***Change the value of the directory to restore from 20110902-025023 ***
+
+
+restore controlfile from '/flashback/rmanbkp/pngfin/20111012-033233/autobackup/c-3692171552-20111012-00';
+
+
+vi /uddora/app/oracle/product/11.1.0/db_1/dbs/initpngfin.ora
+
+------make the changes in the control file
+
+alter database mount;
+
+reset database to incarnation 2;
+
+run {
+
+restore database;}
+
+recover database;
+
+}
+
+alter database open resetlogs;
+
+show parameter db_recovery;
+alter database set db_recovery_file_dest_size=120G scope=both;
+
+
+
+
+
+
+##############################################################
+	FOR SANDPIT & UAT	RENAME THE DATABASE
+#############################################################
+
+
+1.	Drop the target database if it exists
+2.	Rename the parameter file of the target database if it exists in $ORACLE_HOME/dbs
+3.	Restart the source database in ‘restrict’ mode
+Shutdown immediate
+Startup mount restrict
+4.	Now, use the “nid” utility to rename the source database name to target database name
+ORACLE_SID=
+nid target='/ as sysdba' dbname=ungfin setname=YES
+
+
+5.	Rename the parameter file of source database to target database
+mv initpngfin.ora initungfin.ora
+6.	Edit the parameter file renamed above and make necessary changes to parameters (like db_name) to reflect target database
+7.	Create the password file for the target database
+orapwd file=orapwpngpas password=xxxx entries=5
+cd /uddora/app/oracle/product/11.1.0/db_1/dbs
+mv orapwungfin1 orapwungfin1_old
+$ orapwd file=orapwungfin password=manager entries=5
+
+8.	Set the environment for target database
+oraenv pngpas
+9.	Start the target database
+10.	Change the passwords of ‘sys’ and ‘system’ users in the target database
+alter user sys identified by xxxxx;
+alter user system identified by xxxxx;
+11.	Create spfile for the target database
+create spfile='+DATA/ungpas/spfilepngpas.ora' from pfile;
+12.	Rename existing ‘init’ parameter file of the target database
+13.	Create a new ‘init’ parameter file for the target database with only ‘spfile’ parameter
+spfile='+DATA/ungpas/spfilepngpas.ora'
+14.	Restart the target database and make sure ‘spfile’ is used
+show parameter spfile
+
+
+
+
+
+
+
+*******************************
+DROP OLD TABLES
+********************************
+1. Drop the select tables
+
+drop table TBAADM.SOL_DATA_DISTR_LIST_TABLE cascade constraints;
+
+drop table SSOADM.SSO_RESOURCE_TBL cascade constraints;
+
+drop table SSOADM.SERVER_DETAILS_TBL cascade constraints;
+
+drop table CEADM.FCSCEAUDITLOG cascade constraints;
+
+drop table CEADM.FCSCECEDTAB cascade constraints;
+
+drop table CEADM.FCSCEDEPENDENCY cascade constraints;
+
+drop table CEADM.FCSCEMAKERCHECKER cascade constraints;
+
+drop table CEADM.FCSCEMISTAB cascade constraints;
+
+drop table CEADM.FCSCESERVERCLIENT cascade constraints;
+
+drop table CEADM.FCSCEUBSAPPTAB cascade constraints;
+
+drop table CEADM.LICUTILIZEDTAB cascade constraints;
+
+drop table CEADM.FCSCEVALIDATION cascade constraints;
+
+drop table CEADM.FPICINSTALLDETAILS cascade constraints;
+
+drop table CEADM.LICAUDITTAB cascade constraints;
+
+drop table CEADM.LICDETAILSTAB cascade constraints;
+
+drop table FDMADMIN.FPICENTITYDETAILS cascade constraints;
+
+drop table FDMADMIN.FPICINSTALLDETAILS cascade constraints;
+
+drop table apdmadm.APDM_REP cascade constraints;
+
+drop table apdmadm.APDM_CONFIG cascade constraints;
+
+
+
+***********************************************************************************************************************************************************************
+alter user system identified by manager234;
+
+
+2. Import them back from the seed dmp
+
+
+imp system/manager234  file=/flashback/Seedbkp/pngfin_DR_TBAADM_Schema_Seed_111011.dmp  fromuser=TBAADM tables=SOL_DATA_DISTR_LIST_TABLE
+
+
+imp system/manager234  file=/flashback/Seedbkp/pngfin_DR_Seed_Schma_111011.dmp  fromuser=SSOADM tables=SSO_RESOURCE_TBL,SERVER_DETAILS_TBL
+
+imp system/manager234  file=/flashback/Seedbkp/pngfin_DR_Seed_Schma_111011.dmp  log=ceamlog.log fromuser=CEADM tables=FCSCEAUDITLOG,FCSCECEDTAB,FCSCEDEPENDENCY,FCSCEMAKERCHECKER,FCSCEMISTAB,FCSCESERVERCLIENT,FCSCEUBSAPPTAB,LICUTILIZEDTAB,FCSCEVALIDATION,FPICINSTALLDETAILS,LICAUDITTAB,LICDETAILSTAB
+
+
+imp system/manager234  file=/flashback/Seedbkp/pngfin_DR_Seed_Schma_111011.dmp  log=fdmlog.log fromuser=FDMADMIN tables=FPICENTITYDETAILS,FPICINSTALLDETAILS
+
+
+------imp system/manager234  /flashback/Seedbkp/pngfin_DR_Seed_Schma_111011.dmp  log=apdmlog.log fromuser=apdmadm tables=APDM_REP,APDM_CONFIG
+
+
+
+
+***********************************************************************************************************************************************************************
+3.Then For FIMASTER SCHEMA
+
+cd /flashback/Seedbkp    for the script
+
+  2 The following Steps are needed   
+
+Drop the objects in Fimaster
+>>sysdba @step_54_disable_FIMASTER_const.sql
+         @step_52_drop_FIMASTER_seq.sql
+         @step_51_truncate_Fimaster_table.sql
+>>imp parfile=pngfin_DR_FIMASTER_imp.par
+
+
+4. Change user passwords:
+
+alter user ssoadm identified by stanbic account unlock;
+
+alter user finriadm identified by stanbic account unlock;
+
+alter user intadm identified by stanbic account unlock;
+
+alter user fiejb identified by stanbic account unlock;
+
+alter user dedupadm identified stanbic account unlock;
+
+alter user crmuser identified by stanbic account unlock;
+
+alter user ceadm identified by stanbic account unlock;
+
+alter user svsuser identified by stanbic account unlock;
+
+
+
+
+
+
+
+---*************************
+---CONFIRM THE FOLLOWING 
+--****************************
+
+select res_id,res_start_url from  ssoadm.sso_resource_tbl
+
+-----Ensure all ports in res_start_url have port 443
+
+
+******************************************
+--***************************************
+
+select * from ssoadm.sso_resource_access_tbl where res_id not in (select res_id from ssoadm.sso_resource_tbl)
+
+--If the querry return any value, back it up and delete it. This is because some services in PROD are not yes configured on DR
+
+
+create table ssoadm.sso_resource_access_tbl_bk01
+as
+select * from ssoadm.sso_resource_access_tbl where res_id not in (select res_id from ssoadm.sso_resource_tbl)
+
+
+
+--Delete the table 
+
+delete from ssoadm.sso_resource_access_tbl where res_id not in (select res_id from ssoadm.sso_resource_tbl)
+
+commit;
+
+
+
+--**************************************************************************************************************
+************************************************************************
+********WAS CONSOLE & STARTING OF APP SERVICES
+***********************************************************************
+login to YNGFIN1  as user pngfin
+
+1)	cd $HOME/NGPRD/admin/tools/password/
+./encryptdb_fcs.sh
+
+2)	exec bauu9093
+
+
+
+
+
+
+
+NOTE:
+that the WAS console has been hard coded with these passwords in DR
+
+However if any of these passwords changes
+connect to http://yngwas1.ng.sbicdirectory.com:9062/ibm/console/
+username: intsoft
+password: was2admin
+
+WAS Console -> Resources -> JDBC ->Data Sources -> ssodbpool-> JAAS – J2C    authentication data -> <USER>
+
+After doing this you need to encrypt csadm and tbaadm, tbagen, tbautil passwords Run as below
+
+
+
+
+
+
+
+
+
+***********************************************
+*********************************************
+FOR INTERNET BANKING   PNGFIB
+*********************************************
+
+update ececuser.prpm set property_val='10.234.201.11' where property_name = 'BANCSCONNECT_HOST' and bank_id='NG';
+
+update ececuser.prpm set property_val=' 30398' where property_name = ' BANCSCONNECT_PORT' and bank_id='NG';
+
+
+commit;
+
+/
+

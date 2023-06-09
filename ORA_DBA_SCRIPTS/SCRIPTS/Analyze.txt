@@ -1,0 +1,10 @@
+********************************************
+THE DATABASE NEED TO BE ANALYZED EVERY MONTH
+********************************************
+
+
+select distinct LAST_ANALYZED from dba_tables; ------to see the last analyzed date
+
+1.Change tbaadm password
+2./home/oracle/work/Analyze/DBAalyze/AnalyzeTool/bin
+3. ./runbatch.com 
