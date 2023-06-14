@@ -1,0 +1,12 @@
+How to Create and Use Alias Command in Oracle Linux
+=====================================================
+step 1 - list available alias to avoild conflict
+         $ alias
+		 
+step 2 - vi ~/.bashrc
+        ---add below line to my custom alias
+		alias sq='sqlplus / as sysdba'
+
+step 3 - If you want to use the newly defined alias in the current session, issue the following command.
+        $ source ~/.bashrc
+		 

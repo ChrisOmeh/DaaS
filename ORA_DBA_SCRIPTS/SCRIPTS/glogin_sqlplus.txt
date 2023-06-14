@@ -1,0 +1,7 @@
+Login sqlplus
+=================================
+Step 1. $ cd $ORACLE_HOME/sqlplus/admin
+
+Step 2. $ vi glogin.sql
+  Add the below line to the file
+    set sqlprompt "_user'@'_connect_identifier >"
