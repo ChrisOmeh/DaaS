@@ -1,0 +1,7 @@
+10.234.203.217
+
+user - mysql 
+password - qwer1234
+mysql -u root -p
+
+STanbic_1234#
